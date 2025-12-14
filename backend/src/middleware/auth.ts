@@ -1,10 +1,15 @@
+// src/middleware/auth.ts
 import { Request, Response, NextFunction } from "express";
 import jwt from "jsonwebtoken";
 
 export interface AuthRequest extends Request {
-  user?: { id: string; role: "USER" | "MANAGER" | "ADMIN" };
+  user?: {
+    id: string;
+    role: "USER" | "MANAGER" | "ADMIN";
+  };
 }
 
+// Protect middleware
 export const protect = (
   req: AuthRequest,
   res: Response,
@@ -21,15 +26,16 @@ export const protect = (
   try {
     const payload = jwt.verify(token, process.env.JWT_SECRET!) as {
       id: string;
-      role: string;
+      role: "USER" | "MANAGER" | "ADMIN";
     };
-    req.user = { id: payload.id, role: payload.role as any };
+    req.user = { id: payload.id, role: payload.role };
     next();
   } catch (err) {
     return res.status(401).json({ message: "Token expired or invalid" });
   }
 };
 
+// restrictTo — higher-order function
 export const restrictTo = (...roles: ("USER" | "MANAGER" | "ADMIN")[]) => {
   return (req: AuthRequest, res: Response, next: NextFunction) => {
     if (!req.user || !roles.includes(req.user.role)) {

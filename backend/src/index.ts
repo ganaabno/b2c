@@ -8,18 +8,16 @@ import userRoutes from "./routes/users";
 
 const app = express();
 
-// 🔑 CRITICAL: These MUST come BEFORE your routes!
 app.use(
   cors({
-    origin: ["http://localhost:5173"], // Vite default port
+    origin: ["http://localhost:5173"], 
     credentials: true,
   })
 );
 
-app.use(express.json()); // ← Parse JSON bodies
-app.use(morgan("dev")); // ← Logging
+app.use(express.json()); 
+app.use(morgan("dev")); 
 
-// Optional nice root endpoint
 app.get("/", (req, res) => {
   res.json({
     message: "🌍 Gloval Travel API is LIVE AND READY",
@@ -34,12 +32,10 @@ app.get("/", (req, res) => {
   });
 });
 
-// Now mount your routes
 app.use("/api/auth", authRoutes);
 app.use("/api/trips", tourRoutes);
 app.use("/api/users", userRoutes);
 
-// 404 handler (optional but nice)
 app.use("*", (req, res) => {
   res.status(404).json({ message: "Endpoint not found!!" });
 });

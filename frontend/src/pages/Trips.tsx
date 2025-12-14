@@ -2,20 +2,23 @@
 import { useQuery } from "@tanstack/react-query";
 import axios from "axios";
 
+// This interface MUST match exactly what your backend SELECT returns
 interface Trip {
   id: string;
   title: string;
   description: string;
-  image: string; // ← aliased from cover_photo
+  image: string | null; // from cover_photo AS image
   country: string;
-  departure_date: string;
-  hotel: string;
-  breakfast: string;
-  lunch: string;
-  dinner: string;
-  price: string; // ← single_supply_price is text in DB
-  additional_bed?: string | null;
-  country_temperature?: string | null;
+  departure_date: string | null;
+  hotel: string | null;
+  photos: any | null; // JSON or text[] – can be any for now
+  flight_seats: string | null;
+  breakfast: string | null;
+  lunch: string | null;
+  dinner: string | null;
+  price: string | null; // from single_supply_price AS price
+  additional_bed: string | null;
+  country_temperature: string | null;
   created_at: string;
 }
 
@@ -45,24 +48,26 @@ export default function Trips() {
   if (error) {
     return (
       <div className="flex min-h-screen items-center justify-center">
-        <p className="text-2xl text-red-600">Failed to load trips</p>
+        <p className="text-2xl text-red-600">Failed to load trips 😭</p>
       </div>
     );
   }
 
-  const mealIncluded = (meal: string) =>
-    meal?.toLowerCase() === "included" || meal === "yes";
+  const mealIncluded = (meal: string | null) =>
+    meal?.toLowerCase().includes("included") ||
+    meal?.toLowerCase().includes("yes") ||
+    meal?.toLowerCase().includes("багтсан");
 
   return (
     <div className="min-h-screen bg-gray-50 py-12">
       <div className="mx-auto max-w-7xl px-4">
         <h1 className="mb-12 text-center text-6xl font-black text-amber-600">
-          All Trips 🌍✈️
+          Бүх Аялалууд 🌍✈️
         </h1>
 
         {trips.length === 0 ? (
           <p className="text-center text-2xl text-gray-600">
-            No trips available yet — manager gotta add some! xD
+            Одоогоор аялал байхгүй байна — Менежер нэмэх ёстой шүү! xD
           </p>
         ) : (
           <div className="grid gap-10 md:grid-cols-2 lg:grid-cols-3">
@@ -81,7 +86,7 @@ export default function Trips() {
                 ) : (
                   <div className="h-72 bg-linear-to-br from-amber-400 to-orange-600 flex items-center justify-center">
                     <span className="text-4xl font-bold text-white">
-                      No Photo
+                      {trip.title.slice(0, 2).toUpperCase()}
                     </span>
                   </div>
                 )}
@@ -93,41 +98,55 @@ export default function Trips() {
 
                   <p className="mt-2 text-lg text-gray-600">{trip.country}</p>
 
-                  <p className="mt-4 text-gray-700">{trip.description}</p>
+                  <p className="mt-4 text-gray-700 line-clamp-3">
+                    {trip.description}
+                  </p>
 
-                  {/* Meals included icons */}
-                  <div className="mt-6 flex gap-4 text-sm">
+                  {/* Meals included */}
+                  <div className="mt-6 flex flex-wrap gap-4 text-sm">
                     {mealIncluded(trip.breakfast) && (
                       <span className="font-bold text-green-600">
-                        🍳 Breakfast
+                        🍳 Өглөөний цай
                       </span>
                     )}
                     {mealIncluded(trip.lunch) && (
-                      <span className="font-bold text-green-600">🍱 Lunch</span>
+                      <span className="font-bold text-green-600">
+                        🍱 Өдрийн хоол
+                      </span>
                     )}
                     {mealIncluded(trip.dinner) && (
                       <span className="font-bold text-green-600">
-                        🍽️ Dinner
+                        🍽️ Оройн хоол
                       </span>
                     )}
                   </div>
 
-                  {/* Price & Book */}
+                  {/* Price & Departure */}
                   <div className="mt-8 flex items-end justify-between">
                     <div>
-                      <span className="text-4xl font-black text-amber-600">
-                        ${trip.price}
-                      </span>
+                      {trip.price ? (
+                        <span className="text-4xl font-black text-amber-600">
+                          {trip.price.includes("₮")
+                            ? trip.price
+                            : `₮${trip.price}`}
+                        </span>
+                      ) : (
+                        <span className="text-2xl text-gray-500">
+                          Үнэ зарлагдаагүй
+                        </span>
+                      )}
                       {trip.departure_date && (
                         <p className="mt-1 text-gray-600">
-                          Departs:{" "}
-                          {new Date(trip.departure_date).toLocaleDateString()}
+                          Явах огноо:{" "}
+                          {new Date(trip.departure_date).toLocaleDateString(
+                            "mn-MN"
+                          )}
                         </p>
                       )}
                     </div>
 
                     <button className="rounded-lg bg-amber-600 px-8 py-4 font-bold text-white hover:bg-amber-700 transition">
-                      Book Now 🚀
+                      Захиалах 🚀
                     </button>
                   </div>
                 </div>

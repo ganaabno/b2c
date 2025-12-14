@@ -207,7 +207,7 @@ export default function Layout() {
           </div>
         </div>
       </nav>
-      <main className="">
+      <main className="pt-20 md:pt-32">
         <Outlet />
       </main>
     </div>

@@ -1,4 +1,3 @@
-// src/context/AuthContext.tsx
 import {
   createContext,
   useContext,
@@ -27,7 +26,7 @@ const AuthContext = createContext<AuthContextType | undefined>(undefined);
 
 export function AuthProvider({ children }: { children: ReactNode }) {
   const [user, setUser] = useState<User | null>(null);
-  const [isLoading, setIsLoading] = useState(true); // start true so UI doesn't flash
+  const [isLoading, setIsLoading] = useState(true);
 
   const api = axios.create({
     baseURL: import.meta.env.VITE_API_URL,
@@ -36,7 +35,6 @@ export function AuthProvider({ children }: { children: ReactNode }) {
     },
   });
 
-  // AUTO ADD TOKEN TO EVERY REQUEST + handle 401
   api.interceptors.request.use((config) => {
     const token = localStorage.getItem("token");
     if (token) {
@@ -59,7 +57,7 @@ export function AuthProvider({ children }: { children: ReactNode }) {
   const login = async (email: string, password: string) => {
     setIsLoading(true);
     try {
-      const res = await api.post("/auth/login", { email, password });
+      const res = await api.post("/api/auth/login", { email, password });
       localStorage.setItem("token", res.data.token);
       setUser(res.data.user);
     } finally {
@@ -70,7 +68,7 @@ export function AuthProvider({ children }: { children: ReactNode }) {
   const signup = async (name: string, email: string, password: string) => {
     setIsLoading(true);
     try {
-      const res = await api.post("/auth/signup", { name, email, password });
+      const res = await api.post("/api/auth/signup", { name, email, password });
       localStorage.setItem("token", res.data.token);
       setUser(res.data.user);
     } finally {
@@ -93,7 +91,7 @@ export function AuthProvider({ children }: { children: ReactNode }) {
       }
 
       try {
-        const res = await api.get("/auth/me"); // we'll create this route
+        const res = await api.get("/api/auth/me");
         setUser(res.data);
       } catch (err) {
         localStorage.removeItem("token");

@@ -27,12 +27,11 @@ const formatUser = (dbUser: any) => ({
   role: (dbUser.role?.[0] || "USER") as "USER" | "MANAGER" | "ADMIN",
 });
 
-// SIGNUP – ONLY ONE! Using the working method for Neon (pass JS array as param)
 router.post("/signup", async (req, res) => {
   const { name, email, password } = req.body;
 
   if (!name?.trim() || !email?.trim() || !password) {
-    return res.status(400).json({ message: "All fields required bro" });
+    return res.status(400).json({ message: "All fields required" });
   }
 
   try {

@@ -4,7 +4,8 @@ import TourGrid from "../components/TourGrid";
 export default function Home() {
   return (
     <>
-      <div className="w-screen h-[80vh] relative">
+      <div className="w-screen h-[80vh] relative -mt-20 md:-mt-32">
+        {" "}
         <video
           autoPlay
           muted
@@ -14,7 +15,30 @@ export default function Home() {
         >
           <source src="bg-video.mp4" type="video/mp4" />
         </video>
-
+        <div className="absolute bottom-40 left-44 flex flex-col gap-6">
+          <h1
+            className="font-bold text-7xl
+              bg-linear-to-b from-white to-white/60
+              bg-clip-text text-transparent
+              [-webkit-text-stroke:1px_rgba(255,255,255,0.35)]
+              drop-shadow-[0_2px_6px_rgba(0,0,0,0.25)]
+            "
+          >
+            GTC MONGOLIA
+          </h1>
+          <p
+            className="
+              font-bold text-3xl
+              bg-linear-to-b from-white to-white/70
+              bg-clip-text text-transparent
+              [-webkit-text-stroke:1px_rgba(255,255,255,0.35)]
+              drop-shadow-[0_2px_6px_rgba(0,0,0,0.25)]
+            "
+          >
+            Дэлхийгээр Аялж. <br />
+            Дэлхийн Дайтай Сэтгэе!
+          </p>
+        </div>
         <div
           className="absolute -bottom-10 left-1/2 -translate-x-1/2  rounded-[980px] shadow-lg flex justify-center items-center
         py-12 px-36 bg-white"
