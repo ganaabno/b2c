@@ -11,7 +11,8 @@ export default function Home() {
           muted
           loop
           playsInline
-          className="w-full h-full object-cover">
+          className="w-full h-full object-cover"
+        >
           <source src="bg-video.mp4" type="video/mp4" />
         </video>
         <div className="absolute bottom-40 left-44 flex flex-col gap-6">
@@ -21,7 +22,8 @@ export default function Home() {
               bg-clip-text text-transparent
               [-webkit-text-stroke:1px_rgba(255,255,255,0.35)]
               drop-shadow-[0_2px_6px_rgba(0,0,0,0.25)]
-            ">
+            "
+          >
             GTC MONGOLIA
           </h1>
           <p
@@ -31,21 +33,24 @@ export default function Home() {
               bg-clip-text text-transparent
               [-webkit-text-stroke:1px_rgba(255,255,255,0.35)]
               drop-shadow-[0_2px_6px_rgba(0,0,0,0.25)]
-            ">
+            "
+          >
             Дэлхийгээр Аялж. <br />
             Дэлхийн Дайтай Сэтгэе!
           </p>
         </div>
         <div
           className="absolute -bottom-10 left-1/2 -translate-x-1/2  rounded-[980px] shadow-lg flex justify-center items-center
-        py-12 px-36 bg-white">
+        py-12 px-36 bg-white"
+        >
           <div className="flex gap-16">
             <div className="flex flex-col">
               <label htmlFor="from">From:</label>
               <select
                 id="from"
                 name="from"
-                className="py-2 px-12 border rounded-4xl">
+                className="py-2 px-12 border rounded-4xl"
+              >
                 <option value="mongolia">Mongolia</option>
                 <option value="china">China</option>
                 <option value="us">US</option>
@@ -57,7 +62,8 @@ export default function Home() {
               <select
                 id="to"
                 name="to"
-                className="py-2 px-12 border rounded-4xl">
+                className="py-2 px-12 border rounded-4xl"
+              >
                 <option value="mongolia">Mongolia</option>
                 <option value="china">China</option>
                 <option value="us">US</option>
@@ -77,9 +83,10 @@ export default function Home() {
         </div>
       </div>
 
-      {/* Margin top 10 aar zai avch bgaa */}
-      <div className="w-full mt-10"></div>
-      <TripTable />
+      {/* contentoo div dotroo bairluulaarai tegvel tseverhen shuu xD */}
+      <div className="w-full mt-10">
+        <TripTable />
+      </div>
       <div>
         <TourGrid />
       </div>

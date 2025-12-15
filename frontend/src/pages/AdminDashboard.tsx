@@ -23,7 +23,7 @@ export default function AdminDashboard() {
         </h1>
         <p className="mt-6 text-2xl md:text-3xl text-amber-200 font-semibold">
           Welcome back, Supreme Leader{" "}
-          <span className="text-yellow-300">{user?.name}</span>
+          <span className="text-yellow-300">{user?.firstname}</span>
         </p>
         <p className="mt-4 text-lg text-red-200 opacity-90">
           You have unrestricted access to all systems.
