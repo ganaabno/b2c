@@ -22,6 +22,7 @@ const returnUser = (dbUser: any) => ({
   lastname: dbUser.lastname,
   email: dbUser.email,
   role: (dbUser.role?.[0] || "CLIENT") as "CLIENT" | "MANAGER" | "ADMIN",
+  avatar: dbUser.avatar || ""
 });
 // const formatUser = (dbUser: any) => ({
 //   id: dbUser.id,
@@ -55,7 +56,7 @@ const LASTNAME = lastname;
 
     // THIS IS THE WINNER FOR NEON – pass JS array directly
     const [user] = await sql`
-    INSERT INTO users (id, firstname, lastname, email, password, role)
+    INSERT INTO users (id, firstname, lastname, email, password, role, avatar)
     VALUES (
       ${uuidv4()},
       ${FIRSTNAME},
@@ -64,9 +65,10 @@ const LASTNAME = lastname;
       ${hash},
       ${[
         "CLIENT",
-      ]}   -- ← pure JS array, driver converts to your enum array automatically
+      ]} ,
+      ${null}  
     )
-    RETURNING id, firstname, lastname, email, role
+    RETURNING id, firstname, lastname, email, role, avatar
   `;
 
     const token = signToken(user.id, user.role[0]);
@@ -75,7 +77,7 @@ const LASTNAME = lastname;
 
     res.status(201).json({
       token,
-      returnUser
+      user: returnUser(user)
     });
   } catch (err: any) {
     console.error("🔥🔥🔥 SIGNUP CRASHED HARD:", err);

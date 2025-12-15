@@ -5,18 +5,18 @@ import morgan from "morgan";
 import authRoutes from "./routes/auth";
 import tourRoutes from "./routes/trips";
 import userRoutes from "./routes/users";
-
+import uploadRouter from "./routes/upload";
 const app = express();
 
 app.use(
   cors({
-    origin: ["http://localhost:5173"], 
+    origin: ["http://localhost:5173"],
     credentials: true,
   })
 );
 
-app.use(express.json()); 
-app.use(morgan("dev")); 
+app.use(express.json());
+app.use(morgan("dev"));
 
 app.get("/", (req, res) => {
   res.json({
@@ -31,7 +31,7 @@ app.get("/", (req, res) => {
     },
   });
 });
-
+app.use("/api/upload", uploadRouter);
 app.use("/api/auth", authRoutes);
 app.use("/api/trips", tourRoutes);
 app.use("/api/users", userRoutes);

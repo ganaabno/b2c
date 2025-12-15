@@ -7,15 +7,14 @@ interface UserProfileData {
   firstName: string;
   lastName: string;
   email: string;
-  phone: string;
-  bio: string;
+  phone_number: string;
   avatar: string;
 }
 
 export default function UserProfile() {
   const [loading, setLoading] = useState(true);
   const [saving, setSaving] = useState(false);
-  
+
   // 2. Type the Ref correctly
   const fileInputRef = useRef<HTMLInputElement>(null);
 
@@ -23,8 +22,8 @@ export default function UserProfile() {
     firstName: "",
     lastName: "",
     email: "",
-    phone: "",
-    bio: "",
+    phone_number: "",
+    
     avatar: "",
   });
 
@@ -48,8 +47,8 @@ export default function UserProfile() {
           firstName: res.data.firstname || "", // Handle DB naming differences (firstname vs firstName)
           lastName: res.data.lastname || "",
           email: res.data.email || "",
-          phone: res.data.phone || "",
-          bio: res.data.bio || "",
+          phone_number: res.data.phone_number || "",
+         
           avatar: res.data.avatar || "",
         }));
       } catch (error) {
@@ -63,49 +62,93 @@ export default function UserProfile() {
   }, []);
 
   // 4. Typed Change Handler
-  const handleChange = (e: ChangeEvent<HTMLInputElement | HTMLTextAreaElement>) => {
+  const handleChange = (
+    e: ChangeEvent<HTMLInputElement | HTMLTextAreaElement>
+  ) => {
     setFormData({ ...formData, [e.target.name]: e.target.value });
   };
 
-  // 5. Typed Image Handler
-  const handleImageChange = async (e: ChangeEvent<HTMLInputElement>) => {
+  const handleImageChange = async (e: React.ChangeEvent<HTMLInputElement>) => {
     const file = e.target.files?.[0];
     if (!file) return;
 
-    // --- OPTION A: Base64 (Use this if you don't have an upload server yet) ---
-    const reader = new FileReader();
-    reader.onloadend = () => {
-      setFormData((prev) => ({ ...prev, avatar: reader.result as string }));
-    };
-    reader.readAsDataURL(file);
-
-    // --- OPTION B: Upload Server (Uncomment when backend is ready) ---
-    /*
     const uploadData = new FormData();
     uploadData.append("file", file);
+
+    // 1. FIX: Retrieve the token here
+    const token = localStorage.getItem("token");
+
     try {
+      setSaving(true);
+
       const res = await axios.post("/api/upload", uploadData, {
-        headers: { "Content-Type": "multipart/form-data" }
+        headers: {
+          "Content-Type": "multipart/form-data",
+          // 2. FIX: Add the Authorization header
+          Authorization: `Bearer ${token}`,
+        },
       });
-      setFormData((prev) => ({ ...prev, avatar: res.data.url }));
+
+      const imageUrl = res.data.url;
+      setFormData((prev) => ({ ...prev, avatar: imageUrl }));
     } catch (err) {
       console.error("Upload failed", err);
       alert("Failed to upload image");
+    } finally {
+      setSaving(false);
     }
-    */
   };
+
+  // 5. Typed Image Handler
+  // const handleImageChange = async (e: ChangeEvent<HTMLInputElement>) => {
+  //   const file = e.target.files?.[0];
+  //   if (!file) return;
+
+  //   // --- OPTION A: Base64 (Use this if you don't have an upload server yet) ---
+  //   const reader = new FileReader();
+  //   reader.onloadend = () => {
+  //     setFormData((prev) => ({ ...prev, avatar: reader.result as string }));
+  //   };
+  //   reader.readAsDataURL(file);
+
+  //   // --- OPTION B: Upload Server (Uncomment when backend is ready) ---
+  //   /*
+  //   const uploadData = new FormData();
+  //   uploadData.append("file", file);
+  //   try {
+  //     const res = await axios.post("/api/upload", uploadData, {
+  //       headers: { "Content-Type": "multipart/form-data" }
+  //     });
+  //     setFormData((prev) => ({ ...prev, avatar: res.data.url }));
+  //   } catch (err) {
+  //     console.error("Upload failed", err);
+  //     alert("Failed to upload image");
+  //   }
+  //   */
+  // };
 
   const handleSubmit = async (e: FormEvent) => {
     e.preventDefault();
     setSaving(true);
     try {
       const token = localStorage.getItem("token");
-      
-      // Use relative path so it works in production too
-      await axios.put("/api/users/me", formData, {
+
+      // 1. Create a payload that matches the Backend's expected column names
+      const payload = {
+        firstname: formData.firstName, // Map firstName -> firstname
+        lastname: formData.lastName, // Map lastName -> lastname
+        phone_number: formData.phone_number,
+       
+        avatar: formData.avatar,
+      };
+
+      // 2. Send the mapped payload instead of formData
+      // Make sure this URL matches your backend route!
+      // If your GET is /api/auth/me, your PUT might be there too.
+      await axios.put("/api/users/me", payload, {
         headers: { Authorization: `Bearer ${token}` },
       });
-      
+
       alert("Profile updated successfully!");
     } catch (error) {
       console.error(error);
@@ -127,7 +170,6 @@ export default function UserProfile() {
         <div className="bg-white rounded-xl shadow-sm border border-gray-200 overflow-hidden">
           {/* Header / Avatar Section */}
           <div className="p-8 border-b border-gray-100 flex flex-col md:flex-row items-center gap-6">
-            
             {/* Avatar Upload Wrapper */}
             <div
               className="relative group cursor-pointer"
@@ -223,7 +265,7 @@ export default function UserProfile() {
                 <input
                   type="tel"
                   name="phone"
-                  value={formData.phone}
+                  value={formData.phone_number}
                   onChange={handleChange}
                   className="w-full rounded-lg border border-gray-300 px-4 py-2.5 text-gray-900 focus:border-blue-500 focus:ring-2 focus:ring-blue-500/20 outline-none transition-all"
                   placeholder="+976 9911xxxx"
@@ -231,19 +273,7 @@ export default function UserProfile() {
               </div>
             </div>
 
-            <div className="space-y-2">
-              <label className="text-sm font-medium text-gray-700">
-                Товч танилцуулга
-              </label>
-              <textarea
-                name="bio"
-                rows={4}
-                value={formData.bio}
-                onChange={handleChange}
-                className="w-full rounded-lg border border-gray-300 px-4 py-2.5 text-gray-900 focus:border-blue-500 focus:ring-2 focus:ring-blue-500/20 outline-none transition-all resize-none"
-                placeholder="Өөрийн тухай бичнэ үү..."
-              />
-            </div>
+            
 
             <div className="pt-4 flex justify-end gap-4">
               <button
