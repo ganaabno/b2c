@@ -38,7 +38,7 @@ export default function Dashboard() {
         <div className="mb-12 flex items-center justify-between">
           <div>
             <h1 className="text-5xl font-bold text-amber-600">
-              Welcome back, {user?.name || "Traveler"}! 🚀
+              Welcome back, {user?.firstname || "Traveler"}! 🚀
             </h1>
             <p className="mt-2 text-xl text-gray-600">
               Role:{" "}

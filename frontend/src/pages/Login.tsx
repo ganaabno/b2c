@@ -8,10 +8,23 @@ export default function Login() {
   const { login, isLoading } = useAuth();
   const navigate = useNavigate();
 
+  // const handleSubmit =  (e: React.FormEvent) => {
+  //   e.preventDefault();
+  //   login(email, password);
+  //   navigate("/dashboard");
+  // };
   const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
-    await login(email, password);
-    navigate("/dashboard");
+    try {
+      // 1. Wait for login to finish
+      await login(email, password);
+      
+      // 2. Only navigate AFTER success
+      navigate("/dashboard");
+    } catch (error) {
+      console.error("Login failed", error);
+      // Optional: set an error state here to show a message to the user
+    }
   };
 
   return (

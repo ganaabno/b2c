@@ -16,21 +16,27 @@ if (!JWT_SECRET) {
 const signToken = (id: string, role: string) => {
   return jwt.sign({ id, role }, JWT_SECRET, { expiresIn: "7d" });
 };
-
-const formatUser = (dbUser: any) => ({
+const returnUser = (dbUser: any) => ({
   id: dbUser.id,
-  name:
-    `${dbUser.firstname || ""} ${dbUser.lastname || ""}`.trim() ||
-    dbUser.firstname ||
-    "User",
+  firstname: dbUser.firstname,
+  lastname: dbUser.lastname,
   email: dbUser.email,
-  role: (dbUser.role?.[0] || "USER") as "USER" | "MANAGER" | "ADMIN",
+  role: (dbUser.role?.[0] || "CLIENT") as "CLIENT" | "MANAGER" | "ADMIN",
 });
+// const formatUser = (dbUser: any) => ({
+//   id: dbUser.id,
+//   name:
+//     `${dbUser.firstname || ""} ${dbUser.lastname || ""}`.trim() ||
+//     dbUser.firstname ||
+//     "User",
+//   email: dbUser.email,
+//   role: (dbUser.role?.[0] || "CLIENT") as "CLIENT" | "MANAGER" | "ADMIN",
+// });
 
 router.post("/signup", async (req, res) => {
-  const { name, email, password } = req.body;
+  const { firstname, lastname, email, password } = req.body;
 
-  if (!name?.trim() || !email?.trim() || !password) {
+  if (!firstname?.trim() || !lastname?.trim() || !email?.trim() || !password) {
     return res.status(400).json({ message: "All fields required" });
   }
 
@@ -41,10 +47,10 @@ router.post("/signup", async (req, res) => {
       return res.status(400).json({ message: "Email already taken" });
     }
 
-    const parts = name.trim().split(" ");
-    const firstname = parts[0];
-    const lastname = parts.slice(1).join(" ") || null;
-
+    //const firstname = firstname;
+    //const lastname = parts.slice(1).join(" ") || null;
+const FIRSTNAME = firstname;
+const LASTNAME = lastname;
     const hash = await argon2.hash(password);
 
     // THIS IS THE WINNER FOR NEON – pass JS array directly
@@ -52,12 +58,12 @@ router.post("/signup", async (req, res) => {
     INSERT INTO users (id, firstname, lastname, email, password, role)
     VALUES (
       ${uuidv4()},
-      ${firstname},
-      ${lastname},
+      ${FIRSTNAME},
+      ${LASTNAME},
       ${email.toLowerCase()},
       ${hash},
       ${[
-        "USER",
+        "CLIENT",
       ]}   -- ← pure JS array, driver converts to your enum array automatically
     )
     RETURNING id, firstname, lastname, email, role
@@ -65,11 +71,11 @@ router.post("/signup", async (req, res) => {
 
     const token = signToken(user.id, user.role[0]);
 
-    console.log("✅ New user created:", formatUser(user)); // success log
+    console.log("✅ New user created:", returnUser(user)); // success log
 
     res.status(201).json({
       token,
-      user: formatUser(user),
+      returnUser
     });
   } catch (err: any) {
     console.error("🔥🔥🔥 SIGNUP CRASHED HARD:", err);
@@ -101,7 +107,8 @@ router.post("/login", async (req, res) => {
 
     res.json({
       token,
-      user: formatUser(user),
+      user: returnUser(user)
+      //  user: formatUser(user),
     });
   } catch (err: any) {
     console.error("🔥 Login failed:", err);
@@ -126,8 +133,8 @@ router.get("/me", async (req, res) => {
     `;
 
     if (!user) return res.status(404).json({ message: "User not found" });
-
-    res.json(formatUser(user));
+    res.json(returnUser(user));
+    //   res.json(formatUser(user));
   } catch (err: any) {
     console.error("🔥 /me error:", err);
     res.status(401).json({ message: "Invalid token" });
