@@ -11,7 +11,7 @@ import Trips from "./pages/Trips";
 import TourDetail from "./pages/TourDetail"; // ← ADD THIS
 import AdminDashboard from "./pages/AdminDashboard";
 import ManagerDashboard from "./pages/ManagerDashboard";
-
+import UserProfile from "./pages/UserProfile";
 import ProtectedRoute from "./components/ProtectedRoute";
 import Layout from "./components/Layout";
 import { AuthProvider } from "./context/AuthContext";
@@ -35,6 +35,7 @@ export default function App() {
                 <Route path="/dashboard" element={<Dashboard />} />
                 <Route path="/manager" element={<ManagerDashboard />} />
                 <Route path="/admin" element={<AdminDashboard />} />
+              <Route path="/profile" element={<UserProfile />} />
               </Route>
             </Route>
 

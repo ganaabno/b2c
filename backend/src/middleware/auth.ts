@@ -5,7 +5,7 @@ import jwt from "jsonwebtoken";
 export interface AuthRequest extends Request {
   user?: {
     id: string;
-    role: "USER" | "MANAGER" | "ADMIN";
+    role: "CLIENT" | "MANAGER" | "ADMIN";
   };
 }
 
@@ -26,7 +26,7 @@ export const protect = (
   try {
     const payload = jwt.verify(token, process.env.JWT_SECRET!) as {
       id: string;
-      role: "USER" | "MANAGER" | "ADMIN";
+      role: "CLIENT" | "MANAGER" | "ADMIN";
     };
     req.user = { id: payload.id, role: payload.role };
     next();
@@ -36,7 +36,7 @@ export const protect = (
 };
 
 // restrictTo — higher-order function
-export const restrictTo = (...roles: ("USER" | "MANAGER" | "ADMIN")[]) => {
+export const restrictTo = (...roles: ("CLIENT" | "MANAGER" | "ADMIN")[]) => {
   return (req: AuthRequest, res: Response, next: NextFunction) => {
     if (!req.user || !roles.includes(req.user.role)) {
       return res.status(403).json({ message: "You shall not pass!" });

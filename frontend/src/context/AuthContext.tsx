@@ -9,15 +9,22 @@ import axios from "axios";
 
 interface User {
   id: string;
-  name: string;
+  firstname: string;
+  lastname: string;
   email: string;
-  role: "USER" | "MANAGER" | "ADMIN";
+  role: "CLIENT" | "MANAGER" | "ADMIN";
+  avatar: string;
 }
 
 interface AuthContextType {
   user: User | null;
   login: (email: string, password: string) => Promise<void>;
-  signup: (name: string, email: string, password: string) => Promise<void>;
+  signup: (
+    firstname: string,
+    lastname: string,
+    email: string,
+    password: string
+  ) => Promise<void>;
   logout: () => void;
   isLoading: boolean;
 }
@@ -62,15 +69,28 @@ export function AuthProvider({ children }: { children: ReactNode }) {
       setUser(res.data.user);
     } finally {
       setIsLoading(false);
+       
     }
   };
 
-  const signup = async (name: string, email: string, password: string) => {
-    setIsLoading(true);
+  const signup = async (
+    firstname: string,
+    lastname: string,
+    email: string,
+    password: string
+  ) => {
+     setIsLoading(true);
     try {
-      const res = await api.post("/api/auth/signup", { name, email, password });
+      const res = await api.post("/api/auth/signup", {
+        firstname,
+        lastname,
+        email,
+        password,
+      });
       localStorage.setItem("token", res.data.token);
       setUser(res.data.user);
+    } catch (error) {
+      console.log(error);
     } finally {
       setIsLoading(false);
     }
@@ -94,6 +114,7 @@ export function AuthProvider({ children }: { children: ReactNode }) {
         const res = await api.get("/api/auth/me");
         setUser(res.data);
       } catch (err) {
+        console.log(err);
         localStorage.removeItem("token");
         setUser(null);
       } finally {
@@ -110,9 +131,10 @@ export function AuthProvider({ children }: { children: ReactNode }) {
     </AuthContext.Provider>
   );
 }
-
+// eslint-disable-next-line react-refresh/only-export-components
 export const useAuth = () => {
   const context = useContext(AuthContext);
   if (!context) throw new Error("useAuth must be used within AuthProvider");
   return context;
 };
+

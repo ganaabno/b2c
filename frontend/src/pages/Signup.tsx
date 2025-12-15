@@ -1,10 +1,12 @@
 // src/components/Signup.tsx  (or wherever it is)
+ /* eslint-disable @typescript-eslint/no-explicit-any */
 import { useState } from "react";
 import { useAuth } from "../context/AuthContext";
 import { Link, useNavigate } from "react-router-dom";
 
 export default function Signup() {
-  const [name, setName] = useState("");
+  const [firstname, setFirstname] = useState("");
+  const [lastname, setLastname] = useState("");
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
   const [error, setError] = useState(""); // ← new: show nice error
@@ -16,11 +18,12 @@ export default function Signup() {
     setError("");
 
     try {
-      console.log("🚀 Trying signup with:", { name, email });
-      await signup(name, email, password);
+      console.log("🚀 Trying signup with:", { firstname, lastname, email });
+      await signup(firstname, lastname, email, password);
       console.log("✅ Signup success! Navigating to dashboard");
       navigate("/dashboard");
-    } catch (err: any) {
+     
+    } catch (err:any) {
       console.error("🔥 Signup failed:", err);
       setError(
         err.response?.data?.message ||
@@ -45,9 +48,18 @@ export default function Signup() {
       <form onSubmit={handleSubmit} className="space-y-6">
         <input
           type="text"
-          placeholder="Full Name"
-          value={name}
-          onChange={(e) => setName(e.target.value)}
+          placeholder="First Name"
+          value={firstname}
+          onChange={(e) => setFirstname(e.target.value)}
+          className="w-full rounded-lg border px-4 py-3 focus:border-amber-500 focus:outline-none"
+          required
+          disabled={isLoading}
+        />
+         <input
+          type="text"
+          placeholder="Last Name"
+          value={lastname}
+          onChange={(e) => setLastname(e.target.value)}
           className="w-full rounded-lg border px-4 py-3 focus:border-amber-500 focus:outline-none"
           required
           disabled={isLoading}
@@ -73,8 +85,7 @@ export default function Signup() {
         <button
           type="submit"
           disabled={isLoading}
-          className="w-full rounded-lg bg-amber-600 py-4 font-bold text-white hover:bg-amber-700 disabled:opacity-50 transition"
-        >
+          className="w-full rounded-lg bg-amber-600 py-4 font-bold text-white hover:bg-amber-700 disabled:opacity-50 transition">
           {isLoading ? "Creating Account..." : "Sign Up"}
         </button>
       </form>
