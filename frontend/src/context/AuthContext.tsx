@@ -91,9 +91,10 @@ export function AuthProvider({ children }: { children: ReactNode }) {
       }
 
       try {
-        const res = await api.get("/api/auth/me");
+        const res = await api.get("/auth/me");
         setUser(res.data);
       } catch (err) {
+        console.log(err);
         localStorage.removeItem("token");
         setUser(null);
       } finally {
