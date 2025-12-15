@@ -20,7 +20,7 @@ export default function Dashboard() {
   useEffect(() => {
     const fetchtrips = async () => {
       try {
-        const res = await axios.get("/api/trips"); // proxy handles it
+        const res = await axios.get("/api/trips");
         settrips(res.data);
       } catch (err) {
         console.error("Failed to load trips:", err);

@@ -15,8 +15,6 @@ export default function AdminDashboard() {
   return (
     <div className="min-h-screen bg-gray-100 py-8 px-4">
       {" "}
-      {/* Light background for contrast */}
-      {/* Hero Header - Dark & Powerful */}
       <div className="mb-12 rounded-2xl bg-linear-to-r from-red-800 via-red-900 to-black p-10 md:p-16 shadow-2xl">
         <h1 className="flex flex-col md:flex-row items-center gap-6 text-5xl md:text-6xl font-black text-white drop-shadow-2xl">
           <Crown className="h-20 w-20 text-yellow-400 drop-shadow-lg" />
