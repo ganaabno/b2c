@@ -22,7 +22,7 @@ const returnUser = (dbUser: any) => ({
   lastname: dbUser.lastname,
   email: dbUser.email,
   role: (dbUser.role?.[0] || "CLIENT") as "CLIENT" | "MANAGER" | "ADMIN",
-  avatar: dbUser.avatar || ""
+  avatar: dbUser.avatar || "",
 });
 // const formatUser = (dbUser: any) => ({
 //   id: dbUser.id,
@@ -50,8 +50,8 @@ router.post("/signup", async (req, res) => {
 
     //const firstname = firstname;
     //const lastname = parts.slice(1).join(" ") || null;
-const FIRSTNAME = firstname;
-const LASTNAME = lastname;
+    const FIRSTNAME = firstname;
+    const LASTNAME = lastname;
     const hash = await argon2.hash(password);
 
     // THIS IS THE WINNER FOR NEON – pass JS array directly
@@ -63,9 +63,7 @@ const LASTNAME = lastname;
       ${LASTNAME},
       ${email.toLowerCase()},
       ${hash},
-      ${[
-        "CLIENT",
-      ]} ,
+      ${"CLIENT"} ,
       ${null}  
     )
     RETURNING id, firstname, lastname, email, role, avatar
@@ -77,7 +75,7 @@ const LASTNAME = lastname;
 
     res.status(201).json({
       token,
-      user: returnUser(user)
+      user: returnUser(user),
     });
   } catch (err: any) {
     console.error("🔥🔥🔥 SIGNUP CRASHED HARD:", err);
@@ -109,7 +107,7 @@ router.post("/login", async (req, res) => {
 
     res.json({
       token,
-      user: returnUser(user)
+      user: returnUser(user),
       //  user: formatUser(user),
     });
   } catch (err: any) {
@@ -130,7 +128,7 @@ router.get("/me", async (req, res) => {
     const payload = jwt.verify(token, JWT_SECRET) as { id: string };
 
     const [user] = await sql`
-      SELECT id, firstname, lastname, email, role
+      SELECT id, firstname, lastname, email, role, avatar
       FROM users WHERE id = ${payload.id}
     `;
 

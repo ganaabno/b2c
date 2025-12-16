@@ -1,7 +1,8 @@
-import { useState, useEffect, useRef, ChangeEvent, FormEvent } from "react";
+import { useState, useEffect, useRef } from "react";
+import type { ChangeEvent, FormEvent } from "react";
 import axios from "axios";
 import { Camera } from "lucide-react";
-
+import { useAuth } from "@/context/AuthContext";
 // 1. Define the shape of your User data
 interface UserProfileData {
   firstName: string;
@@ -14,6 +15,7 @@ interface UserProfileData {
 export default function UserProfile() {
   const [loading, setLoading] = useState(true);
   const [saving, setSaving] = useState(false);
+  const { updateUser } = useAuth();
 
   // 2. Type the Ref correctly
   const fileInputRef = useRef<HTMLInputElement>(null);
@@ -23,7 +25,7 @@ export default function UserProfile() {
     lastName: "",
     email: "",
     phone_number: "",
-    
+
     avatar: "",
   });
 
@@ -48,7 +50,7 @@ export default function UserProfile() {
           lastName: res.data.lastname || "",
           email: res.data.email || "",
           phone_number: res.data.phone_number || "",
-         
+
           avatar: res.data.avatar || "",
         }));
       } catch (error) {
@@ -91,6 +93,8 @@ export default function UserProfile() {
 
       const imageUrl = res.data.url;
       setFormData((prev) => ({ ...prev, avatar: imageUrl }));
+      // 2. Update Global Context (This fixes the Navbar immediately!)
+      updateUser({ avatar: imageUrl });
     } catch (err) {
       console.error("Upload failed", err);
       alert("Failed to upload image");
@@ -138,7 +142,7 @@ export default function UserProfile() {
         firstname: formData.firstName, // Map firstName -> firstname
         lastname: formData.lastName, // Map lastName -> lastname
         phone_number: formData.phone_number,
-       
+
         avatar: formData.avatar,
       };
 
@@ -147,6 +151,12 @@ export default function UserProfile() {
       // If your GET is /api/auth/me, your PUT might be there too.
       await axios.put("/api/users/me", payload, {
         headers: { Authorization: `Bearer ${token}` },
+      });
+
+      updateUser({
+        firstname: formData.firstName,
+        lastname: formData.lastName,
+        avatar: formData.avatar,
       });
 
       alert("Profile updated successfully!");
@@ -272,8 +282,6 @@ export default function UserProfile() {
                 />
               </div>
             </div>
-
-            
 
             <div className="pt-4 flex justify-end gap-4">
               <button
