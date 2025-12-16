@@ -26,14 +26,7 @@ interface AuthContextType {
     password: string
   ) => Promise<void>;
   logout: () => void;
-  updateUser: (userData: Partial<User>) => void;
   isLoading: boolean;
-  signupAsManager:(
-    firstname: string,
-    lastname: string,
-    email: string,
-    password: string
-  ) => Promise<void>
 }
 
 const AuthContext = createContext<AuthContextType | undefined>(undefined);
@@ -76,6 +69,7 @@ export function AuthProvider({ children }: { children: ReactNode }) {
       setUser(res.data.user);
     } finally {
       setIsLoading(false);
+       
     }
   };
 
@@ -85,29 +79,7 @@ export function AuthProvider({ children }: { children: ReactNode }) {
     email: string,
     password: string
   ) => {
-    setIsLoading(true);
-    try {
-      const res = await api.post("/api/auth/signup", {
-        firstname,
-        lastname,
-        email,
-        password,
-      });
-      localStorage.setItem("token", res.data.token);
-      setUser(res.data.user);
-    } catch (error) {
-      console.log(error);
-    } finally {
-      setIsLoading(false);
-    }
-  };
-  const signupAsManager = async (
-    firstname: string,
-    lastname: string,
-    email: string,
-    password: string
-  ) => {
-    setIsLoading(true);
+     setIsLoading(true);
     try {
       const res = await api.post("/api/auth/signup", {
         firstname,
@@ -127,12 +99,6 @@ export function AuthProvider({ children }: { children: ReactNode }) {
   const logout = () => {
     localStorage.removeItem("token");
     setUser(null);
-  };
-  const updateUser = (userData: Partial<User>) => {
-    setUser((prev) => {
-      if (!prev) return null;
-      return { ...prev, ...userData };
-    });
   };
 
   // Auto-login on mount/refresh
@@ -157,12 +123,10 @@ export function AuthProvider({ children }: { children: ReactNode }) {
     };
 
     loadUser();
-    // eslint-disable-next-line react-hooks/exhaustive-deps
   }, []);
 
   return (
-    <AuthContext.Provider
-      value={{ user, login, signup, logout, isLoading, updateUser, signupAsManager }}>
+    <AuthContext.Provider value={{ user, login, signup, logout, isLoading }}>
       {children}
     </AuthContext.Provider>
   );
@@ -173,3 +137,4 @@ export const useAuth = () => {
   if (!context) throw new Error("useAuth must be used within AuthProvider");
   return context;
 };
+

@@ -65,7 +65,7 @@ export default function Layout() {
             <div className="hidden md:flex items-center gap-6">
               <Link
                 to="/tours"
-                className="font-semibold text-blue-500 text-shadow-2xs shadow-2xl hover:text-amber-600 duration-700">
+                className="font-semibold text-white shadow-2xl hover:text-slate-900 duration-700">
                 Tours
               </Link>
 
@@ -115,7 +115,7 @@ export default function Layout() {
                 <>
                   <Link
                     to="/login"
-                    className="font-semibold text-blue-500 shadow-2xl hover:text-amber-600 duration-700">
+                    className="font-semibold text-white shadow-2xl hover:text-slate-900 duration-700">
                     Login
                   </Link>
                   <Link
@@ -215,7 +215,7 @@ export default function Layout() {
               <>
                 <Link
                   to="/login"
-                  className="text-2xl font-semibold text-blue-500 hover:text-amber-200 transition-colors"
+                  className="text-2xl font-semibold text-white hover:text-amber-200 transition-colors"
                   onClick={closeMobileMenu}>
                   Login
                 </Link>

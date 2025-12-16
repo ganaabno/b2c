@@ -6,11 +6,10 @@ const router = express.Router();
 
 // Get my profile
 router.get("/me", protect, async (req: AuthRequest, res) => {
-  const [user] = await sql`SELECT id, name, email, role, avatar FROM users WHERE id = ${
+  const [user] = await sql`SELECT id, name, email, role FROM users WHERE id = ${
     req.user!.id
   }`;
   res.json(user);
- 
 });
 //Update my profile
 router.put("/me", protect, async (req: AuthRequest, res) => {

@@ -8,6 +8,11 @@ export default function Login() {
   const { login, isLoading } = useAuth();
   const navigate = useNavigate();
 
+  // const handleSubmit =  (e: React.FormEvent) => {
+  //   e.preventDefault();
+  //   login(email, password);
+  //   navigate("/dashboard");
+  // };
   const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
     try {

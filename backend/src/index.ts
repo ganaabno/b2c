@@ -6,7 +6,6 @@ import authRoutes from "./routes/auth";
 import tourRoutes from "./routes/trips";
 import userRoutes from "./routes/users";
 import uploadRouter from "./routes/upload";
-import requestRoutes from "./routes/requests"
 const app = express();
 
 app.use(
@@ -36,7 +35,6 @@ app.use("/api/upload", uploadRouter);
 app.use("/api/auth", authRoutes);
 app.use("/api/trips", tourRoutes);
 app.use("/api/users", userRoutes);
-app.use("/api/requests", requestRoutes);
 
 app.use("*", (req, res) => {
   res.status(404).json({ message: "Endpoint not found!!" });

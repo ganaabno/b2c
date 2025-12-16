@@ -12,7 +12,7 @@ export default function ManagerDashboard() {
           <ClipboardList className="h-16 w-16" />
           MANAGER PANEL
         </h1>
-        <p className="mt-4 text-2xl">Welcome back, Manager {user?.firstname}</p>
+        <p className="mt-4 text-2xl">Welcome back, Manager {user?.name}</p>
       </div>
 
       <div className="grid gap-8 md:grid-cols-2 lg:grid-cols-4">

@@ -11,7 +11,7 @@ interface Trip {
   country: string;
   departure_date: string | null;
   hotel: string | null;
-  photos: string | null; // JSON or text[] – can be any for now
+  photos: any | null; // JSON or text[] – can be any for now
   flight_seats: string | null;
   breakfast: string | null;
   lunch: string | null;

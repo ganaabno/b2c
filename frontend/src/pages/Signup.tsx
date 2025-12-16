@@ -1,5 +1,5 @@
 // src/components/Signup.tsx  (or wherever it is)
-/* eslint-disable @typescript-eslint/no-explicit-any */
+ /* eslint-disable @typescript-eslint/no-explicit-any */
 import { useState } from "react";
 import { useAuth } from "../context/AuthContext";
 import { Link, useNavigate } from "react-router-dom";
@@ -22,7 +22,8 @@ export default function Signup() {
       await signup(firstname, lastname, email, password);
       console.log("✅ Signup success! Navigating to dashboard");
       navigate("/dashboard");
-    } catch (err: any) {
+     
+    } catch (err:any) {
       console.error("🔥 Signup failed:", err);
       setError(
         err.response?.data?.message ||
@@ -54,7 +55,7 @@ export default function Signup() {
           required
           disabled={isLoading}
         />
-        <input
+         <input
           type="text"
           placeholder="Last Name"
           value={lastname}
@@ -84,7 +85,7 @@ export default function Signup() {
         <button
           type="submit"
           disabled={isLoading}
-          className="w-full rounded-lg bg-amber-600 py-4 font-bold text-white hover:bg-amber-700 disabled:opacity-50 transition hover:cursor-pointer">
+          className="w-full rounded-lg bg-amber-600 py-4 font-bold text-white hover:bg-amber-700 disabled:opacity-50 transition">
           {isLoading ? "Creating Account..." : "Sign Up"}
         </button>
       </form>
@@ -95,21 +96,6 @@ export default function Signup() {
           Login
         </Link>
       </p>
-      {/* <div className="mt-4 text-center text-gray-600">
-        Not a client? Sign up as a {" "}
-        <Link to="/signup/manager" className="font-bold text-amber-600 hover:underline hover:cursor-pointer">
-          Manager
-        </Link>
-      </div> */}
-      <div className="mt-4 text-center text-gray-600">
-        See other
-        <Link
-          to="/signup/options"
-          className="font-bold text-amber-600 hover:underline hover:cursor-pointer">
-          {" "}
-          sign up options
-        </Link>
-      </div>
     </div>
   );
 }

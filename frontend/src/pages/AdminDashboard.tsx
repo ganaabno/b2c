@@ -14,7 +14,7 @@ export default function AdminDashboard() {
 
   return (
     <div className="min-h-screen bg-gray-100 py-8 px-4">
-     
+      {" "}
       {/* Light background for contrast */}
       {/* Hero Header - Dark & Powerful */}
       <div className="mb-12 rounded-2xl bg-linear-to-r from-red-800 via-red-900 to-black p-10 md:p-16 shadow-2xl">
@@ -24,8 +24,8 @@ export default function AdminDashboard() {
           <ShieldAlert className="h-16 w-16 text-red-400 hidden md:block" />
         </h1>
         <p className="mt-6 text-2xl md:text-3xl text-amber-200 font-semibold">
-          Welcome back, Supreme Leader
-          <span className="text-yellow-300">{user?.firstname}</span>
+          Welcome back, Supreme Leader{" "}
+          <span className="text-yellow-300">{user?.name}</span>
         </p>
         <p className="mt-4 text-lg text-red-200 opacity-90">
           You have unrestricted access to all systems.
