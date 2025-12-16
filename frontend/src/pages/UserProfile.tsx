@@ -1,4 +1,5 @@
-import { useState, useEffect, useRef, ChangeEvent, FormEvent } from "react";
+import { useState, useEffect, useRef,  } from "react";
+import type{ChangeEvent, FormEvent} from "react"
 import axios from "axios";
 import { Camera } from "lucide-react";
 
