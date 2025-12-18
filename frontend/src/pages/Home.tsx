@@ -1,6 +1,6 @@
 import Footer from "../components/Footer";
 import TourGrid from "../components/TourGrid";
-import TripTable from "../components/TripTable";
+import TourTable from "../components/TourTable";
 export default function Home() {
   return (
     <>
@@ -79,7 +79,7 @@ export default function Home() {
 
       {/* Margin top 10 aar zai avch bgaa */}
       <div className="w-full mt-10"></div>
-      <TripTable />
+      <TourTable />
       <div>
         <TourGrid />
       </div>

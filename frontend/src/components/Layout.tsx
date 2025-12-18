@@ -1,11 +1,11 @@
 import { Outlet, Link } from "react-router-dom";
 import { useAuth } from "../context/AuthContext";
-import { LogOut, Shield, Menu, X } from "lucide-react";
+import { Shield, Menu, X } from "lucide-react";
 import Logo from "../assets/last logo.png";
 import { useEffect, useState } from "react";
 
 export default function Layout() {
-  const { user, logout } = useAuth();
+  const { user} = useAuth();
   const [isBlured, setIsBlured] = useState(false);
   const [isMobileMenuOpen, setIsMobileMenuOpen] = useState(false);
 
@@ -103,13 +103,7 @@ export default function Layout() {
                       />
                     </div>
                   </Link>
-                  {/* ----------------------------------------- */}
-
-                  <button
-                    onClick={logout}
-                    className="flex items-center gap-2 rounded bg-amber-700 px-4 py-2 hover:bg-amber-800">
-                    <LogOut className="h-4 w-4" /> Logout
-                  </button>
+                  
                 </>
               ) : (
                 <>
@@ -200,16 +194,7 @@ export default function Layout() {
                     Hi, {user.firstname}
                   </span>
                 </Link>
-                {/* ------------------------------------------- */}
-
-                <button
-                  onClick={() => {
-                    logout();
-                    closeMobileMenu();
-                  }}
-                  className="flex items-center gap-2 rounded bg-amber-700 px-6 py-3 text-lg hover:bg-amber-800 transition-colors mt-4">
-                  <LogOut className="h-5 w-5" /> Logout
-                </button>
+                
               </>
             ) : (
               <>

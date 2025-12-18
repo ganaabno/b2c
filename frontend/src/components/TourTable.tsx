@@ -9,17 +9,17 @@ import {
   TableRow,
 } from "@/components/ui/table";
 
-export default function TripTable() {
+export default function TourTable() {
   const navigate = useNavigate();
   
   const INITIAL_COUNT = 10;
   const [visibleCount, setVisibleCount] = useState(INITIAL_COUNT);
 
   // --- MOCK DATA ---
-  const trips = Array.from({ length: 45 }, (_, i) => ({
+  const tours = Array.from({ length: 45 }, (_, i) => ({
     id: i + 1,
     name: i % 2 === 0 ? "Туркийн 3 хот" : "Дубайн аялал",
-    slug: `/tours/trip-${i + 1}`,
+    slug: `/tours/tour-${i + 1}`,
     image: "https://nomadays.scdn4.secure.raxcdn.com/mn2-public/antalya_duden_waterfall-FILL-w50h50.jpg",
     startDate: "2025-12-14",
     startDay: "Ням гараг",
@@ -32,40 +32,40 @@ export default function TripTable() {
   const handleLoadMore = () => setVisibleCount((prev) => prev + 10);
   const handleCollapse = () => setVisibleCount(INITIAL_COUNT);
 
-  const visibleTrips = trips.slice(0, visibleCount);
-  const hasMore = visibleCount < trips.length;
+  const visibleTours = tours.slice(0, visibleCount);
+  const hasMore = visibleCount < tours.length;
   const isExpanded = visibleCount > INITIAL_COUNT;
 
   return (
-    <div id="trip-table-container" className="w-full flex flex-col items-center px-[5%] py-8">
+    <div id="tour-table-container" className="w-full flex flex-col items-center px-[5%] py-8">
       
       {/* --- MOBILE VIEW (Cards) - Stays 100% width --- */}
       <div className="w-full grid grid-cols-1 gap-3 md:hidden">
-        {visibleTrips.map((trip) => (
+        {visibleTours.map((tour) => (
           <div 
-            key={trip.id} 
-            onClick={() => handleRowClick(trip.slug)}
+            key={tour.id} 
+            onClick={() => handleRowClick(tour.slug)}
             className="relative overflow-hidden rounded-xl border border-gray-100 bg-white p-3 shadow-sm transition-all active:scale-[0.98] active:bg-gray-50"
           >
             <div className="flex items-center gap-3 mb-3">
               <div className="relative h-10 w-10 shrink-0 overflow-hidden rounded-lg">
-                <img src={trip.image} alt={trip.name} className="h-full w-full object-cover" />
+                <img src={tour.image} alt={tour.name} className="h-full w-full object-cover" />
               </div>
               <div>
-                <h3 className="font-semibold text-gray-900 text-sm">{trip.name}</h3>
+                <h3 className="font-semibold text-gray-900 text-sm">{tour.name}</h3>
                 <span className="inline-flex items-center rounded-full bg-blue-50 px-2 py-0.5 text-[10px] font-medium text-blue-700">
-                  {trip.duration}
+                  {tour.duration}
                 </span>
               </div>
             </div>
             <div className="grid grid-cols-2 gap-y-2 text-xs">
               <div>
                 <p className="text-gray-500">Эхлэх</p>
-                <p className="font-medium text-gray-900">{trip.startDate}</p>
+                <p className="font-medium text-gray-900">{tour.startDate}</p>
               </div>
               <div className="text-right">
                 <p className="text-gray-500">Үнэ</p>
-                <p className="font-bold text-blue-600 text-sm">{trip.price}</p>
+                <p className="font-bold text-blue-600 text-sm">{tour.price}</p>
               </div>
             </div>
           </div>
@@ -87,10 +87,10 @@ export default function TripTable() {
             </TableRow>
           </TableHeader>
           <TableBody>
-            {visibleTrips.map((trip) => (
+            {visibleTours.map((tour) => (
               <TableRow 
-                key={trip.id} 
-                onClick={() => handleRowClick(trip.slug)}
+                key={tour.id} 
+                onClick={() => handleRowClick(tour.slug)}
                 className="
                   cursor-pointer border-b border-gray-50
                   transition-all duration-200 ease-in-out
@@ -102,33 +102,33 @@ export default function TripTable() {
                   <div className="flex items-center gap-3">
                     <div className="relative h-8 w-8 shrink-0 overflow-hidden rounded-md transition-transform duration-300 group-hover:scale-105">
                       <img
-                        src={trip.image}
-                        alt={trip.name}
+                        src={tour.image}
+                        alt={tour.name}
                         className="h-full w-full object-cover"
                       />
                     </div>
                     <span className="text-gray-900 group-hover:text-blue-700 transition-colors">
-                      {trip.name}
+                      {tour.name}
                     </span>
                   </div>
                 </TableCell>
                 <TableCell className="py-2.5">
                   <div className="flex flex-col leading-tight">
-                    <span className="text-gray-900">{trip.startDate}</span>
-                    <span className="text-[11px] text-gray-400">{trip.startDay}</span>
+                    <span className="text-gray-900">{tour.startDate}</span>
+                    <span className="text-[11px] text-gray-400">{tour.startDay}</span>
                   </div>
                 </TableCell>
                 <TableCell className="py-2.5">
                   <span className="inline-flex items-center rounded-full bg-gray-100 px-2 py-0.5 text-[11px] font-medium text-gray-600 group-hover:bg-blue-100 group-hover:text-blue-700 transition-colors">
-                    {trip.duration}
+                    {tour.duration}
                   </span>
                 </TableCell>
                 <TableCell className="py-2.5 text-gray-600">
-                  {trip.endDate}
+                  {tour.endDate}
                 </TableCell>
                 <TableCell className="text-right py-2.5 pr-4">
                   <span className="font-bold text-gray-900 group-hover:text-blue-700 transition-colors">
-                    {trip.price}
+                    {tour.price}
                   </span>
                 </TableCell>
               </TableRow>

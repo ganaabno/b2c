@@ -2,25 +2,11 @@ import { MapPin, Clock, Users, ArrowLeft } from "lucide-react";
 import { Link, useParams } from "react-router-dom";
 import { useQuery } from "@tanstack/react-query";
 import axios from "axios";
+import type { Tour } from "@/types";
 
-interface TourDetail {
-  id: string;
-  title: string;
-  description: string;
-  image: string | null;
-  country: string;
-  departure_date: string | null;
-  hotel: string | null;
-  breakfast: string | null;
-  lunch: string | null;
-  dinner: string | null;
-  price: string | null;
-  additional_bed: string | null;
-  country_temperature: string | null;
-}
 
-async function fetchTour(id: string): Promise<TourDetail> {
-  const res = await axios.get(`/api/trips/${id}`);
+async function fetchTour(id: string): Promise<Tour> {
+  const res = await axios.get(`/api/tours/${id}`);
   return res.data;
 }
 
@@ -31,7 +17,7 @@ export default function TourDetail() {
     isLoading,
     error,
   } = useQuery({
-    queryKey: ["trip", id],
+    queryKey: ["tour", id],
     queryFn: () => fetchTour(id!),
     enabled: !!id,
   });
@@ -56,7 +42,7 @@ export default function TourDetail() {
   return (
     <div className="container mx-auto py-12 px-4">
       <Link
-        to="/trips"
+        to="/tours"
         className="inline-flex items-center gap-2 text-gray-600 hover:text-gray-900 mb-8"
       >
         <ArrowLeft className="w-5 h-5" />
@@ -101,9 +87,9 @@ export default function TourDetail() {
             )}
           </div>
 
-          {tour.price && (
+          {tour.single_supply_price && (
             <div className="text-4xl font-bold text-green-600 mb-8">
-              {tour.price.includes("₮") ? tour.price : `₮${tour.price}`}
+              {tour.single_supply_price.includes("₮") ? tour.single_supply_price : `₮${tour.single_supply_price}`}
             </div>
           )}
 

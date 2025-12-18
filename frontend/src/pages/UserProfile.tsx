@@ -1,18 +1,14 @@
-import { useState, useEffect, useRef,  } from "react";
-import type{ChangeEvent, FormEvent} from "react"
+import { useState, useEffect, useRef } from "react";
+import type { ChangeEvent, FormEvent } from "react";
 import axios from "axios";
 import { Camera } from "lucide-react";
-
+import { useAuth } from "@/context/AuthContext";
+import Button from "@mui/material/Button";
 // 1. Define the shape of your User data
-interface UserProfileData {
-  firstName: string;
-  lastName: string;
-  email: string;
-  phone_number: string;
-  avatar: string;
-}
+import type { UserProfileData } from "@/types";
 
 export default function UserProfile() {
+  const {  logout } = useAuth();
   const [loading, setLoading] = useState(true);
   const [saving, setSaving] = useState(false);
 
@@ -24,7 +20,6 @@ export default function UserProfile() {
     lastName: "",
     email: "",
     phone_number: "",
-    
     avatar: "",
   });
 
@@ -49,7 +44,7 @@ export default function UserProfile() {
           lastName: res.data.lastname || "",
           email: res.data.email || "",
           phone_number: res.data.phone_number || "",
-         
+
           avatar: res.data.avatar || "",
         }));
       } catch (error) {
@@ -100,34 +95,6 @@ export default function UserProfile() {
     }
   };
 
-  // 5. Typed Image Handler
-  // const handleImageChange = async (e: ChangeEvent<HTMLInputElement>) => {
-  //   const file = e.target.files?.[0];
-  //   if (!file) return;
-
-  //   // --- OPTION A: Base64 (Use this if you don't have an upload server yet) ---
-  //   const reader = new FileReader();
-  //   reader.onloadend = () => {
-  //     setFormData((prev) => ({ ...prev, avatar: reader.result as string }));
-  //   };
-  //   reader.readAsDataURL(file);
-
-  //   // --- OPTION B: Upload Server (Uncomment when backend is ready) ---
-  //   /*
-  //   const uploadData = new FormData();
-  //   uploadData.append("file", file);
-  //   try {
-  //     const res = await axios.post("/api/upload", uploadData, {
-  //       headers: { "Content-Type": "multipart/form-data" }
-  //     });
-  //     setFormData((prev) => ({ ...prev, avatar: res.data.url }));
-  //   } catch (err) {
-  //     console.error("Upload failed", err);
-  //     alert("Failed to upload image");
-  //   }
-  //   */
-  // };
-
   const handleSubmit = async (e: FormEvent) => {
     e.preventDefault();
     setSaving(true);
@@ -139,7 +106,7 @@ export default function UserProfile() {
         firstname: formData.firstName, // Map firstName -> firstname
         lastname: formData.lastName, // Map lastName -> lastname
         phone_number: formData.phone_number,
-       
+
         avatar: formData.avatar,
       };
 
@@ -214,6 +181,8 @@ export default function UserProfile() {
                 Зураг солих
               </button>
             </div>
+           
+            <Button onClick={logout} variant="outlined" color="error" className="cursor-pointer">Sign out</Button>
           </div>
 
           {/* Form Section */}
@@ -274,21 +243,13 @@ export default function UserProfile() {
               </div>
             </div>
 
-            
-
             <div className="pt-4 flex justify-end gap-4">
-              <button
-                type="button"
-                onClick={() => window.history.back()}
-                className="px-6 py-2.5 rounded-lg text-sm font-medium text-gray-600 hover:bg-gray-100 transition-colors">
+              <Button color="secondary" className="cursor-pointer" onClick={() => window.history.back()} variant="contained">
                 Буцах
-              </button>
-              <button
-                type="submit"
-                disabled={saving}
-                className="px-6 py-2.5 rounded-lg text-sm font-medium text-white bg-blue-600 hover:bg-blue-700 focus:ring-4 focus:ring-blue-500/20 transition-all disabled:opacity-70">
-                {saving ? "Хадгалж байна..." : "Хадгалах"}
-              </button>
+              </Button>
+              <Button className="cursor-pointer" color="success" type="submit" variant="contained">
+                Хадгалах
+              </Button>
             </div>
           </form>
         </div>

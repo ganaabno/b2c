@@ -1,36 +1,19 @@
-// src/pages/Trips.tsx
+// src/pages/Tours.tsx
 import { useQuery } from "@tanstack/react-query";
 import axios from "axios";
-
+import type {Tour } from "@/types";
 // This interface MUST match exactly what your backend SELECT returns
-interface Trip {
-  id: string;
-  title: string;
-  description: string;
-  image: string | null; // from cover_photo AS image
-  country: string;
-  departure_date: string | null;
-  hotel: string | null;
-  photos: any | null; // JSON or text[] – can be any for now
-  flight_seats: string | null;
-  breakfast: string | null;
-  lunch: string | null;
-  dinner: string | null;
-  price: string | null; // from single_supply_price AS price
-  additional_bed: string | null;
-  country_temperature: string | null;
-  created_at: string;
-}
 
-export default function Trips() {
+
+export default function Tours() {
   const {
-    data: trips = [],
+    data: tours = [],
     isLoading,
     error,
-  } = useQuery<Trip[]>({
-    queryKey: ["trips"],
+  } = useQuery<Tour[]>({
+    queryKey: ["tours"],
     queryFn: async () => {
-      const res = await axios.get("/api/trips");
+      const res = await axios.get("/api/tours");
       return res.data;
     },
   });
@@ -39,7 +22,7 @@ export default function Trips() {
     return (
       <div className="flex min-h-screen items-center justify-center">
         <p className="text-3xl font-bold text-amber-600">
-          Loading epic trips...
+          Loading epic tours...
         </p>
       </div>
     );
@@ -48,7 +31,7 @@ export default function Trips() {
   if (error) {
     return (
       <div className="flex min-h-screen items-center justify-center">
-        <p className="text-2xl text-red-600">Failed to load trips 😭</p>
+        <p className="text-2xl text-red-600">Failed to load tours 😭</p>
       </div>
     );
   }
@@ -65,56 +48,56 @@ export default function Trips() {
           Бүх Аялалууд 🌍✈️
         </h1>
 
-        {trips.length === 0 ? (
+        {tours.length === 0 ? (
           <p className="text-center text-2xl text-gray-600">
             Одоогоор аялал байхгүй байна — Менежер нэмэх ёстой шүү! xD
           </p>
         ) : (
           <div className="grid gap-10 md:grid-cols-2 lg:grid-cols-3">
-            {trips.map((trip) => (
+            {tours.map((tour) => (
               <div
-                key={trip.id}
+                key={tour.id}
                 className="overflow-hidden rounded-2xl bg-white shadow-2xl transition hover:scale-105 hover:shadow-3xl"
               >
                 {/* Cover Photo */}
-                {trip.image ? (
+                {tour.image ? (
                   <img
-                    src={trip.image}
-                    alt={trip.title}
+                    src={tour.image}
+                    alt={tour.title}
                     className="h-72 w-full object-cover"
                   />
                 ) : (
                   <div className="h-72 bg-linear-to-br from-amber-400 to-orange-600 flex items-center justify-center">
                     <span className="text-4xl font-bold text-white">
-                      {trip.title.slice(0, 2).toUpperCase()}
+                      {tour.title.slice(0, 2).toUpperCase()}
                     </span>
                   </div>
                 )}
 
                 <div className="p-8">
                   <h3 className="text-3xl font-bold text-gray-800">
-                    {trip.title}
+                    {tour.title}
                   </h3>
 
-                  <p className="mt-2 text-lg text-gray-600">{trip.country}</p>
+                  <p className="mt-2 text-lg text-gray-600">{tour.country}</p>
 
                   <p className="mt-4 text-gray-700 line-clamp-3">
-                    {trip.description}
+                    {tour.description}
                   </p>
 
                   {/* Meals included */}
                   <div className="mt-6 flex flex-wrap gap-4 text-sm">
-                    {mealIncluded(trip.breakfast) && (
+                    {mealIncluded(tour.breakfast) && (
                       <span className="font-bold text-green-600">
                         🍳 Өглөөний цай
                       </span>
                     )}
-                    {mealIncluded(trip.lunch) && (
+                    {mealIncluded(tour.lunch) && (
                       <span className="font-bold text-green-600">
                         🍱 Өдрийн хоол
                       </span>
                     )}
-                    {mealIncluded(trip.dinner) && (
+                    {mealIncluded(tour.dinner) && (
                       <span className="font-bold text-green-600">
                         🍽️ Оройн хоол
                       </span>
@@ -124,21 +107,21 @@ export default function Trips() {
                   {/* Price & Departure */}
                   <div className="mt-8 flex items-end justify-between">
                     <div>
-                      {trip.price ? (
+                      {tour.single_supply_price ? (
                         <span className="text-4xl font-black text-amber-600">
-                          {trip.price.includes("₮")
-                            ? trip.price
-                            : `₮${trip.price}`}
+                          {tour.single_supply_price.includes("₮")
+                            ? tour.single_supply_price
+                            : `₮${tour.single_supply_price}`}
                         </span>
                       ) : (
                         <span className="text-2xl text-gray-500">
                           Үнэ зарлагдаагүй
                         </span>
                       )}
-                      {trip.departure_date && (
+                      {tour.departure_date && (
                         <p className="mt-1 text-gray-600">
                           Явах огноо:{" "}
-                          {new Date(trip.departure_date).toLocaleDateString(
+                          {new Date(tour.departure_date).toLocaleDateString(
                             "mn-MN"
                           )}
                         </p>

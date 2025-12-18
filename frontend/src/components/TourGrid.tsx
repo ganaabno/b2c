@@ -3,20 +3,11 @@ import { MapPin, Clock, Users } from "lucide-react";
 import { Link } from "react-router-dom";
 import { useQuery } from "@tanstack/react-query";
 import axios from "axios";
+import type{Tour } from "@/types";
 
-interface Tour {
-  id: string;
-  title: string;
-  image: string | null;
-  country: string;
-  // We'll add these fields to the trips table later or use fallbacks
-  duration?: string;
-  group_size?: string;
-  price: string | null;
-}
 
 async function fetchFeaturedTours(): Promise<Tour[]> {
-  const res = await axios.get("/api/trips");
+  const res = await axios.get("/api/tours");
   return res.data.slice(0, 6); // Show only first 6 as "featured"
 }
 
@@ -41,7 +32,7 @@ export default function TourGrid() {
       <div className="flex justify-between items-end mb-12">
         <h2 className="text-3xl font-bold text-gray-900">Онцлох Аялалууд</h2>
         <Link
-          to="/trips"
+          to="/tours"
           className="relative text-3xl font-bold text-gray-900 hover:text-gray-700 transition"
         >
           Бүх Аялалыг Харах
@@ -65,9 +56,9 @@ export default function TourGrid() {
                 alt={tour.title}
                 className="w-full h-full object-cover group-hover:scale-105 transition-transform duration-300"
               />
-              {tour.price && (
+              {tour.single_supply_price && (
                 <div className="absolute top-3 right-3 bg-white px-3 py-1 rounded-full text-sm font-semibold text-gray-900 shadow">
-                  {tour.price.includes("₮") ? tour.price : `₮${tour.price}`}
+                  {tour.single_supply_price.includes("₮") ? tour.single_supply_price : `₮${tour.single_supply_price}`}
                 </div>
               )}
             </div>
@@ -98,7 +89,7 @@ export default function TourGrid() {
 
               <div className="flex gap-3">
                 <Link
-                  to={`/trips/${tour.id}`}
+                  to={`/tours/${tour.id}`}
                   className="w-full py-2 border border-gray-300 rounded-md text-sm font-medium text-gray-700 hover:bg-gray-50 text-center transition-colors"
                 >
                   Дэлгэрэнгүй

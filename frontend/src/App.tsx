@@ -6,10 +6,10 @@ import { Toaster } from "react-hot-toast";
 import Login from "./pages/Login";
 import Signup from "./pages/Signup";
 import Home from "./pages/Home";
-import Trips from "./pages/Trips";
+import Tours from "./pages/Tours";
 import TourDetail from "./pages/TourDetail"; // ← ADD THIS
 import AdminDashboard from "./pages/AdminDashboard";
-import ManagerDashboard from "./pages/(Dashboard)/ManagerDashboard";
+import ManagerDashboard from "./pages/(manager)/ManagerDashboard";
 import UserProfile from "./pages/UserProfile";
 import ProtectedRoute from "./components/ProtectedRoute";
 import Layout from "./components/Layout";
@@ -27,8 +27,8 @@ export default function App() {
               <Route path="/" element={<Home />} />
               <Route path="/login" element={<Login />} />
               <Route path="/signup" element={<Signup />} />
-              <Route path="/trips" element={<Trips />} />
-              <Route path="/trips/:id" element={<TourDetail />} /> {/* ← NEW DETAIL PAGE */}
+              <Route path="/tours" element={<Tours />} />
+              <Route path="/tours/:id" element={<TourDetail />} /> {/* ← NEW DETAIL PAGE */}
 
               <Route element={<ProtectedRoute />}>
                 
