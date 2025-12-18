@@ -56,7 +56,7 @@ export default function AdminTours() {
                 <div className="flex gap-4 mt-3 text-sm text-gray-500">
                   <span>{tour.country}</span>
                   <span>•</span>
-                  <span>{tour.duration}</span>
+                  <span>{tour.duration_day}</span>
                   <span>•</span>
                   <span>{tour.group_size} хүн</span>
                   {tour.is_featured && (

@@ -1,3 +1,5 @@
+import InstagramIcon from '@mui/icons-material/Instagram';
+import FacebookIcon from '@mui/icons-material/Facebook';
 export default function Footer() {
   return (
     <footer className="border-t border-gray-200 py-12 mt-20 bg-gray-50">
@@ -41,23 +43,18 @@ export default function Footer() {
 
           {/* Social */}
           <div className="flex gap-4">
+            
             <a
-              href="#"
+              href="https://www.instagram.com/gtc_mongolia/"
               className="w-9 h-9 rounded-full border border-gray-300 flex items-center justify-center text-gray-600 hover:border-gray-900 hover:text-gray-900 transition-colors"
             >
-              <span className="text-sm">𝕏</span>
+              <InstagramIcon/>
             </a>
             <a
-              href="#"
+              href="https://www.facebook.com/global.travel.corporation.mongolia"
               className="w-9 h-9 rounded-full border border-gray-300 flex items-center justify-center text-gray-600 hover:border-gray-900 hover:text-gray-900 transition-colors"
             >
-              <span className="text-sm">in</span>
-            </a>
-            <a
-              href="#"
-              className="w-9 h-9 rounded-full border border-gray-300 flex items-center justify-center text-gray-600 hover:border-gray-900 hover:text-gray-900 transition-colors"
-            >
-              <span className="text-sm">IG</span>
+             <FacebookIcon/>
             </a>
           </div>
         </div>

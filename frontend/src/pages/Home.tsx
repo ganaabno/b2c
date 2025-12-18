@@ -4,7 +4,7 @@ import TourTable from "../components/TourTable";
 export default function Home() {
   return (
     <>
-      <div className="w-screen h-[80vh] relative -mt-20 md:-mt-32">
+      <div className="w-screen h-[70vh] relative -mt-20 md:-mt-32">
         {" "}
         <video
           autoPlay

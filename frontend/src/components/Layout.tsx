@@ -71,9 +71,7 @@ export default function Layout() {
 
               {user ? (
                 <>
-                  <Link to="/dashboard" className="hover:text-amber-200">
-                    Dashboard
-                  </Link>
+                 
                   {user.role === "MANAGER" && (
                     <Link to="/manager">Manager</Link>
                   )}

@@ -73,10 +73,10 @@ export default function TourGrid() {
                   <MapPin className="w-4 h-4" />
                   <span>{tour.country}</span>
                 </div>
-                {tour.duration && (
+                {tour.duration_day && (
                   <div className="flex items-center gap-2 text-sm text-gray-600">
                     <Clock className="w-4 h-4" />
-                    <span>{tour.duration}</span>
+                    <span>{tour.duration_day}</span>
                   </div>
                 )}
                 {tour.group_size && (

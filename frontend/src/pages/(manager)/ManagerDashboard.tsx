@@ -4,6 +4,8 @@ import { Plus, Edit, Trash2, X, Upload, Users, Loader2 } from "lucide-react";
 import toast from "react-hot-toast";
 import type { Tour } from "@/types";
 import * as React from "react";
+
+
 // 1. Fix Interface to match Database Column Name
 
 export default function ManagerDashboard() {
@@ -11,12 +13,13 @@ export default function ManagerDashboard() {
   const [loading, setLoading] = useState(true);
   const [isModalOpen, setIsModalOpen] = useState(false);
   const [editingTourId, setEditingTourId] = useState<string | null>(null);
- 
+
   const [formData, setFormData] = useState<any>({
     title: "",
     description: "",
     country: "",
     departure_date: "",
+    arrival_date: "",
     hotel: "",
     breakfast: "",
     lunch: "",
@@ -26,6 +29,8 @@ export default function ManagerDashboard() {
     country_temperature: "",
     status: "ACTIVE",
     seats: 20,
+    duration_day: "",
+    duration_night: "",
   });
 
   const [selectedFile, setSelectedFile] = useState<File | null>(null);
@@ -59,7 +64,6 @@ export default function ManagerDashboard() {
   }, []);
 
   const handleDelete = async (id: string) => {
-  
     if (!window.confirm(`Delete random tour?`)) return;
     try {
       const token = localStorage.getItem("token");
@@ -77,7 +81,6 @@ export default function ManagerDashboard() {
   };
 
   const handleSubmit = async (e: React.FormEvent) => {
-    
     e.preventDefault();
 
     const data = new FormData();
@@ -89,7 +92,7 @@ export default function ManagerDashboard() {
     }
 
     try {
-      setLoading(true)
+      setLoading(true);
       if (editingTourId) {
         const res = await axios.put(
           `/api/tours/${editingTourId}`,
@@ -111,7 +114,9 @@ export default function ManagerDashboard() {
         console.error("Error message:", err.message);
       }
       toast.error("Failed to save");
-    }finally{setLoading(false)}
+    } finally {
+      setLoading(false);
+    }
   };
 
   const openModal = (tour?: Tour) => {
@@ -124,6 +129,9 @@ export default function ManagerDashboard() {
         departure_date: tour.departure_date
           ? tour.departure_date.split("T")[0]
           : "",
+        arrival_date: tour.arrival_date 
+        ? tour.arrival_date.split("T")[0] 
+        : "",
         hotel: tour.hotel || "",
         breakfast: tour.breakfast || "",
         lunch: tour.lunch || "",
@@ -133,6 +141,8 @@ export default function ManagerDashboard() {
         country_temperature: tour.country_temperature || "",
         status: tour.status || "ACTIVE",
         seats: tour.seats || 20,
+        duration_day: tour.duration_day || "",
+        duration_night: tour.duration_night || "",
       });
       setPreviewUrl(tour.image);
     } else {
@@ -142,6 +152,7 @@ export default function ManagerDashboard() {
         description: "",
         country: "",
         departure_date: "",
+        arrival_date: "",
         hotel: "",
         breakfast: "",
         lunch: "",
@@ -151,6 +162,8 @@ export default function ManagerDashboard() {
         country_temperature: "",
         status: "ACTIVE",
         seats: 20,
+        duration_day: "",
+        duration_night: "",
       });
       setPreviewUrl(null);
     }
@@ -264,10 +277,13 @@ export default function ManagerDashboard() {
                         className="p-2 cursor-pointer text-blue-600 hover:bg-blue-50 rounded-full">
                         <Edit className="h-5 w-5" />
                       </button>
-                      <button className="p-2 cursor-pointer text-red-600 hover:bg-blue-50 rounded-full" onClick={()=>{handleDelete(tour.id)}}>
-                            <Trash2 className="h-5 w-5"/>
+                      <button
+                        className="p-2 cursor-pointer text-red-600 hover:bg-blue-50 rounded-full"
+                        onClick={() => {
+                          handleDelete(tour.id);
+                        }}>
+                        <Trash2 className="h-5 w-5" />
                       </button>
-                    
                     </td>
                   </tr>
                 ))
@@ -362,6 +378,55 @@ export default function ManagerDashboard() {
                   />
                 </div>
 
+                
+                <div>
+                  <label className="block text-sm font-medium text-gray-700 mb-1">
+                    Start Date
+                  </label>
+                  <input
+                    type="date"
+                    name="departure_date"
+                    value={formData.departure_date}
+                    onChange={handleChange}
+                    className="w-full rounded-lg border border-gray-300 px-4 py-2 focus:border-amber-500 outline-none"
+                  />
+                </div>
+                <div>
+                  <label className="block text-sm font-medium text-gray-700 mb-1">
+                    Arrival date
+                  </label>
+                  <input
+                    type="date"
+                    name="arrival_date"
+                    value={formData.arrival_date}
+                    onChange={handleChange}
+                    className="w-full rounded-lg border border-gray-300 px-4 py-2 focus:border-amber-500 outline-none"
+                  />
+                </div>
+
+                <div>
+                  <label className="block text-sm font-medium text-gray-700 mb-1">
+                    duration_day
+                  </label>
+                  <input
+                    name="duration_day"
+                    value={formData.duration_day}
+                    onChange={handleChange}
+                    className="w-full rounded-lg border border-gray-300 px-4 py-2 focus:border-amber-500 outline-none"
+                  />
+                </div>
+                <div>
+                  <label className="block text-sm font-medium text-gray-700 mb-1">
+                    duration_night
+                  </label>
+                  <input
+                    name="duration_night"
+                    value={formData.duration_night}
+                    onChange={handleChange}
+                    className="w-full rounded-lg border border-gray-300 px-4 py-2 focus:border-amber-500 outline-none"
+                  />
+                </div>
+
                 <div>
                   <label className="block text-sm font-medium text-gray-700 mb-1">
                     Country
@@ -369,18 +434,6 @@ export default function ManagerDashboard() {
                   <input
                     name="country"
                     value={formData.country}
-                    onChange={handleChange}
-                    className="w-full rounded-lg border border-gray-300 px-4 py-2 focus:border-amber-500 outline-none"
-                  />
-                </div>
-                <div>
-                  <label className="block text-sm font-medium text-gray-700 mb-1">
-                    Date
-                  </label>
-                  <input
-                    type="date"
-                    name="departure_date"
-                    value={formData.departure_date}
                     onChange={handleChange}
                     className="w-full rounded-lg border border-gray-300 px-4 py-2 focus:border-amber-500 outline-none"
                   />
@@ -464,14 +517,14 @@ export default function ManagerDashboard() {
 
               <div className="flex justify-end gap-3 pt-4">
                 <button
-                disabled={loading}
+                  disabled={loading}
                   type="button"
                   onClick={closeModal}
                   className="px-5 py-2 cursor-pointer text-gray-600 hover:bg-gray-100 rounded-lg">
                   Буцах
                 </button>
                 <button
-                disabled={loading}
+                  disabled={loading}
                   type="submit"
                   className="px-6 py-2 cursor-pointer bg-amber-600 text-white rounded-lg hover:bg-amber-700 font-bold">
                   Аялал хадгалах

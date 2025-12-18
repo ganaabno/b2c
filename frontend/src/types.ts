@@ -27,6 +27,7 @@ export interface Tour {
   image: string | null; // from cover_photo AS image
   country: string;
   departure_date: string | null;
+  arrival_date: string | null;
   hotel: string | null;
   photos: string | null; // JSON or text[] – can be any for now
   breakfast: string | null;
@@ -36,7 +37,8 @@ export interface Tour {
   additional_bed: string | null;
   country_temperature: string | null;
   created_at: string;
-  duration: string;
+  duration_day: string;
+  duration_night:string;
   group_size: number;
   is_featured: boolean;
   subtitle: string;

@@ -1,3 +1,4 @@
+
 // src/routes/tours.ts
 import express from "express";
 import multer from "multer";
@@ -72,16 +73,17 @@ router.get("/", async (req, res) => {
     res.status(500).json({ message: "Failed to load tours" });
   }
 });
-//GET one tour by id 
-router.get("/:id", async(req,res)=>{
+//GET one tour by id
+router.get("/:id", async (req, res) => {
   const { id } = req.params;
-  try{
-    const one_tour = await sql`SELECT *, cover_photo as image FROM tours WHERE id = ${id}`
-    res.json(one_tour)
-  }catch(err:any){
-    res.status(500).json({message: "Failed to get a tour"})
+  try {
+    const one_tour =
+      await sql`SELECT *, cover_photo as image FROM tours WHERE id = ${id}`;
+    res.json(one_tour);
+  } catch (err: any) {
+    res.status(500).json({ message: "Failed to get a tour" });
   }
-})
+});
 
 // POST – Create Tour (With Cloudinary Upload)
 router.post(
@@ -95,6 +97,7 @@ router.post(
       description,
       country,
       departure_date,
+      arrival_date,
       hotel,
       breakfast,
       lunch,
@@ -104,6 +107,8 @@ router.post(
       country_temperature,
       status,
       seats,
+      duration_day,
+      duration_night,
     } = req.body;
 
     try {
@@ -118,11 +123,11 @@ router.post(
 
       const [newTour] = await sql`
         INSERT INTO tours (
-          title, description, cover_photo, country, departure_date,
+          title, description, cover_photo, country, departure_date,arrival_date, duration_day, duration_night,
           hotel, breakfast, lunch, dinner, single_supply_price,
           additional_bed, country_temperature, status, seats, image_public_id
         ) VALUES (
-          ${title}, ${description}, ${imageUrl}, ${country}, ${departure_date},
+          ${title}, ${description}, ${imageUrl}, ${country}, ${departure_date},${arrival_date}, ${duration_day},${duration_night},
           ${hotel}, ${breakfast}, ${lunch}, ${dinner}, ${single_supply_price},
           ${additional_bed}, ${country_temperature}, ${status || "ACTIVE"}, ${
         seats || 20
@@ -148,15 +153,19 @@ router.put(
 
     try {
       const [existingTour] = await sql`SELECT * FROM tours WHERE id = ${id}`;
-      if (!existingTour) return res.status(404).json({ message: "Tour not found" });
+      if (!existingTour)
+        return res.status(404).json({ message: "Tour not found" });
 
       let imageUrl = undefined;
       let imagePublicId = undefined;
 
       if (req.file) {
         // 👇 Use the new robust delete function
-        await deleteImage(existingTour.image_public_id, existingTour.cover_photo);
-        
+        await deleteImage(
+          existingTour.image_public_id,
+          existingTour.cover_photo
+        );
+
         const uploadResult = await uploadImage(req.file);
         imageUrl = uploadResult.url;
         imagePublicId = uploadResult.public_id;
@@ -170,6 +179,9 @@ router.put(
           image_public_id = COALESCE(${imagePublicId}, image_public_id),
           country = COALESCE(${updates.country}, country),
           departure_date = COALESCE(${updates.departure_date}, departure_date),
+          arrival_date = COALESCE(${updates.arrival_date}, arrival_date),
+          duration_day = COALESCE(${updates.duration_day},   duration_day),
+          duration_night = COALESCE(${updates.duration_night},   duration_night),
           hotel = COALESCE(${updates.hotel}, hotel),
           breakfast = COALESCE(${updates.breakfast}, breakfast),
           lunch = COALESCE(${updates.lunch}, lunch),
@@ -197,8 +209,9 @@ router.delete(
   async (req, res) => {
     try {
       // 1. Get tour to find image ID or URL
-      const [tour] = await sql`SELECT image_public_id, cover_photo FROM tours WHERE id = ${req.params.id}`;
-      
+      const [tour] =
+        await sql`SELECT image_public_id, cover_photo FROM tours WHERE id = ${req.params.id}`;
+
       if (tour) {
         // 👇 Use the new robust delete function
         await deleteImage(tour.image_public_id, tour.cover_photo);
