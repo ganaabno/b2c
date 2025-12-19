@@ -4,15 +4,13 @@ import axios from "axios";
 import { Camera } from "lucide-react";
 import { useAuth } from "@/context/AuthContext";
 import Button from "@mui/material/Button";
-// 1. Define the shape of your User data
 import type { UserProfileData } from "@/types";
 
 export default function UserProfile() {
-  const {  logout } = useAuth();
+  const { logout } = useAuth();
   const [loading, setLoading] = useState(true);
   const [saving, setSaving] = useState(false);
 
-  // 2. Type the Ref correctly
   const fileInputRef = useRef<HTMLInputElement>(null);
 
   const [formData, setFormData] = useState<UserProfileData>({
@@ -32,19 +30,16 @@ export default function UserProfile() {
       }
 
       try {
-        // Ensure this matches your backend route exactly
         const res = await axios.get("/api/auth/me", {
           headers: { Authorization: `Bearer ${token}` },
         });
 
-        // 3. Safely merge data
         setFormData((prev) => ({
           ...prev,
-          firstName: res.data.firstname || "", // Handle DB naming differences (firstname vs firstName)
+          firstName: res.data.firstname || "",
           lastName: res.data.lastname || "",
           email: res.data.email || "",
           phone_number: res.data.phone_number || "",
-
           avatar: res.data.avatar || "",
         }));
       } catch (error) {
@@ -57,7 +52,6 @@ export default function UserProfile() {
     fetchProfile();
   }, []);
 
-  // 4. Typed Change Handler
   const handleChange = (
     e: ChangeEvent<HTMLInputElement | HTMLTextAreaElement>
   ) => {
@@ -71,7 +65,6 @@ export default function UserProfile() {
     const uploadData = new FormData();
     uploadData.append("file", file);
 
-    // 1. FIX: Retrieve the token here
     const token = localStorage.getItem("token");
 
     try {
@@ -80,7 +73,6 @@ export default function UserProfile() {
       const res = await axios.post("/api/upload", uploadData, {
         headers: {
           "Content-Type": "multipart/form-data",
-          // 2. FIX: Add the Authorization header
           Authorization: `Bearer ${token}`,
         },
       });
@@ -101,18 +93,13 @@ export default function UserProfile() {
     try {
       const token = localStorage.getItem("token");
 
-      // 1. Create a payload that matches the Backend's expected column names
       const payload = {
-        firstname: formData.firstName, // Map firstName -> firstname
-        lastname: formData.lastName, // Map lastName -> lastname
+        firstname: formData.firstName,
+        lastname: formData.lastName,
         phone_number: formData.phone_number,
-
         avatar: formData.avatar,
       };
 
-      // 2. Send the mapped payload instead of formData
-      // Make sure this URL matches your backend route!
-      // If your GET is /api/auth/me, your PUT might be there too.
       await axios.put("/api/users/me", payload, {
         headers: { Authorization: `Bearer ${token}` },
       });
@@ -126,24 +113,28 @@ export default function UserProfile() {
     }
   };
 
-  if (loading) return <div className="p-10 text-center">Loading...</div>;
+  if (loading)
+    return (
+      <div className="p-10 text-center text-gray-600 dark:text-gray-400">
+        Loading...
+      </div>
+    );
 
   return (
-    <div className="min-h-screen bg-gray-50 py-10 px-[5%]">
+    <div className="min-h-screen bg-gray-50 dark:bg-gray-900 py-10 px-[5%]">
       <div className="max-w-3xl mx-auto">
-        <h1 className="text-2xl font-bold text-gray-900 mb-8">
+        <h1 className="text-2xl font-bold text-gray-900 dark:text-gray-100 mb-8">
           Хувийн мэдээлэл
         </h1>
 
-        <div className="bg-white rounded-xl shadow-sm border border-gray-200 overflow-hidden">
+        <div className="bg-white dark:bg-gray-800 rounded-xl shadow-sm border border-gray-200 dark:border-gray-700 overflow-hidden">
           {/* Header / Avatar Section */}
-          <div className="p-8 border-b border-gray-100 flex flex-col md:flex-row items-center gap-6">
+          <div className="p-8 border-b border-gray-100 dark:border-gray-700 flex flex-col md:flex-row items-center gap-6">
             {/* Avatar Upload Wrapper */}
             <div
               className="relative group cursor-pointer"
-              onClick={() => fileInputRef.current?.click()} // Safe access
-            >
-              <div className="relative h-24 w-24 rounded-full overflow-hidden bg-gray-100 border-4 border-white shadow-md">
+              onClick={() => fileInputRef.current?.click()}>
+              <div className="relative h-24 w-24 rounded-full overflow-hidden bg-gray-100 dark:bg-gray-700 border-4 border-white dark:border-gray-600 shadow-md">
                 <img
                   src={
                     formData.avatar ||
@@ -170,38 +161,46 @@ export default function UserProfile() {
             </div>
 
             <div className="text-center md:text-left">
-              <h2 className="text-xl font-semibold text-gray-900">
+              <h2 className="text-xl font-semibold text-gray-900 dark:text-gray-100">
                 {formData.firstName || "User"} {formData.lastName}
               </h2>
-              <p className="text-gray-500">{formData.email}</p>
+              <p className="text-gray-500 dark:text-gray-400">{formData.email}</p>
               <button
                 type="button"
                 onClick={() => fileInputRef.current?.click()}
-                className="mt-2 text-sm text-blue-600 hover:text-blue-700 font-medium md:hidden">
+                className="mt-2 text-sm text-blue-600 dark:text-blue-400 hover:text-blue-700 dark:hover:text-blue-300 font-medium md:hidden">
                 Зураг солих
               </button>
             </div>
-           
-            <Button onClick={logout} variant="outlined" color="error" className="cursor-pointer">Sign out</Button>
+
+            <Button
+              onClick={logout}
+              variant="outlined"
+              color="error"
+              className="cursor-pointer">
+              Sign out
+            </Button>
           </div>
 
           {/* Form Section */}
           <form onSubmit={handleSubmit} className="p-8 space-y-6">
             <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
               <div className="space-y-2">
-                <label className="text-sm font-medium text-gray-700">Нэр</label>
+                <label className="text-sm font-medium text-gray-700 dark:text-gray-300">
+                  Нэр
+                </label>
                 <input
                   type="text"
                   name="firstName"
                   value={formData.firstName}
                   onChange={handleChange}
-                  className="w-full rounded-lg border border-gray-300 px-4 py-2.5 text-gray-900 focus:border-blue-500 focus:ring-2 focus:ring-blue-500/20 outline-none transition-all"
+                  className="w-full rounded-lg border border-gray-300 dark:border-gray-600 bg-white dark:bg-gray-700 px-4 py-2.5 text-gray-900 dark:text-gray-100 focus:border-blue-500 dark:focus:border-blue-400 focus:ring-2 focus:ring-blue-500/20 dark:focus:ring-blue-400/20 outline-none transition-all placeholder-gray-400 dark:placeholder-gray-500"
                   placeholder="Таны нэр"
                 />
               </div>
 
               <div className="space-y-2">
-                <label className="text-sm font-medium text-gray-700">
+                <label className="text-sm font-medium text-gray-700 dark:text-gray-300">
                   Овог
                 </label>
                 <input
@@ -209,7 +208,7 @@ export default function UserProfile() {
                   name="lastName"
                   value={formData.lastName}
                   onChange={handleChange}
-                  className="w-full rounded-lg border border-gray-300 px-4 py-2.5 text-gray-900 focus:border-blue-500 focus:ring-2 focus:ring-blue-500/20 outline-none transition-all"
+                  className="w-full rounded-lg border border-gray-300 dark:border-gray-600 bg-white dark:bg-gray-700 px-4 py-2.5 text-gray-900 dark:text-gray-100 focus:border-blue-500 dark:focus:border-blue-400 focus:ring-2 focus:ring-blue-500/20 dark:focus:ring-blue-400/20 outline-none transition-all placeholder-gray-400 dark:placeholder-gray-500"
                   placeholder="Таны овог"
                 />
               </div>
@@ -217,38 +216,47 @@ export default function UserProfile() {
 
             <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
               <div className="space-y-2">
-                <label className="text-sm font-medium text-gray-700">
+                <label className="text-sm font-medium text-gray-700 dark:text-gray-300">
                   Имэйл хаяг
                 </label>
                 <input
                   type="email"
                   value={formData.email}
                   disabled
-                  className="w-full rounded-lg border border-gray-200 bg-gray-50 px-4 py-2.5 text-gray-500 cursor-not-allowed"
+                  className="w-full rounded-lg border border-gray-200 dark:border-gray-600 bg-gray-50 dark:bg-gray-600 px-4 py-2.5 text-gray-500 dark:text-gray-400 cursor-not-allowed"
                 />
               </div>
 
               <div className="space-y-2">
-                <label className="text-sm font-medium text-gray-700">
+                <label className="text-sm font-medium text-gray-700 dark:text-gray-300">
                   Утасны дугаар
                 </label>
                 <input
                   type="tel"
-                  name="phone"
+                  name="phone_number"
                   value={formData.phone_number}
                   onChange={handleChange}
-                  className="w-full rounded-lg border border-gray-300 px-4 py-2.5 text-gray-900 focus:border-blue-500 focus:ring-2 focus:ring-blue-500/20 outline-none transition-all"
+                  className="w-full rounded-lg border border-gray-300 dark:border-gray-600 bg-white dark:bg-gray-700 px-4 py-2.5 text-gray-900 dark:text-gray-100 focus:border-blue-500 dark:focus:border-blue-400 focus:ring-2 focus:ring-blue-500/20 dark:focus:ring-blue-400/20 outline-none transition-all placeholder-gray-400 dark:placeholder-gray-500"
                   placeholder="+976 9911xxxx"
                 />
               </div>
             </div>
 
             <div className="pt-4 flex justify-end gap-4">
-              <Button color="secondary" className="cursor-pointer" onClick={() => window.history.back()} variant="contained">
+              <Button
+                color="secondary"
+                className="cursor-pointer"
+                onClick={() => window.history.back()}
+                variant="contained">
                 Буцах
               </Button>
-              <Button className="cursor-pointer" color="success" type="submit" variant="contained">
-                Хадгалах
+              <Button
+                className="cursor-pointer"
+                color="success"
+                type="submit"
+                variant="contained"
+                disabled={saving}>
+                {saving ? "Хадгалж байна..." : "Хадгалах"}
               </Button>
             </div>
           </form>

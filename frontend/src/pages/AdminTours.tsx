@@ -3,7 +3,6 @@ import { Trash2, Edit, Plus } from "lucide-react";
 import { useState } from "react";
 import type { Tour } from "@/types";
 
-
 async function fetchTours(): Promise<Tour[]> {
   const res = await fetch("/api/tours");
   if (!res.ok) throw new Error("Failed to fetch");
@@ -37,8 +36,7 @@ export default function AdminTours() {
         <h1 className="text-3xl font-bold">Аялал Удирдлага</h1>
         <button
           onClick={() => setEditingId("new")}
-          className="flex items-center gap-2 bg-green-600 text-white px-6 py-3 rounded-lg hover:bg-green-700"
-        >
+          className="flex items-center gap-2 bg-green-600 text-white px-6 py-3 rounded-lg hover:bg-green-700">
           <Plus className="w-5 h-5" /> Шинэ Аялал Нэмэх
         </button>
       </div>
@@ -47,8 +45,7 @@ export default function AdminTours() {
         {tours?.map((tour) => (
           <div
             key={tour.id}
-            className="bg-white border rounded-lg p-6 shadow hover:shadow-md"
-          >
+            className="bg-white border rounded-lg p-6 shadow hover:shadow-md">
             <div className="flex justify-between items-start">
               <div className="flex-1">
                 <h3 className="text-xl font-semibold">{tour.title}</h3>
@@ -68,14 +65,12 @@ export default function AdminTours() {
               <div className="flex gap-3">
                 <button
                   onClick={() => setEditingId(tour.id)}
-                  className="p-2 text-blue-600 hover:bg-blue-50 rounded"
-                >
+                  className="p-2 text-blue-600 hover:bg-blue-50 rounded">
                   <Edit className="w-5 h-5" />
                 </button>
                 <button
-                  onClick={() => deleteMutation.mutate(tour.id)}
-                  className="p-2 text-red-600 hover:bg-red-50 rounded"
-                >
+                  onClick={() => deleteMutation.mutate(tour.id || "")}
+                  className="p-2 text-red-600 hover:bg-red-50 rounded">
                   <Trash2 className="w-5 h-5" />
                 </button>
               </div>
@@ -97,8 +92,7 @@ export default function AdminTours() {
             </p>
             <button
               onClick={() => setEditingId(null)}
-              className="px-6 py-3 bg-gray-600 text-white rounded-lg"
-            >
+              className="px-6 py-3 bg-gray-600 text-white rounded-lg">
               Хаах
             </button>
           </div>

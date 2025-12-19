@@ -45,6 +45,7 @@ export interface Tour {
   status: "ACTIVE" | "FULL" | "COMPLETED" | "INACTIVE";
   seats: number;
   image_public_id: string | null;
+  slug: string | null;
 }
 
 export interface UserProfileData {

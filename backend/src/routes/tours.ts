@@ -1,11 +1,10 @@
-
 // src/routes/tours.ts
 import express from "express";
 import multer from "multer";
 import { v2 as cloudinary } from "cloudinary";
 import { sql } from "../utils/db";
 import { protect, restrictTo, AuthRequest } from "../middleware/auth";
-
+import slugify from "slugify";
 const router = express.Router();
 
 // 1. Configure Cloudinary
@@ -15,47 +14,55 @@ cloudinary.config({
   api_secret: process.env.CLOUDINARY_API_SECRET,
 });
 
-// 2. Configure Multer (Use Memory Storage, not Disk)
+// 2. Configure Multer (Use Memory Storage)
 const storage = multer.memoryStorage();
 const upload = multer({ storage: storage });
+
+// Configure Multer to accept multiple fields
+const uploadFields = upload.fields([
+  { name: "cover_photo", maxCount: 1 }, // The main cover image
+  { name: "photos", maxCount: 10 }, // Up to 10 gallery images
+]);
 
 // --- HELPER: Upload to Cloudinary ---
 const uploadImage = async (file: Express.Multer.File) => {
   const b64 = Buffer.from(file.buffer).toString("base64");
   const dataURI = "data:" + file.mimetype + ";base64," + b64;
   const result = await cloudinary.uploader.upload(dataURI, {
-    folder: "travel-app-tours", // Folder in Cloudinary
+    folder: "travel-app-tours",
   });
   return { url: result.secure_url, public_id: result.public_id };
 };
+
 const deleteImage = async (
   publicId: string | null,
   imageUrl: string | null
 ) => {
   let idToDelete = publicId;
-  // FALLBACK: If no public_id (old data), try to extract from URL
+
+  // FALLBACK: Extract ID from URL using Regex
   if (!idToDelete && imageUrl) {
     try {
-      // Example URL: https://res.cloudinary.com/.../upload/v1234/travel-app-tours/image.jpg
-      const parts = imageUrl.split("/");
-      const filename = parts.pop(); // image.jpg
-      const folder = parts.pop(); // travel-app-tours
-      if (filename && folder) {
-        // Remove file extension (.jpg)
-        const nameWithoutExt = filename.split(".")[0];
-        idToDelete = `${folder}/${nameWithoutExt}`;
+      // Matches everything after "/upload/" (and optional version v123/) up to the file extension
+      const regex = /\/upload\/(?:v\d+\/)?(.+)\.[a-zA-Z0-9]+$/;
+      const match = imageUrl.match(regex);
+      if (match && match[1]) {
+        idToDelete = match[1];
       }
     } catch (e) {
-      console.log("Could not extract ID from URL");
+      console.error("Error parsing URL:", imageUrl);
     }
   }
 
-  if (!idToDelete) return;
+  if (!idToDelete) {
+    console.log("❌ Could not find Public ID for:", imageUrl);
+    return;
+  }
 
   try {
-    console.log(`Attempting to delete Cloudinary Image: ${idToDelete}`);
+    console.log(`🗑️ Deleting from Cloudinary: ${idToDelete}`);
     const result = await cloudinary.uploader.destroy(idToDelete);
-    console.log("Cloudinary Delete Result:", result); // { result: 'ok' } or { result: 'not found' }
+    console.log("Cloudinary Result:", result);
   } catch (error) {
     console.error("Cloudinary Delete Error:", error);
   }
@@ -64,7 +71,6 @@ const deleteImage = async (
 // GET all tours
 router.get("/", async (req, res) => {
   try {
-    // We map 'cover_photo' to 'image' for frontend compatibility
     const tours = await sql`
       SELECT *, cover_photo as image FROM tours ORDER BY created_at DESC
     `;
@@ -73,24 +79,28 @@ router.get("/", async (req, res) => {
     res.status(500).json({ message: "Failed to load tours" });
   }
 });
-//GET one tour by id
-router.get("/:id", async (req, res) => {
-  const { id } = req.params;
-  try {
-    const one_tour =
-      await sql`SELECT *, cover_photo as image FROM tours WHERE id = ${id}`;
-    res.json(one_tour);
-  } catch (err: any) {
-    res.status(500).json({ message: "Failed to get a tour" });
-  }
+
+
+
+// GET /api/tours/:slug
+router.get("/:slug", async (req, res) => {
+  const { slug } = req.params;
+
+  const [tour] = await sql`
+    SELECT * FROM tours WHERE slug = ${slug}
+  `;
+
+  if (!tour) return res.status(404).json({ message: "Tour not found" });
+
+  res.json(tour);
 });
 
-// POST – Create Tour (With Cloudinary Upload)
+// POST – Create Tour (With Multiple Photos)
 router.post(
   "/",
   protect,
   restrictTo("MANAGER", "ADMIN"),
-  upload.single("cover_photo"), // Expects 'cover_photo' field
+  uploadFields, // 👈 Changed to accept multiple fields
   async (req: AuthRequest, res) => {
     const {
       title,
@@ -112,26 +122,43 @@ router.post(
     } = req.body;
 
     try {
-      // Upload to Cloudinary if file exists
+      const slug = slugify(title, { lower: true, strict: true });
+      // Access files safely
+      const files = req.files as { [fieldname: string]: Express.Multer.File[] };
+      const coverFile = files?.["cover_photo"]?.[0];
+      const galleryFiles = files?.["photos"] || [];
+
+      // 1. Upload Cover Photo
       let imageUrl = null;
       let imagePublicId = null;
-      if (req.file) {
-        const uploadResult = await uploadImage(req.file);
+      if (coverFile) {
+        const uploadResult = await uploadImage(coverFile);
         imageUrl = uploadResult.url;
         imagePublicId = uploadResult.public_id;
       }
 
+      // 2. Upload Gallery Photos
+      const galleryUrls: string[] = [];
+      for (const file of galleryFiles) {
+        const result = await uploadImage(file);
+        galleryUrls.push(result.url);
+      }
+
+      // 3. Insert into DB
+      // Note: We pass galleryUrls array directly because we changed the column to text[]
       const [newTour] = await sql`
         INSERT INTO tours (
-          title, description, cover_photo, country, departure_date,arrival_date, duration_day, duration_night,
-          hotel, breakfast, lunch, dinner, single_supply_price,
-          additional_bed, country_temperature, status, seats, image_public_id
+          title, slug, description, cover_photo, country, departure_date, arrival_date, 
+          duration_day, duration_night, hotel, breakfast, lunch, dinner, 
+          single_supply_price, additional_bed, country_temperature, status, 
+          seats, image_public_id, photos
         ) VALUES (
-          ${title}, ${description}, ${imageUrl}, ${country}, ${departure_date},${arrival_date}, ${duration_day},${duration_night},
-          ${hotel}, ${breakfast}, ${lunch}, ${dinner}, ${single_supply_price},
-          ${additional_bed}, ${country_temperature}, ${status || "ACTIVE"}, ${
+          ${title}, ${slug}, ${description}, ${imageUrl}, ${country}, ${departure_date}, ${arrival_date}, 
+          ${duration_day}, ${duration_night}, ${hotel}, ${breakfast}, ${lunch}, ${dinner}, 
+          ${single_supply_price}, ${additional_bed}, ${country_temperature}, 
+          ${status || "ACTIVE"}, ${
         seats || 20
-      }, ${imagePublicId}
+      }, ${imagePublicId}, ${galleryUrls}
         )
         RETURNING *
       `;
@@ -142,11 +169,13 @@ router.post(
     }
   }
 );
+
+// PUT – Update Tour
 router.put(
   "/:id",
   protect,
   restrictTo("MANAGER", "ADMIN"),
-  upload.single("cover_photo"),
+  uploadFields, // 👈 Changed to accept multiple fields
   async (req: AuthRequest, res) => {
     const { id } = req.params;
     const updates = req.body;
@@ -156,32 +185,54 @@ router.put(
       if (!existingTour)
         return res.status(404).json({ message: "Tour not found" });
 
+      // Access files safely
+      const files = req.files as { [fieldname: string]: Express.Multer.File[] };
+      const coverFile = files?.["cover_photo"]?.[0];
+      const galleryFiles = files?.["photos"] || [];
+
+      // 1. Handle Cover Photo Replacement
       let imageUrl = undefined;
       let imagePublicId = undefined;
 
-      if (req.file) {
-        // 👇 Use the new robust delete function
+      if (coverFile) {
+        // Delete old cover
         await deleteImage(
           existingTour.image_public_id,
           existingTour.cover_photo
         );
-
-        const uploadResult = await uploadImage(req.file);
+        // Upload new cover
+        const uploadResult = await uploadImage(coverFile);
         imageUrl = uploadResult.url;
         imagePublicId = uploadResult.public_id;
       }
 
+      // 2. Handle Gallery Photos (Append new ones)
+      const newGalleryUrls: string[] = [];
+      for (const file of galleryFiles) {
+        const result = await uploadImage(file);
+        newGalleryUrls.push(result.url);
+      }
+
+      // 3. Update DB
+      // We use COALESCE(photos, '{}') || ${newGalleryUrls} to append new photos to the existing array
       const [updatedTour] = await sql`
         UPDATE tours SET
           title = COALESCE(${updates.title}, title),
           description = COALESCE(${updates.description}, description),
           cover_photo = COALESCE(${imageUrl}, cover_photo),
           image_public_id = COALESCE(${imagePublicId}, image_public_id),
+          
+          -- Append new photos to existing array
+          photos = CASE 
+            WHEN ${newGalleryUrls.length} > 0 THEN COALESCE(photos, '{}'::text[]) || ${newGalleryUrls}
+            ELSE photos
+          END,
+
           country = COALESCE(${updates.country}, country),
           departure_date = COALESCE(${updates.departure_date}, departure_date),
           arrival_date = COALESCE(${updates.arrival_date}, arrival_date),
-          duration_day = COALESCE(${updates.duration_day},   duration_day),
-          duration_night = COALESCE(${updates.duration_night},   duration_night),
+          duration_day = COALESCE(${updates.duration_day}, duration_day),
+          duration_night = COALESCE(${updates.duration_night}, duration_night),
           hotel = COALESCE(${updates.hotel}, hotel),
           breakfast = COALESCE(${updates.breakfast}, breakfast),
           lunch = COALESCE(${updates.lunch}, lunch),
@@ -208,17 +259,45 @@ router.delete(
   restrictTo("MANAGER", "ADMIN"),
   async (req, res) => {
     try {
-      // 1. Get tour to find image ID or URL
-      const [tour] =
-        await sql`SELECT image_public_id, cover_photo FROM tours WHERE id = ${req.params.id}`;
+      console.log(`Attempting to delete tour ${req.params.id}...`);
 
-      if (tour) {
-        // 👇 Use the new robust delete function
+      // 1. Get tour details
+      const [tour] = await sql`
+        SELECT image_public_id, cover_photo, photos 
+        FROM tours 
+        WHERE id = ${req.params.id}
+      `;
+
+      if (!tour) {
+        return res.status(404).json({ message: "Tour not found" });
+      }
+
+      console.log("Tour found. Data:", {
+        cover: tour.cover_photo,
+        photosType: typeof tour.photos,
+        photosValue: tour.photos,
+      });
+
+      // 2. Delete Cover Photo
+      if (tour.cover_photo) {
         await deleteImage(tour.image_public_id, tour.cover_photo);
       }
 
-      // 2. Delete from DB
+      // 3. Delete Gallery Photos
+      // Handle case where photos might be null or undefined
+      const gallery = tour.photos || [];
+
+      if (Array.isArray(gallery) && gallery.length > 0) {
+        console.log(`Found ${gallery.length} gallery photos.`);
+        await Promise.all(gallery.map((url: string) => deleteImage(null, url)));
+      } else {
+        console.log("No gallery photos to delete (or format is wrong).");
+      }
+
+      // 4. Delete from DB
       await sql`DELETE FROM tours WHERE id = ${req.params.id}`;
+
+      console.log("✅ Tour deleted successfully.");
       res.json({ message: "Deleted" });
     } catch (err: any) {
       console.error("Delete Error:", err);

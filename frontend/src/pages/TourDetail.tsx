@@ -1,29 +1,48 @@
 
-import { useEffect, useState } from "react";
+import { useEffect, useState, useRef } from "react";
 import { useParams, useNavigate } from "react-router-dom";
 import axios from "axios";
-import { 
-  Calendar, MapPin, Clock, Users, Utensils, 
-  BedDouble, Sun, Moon, ArrowLeft, CheckCircle2, 
-  Share2, Heart, Thermometer
+import {
+   MapPin, Clock, Users,  BedDouble,
+  ArrowLeft, Share2, Heart, Thermometer, CheckCircle2,
+  XCircle, Plane, Info, Phone, ShieldCheck, Camera,
+   Star
 } from "lucide-react";
 import { Loader2 } from "lucide-react";
-import type { Tour } from "@/types"; // Ensure this path is correct
+import type { Tour } from "@/types";
+import { Button } from "@/components/ui/button";
+
+// --- COMPONENTS ---
+
+const SectionTitle = ({ icon: Icon, title }: { icon: any, title: string }) => (
+  <div className="flex items-center gap-3 mb-6 border-b border-gray-100 dark:border-gray-700 pb-4">
+    <div className="p-2 bg-amber-100 dark:bg-amber-900/30 rounded-lg text-amber-600 dark:text-amber-500">
+      <Icon className="h-6 w-6" />
+    </div>
+    <h2 className="text-2xl font-bold text-gray-900 dark:text-gray-100">{title}</h2>
+  </div>
+);
 
 export default function TourDetail() {
-  const { id } = useParams();
+  const { slug } = useParams();
   const navigate = useNavigate();
   const [tour, setTour] = useState<Tour | null>(null);
   const [loading, setLoading] = useState(true);
+  const [activeTab, setActiveTab] = useState("overview");
+
+  // Refs for scrolling to sections
+  const overviewRef = useRef<HTMLDivElement>(null);
+  const itineraryRef = useRef<HTMLDivElement>(null);
+  const hotelRef = useRef<HTMLDivElement>(null);
+  const galleryRef = useRef<HTMLDivElement>(null);
 
   useEffect(() => {
+    if (!slug) return;
     const fetchTour = async () => {
       try {
-        const res = await axios.get(`/api/tours/${id}`);
-        // If your API returns { tour: ... } or just the object, adjust here
-        const arrai = res.data;
-        setTour(arrai[0]); 
-       
+        const res = await axios.get(`/api/tours/${slug}`);
+        const data = Array.isArray(res.data) ? res.data[0] : res.data;
+        setTour(data);
       } catch (error) {
         console.error("Failed to fetch tour", error);
       } finally {
@@ -31,231 +50,343 @@ export default function TourDetail() {
       }
     };
     fetchTour();
-  }, [id]);
+  }, [slug]);
+
+  // Scroll spy logic could go here to update activeTab on scroll
+  const scrollToSection = (ref: React.RefObject<HTMLDivElement> , tab: string) => {
+    setActiveTab(tab);
+    ref.current?.scrollIntoView({ behavior: "smooth", block: "start" });
+  };
 
   if (loading) {
     return (
-      <div className="flex h-screen items-center justify-center bg-gray-50">
+      <div className="flex h-screen items-center justify-center bg-gray-50 dark:bg-gray-900">
         <Loader2 className="h-10 w-10 animate-spin text-amber-600" />
       </div>
     );
   }
 
-  if (!tour) {
-    return (
-      <div className="flex h-screen flex-col items-center justify-center gap-4">
-        <h2 className="text-2xl font-bold text-gray-800">Tour not found</h2>
-        <button onClick={() => navigate(-1)} className="text-amber-600 hover:underline">
-          Go Back
-        </button>
-      </div>
-    );
-  }
+  if (!tour) return null;
 
-  // Helper for date formatting
-  const formatDate = (dateString?: string) => {
-    if (!dateString) return "TBD";
-    return new Date(dateString).toLocaleDateString("mn-MN", {
-      year: "numeric",
-      month: "long",
-      day: "numeric",
-    });
+  // Parse photos safely
+  let galleryImages: string[] = [];
+  try {
+    if (Array.isArray(tour.photos)) galleryImages = tour.photos;
+    else if (typeof tour.photos === "string") galleryImages = JSON.parse(tour.photos);
+  } catch (e) { galleryImages = []; }
+
+  const formatDate = (date?: string | null) => {
+    if (!date) return "TBD";
+    return new Date(date).toLocaleDateString("mn-MN", { month: "long", day: "numeric" });
   };
 
-  // const getStatusBadge = (status: string) => {
-  //   const styles = {
-  //     ACTIVE: "bg-green-500 text-white",
-  //     FULL: "bg-red-500 text-white",
-  //     INACTIVE: "bg-gray-500 text-white",
-  //     COMPLETED: "bg-blue-500 text-white",
-  //   };
- 
-  //   return styles[status] || "bg-gray-500 text-white";
-  // };
-
   return (
-    <div className="min-h-screen bg-gray-50 pb-20">
-      {/* --- HERO SECTION --- */}
-      <div className="relative h-[50vh] w-full overflow-hidden md:h-[60vh]">
+    <div className="min-h-screen bg-gray-50 dark:bg-gray-900 font-sans pb-20">
+      
+      {/* --- 1. HERO HEADER (TravelX Style) --- */}
+      <div className="relative h-[60vh] lg:h-[70vh] w-full overflow-hidden">
         <img
           src={tour.image || "https://placehold.co/1200x800"}
           alt={tour.title}
-          className="h-full w-full object-cover transition-transform duration-700 hover:scale-105"
+          className="h-full w-full object-cover transition-transform duration-1000 hover:scale-105"
         />
-        <div className="absolute inset-0 bg-linear-to-t from-black/80 via-black/20 to-transparent" />
+        <div className="absolute inset-0 bg-linear-to-t from-gray-900 via-gray-900/20 to-transparent" />
         
-        {/* Top Nav */}
-        <div className="absolute left-0 top-0 flex w-full justify-between p-6">
-          <button 
-            onClick={() => navigate(-1)}
-            className="rounded-full bg-white/20 p-3 text-white backdrop-blur-md transition hover:bg-white/40"
-          >
+        {/* Navigation Overlay */}
+        <div className="absolute top-0 left-0 w-full p-6 flex justify-between items-center z-20">
+          <button onClick={() => navigate(-1)} className="bg-white/10 backdrop-blur-md p-3 rounded-full text-white hover:bg-white/20 border border-white/10 transition">
             <ArrowLeft className="h-6 w-6" />
           </button>
           <div className="flex gap-3">
-            <button className="rounded-full bg-white/20 p-3 text-white backdrop-blur-md transition hover:bg-white/40">
-              <Share2 className="h-6 w-6" />
+            <button className="bg-white/10 backdrop-blur-md p-3 rounded-full text-white hover:bg-white/20 border border-white/10 transition">
+              <Share2 className="h-5 w-5" />
             </button>
-            <button className="rounded-full bg-white/20 p-3 text-white backdrop-blur-md transition hover:bg-white/40">
-              <Heart className="h-6 w-6" />
+            <button className="bg-white/10 backdrop-blur-md p-3 rounded-full text-white hover:bg-white/20 border border-white/10 transition">
+              <Heart className="h-5 w-5" />
             </button>
           </div>
         </div>
 
-        {/* Hero Content */}
-        <div className="absolute bottom-0 left-0 w-full p-6 md:p-12">
-          <div className="mx-auto max-w-7xl">
-            <span className={`mb-4 inline-block rounded-full px-4 py-1 text-sm font-bold tracking-wide `}>
-              {tour.status}
-            </span>
-            <h1 className="mb-2 text-4xl font-bold text-white shadow-sm md:text-6xl">
+        {/* Hero Text */}
+        <div className="absolute bottom-0 left-0 w-full p-6 md:p-12 lg:p-20 z-10">
+          <div className="max-w-7xl mx-auto">
+            <div className="flex flex-wrap gap-3 mb-4">
+               <span className="bg-amber-500 text-white px-3 py-1 rounded-full text-xs font-bold uppercase tracking-wider shadow-lg">
+                 {tour.duration_day} Days Tour
+               </span>
+               <span className="bg-white/20 backdrop-blur-md text-white border border-white/20 px-3 py-1 rounded-full text-xs font-bold uppercase tracking-wider flex items-center gap-1">
+                 <MapPin className="h-3 w-3" /> {tour.country}
+               </span>
+            </div>
+            <h1 className="text-4xl md:text-6xl font-extrabold text-white mb-4 leading-tight shadow-sm">
               {tour.title}
             </h1>
-            <div className="flex flex-wrap items-center gap-6 text-white/90">
-              <div className="flex items-center gap-2">
-                <MapPin className="h-5 w-5 text-amber-400" />
-                <span className="text-lg">{tour.country}</span>
-              </div>
-              {tour.country_temperature && (
-                <div className="flex items-center gap-2">
-                  <Thermometer className="h-5 w-5 text-amber-400" />
-                  <span className="text-lg">{tour.country_temperature}°C</span>
-                </div>
-              )}
-            </div>
+            {tour.subtitle && <p className="text-lg text-gray-200 max-w-2xl font-light">{tour.subtitle}</p>}
           </div>
         </div>
       </div>
 
-      {/* --- MAIN CONTENT --- */}
-      <div className="mx-auto -mt-8 max-w-7xl px-4 md:px-8">
-        <div className="grid grid-cols-1 gap-8 lg:grid-cols-3">
+      {/* --- 2. STICKY NAV BAR (Global Travel Style) --- */}
+      <div className="sticky top-0 z-40 bg-white dark:bg-gray-800 shadow-md border-b border-gray-200 dark:border-gray-700">
+        <div className="max-w-7xl mx-auto px-4 md:px-8">
+          <div className="flex items-center gap-8 overflow-x-auto no-scrollbar">
+            {[
+              { id: "overview", label: "Overview", ref: overviewRef },
+              { id: "itinerary", label: "Itinerary", ref: itineraryRef },
+              { id: "hotel", label: "Accommodation", ref: hotelRef },
+              { id: "gallery", label: "Photos", ref: galleryRef },
+            ].map((item) => (
+              <button
+                key={item.id}
+                onClick={() => scrollToSection(item.ref, item.id)}
+                className={`py-4 text-sm font-bold uppercase tracking-wide border-b-2 transition-colors whitespace-nowrap ${
+                  activeTab === item.id
+                    ? "border-amber-600 text-amber-600 dark:text-amber-500"
+                    : "border-transparent text-gray-500 hover:text-gray-800 dark:text-gray-400 dark:hover:text-gray-200"
+                }`}
+              >
+                {item.label}
+              </button>
+            ))}
+          </div>
+        </div>
+      </div>
+
+      <div className="max-w-7xl mx-auto px-4 md:px-8 py-10">
+        <div className="grid grid-cols-1 lg:grid-cols-3 gap-10">
           
-          {/* LEFT COLUMN (Details) */}
-          <div className="lg:col-span-2 mt-10">
+          {/* --- LEFT COLUMN (Main Content) --- */}
+          <div className="lg:col-span-2 space-y-12">
             
-            {/* Quick Stats Card */}
-            <div className="mb-8 grid grid-cols-2 gap-4 rounded-2xl bg-white p-6 shadow-sm md:grid-cols-4">
-              <div className="flex flex-col items-center justify-center gap-1 border-r border-gray-100 last:border-0">
-                <Clock className="h-6 w-6 text-amber-600" />
-                <span className="text-sm text-gray-500">Duration</span>
-                <span className="font-bold text-gray-900">{tour.duration_day}D / {tour.duration_night}N</span>
+            {/* OVERVIEW SECTION */}
+            <div ref={overviewRef} className="scroll-mt-24">
+              <div className="grid grid-cols-2 md:grid-cols-4 gap-4 mb-8">
+                <div className="bg-white dark:bg-gray-800 p-4 rounded-xl border border-gray-100 dark:border-gray-700 shadow-sm flex flex-col items-center text-center gap-2">
+                  <Clock className="h-6 w-6 text-amber-600" />
+                  <div>
+                    <p className="text-xs text-gray-500 uppercase">Duration</p>
+                    <p className="font-bold text-gray-900 dark:text-gray-100">{tour.duration_day} Days</p>
+                  </div>
+                </div>
+                <div className="bg-white dark:bg-gray-800 p-4 rounded-xl border border-gray-100 dark:border-gray-700 shadow-sm flex flex-col items-center text-center gap-2">
+                  <Users className="h-6 w-6 text-amber-600" />
+                  <div>
+                    <p className="text-xs text-gray-500 uppercase">Group Size</p>
+                    <p className="font-bold text-gray-900 dark:text-gray-100">{tour.group_size || 20} People</p>
+                  </div>
+                </div>
+                <div className="bg-white dark:bg-gray-800 p-4 rounded-xl border border-gray-100 dark:border-gray-700 shadow-sm flex flex-col items-center text-center gap-2">
+                  <Thermometer className="h-6 w-6 text-amber-600" />
+                  <div>
+                    <p className="text-xs text-gray-500 uppercase">Weather</p>
+                    <p className="font-bold text-gray-900 dark:text-gray-100">{tour.country_temperature || "25"}°C</p>
+                  </div>
+                </div>
+                <div className="bg-white dark:bg-gray-800 p-4 rounded-xl border border-gray-100 dark:border-gray-700 shadow-sm flex flex-col items-center text-center gap-2">
+                  <Plane className="h-6 w-6 text-amber-600" />
+                  <div>
+                    <p className="text-xs text-gray-500 uppercase">Flight</p>
+                    <p className="font-bold text-gray-900 dark:text-gray-100">Included</p>
+                  </div>
+                </div>
               </div>
-              <div className="flex flex-col items-center justify-center gap-1 border-r border-gray-100 last:border-0">
-                <Calendar className="h-6 w-6 text-amber-600" />
-                <span className="text-sm text-gray-500">Departure</span>
-                <span className="font-bold text-gray-900">{formatDate(tour.departure_date || "")}</span>
-              </div>
-              <div className="flex flex-col items-center justify-center gap-1 border-r border-gray-100 last:border-0">
-                <Calendar className="h-6 w-6 text-amber-600" />
-                <span className="text-sm text-gray-500">Return</span>
-                <span className="font-bold text-gray-900">{formatDate(tour.arrival_date ||"")}</span>
-              </div>
-              <div className="flex flex-col items-center justify-center gap-1">
-                <Users className="h-6 w-6 text-amber-600" />
-                <span className="text-sm text-gray-500">Seats</span>
-                <span className="font-bold text-gray-900">{tour.seats} Available</span>
+
+              <SectionTitle icon={Info} title="Tour Overview" />
+              <div className="prose prose-lg dark:prose-invert max-w-none text-gray-600 dark:text-gray-300 leading-relaxed">
+                {tour.description}
               </div>
             </div>
 
-            {/* Description */}
-            <div className="mb-8 rounded-2xl bg-white p-8 shadow-sm">
-              <h3 className="mb-4 text-2xl font-bold text-gray-900">About this Tour</h3>
-              <p className="leading-relaxed text-gray-600 whitespace-pre-line">
-                {tour.description || "No description provided for this tour."}
-              </p>
+            {/* ITINERARY SECTION (Visual Timeline) */}
+            <div ref={itineraryRef} className="scroll-mt-24">
+              <SectionTitle icon={MapPin} title="Itinerary Highlights" />
+              
+              {/* Since we don't have structured itinerary data yet, we create a visual placeholder or wrap the description */}
+              <div className="relative border-l-2 border-dashed border-amber-200 dark:border-amber-900/50 ml-4 space-y-8 pb-4">
+                {/* Mock Day 1 */}
+                <div className="relative pl-8">
+                  <div className="absolute -left-[9px] top-0 h-4 w-4 rounded-full bg-amber-500 ring-4 ring-white dark:ring-gray-900" />
+                  <h3 className="text-lg font-bold text-gray-900 dark:text-gray-100 mb-2">Day 1: Departure & Arrival</h3>
+                  <p className="text-gray-600 dark:text-gray-400">
+                    Flight from Ulaanbaatar to {tour.country}. Transfer to hotel and check-in. Welcome dinner included.
+                  </p>
+                </div>
+                
+                {/* Mock Day 2 */}
+                <div className="relative pl-8">
+                  <div className="absolute -left-[9px] top-0 h-4 w-4 rounded-full bg-amber-500 ring-4 ring-white dark:ring-gray-900" />
+                  <h3 className="text-lg font-bold text-gray-900 dark:text-gray-100 mb-2">Day 2 - {Number(tour.duration_day) - 1}: Exploration</h3>
+                  <p className="text-gray-600 dark:text-gray-400">
+                    Full days of activities. (Refer to the detailed description above for specific daily activities).
+                  </p>
+                </div>
+
+                {/* Mock Final Day */}
+                <div className="relative pl-8">
+                  <div className="absolute -left-[9px] top-0 h-4 w-4 rounded-full bg-gray-400 ring-4 ring-white dark:ring-gray-900" />
+                  <h3 className="text-lg font-bold text-gray-900 dark:text-gray-100 mb-2">Day {tour.duration_day}: Return</h3>
+                  <p className="text-gray-600 dark:text-gray-400">
+                    Breakfast at hotel. Transfer to airport for flight back to Ulaanbaatar.
+                  </p>
+                </div>
+              </div>
             </div>
 
-            {/* Accommodation & Meals */}
-            <div className="grid gap-8 md:grid-cols-2">
-              <div className="rounded-2xl bg-white p-8 shadow-sm">
-                <div className="mb-4 flex items-center gap-3">
-                  <div className="rounded-full bg-blue-100 p-2">
-                    <BedDouble className="h-6 w-6 text-blue-600" />
-                  </div>
-                  <h3 className="text-xl font-bold text-gray-900">Accommodation</h3>
-                </div>
-                <p className="text-gray-600">{tour.hotel || "Hotel details pending"}</p>
-                {tour.additional_bed && (
-                   <div className="mt-4 rounded-lg bg-blue-50 p-3 text-sm text-blue-800">
-                     <span className="font-semibold">Extra Bed Option:</span> {tour.additional_bed}
-                   </div>
-                )}
-              </div>
-
-              <div className="rounded-2xl bg-white p-8 shadow-sm">
-                <div className="mb-4 flex items-center gap-3">
-                  <div className="rounded-full bg-orange-100 p-2">
-                    <Utensils className="h-6 w-6 text-orange-600" />
-                  </div>
-                  <h3 className="text-xl font-bold text-gray-900">Meals Included</h3>
-                </div>
+            {/* INCLUSIONS SECTION (New!) */}
+            <div className="bg-gray-50 dark:bg-gray-800/50 rounded-2xl p-8 border border-gray-100 dark:border-gray-700">
+              <h3 className="text-xl font-bold text-gray-900 dark:text-gray-100 mb-6">What's Included</h3>
+              <div className="grid md:grid-cols-2 gap-8">
+                {/* Included */}
                 <ul className="space-y-3">
-                  <li className="flex items-center gap-3 text-gray-700">
-                    <div className="flex h-8 w-8 items-center justify-center rounded-full bg-orange-50">
-                      <Sun className="h-4 w-4 text-orange-500" />
-                    </div>
-                    <span><span className="font-semibold">Breakfast:</span> {tour.breakfast || "Not included"}</span>
+                  <li className="flex items-start gap-3">
+                    <CheckCircle2 className="h-5 w-5 text-green-500 shrink-0 mt-0.5" />
+                    <span className="text-gray-700 dark:text-gray-300">Round trip flight tickets</span>
                   </li>
-                  <li className="flex items-center gap-3 text-gray-700">
-                    <div className="flex h-8 w-8 items-center justify-center rounded-full bg-orange-50">
-                      <Sun className="h-4 w-4 text-orange-500" />
-                    </div>
-                    <span><span className="font-semibold">Lunch:</span> {tour.lunch || "Not included"}</span>
+                  <li className="flex items-start gap-3">
+                    <CheckCircle2 className="h-5 w-5 text-green-500 shrink-0 mt-0.5" />
+                    <span className="text-gray-700 dark:text-gray-300">Accommodation ({tour.hotel})</span>
                   </li>
-                  <li className="flex items-center gap-3 text-gray-700">
-                    <div className="flex h-8 w-8 items-center justify-center rounded-full bg-indigo-50">
-                      <Moon className="h-4 w-4 text-indigo-500" />
-                    </div>
-                    <span><span className="font-semibold">Dinner:</span> {tour.dinner || "Not included"}</span>
+                  {tour.breakfast && (
+                    <li className="flex items-start gap-3">
+                      <CheckCircle2 className="h-5 w-5 text-green-500 shrink-0 mt-0.5" />
+                      <span className="text-gray-700 dark:text-gray-300">Daily Breakfast</span>
+                    </li>
+                  )}
+                  {(tour.lunch || tour.dinner) && (
+                    <li className="flex items-start gap-3">
+                      <CheckCircle2 className="h-5 w-5 text-green-500 shrink-0 mt-0.5" />
+                      <span className="text-gray-700 dark:text-gray-300">Selected Meals ({tour.lunch ? 'Lunch' : ''} {tour.dinner ? 'Dinner' : ''})</span>
+                    </li>
+                  )}
+                  <li className="flex items-start gap-3">
+                    <CheckCircle2 className="h-5 w-5 text-green-500 shrink-0 mt-0.5" />
+                    <span className="text-gray-700 dark:text-gray-300">Airport Transfers</span>
+                  </li>
+                </ul>
+
+                {/* Not Included */}
+                <ul className="space-y-3">
+                  <li className="flex items-start gap-3">
+                    <XCircle className="h-5 w-5 text-red-400 shrink-0 mt-0.5" />
+                    <span className="text-gray-500 dark:text-gray-400">Personal expenses</span>
+                  </li>
+                  <li className="flex items-start gap-3">
+                    <XCircle className="h-5 w-5 text-red-400 shrink-0 mt-0.5" />
+                    <span className="text-gray-500 dark:text-gray-400">Travel Insurance</span>
+                  </li>
+                  <li className="flex items-start gap-3">
+                    <XCircle className="h-5 w-5 text-red-400 shrink-0 mt-0.5" />
+                    <span className="text-gray-500 dark:text-gray-400">Optional Tours</span>
                   </li>
                 </ul>
               </div>
             </div>
+
+            {/* ACCOMMODATION SECTION */}
+            <div ref={hotelRef} className="scroll-mt-24">
+              <SectionTitle icon={BedDouble} title="Accommodation" />
+              <div className="bg-white dark:bg-gray-800 rounded-2xl overflow-hidden border border-gray-100 dark:border-gray-700 shadow-sm flex flex-col md:flex-row">
+                <div className="md:w-1/3 h-48 md:h-auto bg-gray-200 dark:bg-gray-700 relative">
+                   {/* Placeholder for hotel image since we don't have a specific hotel_image field */}
+                   <div className="absolute inset-0 flex items-center justify-center text-gray-400">
+                     <Camera className="h-8 w-8" />
+                   </div>
+                </div>
+                <div className="p-6 md:w-2/3">
+                  <div className="flex justify-between items-start mb-2">
+                    <h3 className="text-xl font-bold text-gray-900 dark:text-gray-100">{tour.hotel || "Hotel TBD"}</h3>
+                    <div className="flex text-yellow-400">
+                      <Star className="h-4 w-4 fill-current" />
+                      <Star className="h-4 w-4 fill-current" />
+                      <Star className="h-4 w-4 fill-current" />
+                      <Star className="h-4 w-4 fill-current" />
+                    </div>
+                  </div>
+                  <p className="text-gray-600 dark:text-gray-400 mb-4 text-sm">
+                    Comfortable stay located near city center/beach. Includes modern amenities and free Wi-Fi.
+                  </p>
+                  <div className="flex flex-wrap gap-2">
+                    <span className="px-2 py-1 bg-gray-100 dark:bg-gray-700 rounded text-xs text-gray-600 dark:text-gray-300">Free Wifi</span>
+                    <span className="px-2 py-1 bg-gray-100 dark:bg-gray-700 rounded text-xs text-gray-600 dark:text-gray-300">Pool</span>
+                    <span className="px-2 py-1 bg-gray-100 dark:bg-gray-700 rounded text-xs text-gray-600 dark:text-gray-300">Gym</span>
+                  </div>
+                </div>
+              </div>
+            </div>
+
+            {/* GALLERY SECTION */}
+            <div ref={galleryRef} className="scroll-mt-24">
+              <SectionTitle icon={Camera} title="Photo Gallery" />
+              {galleryImages.length > 0 ? (
+                <div className="grid grid-cols-2 md:grid-cols-3 gap-4">
+                  {galleryImages.map((img, idx) => (
+                    <div key={idx} className="aspect-4/3 rounded-xl overflow-hidden cursor-pointer group">
+                      <img src={img} alt="Gallery" className="w-full h-full object-cover transition duration-500 group-hover:scale-110" />
+                    </div>
+                  ))}
+                </div>
+              ) : (
+                <div className="text-center py-12 bg-gray-50 dark:bg-gray-800/50 rounded-xl border border-dashed border-gray-300 dark:border-gray-700">
+                  <Camera className="h-10 w-10 text-gray-300 mx-auto mb-3" />
+                  <p className="text-gray-500">Gallery images coming soon</p>
+                </div>
+              )}
+            </div>
+
           </div>
 
-          {/* RIGHT COLUMN (Sticky Booking Card) */}
+          {/* --- RIGHT COLUMN (Sticky Booking) --- */}
           <div className="lg:col-span-1">
-            <div className="sticky top-24 rounded-2xl bg-white p-6 shadow-xl ring-1 ring-gray-100">
-              <div className="mb-6">
-                <p className="text-sm text-gray-500">Starting from</p>
-                <div className="flex items-baseline gap-1">
-                  <span className="text-3xl font-bold text-amber-600">₮{Number(tour.single_supply_price).toLocaleString()}</span>
-                  <span className="text-gray-400">/ person</span>
+            <div className="sticky top-24 space-y-6">
+              
+              {/* Price Card */}
+              <div className="bg-white dark:bg-gray-800 rounded-2xl shadow-xl border border-gray-100 dark:border-gray-700 overflow-hidden">
+                <div className="bg-amber-600 p-4 text-white text-center">
+                  <p className="text-sm opacity-90">Special Offer Price</p>
+                  <h3 className="text-3xl font-bold">₮{Number(tour.single_supply_price).toLocaleString()}</h3>
+                </div>
+                
+                <div className="p-6 space-y-6">
+                  <div className="space-y-3">
+                    <div className="flex justify-between text-sm border-b border-gray-100 dark:border-gray-700 pb-2">
+                      <span className="text-gray-500 dark:text-gray-400">Departure</span>
+                      <span className="font-semibold text-gray-900 dark:text-gray-100">{formatDate(tour.departure_date)}</span>
+                    </div>
+                    <div className="flex justify-between text-sm border-b border-gray-100 dark:border-gray-700 pb-2">
+                      <span className="text-gray-500 dark:text-gray-400">Return</span>
+                      <span className="font-semibold text-gray-900 dark:text-gray-100">{formatDate(tour.arrival_date)}</span>
+                    </div>
+                    <div className="flex justify-between text-sm pb-2">
+                      <span className="text-gray-500 dark:text-gray-400">Availability</span>
+                      <span className="font-bold text-green-600">{tour.seats} Seats Left</span>
+                    </div>
+                  </div>
+
+                  <Button className="w-full h-12 text-lg font-bold bg-amber-600 hover:bg-amber-700 text-white shadow-lg shadow-amber-200 dark:shadow-none">
+                    Book This Tour
+                  </Button>
+                  
+                  <div className="flex items-center justify-center gap-2 text-xs text-gray-400">
+                    <ShieldCheck className="h-4 w-4" /> No hidden fees • Secure payment
+                  </div>
                 </div>
               </div>
 
-              <div className="mb-6 space-y-4 rounded-xl bg-gray-50 p-4">
-                <div className="flex justify-between text-sm">
-                  <span className="text-gray-500">Departure</span>
-                  <span className="font-medium text-gray-900">{formatDate(tour.departure_date || "")}</span>
+              {/* Contact Card */}
+              <div className="bg-blue-50 dark:bg-blue-900/20 rounded-2xl p-6 border border-blue-100 dark:border-blue-800">
+                <div className="flex items-center gap-4 mb-4">
+                  <div className="h-12 w-12 rounded-full bg-blue-100 dark:bg-blue-800 flex items-center justify-center text-blue-600 dark:text-blue-200">
+                    <Phone className="h-6 w-6" />
+                  </div>
+                  <div>
+                    <p className="text-sm text-blue-600 dark:text-blue-300 font-medium">Have questions?</p>
+                    <p className="font-bold text-blue-900 dark:text-blue-100">Talk to an expert</p>
+                  </div>
                 </div>
-                <div className="flex justify-between text-sm">
-                  <span className="text-gray-500">Return</span>
-                  <span className="font-medium text-gray-900">{formatDate(tour.arrival_date || "")}</span>
-                </div>
-                <div className="h-px bg-gray-200" />
-                <div className="flex justify-between text-sm">
-                  <span className="text-gray-500">Status</span>
-                  <span className={`font-bold ${tour.status === 'ACTIVE' ? 'text-green-600' : 'text-red-600'}`}>
-                    {tour.status}
-                  </span>
-                </div>
+                <p className="text-2xl font-bold text-blue-800 dark:text-blue-200 mb-2">+976 9911 0000</p>
+                <p className="text-sm text-blue-600/80 dark:text-blue-300/80">Monday - Sunday, 9am - 8pm</p>
               </div>
 
-              <div className="space-y-3">
-                <button className="flex w-full items-center justify-center gap-2 rounded-xl bg-amber-600 py-4 font-bold text-white shadow-lg shadow-amber-200 transition hover:bg-amber-700 hover:shadow-xl">
-                  Book Now
-                </button>
-                <button className="flex w-full items-center justify-center gap-2 rounded-xl border-2 border-gray-100 bg-white py-4 font-bold text-gray-700 transition hover:border-gray-200 hover:bg-gray-50">
-                  Download Itinerary
-                </button>
-              </div>
-
-              <div className="mt-6 flex items-center justify-center gap-2 text-sm text-gray-400">
-                <CheckCircle2 className="h-4 w-4" />
-                <span>Best Price Guaranteed</span>
-              </div>
             </div>
           </div>
 
