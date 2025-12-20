@@ -106,17 +106,25 @@ export default function ManagerDashboard() {
     e.preventDefault();
     const data = new FormData();
 
+    // 1. Append all text fields
     Object.keys(formData).forEach((key) => {
       data.append(key, formData[key]);
     });
 
+    // 2. Append the new Cover Photo (if changed)
     if (selectedFile) {
       data.append("cover_photo", selectedFile);
     }
 
+    // 3. Append NEW gallery images
     galleryFiles.forEach((file) => {
-      data.append("photos", file);
+      data.append("photos", file); // These are new files to upload
     });
+
+    // 4. Append EXISTING gallery images (The Fix)
+    // We send this as a JSON string so the backend knows which URLs to keep.
+    // If the user deleted an image from the UI, it won't be in this array.
+    data.append("existing_photos", JSON.stringify(existingPhotos));
 
     saveMutation.mutate(data);
   };
@@ -212,6 +220,11 @@ export default function ManagerDashboard() {
 
   const removeGalleryFile = (index: number) => {
     setGalleryFiles((prev) => prev.filter((_, i) => i !== index));
+  };
+
+  // Remove an EXISTING file (from the database list)
+  const removeExistingPhoto = (index: number) => {
+    setExistingPhotos((prev) => prev.filter((_, i) => i !== index));
   };
 
   const formatPrice = (price: number | string) => {
@@ -330,7 +343,7 @@ export default function ManagerDashboard() {
                       </button>
                       <button
                         className="p-2 cursor-pointer text-red-600 dark:text-red-400 hover:bg-red-50 dark:hover:bg-red-900/30 rounded-full"
-                        onClick={() => handleDelete(tour.id||"")}>
+                        onClick={() => handleDelete(tour.id || "")}>
                         <Trash2 className="h-5 w-5" />
                       </button>
                     </td>
@@ -412,14 +425,23 @@ export default function ManagerDashboard() {
                         </label>
                       </div>
                       <div className="grid grid-cols-3 gap-2">
-                        {existingPhotos.slice(0, 3).map((url, idx) => (
+                        {/* Existing Photos Loop */}
+                        {existingPhotos.slice(0, 6).map((url, idx) => (
                           <div
                             key={`ex-${idx}`}
-                            className="aspect-square rounded bg-gray-100 dark:bg-gray-700 overflow-hidden">
+                            className="aspect-square rounded bg-gray-100 dark:bg-gray-700 overflow-hidden relative group">
                             <img
                               src={url}
                               className="w-full h-full object-cover"
                             />
+
+                            {/* Add this Delete Button */}
+                            <button
+                              type="button"
+                              onClick={() => removeExistingPhoto(idx)}
+                              className="absolute top-0 right-0 bg-red-500 text-white p-0.5 rounded-bl opacity-0 group-hover:opacity-100 transition-opacity">
+                              <X className="h-3 w-3" />
+                            </button>
                           </div>
                         ))}
                         {galleryFiles.slice(0, 3).map((file, idx) => (

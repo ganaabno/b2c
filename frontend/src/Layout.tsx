@@ -4,7 +4,7 @@ import { Shield, Menu, X } from "lucide-react";
 import Logo from "@/assets/logo.png";
 import { useEffect, useState } from "react";
 import { ModeToggle } from "./components/mode-toggle";
-
+import Footer from "./components/Footer";
 export default function Layout() {
   const { user } = useAuth();
   const [isBlured, setIsBlured] = useState(false);
@@ -56,10 +56,12 @@ export default function Layout() {
               className="text-2xl font-bold z-50"
               onClick={closeMobileMenu}>
               <img
-  src={Logo}
-  alt="LogoImage"
-  className="scale-50 invert sepia hue-rotate-15 saturate-50 dark:brightness-0 dark:invert dark:sepia-0 dark:hue-rotate-0 dark:saturate-100"
-/>
+              height={200}
+              width={320}
+                src={Logo}
+                alt="LogoImage"
+                className="scale-50 invert sepia hue-rotate-15 saturate-50 dark:brightness-0 dark:invert dark:sepia-0 dark:hue-rotate-0 dark:saturate-100"
+              />
             </Link>
 
             {/* Desktop Navigation */}
@@ -67,7 +69,7 @@ export default function Layout() {
               <Link
                 to="/tours"
                 className="font-semibold text-gray-700 dark:text-gray-200 hover:text-amber-600 dark:hover:text-amber-400 duration-300">
-                Tours
+                Бүх аялалууд
               </Link>
 
               {user ? (
@@ -89,7 +91,7 @@ export default function Layout() {
                   )}
 
                   <span className="text-gray-700 dark:text-gray-200 font-medium">
-                    Hi, {user.firstname}
+                    Сайн уу, {user.firstname}
                   </span>
                   <Link
                     to="/profile"
@@ -113,12 +115,12 @@ export default function Layout() {
                   <Link
                     to="/login"
                     className="font-semibold text-gray-700 dark:text-gray-200 hover:text-amber-600 dark:hover:text-amber-400 duration-300">
-                    Login
+                    Нэвтрэх
                   </Link>
                   <Link
                     to="/signup"
                     className="rounded-2xl font-semibold bg-amber-500 dark:bg-amber-600 text-white px-4 py-2 hover:bg-amber-600 dark:hover:bg-amber-500 duration-300 shadow-md">
-                    Sign Up
+                    Бүртгүүлэх
                   </Link>
                   <ModeToggle />
                 </>
@@ -222,6 +224,7 @@ export default function Layout() {
       <main className="pt-20">
         <Outlet />
       </main>
+      <Footer></Footer>
     </div>
   );
 }

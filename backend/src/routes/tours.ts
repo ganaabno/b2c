@@ -87,7 +87,7 @@ router.get("/:slug", async (req, res) => {
   const { slug } = req.params;
 
   const [tour] = await sql`
-    SELECT * FROM tours WHERE slug = ${slug}
+    SELECT *, cover_photo as image FROM tours WHERE slug = ${slug}
   `;
 
   if (!tour) return res.status(404).json({ message: "Tour not found" });
@@ -169,13 +169,12 @@ router.post(
     }
   }
 );
-
 // PUT – Update Tour
 router.put(
   "/:id",
   protect,
   restrictTo("MANAGER", "ADMIN"),
-  uploadFields, // 👈 Changed to accept multiple fields
+  uploadFields,
   async (req: AuthRequest, res) => {
     const { id } = req.params;
     const updates = req.body;
@@ -206,15 +205,41 @@ router.put(
         imagePublicId = uploadResult.public_id;
       }
 
-      // 2. Handle Gallery Photos (Append new ones)
+      // 2. Handle Gallery Photos Logic
+      
+      // A. Parse the list of "Existing Photos" the user wants to KEEP
+      // The frontend sends this as a JSON string: '["url1", "url2"]'
+      let keptPhotos: string[] = [];
+      if (updates.existing_photos) {
+        try {
+          keptPhotos = JSON.parse(updates.existing_photos);
+        } catch (e) {
+          console.error("Failed to parse existing_photos", e);
+          keptPhotos = [];
+        }
+      }
+
+      // B. Find which photos were DELETED (Present in DB but NOT in keptPhotos)
+      const oldPhotos = existingTour.photos || [];
+      const photosToDelete = oldPhotos.filter((url: string) => !keptPhotos.includes(url));
+
+      // C. Delete removed photos from Cloudinary
+      if (photosToDelete.length > 0) {
+        console.log(`Deleting ${photosToDelete.length} removed gallery images...`);
+        await Promise.all(photosToDelete.map((url: string) => deleteImage(null, url)));
+      }
+
+      // D. Upload NEW photos
       const newGalleryUrls: string[] = [];
       for (const file of galleryFiles) {
         const result = await uploadImage(file);
         newGalleryUrls.push(result.url);
       }
 
+      // E. Combine Kept + New
+      const finalPhotoList = [...keptPhotos, ...newGalleryUrls];
+
       // 3. Update DB
-      // We use COALESCE(photos, '{}') || ${newGalleryUrls} to append new photos to the existing array
       const [updatedTour] = await sql`
         UPDATE tours SET
           title = COALESCE(${updates.title}, title),
@@ -222,11 +247,8 @@ router.put(
           cover_photo = COALESCE(${imageUrl}, cover_photo),
           image_public_id = COALESCE(${imagePublicId}, image_public_id),
           
-          -- Append new photos to existing array
-          photos = CASE 
-            WHEN ${newGalleryUrls.length} > 0 THEN COALESCE(photos, '{}'::text[]) || ${newGalleryUrls}
-            ELSE photos
-          END,
+          -- Update photos with the calculated final list
+          photos = ${finalPhotoList}::text[],
 
           country = COALESCE(${updates.country}, country),
           departure_date = COALESCE(${updates.departure_date}, departure_date),

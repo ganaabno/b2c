@@ -1,4 +1,4 @@
-import Footer from "../components/Footer";
+
 import TourGrid from "../components/TourGrid";
 import TourTable from "../components/TourTable";
 export default function Home() {
@@ -36,7 +36,7 @@ export default function Home() {
             Дэлхийн Дайтай Сэтгэе!
           </p>
         </div>
-        <div
+        {/* <div
           className="absolute -bottom-10 left-1/2 -translate-x-1/2  rounded-[980px] shadow-lg flex justify-center items-center
         py-12 px-36 bg-white">
           <div className="flex gap-16">
@@ -72,9 +72,9 @@ export default function Home() {
                 name="departure"
                 className="py-2 px-12 border rounded-4xl"
               />
-            </div>
+            </div> 
           </div>
-        </div>
+        </div>*/}
       </div>
 
       {/* Margin top 10 aar zai avch bgaa */}
@@ -84,7 +84,7 @@ export default function Home() {
         <TourGrid />
       </div>
 
-      <Footer />
+      
     </>
   );
 }

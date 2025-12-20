@@ -94,7 +94,7 @@ export default function TourTable() {
       </div>
 
       {/* --- DESKTOP VIEW (Shadcn Table) --- */}
-      <div className="hidden md:block w-full overflow-hidden rounded-xl border border-slate-200 dark:border-gray-700 shadow-sm bg-white dark:bg-gray-800">
+      <div className="hidden md:block w-full overflow-hidden rounded-xl border border-slate-200 dark:border-gray-700 shadow-sm bg-white dark:bg-gray-800 max-w-[1200px]">
         <Table className="min-w-[800px]">
           <TableHeader className="bg-slate-50/80 dark:bg-gray-900/50">
             <TableRow className="hover:bg-transparent border-b border-slate-200 dark:border-gray-700">
@@ -105,11 +105,9 @@ export default function TourTable() {
                 Эхлэх өдөр
               </TableHead>
               <TableHead className="w-[100px] py-4 font-semibold text-slate-600 dark:text-gray-300">
-                Өдөр
+                Өдөр / Шөнө
               </TableHead>
-              <TableHead className="w-[100px] py-4 font-semibold text-slate-600 dark:text-gray-300">
-                Шөнө
-              </TableHead>
+              
               <TableHead className="w-[150px] py-4 font-semibold text-slate-600 dark:text-gray-300">
                 Дуусах өдөр
               </TableHead>
@@ -138,29 +136,57 @@ export default function TourTable() {
                         className="h-full w-full object-cover"
                       />
                     </div>
-                    <span className="text-slate-700 dark:text-gray-200 font-semibold group-hover:text-indigo-600 dark:group-hover:text-indigo-400 transition-colors">
+                    <span className="text-slate-700 dark:text-gray-200 text-[20px] font-semibold group-hover:text-indigo-600 dark:group-hover:text-indigo-400 transition-colors">
                       {tour.title}
                     </span>
                   </div>
                 </TableCell>
                 <TableCell className="py-3.5">
-                  <span className="text-slate-600 dark:text-gray-300 font-medium">{tour.departure_date}</span>
+                  <span className="text-slate-600 dark:text-gray-300 font-medium text-xl">{tour.departure_date}</span>
                 </TableCell>
-                <TableCell className="py-3.5">
-                  <span className="inline-flex items-center justify-center rounded-md bg-indigo-50 dark:bg-indigo-900/50 px-2.5 py-1 text-xs font-bold text-indigo-700 dark:text-indigo-300 group-hover:bg-indigo-100 dark:group-hover:bg-indigo-900/70 transition-colors">
-                    {tour.duration_day}
-                  </span>
-                </TableCell>
-                <TableCell className="py-3.5">
-                  <span className="inline-flex items-center justify-center rounded-md bg-slate-100 dark:bg-gray-700 px-2.5 py-1 text-xs font-bold text-slate-600 dark:text-gray-300 group-hover:bg-slate-200 dark:group-hover:bg-gray-600 transition-colors">
-                    {tour.duration_night}
-                  </span>
-                </TableCell>
-                <TableCell className="py-3.5 text-slate-500 dark:text-gray-400">
+                <TableCell className="py-4">
+  <div className="flex items-center gap-3">
+    
+    {/* The Visual Pill */}
+    <div className="relative flex h-10 overflow-hidden rounded-full border-2 border-gray-100 dark:border-gray-700 shadow-sm group-hover:shadow-md transition-all duration-300">
+      
+      {/* Day Side (Sun) */}
+      <div className="flex items-center gap-1.5 bg-linear-to-b from-amber-300 to-orange-400 px-3 pl-4">
+        <span className="text-sm font-black text-white drop-shadow-sm">
+          {tour.duration_day}
+        </span>
+        <svg className="h-4 w-4 text-white animate-spin-slow" fill="none" viewBox="0 0 24 24" stroke="currentColor" strokeWidth="2.5">
+          <path strokeLinecap="round" strokeLinejoin="round" d="M12 3v1m0 16v1m9-9h-1M4 12H3m15.364 6.364l-.707-.707M6.343 6.343l-.707-.707m12.728 0l-.707.707M6.343 17.657l-.707.707M16 12a4 4 0 11-8 0 4 4 0 018 0z" />
+        </svg>
+      </div>
+
+      {/* The Diagonal Slash Divider */}
+      <div className="absolute left-1/2 top-0 -ml-2 h-full w-4 -skew-x-12 bg-white dark:bg-gray-800 z-10"></div>
+
+      {/* Night Side (Moon) */}
+      <div className="flex items-center gap-1.5 bg-linear-to-b from-indigo-900 to-slate-900 px-3 pr-4">
+        <svg className="h-3.5 w-3.5 text-indigo-200" fill="currentColor" viewBox="0 0 24 24">
+          <path d="M21.752 15.002A9.718 9.718 0 0118 15.75c-5.385 0-9.75-4.365-9.75-9.75 0-1.33.266-2.597.748-3.752A9.753 9.753 0 003 11.25C3 16.635 7.365 21 12.75 21a9.753 9.753 0 009.002-5.998z" />
+        </svg>
+        <span className="text-sm font-black text-indigo-100 drop-shadow-sm">
+          {tour.duration_night}
+        </span>
+      </div>
+    </div>
+
+    {/* Minimal Text Label (Optional, for clarity) */}
+    {/* <div className="flex flex-col text-[10px] font-bold uppercase tracking-wider leading-tight text-gray-400">
+      <span>Days</span>
+      <span>Nights</span>
+    </div> */}
+
+  </div>
+</TableCell>
+                <TableCell className="py-3.5 text-slate-600 dark:text-gray-300 font-medium text-xl">
                   {tour.arrival_date}
                 </TableCell>
                 <TableCell className="text-right py-3.5 pr-6">
-                  <span className="font-bold text-emerald-600 dark:text-emerald-400 text-[15px] group-hover:text-emerald-700 dark:group-hover:text-emerald-300 transition-colors">
+                  <span className="font-bold text-emerald-600 dark:text-emerald-400 text-xl group-hover:text-emerald-700 dark:group-hover:text-emerald-300 transition-colors">
                     ₮{formatPrice(tour.single_supply_price || "")}
                   </span>
                 </TableCell>
