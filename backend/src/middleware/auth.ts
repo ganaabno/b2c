@@ -26,9 +26,13 @@ export const protect = (
   try {
     const payload = jwt.verify(token, process.env.JWT_SECRET!) as {
       id: string;
-      role: "CLIENT" | "MANAGER" | "ADMIN";
+      role: string;
+      // role: "CLIENT" | "MANAGER" | "ADMIN";
     };
-    req.user = { id: payload.id, role: payload.role };
+    req.user = {
+      id: payload.id,
+      role: payload.role.toUpperCase() as "CLIENT" | "MANAGER" | "ADMIN",
+    };
     next();
   } catch (err) {
     return res.status(401).json({ message: "Token expired or invalid" });
@@ -38,6 +42,11 @@ export const protect = (
 // restrictTo — higher-order function
 export const restrictTo = (...roles: ("CLIENT" | "MANAGER" | "ADMIN")[]) => {
   return (req: AuthRequest, res: Response, next: NextFunction) => {
+    console.log("👮 Authorization Check:", {
+      userRole: req.user?.role,
+      requiredRoles: roles,
+      match: req.user && roles.includes(req.user.role),
+    });
     if (!req.user || !roles.includes(req.user.role)) {
       return res.status(403).json({ message: "You shall not pass!" });
     }

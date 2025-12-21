@@ -3,20 +3,20 @@ import express from "express";
 import cors from "cors";
 import morgan from "morgan";
 import authRoutes from "./routes/auth";
-import tourRoutes from "./routes/trips";
+import tourRoutes from "./routes/tours";
 import userRoutes from "./routes/users";
-
+import uploadRouter from "./routes/upload";
 const app = express();
 
 app.use(
   cors({
-    origin: ["http://localhost:5173"], 
+    origin: ["http://localhost:5173"],
     credentials: true,
   })
 );
 
-app.use(express.json()); 
-app.use(morgan("dev")); 
+app.use(express.json());
+app.use(morgan("dev"));
 
 app.get("/", (req, res) => {
   res.json({
@@ -27,13 +27,13 @@ app.get("/", (req, res) => {
       login: "POST /api/auth/login",
       signup: "POST /api/auth/signup",
       me: "GET /api/auth/me (protected)",
-      trips: "GET /api/trips",
+      tours: "GET /api/tours",
     },
   });
 });
-
+app.use("/api/upload", uploadRouter);
 app.use("/api/auth", authRoutes);
-app.use("/api/trips", tourRoutes);
+app.use("/api/tours", tourRoutes);
 app.use("/api/users", userRoutes);
 
 app.use("*", (req, res) => {

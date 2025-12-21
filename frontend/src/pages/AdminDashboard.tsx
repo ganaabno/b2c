@@ -7,7 +7,7 @@ import {
   Settings,
   Zap,
 } from "lucide-react";
-import AdminTrips from "./AdminTrips";
+import AdminTours from "./AdminTours";
 
 export default function AdminDashboard() {
   const { user } = useAuth();
@@ -64,12 +64,12 @@ export default function AdminDashboard() {
           Comes Great Responsibility
         </p>
       </div>
-      {/* Trips Section */}
+     
       <div className="mt-20">
         <h2 className="text-4xl font-bold text-gray-800 mb-8 text-center md:text-left">
-          Manage Tours & Trips
+          Manage Tours 
         </h2>
-        <AdminTrips />
+        <AdminTours />
       </div>
     </div>
   );

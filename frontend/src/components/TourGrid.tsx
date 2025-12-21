@@ -1,23 +1,28 @@
-// src/components/TourGrid.tsx  (or wherever you keep it)
-import { MapPin, Clock, Users } from "lucide-react";
+import { MapPin, Clock, Users, ArrowRight, Sparkles } from "lucide-react";
 import { Link } from "react-router-dom";
 import { useQuery } from "@tanstack/react-query";
 import axios from "axios";
+import { motion } from "framer-motion"; // Import framer-motion
+import type { Tour } from "@/types";
 
-interface Tour {
-  id: string;
-  title: string;
-  image: string | null;
-  country: string;
-  // We'll add these fields to the trips table later or use fallbacks
-  duration?: string;
-  group_size?: string;
-  price: string | null;
-}
+// --- SKELETON COMPONENT (For loading state) ---
+const TourSkeleton = () => (
+  <div className="rounded-2xl overflow-hidden border border-gray-100 dark:border-gray-800 bg-white dark:bg-gray-900">
+    <div className="h-64 bg-gray-200 dark:bg-gray-800 animate-pulse" />
+    <div className="p-5 space-y-3">
+      <div className="h-6 w-3/4 bg-gray-200 dark:bg-gray-800 rounded animate-pulse" />
+      <div className="h-4 w-1/2 bg-gray-200 dark:bg-gray-800 rounded animate-pulse" />
+      <div className="flex gap-2 pt-4">
+        <div className="h-10 w-full bg-gray-200 dark:bg-gray-800 rounded animate-pulse" />
+        <div className="h-10 w-full bg-gray-200 dark:bg-gray-800 rounded animate-pulse" />
+      </div>
+    </div>
+  </div>
+);
 
 async function fetchFeaturedTours(): Promise<Tour[]> {
-  const res = await axios.get("/api/trips");
-  return res.data.slice(0, 6); // Show only first 6 as "featured"
+  const res = await axios.get("/api/tours");
+  return res.data.slice(0, 6);
 }
 
 export default function TourGrid() {
@@ -26,91 +31,138 @@ export default function TourGrid() {
     queryFn: fetchFeaturedTours,
   });
 
-  if (isLoading) {
-    return (
-      <div className="container mx-auto my-20 py-12 text-center">
-        <p className="text-2xl text-gray-600">
-          Онцлох аялалууд ачааллаж байна...
-        </p>
-      </div>
-    );
-  }
+  // Animation variants
+  const container = {
+    hidden: { opacity: 0 },
+    show: {
+      opacity: 1,
+      transition: {
+        staggerChildren: 0.1
+      }
+    }
+  };
+
+  const item = {
+    hidden: { opacity: 0, y: 20 },
+    show: { opacity: 1, y: 0 }
+  };
 
   return (
-    <div className="container mx-auto my-20 py-12">
-      <div className="flex justify-between items-end mb-12">
-        <h2 className="text-3xl font-bold text-gray-900">Онцлох Аялалууд</h2>
+    <section className="container mx-auto my-24 px-4">
+      
+      {/* --- HEADER --- */}
+      <div className="flex flex-col md:flex-row justify-between items-end mb-12 gap-4">
+        <div>
+          <div className="flex items-center gap-2 text-green-600 dark:text-green-500 font-bold uppercase tracking-wider text-sm mb-2">
+            <Sparkles className="w-4 h-4" />
+            <span>Бидний</span>
+          </div>
+          <h2 className="text-4xl font-extrabold text-gray-900 dark:text-white tracking-tight">
+            Онцлох <span className="text-transparent bg-clip-text bg-linear-to-r from-green-600 to-emerald-400">Аялалууд</span>
+          </h2>
+        </div>
+
         <Link
-          to="/trips"
-          className="relative text-3xl font-bold text-gray-900 hover:text-gray-700 transition"
+          to="/tours"
+          className="group flex items-center gap-2 text-lg font-semibold text-gray-600 dark:text-gray-300 hover:text-green-600 dark:hover:text-green-400 transition-colors"
         >
-          Бүх Аялалыг Харах
-          <span className="absolute left-1/2 -bottom-[15px] w-64 h-0.5 bg-gray-900 -translate-x-1/2"></span>
-          <span className="absolute left-[calc(50%+116px)] -bottom-5 w-3 h-3 border-r-2 border-b-2 border-gray-900 -rotate-45"></span>
+          Бүх аялалуудыг харах
+          <span className="bg-gray-100 dark:bg-gray-800 p-2 rounded-full group-hover:bg-green-100 dark:group-hover:bg-green-900/30 transition-colors">
+            <ArrowRight className="w-5 h-5 group-hover:translate-x-1 transition-transform" />
+          </span>
         </Link>
       </div>
 
-      <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-6">
-        {tours.map((tour) => (
-          <div
-            key={tour.id}
-            className="bg-white rounded-lg overflow-hidden border border-gray-200 hover:shadow-lg transition-shadow duration-300 group"
-          >
-            <div className="relative h-48 overflow-hidden bg-gray-100">
-              <img
-                src={
-                  tour.image ||
-                  "https://via.placeholder.com/800x600?text=No+Image"
-                }
-                alt={tour.title}
-                className="w-full h-full object-cover group-hover:scale-105 transition-transform duration-300"
-              />
-              {tour.price && (
-                <div className="absolute top-3 right-3 bg-white px-3 py-1 rounded-full text-sm font-semibold text-gray-900 shadow">
-                  {tour.price.includes("₮") ? tour.price : `₮${tour.price}`}
-                </div>
-              )}
-            </div>
+      {/* --- GRID CONTENT --- */}
+      {isLoading ? (
+        <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-8">
+          {[1, 2, 3].map((i) => <TourSkeleton key={i} />)}
+        </div>
+      ) : (
+        <motion.div 
+          variants={container}
+          initial="hidden"
+          whileInView="show"
+          viewport={{ once: true, margin: "-100px" }}
+          className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-8"
+        >
+          {tours.map((tour) => (
+            <motion.div
+              key={tour.id}
+              variants={item}
+              className="group relative bg-white dark:bg-gray-900 rounded-3xl overflow-hidden border border-gray-100 dark:border-gray-800 shadow-sm hover:shadow-xl hover:shadow-green-900/5 dark:hover:shadow-green-900/20 transition-all duration-500"
+            >
+              {/* Image Section */}
+              <div className="relative h-72 overflow-hidden">
+                <img
+                  src={tour.image || "https://via.placeholder.com/800x600?text=No+Image"}
+                  alt={tour.title}
+                  className="w-full h-full object-cover transition-transform duration-700 group-hover:scale-110"
+                />
+                
+                {/* Glassmorphism Overlay Gradient */}
+                <div className="absolute inset-0 bg-linear-to-t from-black/60 via-transparent to-transparent opacity-60" />
 
-            <div className="p-5">
-              <h3 className="text-lg font-semibold text-gray-900 mb-2">
-                {tour.title}
-              </h3>
-
-              <div className="space-y-2 mb-4">
-                <div className="flex items-center gap-2 text-sm text-gray-600">
-                  <MapPin className="w-4 h-4" />
-                  <span>{tour.country}</span>
-                </div>
-                {tour.duration && (
-                  <div className="flex items-center gap-2 text-sm text-gray-600">
-                    <Clock className="w-4 h-4" />
-                    <span>{tour.duration}</span>
+                {/* Price Badge (Glass Effect) */}
+                {tour.single_supply_price && (
+                  <div className="absolute top-4 right-4 bg-white/90 dark:bg-gray-900/90 backdrop-blur-md px-4 py-2 rounded-full shadow-lg border border-white/20">
+                    <span className="text-sm font-bold text-gray-900 dark:text-white">
+                      {tour.single_supply_price.includes("₮") ? tour.single_supply_price : `₮${Number(tour.single_supply_price).toLocaleString()}`}
+                    </span>
                   </div>
                 )}
-                {tour.group_size && (
-                  <div className="flex items-center gap-2 text-sm text-gray-600">
-                    <Users className="w-4 h-4" />
-                    <span>{tour.group_size} хүн</span>
-                  </div>
-                )}
+
+                {/* Country Badge */}
+                <div className="absolute top-4 left-4 bg-black/30 backdrop-blur-md text-white px-3 py-1 rounded-full text-xs font-bold flex items-center gap-1 border border-white/10">
+                  <MapPin className="w-3 h-3" />
+                  {tour.country}
+                </div>
               </div>
 
-              <div className="flex gap-3">
-                <Link
-                  to={`/trips/${tour.id}`}
-                  className="w-full py-2 border border-gray-300 rounded-md text-sm font-medium text-gray-700 hover:bg-gray-50 text-center transition-colors"
-                >
-                  Дэлгэрэнгүй
+              {/* Content Section */}
+              <div className="p-6 relative">
+                {/* Floating Action Button (Optional visual flair) */}
+                <Link to={`/tours/${tour.slug}`} className="absolute cursor-pointer -top-6 right-6 bg-green-500 text-white p-3 rounded-full shadow-lg shadow-green-500/30 opacity-0 group-hover:opacity-100 translate-y-4 group-hover:translate-y-0 transition-all duration-300">
+                  <ArrowRight className="w-5 h-5" />
                 </Link>
-                <button className="w-full py-2 rounded-md text-sm font-medium text-white bg-green-500 hover:bg-green-600 transition-colors">
-                  Захиалах
-                </button>
+
+                <h3 className="text-xl font-bold text-gray-900 dark:text-white mb-3 line-clamp-1 group-hover:text-green-600 dark:group-hover:text-green-400 transition-colors">
+                  {tour.title}
+                </h3>
+
+                {/* Meta Data Row */}
+                <div className="flex items-center gap-4 text-sm text-gray-500 dark:text-gray-400 mb-6">
+                  {tour.duration_day && (
+                    <div className="flex items-center gap-1.5 bg-gray-50 dark:bg-gray-800 px-2 py-1 rounded-md">
+                      <Clock className="w-4 h-4 text-green-500" />
+                      <span>{tour.duration_day} Days</span>
+                    </div>
+                  )}
+                  {tour.group_size && (
+                    <div className="flex items-center gap-1.5 bg-gray-50 dark:bg-gray-800 px-2 py-1 rounded-md">
+                      <Users className="w-4 h-4 text-green-500" />
+                      <span>{tour.group_size} People</span>
+                    </div>
+                  )}
+                </div>
+
+                {/* Action Buttons */}
+                <div className="grid grid-cols-2 gap-3">
+                  <Link
+                    to={`/tours/${tour.slug}`}
+                    className="py-2.5 rounded-xl text-sm font-bold text-gray-600 dark:text-gray-300 bg-gray-100 dark:bg-gray-800 hover:bg-gray-200 dark:hover:bg-gray-700 text-center transition-colors"
+                  >
+                    Дэлгэрэнгүй 
+                  </Link>
+                  <button className="cursor-pointer py-2.5 rounded-xl text-sm font-bold text-white bg-green-600 hover:bg-green-700 shadow-lg shadow-green-600/20 transition-all active:scale-95">
+                    Захиалах
+                  </button>
+                </div>
               </div>
-            </div>
-          </div>
-        ))}
-      </div>
-    </div>
+            </motion.div>
+          ))}
+        </motion.div>
+      )}
+    </section>
   );
 }

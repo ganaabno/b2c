@@ -6,28 +6,8 @@ import {
   type ReactNode,
 } from "react";
 import axios from "axios";
+import type { User, AuthContextType } from "@/types";
 
-interface User {
-  id: string;
-  firstname: string;
-  lastname: string;
-  email: string;
-  role: "CLIENT" | "MANAGER" | "ADMIN";
-  avatar: string;
-}
-
-interface AuthContextType {
-  user: User | null;
-  login: (email: string, password: string) => Promise<void>;
-  signup: (
-    firstname: string,
-    lastname: string,
-    email: string,
-    password: string
-  ) => Promise<void>;
-  logout: () => void;
-  isLoading: boolean;
-}
 
 const AuthContext = createContext<AuthContextType | undefined>(undefined);
 

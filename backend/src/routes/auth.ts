@@ -21,7 +21,8 @@ const returnUser = (dbUser: any) => ({
   firstname: dbUser.firstname,
   lastname: dbUser.lastname,
   email: dbUser.email,
-  role: (dbUser.role?.[0] || "CLIENT") as "CLIENT" | "MANAGER" | "ADMIN",
+  role: (dbUser.role || "CLIENT") as "CLIENT" | "MANAGER" | "ADMIN",
+  avatar: dbUser.avatar || "",
 });
 // const formatUser = (dbUser: any) => ({
 //   id: dbUser.id,
@@ -49,24 +50,23 @@ router.post("/signup", async (req, res) => {
 
     //const firstname = firstname;
     //const lastname = parts.slice(1).join(" ") || null;
-const FIRSTNAME = firstname;
-const LASTNAME = lastname;
+    const FIRSTNAME = firstname;
+    const LASTNAME = lastname;
     const hash = await argon2.hash(password);
 
     // THIS IS THE WINNER FOR NEON – pass JS array directly
     const [user] = await sql`
-    INSERT INTO users (id, firstname, lastname, email, password, role)
+    INSERT INTO users (id, firstname, lastname, email, password, role, avatar)
     VALUES (
       ${uuidv4()},
       ${FIRSTNAME},
       ${LASTNAME},
       ${email.toLowerCase()},
       ${hash},
-      ${[
-        "CLIENT",
-      ]}   -- ← pure JS array, driver converts to your enum array automatically
+      ${["CLIENT"]} ,
+      ${null}  
     )
-    RETURNING id, firstname, lastname, email, role
+    RETURNING id, firstname, lastname, email, role, avatar
   `;
 
     const token = signToken(user.id, user.role[0]);
@@ -75,7 +75,7 @@ const LASTNAME = lastname;
 
     res.status(201).json({
       token,
-      returnUser
+      user: returnUser(user),
     });
   } catch (err: any) {
     console.error("🔥🔥🔥 SIGNUP CRASHED HARD:", err);
@@ -103,11 +103,11 @@ router.post("/login", async (req, res) => {
       return res.status(401).json({ message: "Wrong credentials" });
     }
 
-    const token = signToken(user.id, user.role[0]);
+    const token = signToken(user.id, user.role);
 
     res.json({
       token,
-      user: returnUser(user)
+      user: returnUser(user),
       //  user: formatUser(user),
     });
   } catch (err: any) {
@@ -131,9 +131,10 @@ router.get("/me", async (req, res) => {
       SELECT id, firstname, lastname, email, role
       FROM users WHERE id = ${payload.id}
     `;
-
+    console.log(user);
     if (!user) return res.status(404).json({ message: "User not found" });
     res.json(returnUser(user));
+
     //   res.json(formatUser(user));
   } catch (err: any) {
     console.error("🔥 /me error:", err);

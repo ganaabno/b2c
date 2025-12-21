@@ -1,39 +1,30 @@
 import { useQuery, useMutation, useQueryClient } from "@tanstack/react-query";
 import { Trash2, Edit, Plus } from "lucide-react";
 import { useState } from "react";
+import type { Tour } from "@/types";
 
-interface Trip {
-  id: string;
-  title: string;
-  subtitle: string;
-  country: string;
-  duration: string;
-  group_size: number;
-  is_featured: boolean;
-}
-
-async function fetchTrips(): Promise<Trip[]> {
-  const res = await fetch("/api/trips");
+async function fetchTours(): Promise<Tour[]> {
+  const res = await fetch("/api/tours");
   if (!res.ok) throw new Error("Failed to fetch");
   return res.json();
 }
 
-async function deleteTrip(id: string) {
-  await fetch(`/api/trips/${id}`, { method: "DELETE" });
+async function deleteTour(id: string) {
+  await fetch(`/api/tours/${id}`, { method: "DELETE" });
 }
 
-export default function AdminTrips() {
+export default function AdminTours() {
   const queryClient = useQueryClient();
   const [editingId, setEditingId] = useState<string | null>(null);
 
-  const { data: trips, isLoading } = useQuery({
-    queryKey: ["trips"],
-    queryFn: fetchTrips,
+  const { data: tours, isLoading } = useQuery({
+    queryKey: ["tours"],
+    queryFn: fetchTours,
   });
 
   const deleteMutation = useMutation({
-    mutationFn: deleteTrip,
-    onSuccess: () => queryClient.invalidateQueries({ queryKey: ["trips"] }),
+    mutationFn: deleteTour,
+    onSuccess: () => queryClient.invalidateQueries({ queryKey: ["tours"] }),
   });
 
   if (isLoading)
@@ -45,29 +36,27 @@ export default function AdminTrips() {
         <h1 className="text-3xl font-bold">Аялал Удирдлага</h1>
         <button
           onClick={() => setEditingId("new")}
-          className="flex items-center gap-2 bg-green-600 text-white px-6 py-3 rounded-lg hover:bg-green-700"
-        >
+          className="flex items-center gap-2 bg-green-600 text-white px-6 py-3 rounded-lg hover:bg-green-700">
           <Plus className="w-5 h-5" /> Шинэ Аялал Нэмэх
         </button>
       </div>
 
       <div className="grid gap-6">
-        {trips?.map((trip) => (
+        {tours?.map((tour) => (
           <div
-            key={trip.id}
-            className="bg-white border rounded-lg p-6 shadow hover:shadow-md"
-          >
+            key={tour.id}
+            className="bg-white border rounded-lg p-6 shadow hover:shadow-md">
             <div className="flex justify-between items-start">
               <div className="flex-1">
-                <h3 className="text-xl font-semibold">{trip.title}</h3>
-                <p className="text-gray-600 mt-1">{trip.subtitle}</p>
+                <h3 className="text-xl font-semibold">{tour.title}</h3>
+                <p className="text-gray-600 mt-1">{tour.subtitle}</p>
                 <div className="flex gap-4 mt-3 text-sm text-gray-500">
-                  <span>{trip.country}</span>
+                  <span>{tour.country}</span>
                   <span>•</span>
-                  <span>{trip.duration}</span>
+                  <span>{tour.duration_day}</span>
                   <span>•</span>
-                  <span>{trip.group_size} хүн</span>
-                  {trip.is_featured && (
+                  <span>{tour.group_size} хүн</span>
+                  {tour.is_featured && (
                     <span className="text-green-600 font-medium">Онцлох</span>
                   )}
                 </div>
@@ -75,15 +64,13 @@ export default function AdminTrips() {
 
               <div className="flex gap-3">
                 <button
-                  onClick={() => setEditingId(trip.id)}
-                  className="p-2 text-blue-600 hover:bg-blue-50 rounded"
-                >
+                  onClick={() => setEditingId(tour.id)}
+                  className="p-2 text-blue-600 hover:bg-blue-50 rounded">
                   <Edit className="w-5 h-5" />
                 </button>
                 <button
-                  onClick={() => deleteMutation.mutate(trip.id)}
-                  className="p-2 text-red-600 hover:bg-red-50 rounded"
-                >
+                  onClick={() => deleteMutation.mutate(tour.id || "")}
+                  className="p-2 text-red-600 hover:bg-red-50 rounded">
                   <Trash2 className="w-5 h-5" />
                 </button>
               </div>
@@ -105,8 +92,7 @@ export default function AdminTrips() {
             </p>
             <button
               onClick={() => setEditingId(null)}
-              className="px-6 py-3 bg-gray-600 text-white rounded-lg"
-            >
+              className="px-6 py-3 bg-gray-600 text-white rounded-lg">
               Хаах
             </button>
           </div>
