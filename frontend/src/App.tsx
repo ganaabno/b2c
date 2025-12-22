@@ -7,7 +7,7 @@ import Login from "./pages/Login";
 import Signup from "./pages/Signup";
 import Home from "./pages/Home";
 import Tours from "./pages/Tours";
-import TourDetail from "./pages/TourDetail"; // ← ADD THIS
+import TourDetail from "./pages/TourDetail"; 
 import AdminDashboard from "./pages/AdminDashboard";
 import ManagerDashboard from "./pages/(manager)/ManagerDashboard";
 import UserProfile from "./pages/UserProfile";

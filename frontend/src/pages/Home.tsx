@@ -1,6 +1,7 @@
-
+import Comments from "@/components/ui/comments";
 import TourGrid from "../components/TourGrid";
 import TourTable from "../components/TourTable";
+
 export default function Home() {
   return (
     <>
@@ -13,11 +14,11 @@ export default function Home() {
           playsInline
           className="w-full h-full object-cover"
         >
-          <source src="bg-video.mp4" type="video/mp4" />
+          <source src="video.mp4" type="video/mp4" />
         </video>
-        <div className="absolute bottom-40 left-44 flex flex-col gap-6">
+        <div className="absolute bottom-40 left-140 flex flex-col gap-8 -mb-20">
           <h1
-            className="font-bold text-7xl
+            className="font-bold text-5xl
               bg-linear-to-b from-white to-white/60
               bg-clip-text text-transparent
               [-webkit-text-stroke:1px_rgba(255,255,255,0.35)]
@@ -28,7 +29,7 @@ export default function Home() {
           </h1>
           <p
             className="
-              font-bold text-3xl
+              font-bold text-2xl
               bg-linear-to-b from-white to-white/70
               bg-clip-text text-transparent
               [-webkit-text-stroke:1px_rgba(255,255,255,0.35)]
@@ -37,6 +38,19 @@ export default function Home() {
           >
             Дэлхийгээр Аялж. <br />
             Дэлхийн Дайтай Сэтгэе!
+          </p>
+          <p
+            className="
+              font-bold text-md
+              bg-linear-to-b from-white to-white/70
+              bg-clip-text text-transparent
+              [-webkit-text-stroke:1px_rgba(255,255,255,0.35)]
+              drop-shadow-[0_2px_6px_rgba(0,0,0,0.25)]
+            "
+          >
+            GTC MONGOLIA: Мөрөөдлийн аяллаа <br /> бидэнтэй эхлүүл Тансаг
+            аялалыг <br />
+            хамгийн хямдаар санал болгож байна
           </p>
         </div>
         {/* <div
@@ -85,12 +99,13 @@ export default function Home() {
 
       {/* Margin top 10 aar zai avch bgaa */}
       <div className="w-full mt-10"></div>
-      <TripTable />
+      <TourTable />
       <div>
         <TourGrid />
       </div>
-
-      
+      <div>
+        <Comments />
+      </div>
     </>
   );
 }

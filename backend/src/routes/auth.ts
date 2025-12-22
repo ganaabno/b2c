@@ -93,14 +93,14 @@ router.post("/login", async (req, res) => {
   const { email, password } = req.body;
 
   if (!email || !password) {
-    return res.status(400).json({ message: "Email and password required" });
+    return res.status(400).json({ message: "Имэйл хаяг болон нууц үг шаардлагатай" });
   }
 
   try {
     const [user] =
       await sql`SELECT * FROM users WHERE email = ${email.toLowerCase()}`;
     if (!user || !(await argon2.verify(user.password, password))) {
-      return res.status(401).json({ message: "Wrong credentials" });
+      return res.status(401).json({ message: "Имэйл эсвэл нууц үг буруу байна." });
     }
 
     const token = signToken(user.id, user.role);
@@ -112,7 +112,7 @@ router.post("/login", async (req, res) => {
     });
   } catch (err: any) {
     console.error("🔥 Login failed:", err);
-    res.status(500).json({ message: "Login error" });
+    res.status(500).json({ message: "Нэвтрэхэд алдаа гарлаа. Дахин оролдоно уу." });
   }
 });
 
@@ -121,7 +121,7 @@ router.get("/me", async (req, res) => {
   try {
     const authHeader = req.headers.authorization;
     if (!authHeader?.startsWith("Bearer ")) {
-      return res.status(401).json({ message: "No token" });
+      return res.status(401).json({ message: "Хэрэглэгч олдсонгүй" });
     }
 
     const token = authHeader.split(" ")[1];
@@ -132,13 +132,13 @@ router.get("/me", async (req, res) => {
       FROM users WHERE id = ${payload.id}
     `;
     console.log(user);
-    if (!user) return res.status(404).json({ message: "User not found" });
+    if (!user) return res.status(404).json({ message: "Хэрэглэгч олдсонгүй" });
     res.json(returnUser(user));
 
     //   res.json(formatUser(user));
   } catch (err: any) {
     console.error("🔥 /me error:", err);
-    res.status(401).json({ message: "Invalid token" });
+    res.status(401).json({ message: "Имэйл эсвэл нууц үг буруу байна." });
   }
 });
 

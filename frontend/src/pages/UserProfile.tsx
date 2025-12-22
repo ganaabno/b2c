@@ -133,7 +133,8 @@ export default function UserProfile() {
             {/* Avatar Upload Wrapper */}
             <div
               className="relative group cursor-pointer"
-              onClick={() => fileInputRef.current?.click()}>
+              onClick={() => fileInputRef.current?.click()}
+            >
               <div className="relative h-24 w-24 rounded-full overflow-hidden bg-gray-100 dark:bg-gray-700 border-4 border-white dark:border-gray-600 shadow-md">
                 <img
                   src={
@@ -164,11 +165,14 @@ export default function UserProfile() {
               <h2 className="text-xl font-semibold text-gray-900 dark:text-gray-100">
                 {formData.firstName || "User"} {formData.lastName}
               </h2>
-              <p className="text-gray-500 dark:text-gray-400">{formData.email}</p>
+              <p className="text-gray-500 dark:text-gray-400">
+                {formData.email}
+              </p>
               <button
                 type="button"
                 onClick={() => fileInputRef.current?.click()}
-                className="mt-2 text-sm text-blue-600 dark:text-blue-400 hover:text-blue-700 dark:hover:text-blue-300 font-medium md:hidden">
+                className="mt-2 text-sm text-blue-600 dark:text-blue-400 hover:text-blue-700 dark:hover:text-blue-300 font-medium md:hidden"
+              >
                 Зураг солих
               </button>
             </div>
@@ -177,7 +181,8 @@ export default function UserProfile() {
               onClick={logout}
               variant="outlined"
               color="error"
-              className="cursor-pointer">
+              className="cursor-pointer"
+            >
               Sign out
             </Button>
           </div>
@@ -247,7 +252,8 @@ export default function UserProfile() {
                 color="secondary"
                 className="cursor-pointer"
                 onClick={() => window.history.back()}
-                variant="contained">
+                variant="contained"
+              >
                 Буцах
               </Button>
               <Button
@@ -255,7 +261,8 @@ export default function UserProfile() {
                 color="success"
                 type="submit"
                 variant="contained"
-                disabled={saving}>
+                disabled={saving}
+              >
                 {saving ? "Хадгалж байна..." : "Хадгалах"}
               </Button>
             </div>
