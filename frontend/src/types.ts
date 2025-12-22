@@ -46,6 +46,7 @@ export interface Tour {
   seats: number;
   image_public_id: string | null;
   slug: string | null;
+  type: string ;
 }
 
 export interface UserProfileData {

@@ -37,6 +37,7 @@ export default function ManagerDashboard() {
     seats: 20,
     duration_day: "",
     duration_night: "",
+    type:""
   });
 
   const getAuthHeaders = () => {
@@ -151,6 +152,7 @@ export default function ManagerDashboard() {
         seats: tour.seats || 20,
         duration_day: tour.duration_day || "",
         duration_night: tour.duration_night || "",
+        type: tour.type||"",
       });
       setPreviewUrl(tour.image);
 
@@ -187,6 +189,7 @@ export default function ManagerDashboard() {
         seats: 20,
         duration_day: "",
         duration_night: "",
+        type:""
       });
       setPreviewUrl(null);
       setExistingPhotos([]);
