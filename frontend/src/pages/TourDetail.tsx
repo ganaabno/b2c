@@ -1,4 +1,5 @@
-import { useEffect, useState, useRef } from "react";
+import { useEffect, useState, useRef, Suspense, lazy } from "react";
+import React from "react";
 import { useParams, useNavigate } from "react-router-dom";
 import axios from "axios";
 import {
@@ -27,6 +28,36 @@ import type { Tour } from "@/types";
 import { Button } from "@/components/ui/button";
 import BookingDialog from "@/components/BookingDialog";
 
+
+
+const Hainan = lazy(() => 
+	import("../components/hutulbur/Hainan"));
+const Turkey = lazy(() => 
+	import("../components/hutulbur/Turkey"));
+const Bali = lazy(() => 
+	import("../components/hutulbur/Bali"));
+const Dalyan = lazy(() => 
+	import("../components/hutulbur/Dalyan"));
+const Halong_Bay= lazy(() => 
+	import("../components/hutulbur/Halong_Bay"));
+const HoChiMinh_Phu_coac = lazy(() => 
+	import("../components/hutulbur/HoChiMinh_Phu_coac"));
+const Janjieje = lazy(() => 
+	import("../components/hutulbur/Janjieje"));
+const Japan = lazy(() => 
+	import("../components/hutulbur/Japan"));
+const Natrang = lazy(() => 
+	import("../components/hutulbur/Natrang"));
+const Phu_Coac = lazy(() => 
+	import("../components/hutulbur/Phu_Coac"));
+const Shanghai = lazy(() => 
+	import("../components/hutulbur/Shanghai"));
+const Singapore = lazy(() => 
+	import("../components/hutulbur/Singapore"));
+const Thailand_Banggok = lazy(() => 
+	import("../components/hutulbur/Thailand_Banggok"));
+
+
 const SectionTitle = ({ icon: Icon, title }: { icon: any; title: string }) => (
   <div className="flex items-center gap-3 mb-6 border-b border-gray-100 dark:border-gray-700 pb-4">
     <div className="p-2 bg-amber-100 dark:bg-amber-900/30 rounded-lg text-amber-600 dark:text-amber-500">
@@ -52,6 +83,37 @@ export default function TourDetail() {
   const hotelRef = useRef<HTMLDivElement>(null);
   const galleryRef = useRef<HTMLDivElement>(null);
 
+  const showHutulbur()=>{
+  switch(){
+    case 'Hainan':
+      return <Hainan/>;
+      case "Turkey":
+        return <Turkey/>;
+        case "Bali":
+        return <Bali/>;
+        case "Dalyan":
+        return <Dalyan/>;
+        case "Halong_Bay":
+        return <Halong_Bay/>;
+        case "HoChiMinh_Phu_coac":
+        return <HoChiMinh_Phu_coac/>;
+        case "Janjieje":
+        return <Janjieje/>;
+        case "Japan":
+        return <Japan/>;
+        case "Natrang":
+        return <Natrang/>;
+        case "Phu_Coac":
+        return <Phu_Coac/>;
+        case "Shanghai":
+        return <Shanghai/>;
+        case "Singapore ":
+        return <Singapore />;
+        case "Thailand_Banggok":
+        return <Thailand_Banggok/>;
+      
+  }
+}
   useEffect(() => {
     if (!slug) return;
     const fetchTour = async () => {
