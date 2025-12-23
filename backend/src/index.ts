@@ -2,10 +2,12 @@
 import express from "express";
 import cors from "cors";
 import morgan from "morgan";
-import authRoutes from "./routes/auth";
-import tourRoutes from "./routes/tours";
-import userRoutes from "./routes/users";
+import authRouter from "./routes/auth";
+import tourRouter from "./routes/tours";
+import userRouter from "./routes/users";
 import uploadRouter from "./routes/upload";
+import { hipayRouter } from "./routes/hipayRouter";
+import axios from "axios";
 const app = express();
 
 app.use(
@@ -32,9 +34,10 @@ app.get("/", (req, res) => {
   });
 });
 app.use("/api/upload", uploadRouter);
-app.use("/api/auth", authRoutes);
-app.use("/api/tours", tourRoutes);
-app.use("/api/users", userRoutes);
+app.use("/api/auth", authRouter);
+app.use("/api/tours", tourRouter);
+app.use("/api/users", userRouter);
+app.use("/api/hipay", hipayRouter);
 
 app.use("*", (req, res) => {
   res.status(404).json({ message: "Endpoint not found!!" });

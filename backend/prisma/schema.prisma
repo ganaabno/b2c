@@ -1,0 +1,133 @@
+generator client {
+  provider = "prisma-client-js"
+}
+
+datasource db {
+  provider = "postgresql"
+  url      = env("DATABASE_URL")
+}
+
+model Form {
+  ID                   String    @id @default(dbgenerated("gen_random_uuid()"))
+  tour_title           String
+  departure_date       String
+  lastname             String
+  firstname            String
+  phone_number         String
+  email                String
+  birth_date           String
+  age                  String
+  passport_number      String
+  passport_expire_date String
+  allergies            String
+  emergency_phone      String
+  room_allocation      String
+  nationality          String
+  room_type            String
+  hotel                String
+  additional_service   String
+  price                String
+  passport_upload      String
+  notes                String?
+  pax_type             String?
+  itinerary_status     String?
+  created_at           DateTime? @default(now())
+}
+
+model manager_requests {
+  id             String    @id @db.Uuid
+  firstname      String
+  lastname       String
+  email          String
+  password       String
+  request_status String?   @default("PENDING")
+  created_at     DateTime? @default(now()) @db.Timestamp(6)
+}
+
+model provider_requests {
+  id             String    @id @db.Uuid
+  firstname      String
+  lastname       String
+  email          String
+  password       String
+  request_status String?   @default("PENDING")
+  created_at     DateTime? @default(now()) @db.Timestamp(6)
+}
+
+model subcontractor_requests {
+  id             String    @id @db.Uuid
+  firstname      String
+  lastname       String
+  email          String
+  password       String
+  request_status String?   @default("PENDING")
+  created_at     DateTime? @default(now()) @db.Timestamp(6)
+}
+
+model tours {
+  id                  String    @id(map: "Trips_pkey") @default(dbgenerated("gen_random_uuid()"))
+  title               String
+  description         String
+  cover_photo         String
+  country             String
+  departure_date      String
+  hotel               String
+  photos              String[]
+  flight_seats        String?
+  breakfast           String?
+  lunch               String?
+  dinner              String?
+  single_supply_price String?
+  additional_bed      String?
+  country_temperature String?
+  created_at          DateTime? @default(now())
+  subtitle            String?
+  duration            String?
+  group_size          String?
+  price_schedule      Json?
+  additional_prices   Json?
+  inclusions          Json?
+  hotels              Json?
+  free_inclusions     Json?
+  payment_options     Json?
+  itinerary           Json?
+  is_featured         Boolean?  @default(false)
+  status              String?   @default("active")
+  seats               Int?      @default(0)
+  image_public_id     String?
+  duration_day        String?
+  duration_night      String?
+  arrival_date        String?
+  slug                String?   @unique
+  program             String[]
+  type                String?
+}
+
+model users {
+  id              String    @id(map: "Users_pkey") @default(dbgenerated("gen_random_uuid()"))
+  lastname        String?   @default("")
+  firstname       String
+  email           String    @unique(map: "Users_email_key")
+  role            String?   @default(dbgenerated("ARRAY['CLIENT'::\"UserRole\"]"))
+  status          Status[]  @default([not_on_trip])
+  profile_picture String?
+  phone_number    String?
+  password        String?
+  created_at      DateTime? @default(now())
+  avatar          String?
+}
+
+enum Status {
+  on_trip
+  not_on_trip
+}
+
+enum UserRole {
+  ADMIN
+  MANAGER
+  PROVIDER
+  SUBAGENT
+  UGTAGCH
+  UDEGCH
+  CLIENT
+}

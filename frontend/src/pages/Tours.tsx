@@ -7,7 +7,7 @@ import {
   Calendar, 
   Clock, 
   ArrowRight, 
-  Utensils, 
+
   AlertCircle,
   Loader2,
   Search
@@ -69,11 +69,7 @@ export default function Tours() {
     );
   }
 
-  const hasMeal = (meal?: string | null) => {
-    if (!meal) return false;
-    const m = meal.toLowerCase();
-    return m.includes("included") || m.includes("yes") || m.includes("багтсан");
-  };
+ 
 
   // Helper to format price nicely
   const formatPrice = (price: string | number) => {
@@ -174,12 +170,7 @@ export default function Tours() {
                         <span>{new Date(tour.departure_date).toLocaleDateString("mn-MN")}</span>
                       </div>
                     )}
-                    {(hasMeal(tour.breakfast) || hasMeal(tour.lunch) || hasMeal(tour.dinner)) && (
-                      <div className="flex items-center gap-1.5" title="Meals Included">
-                        <Utensils className="h-4 w-4 text-green-600" />
-                        <span>Meals</span>
-                      </div>
-                    )}
+                   
                   </div>
 
                   {/* Footer */}

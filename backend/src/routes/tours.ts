@@ -118,6 +118,7 @@ router.post(
       seats,
       duration_day,
       duration_night,
+      genre
     } = req.body;
 
     try {
@@ -148,12 +149,12 @@ router.post(
       const [newTour] = await sql`
         INSERT INTO tours (
           title, slug, description, cover_photo, country, departure_date, arrival_date, 
-          duration_day, duration_night, hotel, breakfast, lunch, dinner, 
+          duration_day, duration_night, hotel, breakfast, lunch, dinner, genre,
           single_supply_price, additional_bed, country_temperature, status, 
           seats, image_public_id, photos
         ) VALUES (
           ${title}, ${slug}, ${description}, ${imageUrl}, ${country}, ${departure_date}, ${arrival_date}, 
-          ${duration_day}, ${duration_night}, ${hotel}, ${breakfast}, ${lunch}, ${dinner}, 
+          ${duration_day}, ${duration_night}, ${hotel}, ${breakfast}, ${lunch}, ${dinner}, ${genre},
           ${single_supply_price}, ${additional_bed}, ${country_temperature}, 
           ${status || "ACTIVE"}, ${
         seats || 20
@@ -262,6 +263,7 @@ router.put(
           additional_bed = COALESCE(${updates.additional_bed}, additional_bed),
           country_temperature = COALESCE(${updates.country_temperature}, country_temperature),
           status = COALESCE(${updates.status}, status),
+          genre = COALESCE($(updates.genre), genre),
           seats = COALESCE(${updates.seats}, seats)
         WHERE id = ${id}
         RETURNING *

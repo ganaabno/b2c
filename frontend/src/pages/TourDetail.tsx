@@ -28,35 +28,23 @@ import type { Tour } from "@/types";
 import { Button } from "@/components/ui/button";
 import BookingDialog from "@/components/BookingDialog";
 
-
-
-const Hainan = lazy(() => 
-	import("../components/hutulbur/Hainan"));
-const Turkey = lazy(() => 
-	import("../components/hutulbur/Turkey"));
-const Bali = lazy(() => 
-	import("../components/hutulbur/Bali"));
-const Dalyan = lazy(() => 
-	import("../components/hutulbur/Dalyan"));
-const Halong_Bay= lazy(() => 
-	import("../components/hutulbur/Halong_Bay"));
-const HoChiMinh_Phu_coac = lazy(() => 
-	import("../components/hutulbur/HoChiMinh_Phu_coac"));
-const Janjieje = lazy(() => 
-	import("../components/hutulbur/Janjieje"));
-const Japan = lazy(() => 
-	import("../components/hutulbur/Japan"));
-const Natrang = lazy(() => 
-	import("../components/hutulbur/Natrang"));
-const Phu_Coac = lazy(() => 
-	import("../components/hutulbur/Phu_Coac"));
-const Shanghai = lazy(() => 
-	import("../components/hutulbur/Shanghai"));
-const Singapore = lazy(() => 
-	import("../components/hutulbur/Singapore"));
-const Thailand_Banggok = lazy(() => 
-	import("../components/hutulbur/Thailand_Banggok"));
-
+const Hainan = lazy(() => import("../components/hutulbur/Hainan"));
+const Turkey = lazy(() => import("../components/hutulbur/Turkey"));
+const Bali = lazy(() => import("../components/hutulbur/Bali"));
+const Dalyan = lazy(() => import("../components/hutulbur/Dalyan"));
+const Halong_Bay = lazy(() => import("../components/hutulbur/Halong_Bay"));
+const HoChiMinh_Phu_coac = lazy(
+  () => import("../components/hutulbur/HoChiMinh_Phu_coac")
+);
+const Janjieje = lazy(() => import("../components/hutulbur/Janjieje"));
+const Japan = lazy(() => import("../components/hutulbur/Japan"));
+const Natrang = lazy(() => import("../components/hutulbur/Natrang"));
+const Phu_Coac = lazy(() => import("../components/hutulbur/Phu_Coac"));
+const Shanghai = lazy(() => import("../components/hutulbur/Shanghai"));
+const Singapore = lazy(() => import("../components/hutulbur/Singapore"));
+const Thailand_Banggok = lazy(
+  () => import("../components/hutulbur/Thailand_Banggok")
+);
 
 const SectionTitle = ({ icon: Icon, title }: { icon: any; title: string }) => (
   <div className="flex items-center gap-3 mb-6 border-b border-gray-100 dark:border-gray-700 pb-4">
@@ -83,37 +71,38 @@ export default function TourDetail() {
   const hotelRef = useRef<HTMLDivElement>(null);
   const galleryRef = useRef<HTMLDivElement>(null);
 
-  const showHutulbur()=>{
-  switch(){
-    case 'Hainan':
-      return <Hainan/>;
+  const showHutulbur = (tour: Tour) => {
+    switch (tour?.genre) {
+      case "Hainan":
+        return <Hainan />;
       case "Turkey":
-        return <Turkey/>;
-        case "Bali":
-        return <Bali/>;
-        case "Dalyan":
-        return <Dalyan/>;
-        case "Halong_Bay":
-        return <Halong_Bay/>;
-        case "HoChiMinh_Phu_coac":
-        return <HoChiMinh_Phu_coac/>;
-        case "Janjieje":
-        return <Janjieje/>;
-        case "Japan":
-        return <Japan/>;
-        case "Natrang":
-        return <Natrang/>;
-        case "Phu_Coac":
-        return <Phu_Coac/>;
-        case "Shanghai":
-        return <Shanghai/>;
-        case "Singapore ":
+        return <Turkey />;
+      case "Bali":
+        return <Bali />;
+      case "Dalyan":
+        return <Dalyan />;
+      case "Halong_Bay":
+        return <Halong_Bay />;
+      case "HoChiMinh_Phu_coac":
+        return <HoChiMinh_Phu_coac />;
+      case "Janjieje":
+        return <Janjieje />;
+      case "Japan":
+        return <Japan />;
+      case "Natrang":
+        return <Natrang />;
+      case "Phu_Coac":
+        return <Phu_Coac />;
+      case "Shanghai":
+        return <Shanghai />;
+      case "Singapore":
         return <Singapore />;
-        case "Thailand_Banggok":
-        return <Thailand_Banggok/>;
-      
-  }
-}
+      case "Thailand_Banggok":
+        return <Thailand_Banggok />;
+      default:
+        return null; // or a fallback component
+    }
+  };
   useEffect(() => {
     if (!slug) return;
     const fetchTour = async () => {
@@ -183,8 +172,7 @@ export default function TourDetail() {
         <div className="absolute top-0 left-0 w-full p-6 flex justify-between items-center z-20">
           <button
             onClick={() => navigate(-1)}
-            className="bg-white/10 cursor-pointer backdrop-blur-md p-3 rounded-full text-white hover:bg-white/20 border border-white/10 transition"
-          >
+            className="bg-white/10 cursor-pointer backdrop-blur-md p-3 rounded-full text-white hover:bg-white/20 border border-white/10 transition">
             <ArrowLeft className="h-6 w-6" />
           </button>
           <div className="flex gap-3">
@@ -237,8 +225,7 @@ export default function TourDetail() {
                   activeTab === item.id
                     ? "border-amber-600 text-amber-600 dark:text-amber-500"
                     : "border-transparent text-gray-500 hover:text-gray-800 dark:text-gray-400 dark:hover:text-gray-200"
-                }`}
-              >
+                }`}>
                 {item.label}
               </button>
             ))}
@@ -246,7 +233,7 @@ export default function TourDetail() {
         </div>
       </div>
 
-      <div className="max-w-7xl mx-auto px-4 md:px-8 py-10">
+      <div className="max-w-7xl mx-auto px-4 md:px-8 py-8">
         <div className="grid grid-cols-1 lg:grid-cols-3 gap-10">
           {/* --- LEFT COLUMN (Main Content) --- */}
           <div className="lg:col-span-2 space-y-12">
@@ -363,23 +350,7 @@ export default function TourDetail() {
                       Accommodation ({tour.hotel})
                     </span>
                   </li>
-                  {tour.breakfast && (
-                    <li className="flex items-start gap-3">
-                      <CheckCircle2 className="h-5 w-5 text-green-500 shrink-0 mt-0.5" />
-                      <span className="text-gray-700 dark:text-gray-300">
-                        Daily Breakfast
-                      </span>
-                    </li>
-                  )}
-                  {(tour.lunch || tour.dinner) && (
-                    <li className="flex items-start gap-3">
-                      <CheckCircle2 className="h-5 w-5 text-green-500 shrink-0 mt-0.5" />
-                      <span className="text-gray-700 dark:text-gray-300">
-                        Selected Meals ({tour.lunch ? "Lunch" : ""}{" "}
-                        {tour.dinner ? "Dinner" : ""})
-                      </span>
-                    </li>
-                  )}
+
                   <li className="flex items-start gap-3">
                     <CheckCircle2 className="h-5 w-5 text-green-500 shrink-0 mt-0.5" />
                     <span className="text-gray-700 dark:text-gray-300">
@@ -475,8 +446,7 @@ export default function TourDetail() {
                           prev === 0 ? galleryImages.length - 1 : prev - 1
                         );
                       }}
-                      className="absolute cursor-pointer left-4 top-1/2 -translate-y-1/2 bg-black/50 hover:bg-black/70 text-white p-2 rounded-full opacity-0 group-hover:opacity-100 transition-opacity"
-                    >
+                      className="absolute cursor-pointer left-4 top-1/2 -translate-y-1/2 bg-black/50 hover:bg-black/70 text-white p-2 rounded-full opacity-0 group-hover:opacity-100 transition-opacity">
                       <ArrowLeft className="h-6 w-6" />
                     </button>
 
@@ -488,8 +458,7 @@ export default function TourDetail() {
                           prev === galleryImages.length - 1 ? 0 : prev + 1
                         );
                       }}
-                      className="absolute cursor-pointer right-4 top-1/2 -translate-y-1/2 bg-black/50 hover:bg-black/70 text-white p-2 rounded-full opacity-0 group-hover:opacity-100 transition-opacity"
-                    >
+                      className="absolute cursor-pointer right-4 top-1/2 -translate-y-1/2 bg-black/50 hover:bg-black/70 text-white p-2 rounded-full opacity-0 group-hover:opacity-100 transition-opacity">
                       <ArrowRight className="h-6 w-6" />{" "}
                       {/* Make sure to import ArrowRight */}
                     </button>
@@ -505,8 +474,7 @@ export default function TourDetail() {
                           selectedImageIndex === idx
                             ? "border-amber-600 ring-2 ring-amber-600/30"
                             : "border-transparent opacity-70 hover:opacity-100"
-                        }`}
-                      >
+                        }`}>
                         <img
                           src={img}
                           alt={`Thumbnail ${idx}`}
@@ -523,6 +491,11 @@ export default function TourDetail() {
                 </div>
               )}
             </div>
+
+            <Suspense
+              fallback={<div>Components are loading please wait...</div>}>
+              {showHutulbur(tour)}
+            </Suspense>
           </div>
 
           {/* --- RIGHT COLUMN (Sticky Booking) --- */}

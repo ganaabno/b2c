@@ -30,9 +30,6 @@ export interface Tour {
   arrival_date: string | null;
   hotel: string | null;
   photos: string | null; // JSON or text[] – can be any for now
-  breakfast: string | null;
-  lunch: string | null;
-  dinner: string | null;
   single_supply_price: string | null; // from single_supply_price AS price
   additional_bed: string | null;
   country_temperature: string | null;
@@ -46,7 +43,7 @@ export interface Tour {
   seats: number;
   image_public_id: string | null;
   slug: string | null;
-  type: string ;
+  genre: string;
 }
 
 export interface UserProfileData {

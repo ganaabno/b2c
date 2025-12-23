@@ -1,2 +1,7 @@
 {
+  "editor.formatOnSave": true,
+  "[prisma]": {
+    "editor.defaultFormatter": "Prisma.prisma"
+  },
+  "prisma.prismaFmtBinPath": "pnpm dlx prisma format"
 }
