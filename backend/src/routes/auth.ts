@@ -63,7 +63,7 @@ router.post("/signup", async (req, res) => {
       ${LASTNAME},
       ${email.toLowerCase()},
       ${hash},
-      ${["CLIENT"]} ,
+      ${"CLIENT"} ,
       ${null}  
     )
     RETURNING id, firstname, lastname, email, role, avatar

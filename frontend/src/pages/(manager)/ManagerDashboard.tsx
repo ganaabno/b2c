@@ -4,8 +4,6 @@ import { Plus } from "lucide-react";
 import toast from "react-hot-toast";
 import { useQuery, useMutation, useQueryClient } from "@tanstack/react-query";
 import type { Tour } from "@/types";
-
-// Import your components
 import ManagerTourTable from "@/components/manager/ManagerTourTable";
 import ManagerTourModal from "@/components/manager/ManagerTourModal";
 
@@ -50,7 +48,7 @@ export default function ManagerDashboard() {
       queryClient.invalidateQueries({ queryKey: ["tours"] });
       closeModal();
     },
-    onError: (err: any) => {
+    onError: (err: unknown) => {
       console.error(err);
       toast.error("Failed to save tour");
     },
@@ -67,7 +65,11 @@ export default function ManagerDashboard() {
       toast.success("Deleted!");
       queryClient.invalidateQueries({ queryKey: ["tours"] });
     },
-    onError: (err: any) => toast.error(err.message || "Failed to delete"),
+    onError: (err: unknown) => {
+      if (err instanceof Error) {
+        toast.error(err.message || "Failed to delete");
+      }
+    },
   });
 
   // --- Handlers ---
@@ -93,9 +95,9 @@ export default function ManagerDashboard() {
 
   const handleSave = (formData: FormData) => {
     // FIX: Pass the ID explicitly when calling mutate
-    saveMutation.mutate({ 
-      id: editingTour?.id, 
-      data: formData 
+    saveMutation.mutate({
+      id: editingTour?.id,
+      data: formData,
     });
   };
 
@@ -115,11 +117,11 @@ export default function ManagerDashboard() {
         </div>
 
         {/* Table Component */}
-        <ManagerTourTable 
-          tours={tours} 
-          loading={loading} 
-          onEdit={openEditModal} 
-          onDelete={handleDelete} 
+        <ManagerTourTable
+          tours={tours}
+          loading={loading}
+          onEdit={openEditModal}
+          onDelete={handleDelete}
         />
       </div>
 

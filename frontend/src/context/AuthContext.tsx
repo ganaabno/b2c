@@ -8,7 +8,6 @@ import {
 import axios from "axios";
 import type { User, AuthContextType } from "@/types";
 
-
 const AuthContext = createContext<AuthContextType | undefined>(undefined);
 
 export function AuthProvider({ children }: { children: ReactNode }) {
@@ -47,9 +46,10 @@ export function AuthProvider({ children }: { children: ReactNode }) {
       const res = await api.post("/api/auth/login", { email, password });
       localStorage.setItem("token", res.data.token);
       setUser(res.data.user);
+    } catch (error) {
+      console.log("error:", error);
     } finally {
       setIsLoading(false);
-       
     }
   };
 
@@ -59,7 +59,7 @@ export function AuthProvider({ children }: { children: ReactNode }) {
     email: string,
     password: string
   ) => {
-     setIsLoading(true);
+    setIsLoading(true);
     try {
       const res = await api.post("/api/auth/signup", {
         firstname,
@@ -117,4 +117,3 @@ export const useAuth = () => {
   if (!context) throw new Error("useAuth must be used within AuthProvider");
   return context;
 };
-

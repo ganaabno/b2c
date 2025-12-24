@@ -28,7 +28,7 @@ const Hainan = () => {
         "03:10 цагт Саняа хотын Финикс олон улсын нисэх онгоцны буудалд буугаад хөтөч тосож буудалдаа хүргүүлж амарна.",
       ],
       meals: { lunch: "Restaurant" },
-      accommodation: "Jomtien Palm Beach Hotel",
+      accommodation: "",
     },
     {
       day: 2,
@@ -40,7 +40,7 @@ const Hainan = () => {
         "Чөлөөт өдрүүдээр далайн эрэг орж цагийг өнгөрөөх, буудалдаа амрах, дэлгүүр хэсэх, нэмэлт сонирхолтой хөтөлбөр авах зэрэг бусад хүссэн зүйлсээ хийх боломжтой.",
       ],
       meals: { breakfast: "Hotel breakfast" },
-      accommodation: "Jomtien Palm Beach Hotel",
+      accommodation: "",
     },
     {
       day: 3,
@@ -55,7 +55,7 @@ const Hainan = () => {
         "Товлосон цагт цугларч автобусандаа суун аварга загасны аж ахуйтай танилцана. 3-н давхар тансаг зэрэглэлийн усан онгоцоор Номхон далайд 3-н цаг аялна. Үүнд DJ, Karaoke, загасчлал, жимс, уух зүйлс, (хязгаартай) туршлагатай усан онгоцны баг зэрэг багтсан. Энэ аялалдаа та нэмэлтээр далайд шумбах, моторт завь, шүхэр, fly boarding зэрэг олон тоглоомууд тоглох боломжтой. (260-800 ЮАНЬ)",
       ],
       meals: { breakfast: "Restaurant", dinner: "Included" },
-      accommodation: "Jomtien Palm Beach Hotel",
+      accommodation: "",
     },
     {
       day: 4,
@@ -63,87 +63,95 @@ const Hainan = () => {
         "БҮТЭН ӨДРИЙН BEDUGUL ХЭСГИЙН АЯЛАЛ + TANAH LOT/ӨДӨР & ОРОЙН ХООЛ/",
       date: "2025.12.30 (Мягмар)",
       image: "https://placehold.co/600x400/00CED1/ffffff?text=Island",
-      location: "Pattaya City",
+      location: "Яанода ойн парк",
       route: [{ name: "Pattaya City", distance: "15km", duration: "30min" }],
       description: [
-        "08:00 Өглөөний цай",
-        "Mengwi тосгон – Taman Ayun язгууртны гэр бүлийн сүм",
-        "Bratan нуур – Ulun Danu усан дээрх хөвдөг сүм",
-        "Tanah Lot сүт",
+        "Яанода ойн паркийн аялал. (нэмэлт төлбөртэй: шилэн гүүр (98yuan), 12 төрлийн экстрэм тоглоомууд болон уулнаас завьтай гулгаж буух боломжтой (198 yuan). Хятадын цайны соёлтой танилцаж Кунг Фу цай амтлана.",
       ],
-      meals: { lunch: "Restaurant", dinner: "Included" },
-      accommodation: "Jomtien Palm Beach Hotel",
+      meals: { breakfast: "", lunch: "Restaurant", dinner: "Included" },
+      accommodation: "",
     },
     {
       day: 5,
-      title: "ХАГАС ӨДӨР WATER BOM PARK + ЧӨЛӨӨТ ЦАГ/ӨДӨР & ОРОЙН ХООЛ/",
+      title: "Чөлөөт өдөр. ",
       date: "2025.12.31 (Лхагва)",
       image: "https://placehold.co/600x400/00CED1/ffffff?text=Island",
       location: "Pattaya City",
       route: [{ name: "Pattaya City", distance: "15km", duration: "30min" }],
-      description: ["08:00 Өглөөний цай"],
-      meals: {},
-      accommodation: "Jomtien Palm Beach Hotel",
+      description: [
+        "Чөлөөт өдрүүдээр далайн эрэг орж цагийг өнгөрөөх, буудалдаа амрах, дэлгүүр хэсэх, нэмэлт сонирхолтой хөтөлбөр авах зэрэг бусад хүссэн зүйлсээ хийх боломжтой.",
+      ],
+      meals: { breakfast: "" },
+      accommodation: "",
     },
     {
       day: 6,
-      title:
-        "БҮТЭН ӨДРИЙН ТЭНГЭРИЙН ХААЛГА БОЛОН TIRTA GANGGA УСАН ОРДОНГИЙН АЯЛАЛ/ӨДӨР& ОРОЙН ХООЛ/",
+      title: "УСАН ПАРК ҮНЭГҮЙ",
       date: "2025.1.1 (Пүрэв)",
       image: "https://placehold.co/600x400/00CED1/ffffff?text=Island",
       location: "Pattaya City",
       route: [{ name: "Pattaya City", distance: "15km", duration: "30min" }],
       description: [
-        "08:00 Өглөөний цай",
-        "The Heaven Gate – Бали арлын зүүн зүгт байрлах Lempuyang The Heaven’s Gate буюу Тэнгэрийн хаалгыг зорино",
-        "Tirta Gangga – Хааны усан ордон",
+        "Товлосон цагт цугларч автобусандаа сууж аялалдаа гарна. Сувдны дэлгүүр ороод үүний дараа Дубайд салбартай ATLANTIS усан паркт очиж өдөржин хүссэнээрээ тоглоно.",
       ],
       meals: {
         breakfast: "Hotel breakfast",
-        lunch: "Restaurant",
+
         dinner: "Restaurant",
       },
-      accommodation: "Jomtien Palm Beach Hotel",
+      accommodation: "",
     },
     {
       day: 7,
-      title: "",
+      title: "Чөлөөт өдөр.",
       date: "2025.1.2 (Баасан)",
       image: "https://placehold.co/600x400/00CED1/ffffff?text=Island",
       location: "Pattaya City",
-      route: [{ name: "Pattaya City", distance: "15km", duration: "30min" }],
+      route: [],
       description: [
-        "07:00-08:00 Өглөөний цай",
-        "11:00 Аялагчид зочид буудлын өрөөгөө хүлээлгэж өгөн Ngurah Rai олон улсын нисэх буудал руу хөдөлнө.",
-        "13:10-17:20 Бали-Ханой нислэг",
-        "19:00 Зочид буудалд байрлана",
+        "Чөлөөт өдрүүдээр далайн эрэг орж цагийг өнгөрөөх, буудалдаа амрах, дэлгүүр хэсэх, нэмэлт сонирхолтой хөтөлбөр авах зэрэг бусад хүссэн зүйлсээ хийх боломжтой.",
       ],
       meals: {
         breakfast: "Hotel breakfast",
-        lunch: "Restaurant",
-        dinner: "Restaurant",
       },
-      accommodation: "Jomtien Palm Beach Hotel",
+      accommodation: "",
     },
 
     {
       day: 8,
-      title: "Сүүлийн өдөр",
+      title: "Чөлөөт өдөр",
       date: "2025.1.3 (Бямба)",
       image: "https://placehold.co/600x400/00CED1/ffffff?text=Island",
       location: "Pattaya City",
       route: [{ name: "Pattaya City", distance: "15km", duration: "30min" }],
       description: [
-        "07:00-08:00 Өглөөний цай",
-        "08:30 Аялагчид зочид буудлын өрөөгөө хүлээлгэж өгөн Ной Бай олон улсын нисэх буудал руу хөдөлнө",
-        "13:00-19:00 Ханой-Улаанбаатар нислэг",
+        "Чөлөөт өдрүүдээр далайн эрэг орж цагийг өнгөрөөх, буудалдаа амрах, дэлгүүр хэсэх, нэмэлт сонирхолтой хөтөлбөр авах зэрэг бусад хүссэн зүйлсээ хийх боломжтой.",
       ],
       meals: {
         breakfast: "Hotel breakfast",
-        lunch: "Restaurant",
-        dinner: "Restaurant",
       },
-      accommodation: "Jomtien Palm Beach Hotel",
+      accommodation: "",
+    },
+    {
+      day: 9,
+      title: "Сүүлийн өдөр",
+      date: "2025.1.4 (Ням)",
+      image: "https://placehold.co/600x400/00CED1/ffffff?text=Island",
+      location: "Pattaya City",
+      route: [{ name: "Pattaya City", distance: "15km", duration: "30min" }],
+      description: [
+        
+        "Тогтсон цагт буудлаа хүлээлгэж өгөөд Дэлхийн миссийн 53,54,55,57,60,67 дахь удаагийн тэмцээнийг зохион явуулсан Beauty Crown Center дээр очиж ГРУПП аялагч нартайгаа дурсгалын зураг татуулна.",
+"2138м cable car-аар зорчин Саняа хотын гэрэлт уул дээрх Үзэсгэлэнт Fenghuangling Sea Oath уулын байгалийн цогцолборт газрыг үзнэ.",
+"17:00 цагт Саняа Финикс нисэх онгоцны буудал дээр ирж бүртгэлээ хийлгэнэ.",
+"20:10 цагт Улаанбаатар чиглэлд нисээд шөнийн 01:10 цагт газардаж бидний аялал өндөрлөнө."
+
+      ],
+      meals: {
+        breakfast: "Hotel breakfast",
+        dinner:""
+      },
+      accommodation: "",
     },
   ];
 

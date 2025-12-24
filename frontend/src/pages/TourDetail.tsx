@@ -160,7 +160,7 @@ export default function TourDetail() {
   return (
     <div className="min-h-screen bg-gray-50 dark:bg-gray-900 font-sans pb-20">
       {/* --- 1. HERO HEADER (TravelX Style) --- */}
-      <div className="relative h-[60vh] lg:h-[70vh] w-full overflow-hidden">
+      <div className="relative h-[50vh] lg:h-[60vh] w-full overflow-hidden">
         <img
           src={tour.image || "https://placehold.co/1200x800"}
           alt={tour.title}
@@ -209,7 +209,7 @@ export default function TourDetail() {
       </div>
 
       {/* --- 2. STICKY NAV BAR (Global Travel Style) --- */}
-      <div className="sticky top-0 z-40 bg-white dark:bg-gray-800 shadow-md border-b border-gray-200 dark:border-gray-700">
+      <div className="sticky top-20 z-40 bg-white dark:bg-gray-800 shadow-md border-b border-gray-200 dark:border-gray-700">
         <div className="max-w-7xl mx-auto px-4 md:px-8">
           <div className="flex items-center gap-8 overflow-x-auto no-scrollbar">
             {[
@@ -500,7 +500,7 @@ export default function TourDetail() {
 
           {/* --- RIGHT COLUMN (Sticky Booking) --- */}
           <div className="lg:col-span-1">
-            <div className="sticky top-24 space-y-6">
+            <div className="sticky top-40 space-y-6">
               {/* Price Card */}
               <div className="bg-white dark:bg-gray-800 rounded-2xl shadow-xl border border-gray-100 dark:border-gray-700 overflow-hidden">
                 <div className="bg-amber-600 p-4 text-white text-center">
@@ -582,7 +582,7 @@ export default function TourDetail() {
                   </div>
                 </div>
                 <p className="text-2xl font-bold text-blue-800 dark:text-blue-200 mb-2">
-                  +976 9911 0000
+                  +976 76060606
                 </p>
                 <p className="text-sm text-blue-600/80 dark:text-blue-300/80">
                   Monday - Sunday, 9am - 8pm

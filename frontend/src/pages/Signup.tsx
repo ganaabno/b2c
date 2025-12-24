@@ -18,9 +18,11 @@ export default function SignupForm() {
     setError("");
     try {
       await signup(firstname, lastname, email, password);
-      navigate("/dashboard");
-    } catch (err: any) {
-      setError(err.message || "Signup failed");
+      navigate("/");
+    } catch (err: unknown) {
+      if (err instanceof Error) {
+        setError(err.message || "Signup failed");
+      }
     }
   };
 
@@ -30,20 +32,22 @@ export default function SignupForm() {
       animate={{ opacity: 1, x: 0 }}
       exit={{ opacity: 0, x: -30 }}
       transition={{ duration: 0.4 }}
-      className="w-full max-w-md"
-    >
+      className="w-full max-w-md">
       <div className="mb-12 text-left">
-        <img src={Logo} alt="Logo" className="w-64 invert mb-6"/>
-        <h1 className="text-4xl font-bold text-gray-900 mb-2">Бүртгүүлэх</h1>
-        <p className="text-gray-600">Gloval Travel-д тавтай морил</p>
+        <img src={Logo} alt="Logo" className="w-64 invert dark:invert-0 mb-6" />
+        <h1 className="text-4xl font-bold text-gray-900 dark:text-gray-50 mb-2">
+          Бүртгүүлэх
+        </h1>
+        <p className="text-gray-600 dark:text-gray-200">
+          Gloval Travel-д тавтай морил
+        </p>
       </div>
 
       {error && (
         <motion.div
           initial={{ opacity: 0, y: -10 }}
           animate={{ opacity: 1, y: 0 }}
-          className="mb-4 rounded-xl bg-red-50 border-2 border-red-200 p-4 text-red-700 text-center"
-        >
+          className="mb-4 rounded-xl bg-red-50 border-2 border-red-200 p-4 text-red-700 text-center">
           <div className="flex items-center justify-center gap-2">
             <svg className="w-5 h-5" fill="currentColor" viewBox="0 0 20 20">
               <path
@@ -60,7 +64,7 @@ export default function SignupForm() {
       <form onSubmit={handleSubmit} className="space-y-2">
         <div className="grid grid-cols-2 gap-4">
           <div className="space-y-2">
-            <label className="text-sm font-medium text-gray-700 block">
+            <label className="text-sm font-medium dark:text-gray-400 text-gray-700 block">
               Нэр
             </label>
             <input
@@ -68,12 +72,12 @@ export default function SignupForm() {
               placeholder="Нэрээ оруулна уу"
               value={firstname}
               onChange={(e) => setFirstname(e.target.value)}
-              className="w-full rounded-xl border-2 border-gray-200 px-4 py-3.5 text-gray-900 placeholder:text-gray-400 focus:border-sky-500 focus:ring-4 focus:ring-sky-500/10 focus:outline-none transition-all"
+              className="w-full dark:text-gray-300 rounded-xl border-2 border-gray-200 px-4 py-3.5 text-gray-900 placeholder:text-gray-400 focus:border-sky-500 focus:ring-4 focus:ring-sky-500/10 focus:outline-none transition-all"
               required
             />
           </div>
           <div className="space-y-2">
-            <label className="text-sm font-medium text-gray-700 block">
+            <label className="text-sm font-medium dark:text-gray-400 text-gray-700 block">
               Овог
             </label>
             <input
@@ -81,14 +85,14 @@ export default function SignupForm() {
               placeholder="Овгоо оруулна уу"
               value={lastname}
               onChange={(e) => setLastname(e.target.value)}
-              className="w-full rounded-xl border-2 border-gray-200 px-4 py-3.5 text-gray-900 placeholder:text-gray-400 focus:border-sky-500 focus:ring-4 focus:ring-sky-500/10 focus:outline-none transition-all"
+              className="w-full dark:text-gray-300 rounded-xl border-2 border-gray-200 px-4 py-3.5 text-gray-900 placeholder:text-gray-400 focus:border-sky-500 focus:ring-4 focus:ring-sky-500/10 focus:outline-none transition-all"
               required
             />
           </div>
         </div>
 
         <div className="space-y-2">
-          <label className="text-sm font-medium text-gray-700 block">
+          <label className="text-sm font-medium dark:text-gray-400 text-gray-700 block">
             Имэйл хаяг
           </label>
           <input
@@ -96,13 +100,13 @@ export default function SignupForm() {
             placeholder="example@email.com"
             value={email}
             onChange={(e) => setEmail(e.target.value)}
-            className="w-full rounded-xl border-2 border-gray-200 px-4 py-3.5 text-gray-900 placeholder:text-gray-400 focus:border-sky-500 focus:ring-4 focus:ring-sky-500/10 focus:outline-none transition-all"
+            className="w-full dark:text-gray-300 rounded-xl border-2 border-gray-200 px-4 py-3.5 text-gray-900 placeholder:text-gray-400 focus:border-sky-500 focus:ring-4 focus:ring-sky-500/10 focus:outline-none transition-all"
             required
           />
         </div>
 
         <div className="space-y-2">
-          <label className="text-sm font-medium text-gray-700 block">
+          <label className="text-sm  dark:text-gray-400 font-medium text-gray-700 block">
             Нууц үг
           </label>
           <input
@@ -110,7 +114,7 @@ export default function SignupForm() {
             placeholder="••••••••"
             value={password}
             onChange={(e) => setPassword(e.target.value)}
-            className="w-full rounded-xl border-2 border-gray-200 px-4 py-3.5 text-gray-900 placeholder:text-gray-400 focus:border-sky-500 focus:ring-4 focus:ring-sky-500/10 focus:outline-none transition-all"
+            className="w-full dark:text-gray-300 rounded-xl border-2 border-gray-200 px-4 py-3.5 text-gray-900 placeholder:text-gray-400 focus:border-sky-500 focus:ring-4 focus:ring-sky-500/10 focus:outline-none transition-all"
             required
           />
         </div>
@@ -118,8 +122,7 @@ export default function SignupForm() {
         <button
           type="submit"
           disabled={isLoading}
-          className="w-full rounded-xl bg-linear-to-r from-sky-500 to-sky-600 py-4 font-semibold text-white shadow-lg shadow-sky-500/30 hover:shadow-xl hover:shadow-sky-500/40 hover:scale-[1.02] disabled:opacity-50 disabled:cursor-not-allowed disabled:hover:scale-100 transition-all duration-200 mt-6"
-        >
+          className="w-full cursor-pointer rounded-xl bg-linear-to-r from-sky-500 to-sky-600 py-4 font-semibold text-white shadow-lg shadow-sky-500/30 hover:shadow-xl hover:shadow-sky-500/40 hover:scale-[1.02] disabled:opacity-50 disabled:cursor-not-allowed disabled:hover:scale-100 transition-all duration-200 mt-6">
           {isLoading ? (
             <span className="flex items-center justify-center gap-2">
               <svg className="animate-spin h-5 w-5" viewBox="0 0 24 24">

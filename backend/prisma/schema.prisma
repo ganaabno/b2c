@@ -110,7 +110,6 @@ model users {
   email           String    @unique(map: "Users_email_key")
   role            String?   @default(dbgenerated("ARRAY['CLIENT'::\"UserRole\"]"))
   status          Status[]  @default([not_on_trip])
-  profile_picture String?
   phone_number    String?
   password        String?
   created_at      DateTime? @default(now())

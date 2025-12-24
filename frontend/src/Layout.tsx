@@ -74,7 +74,7 @@ export default function Layout() {
                 alt="LogoImage"
                 className={`scale-50 transition-all duration-500 ${
                   isScrolled
-                    ? "brightness-0dark:brightness-100 invert"
+                    ? "brightness-0 dark:brightness-100 "
                     : "sepia hue-rotate-15 saturate-50 dark:brightness-0 dark:invert dark:sepia-0 dark:hue-rotate-0 dark:saturate-100"
                 }`}
               />
@@ -252,7 +252,7 @@ export default function Layout() {
                     />
                   </div>
                   <span className="text-xl text-gray-700 dark:text-gray-200 group-hover:text-amber-500 dark:group-hover:text-amber-400 font-medium">
-                    Hi, {user.firstname}
+                    Сайн уу, {user.firstname}
                   </span>
                 </Link>
                 <ModeToggle />

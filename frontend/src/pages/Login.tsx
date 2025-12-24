@@ -19,10 +19,13 @@ export default function LoginForm() {
     try {
       await login(email, password);
       navigate("/dashboard");
-    } catch (err: any) {
+    } catch (err: unknown) {
       console.error("Login failed:", err);
 
       let errorMessage = "Нэвтрэхэд алдаа гарлаа. Дахин оролдоно уу.";
+      if(err instanceof Error){
+        console.log(err)
+      }
 
       if (axios.isAxiosError(err)) {
         const serverMessage =
@@ -38,9 +41,7 @@ export default function LoginForm() {
           errorMessage =
             "Серверт алдаа гарлаа. Хэсэг хугацааны дараа оролдоно уу.";
         }
-      } else if (err.message) {
-        errorMessage = err.message;
-      }
+      } 
 
       setError(errorMessage);
 
@@ -58,9 +59,9 @@ export default function LoginForm() {
       className="w-full max-w-md"
     >
       <div className="mb-12 text-left">
-        <img src={logo} alt="Logo" className="w-64 invert mb-6" />
-        <h1 className="text-4xl font-bold text-gray-900 mb-2">Тавтай морил</h1>
-        <p className="text-gray-600">Та өөрийн хаяг руу нэвтэрнэ үү</p>
+        <img src={logo} alt="Logo" className="w-64 invert dark:invert-0 mb-6" />
+        <h1 className="text-4xl font-bold text-gray-900 mb-2 dark:text-gray-50">Тавтай морил</h1>
+        <p className="text-gray-600 dark:text-gray-200">Та өөрийн хаяг руу нэвтэрнэ үү</p>
       </div>
 
       {error && (
@@ -76,7 +77,7 @@ export default function LoginForm() {
 
       <form onSubmit={handleSubmit} className="space-y-5">
         <div className="space-y-2">
-          <label className="text-sm font-medium text-gray-700 block">
+          <label className="text-sm font-medium text-gray-700 dark:text-gray-400 block">
             Имэйл хаяг
           </label>
           <input
@@ -84,14 +85,14 @@ export default function LoginForm() {
             placeholder="example@email.com"
             value={email}
             onChange={(e) => setEmail(e.target.value)}
-            className="w-full rounded-xl border-2 border-gray-200 px-4 py-3.5 text-gray-900 placeholder:text-gray-400 focus:border-sky-500 focus:ring-4 focus:ring-sky-500/10 focus:outline-none transition-all"
+            className="w-full dark:text-gray-300 rounded-xl border-2 border-gray-200 px-4 py-3.5 text-gray-900 placeholder:text-gray-400 focus:border-sky-500 focus:ring-4 focus:ring-sky-500/10 focus:outline-none transition-all"
             required
             disabled={isLoading}
           />
         </div>
 
         <div className="space-y-2">
-          <label className="text-sm font-medium text-gray-700 block">
+          <label className="text-sm font-medium dark:text-gray-400 text-gray-700 block">
             Нууц үг
           </label>
           <input
@@ -99,7 +100,7 @@ export default function LoginForm() {
             placeholder="••••••••"
             value={password}
             onChange={(e) => setPassword(e.target.value)}
-            className="w-full rounded-xl border-2 border-gray-200 px-4 py-3.5 text-gray-900 placeholder:text-gray-400 focus:border-sky-500 focus:ring-4 focus:ring-sky-500/10 focus:outline-none transition-all"
+            className="w-full dark:text-gray-300 rounded-xl border-2 border-gray-200 px-4 py-3.5 text-gray-900 placeholder:text-gray-400 focus:border-sky-500 focus:ring-4 focus:ring-sky-500/10 focus:outline-none transition-all"
             required
             disabled={isLoading}
           />
@@ -108,7 +109,7 @@ export default function LoginForm() {
         <button
           type="submit"
           disabled={isLoading}
-          className="w-full rounded-xl bg-linear-to-r from-sky-500 to-sky-600 py-4 font-semibold text-white shadow-lg shadow-sky-500/30 hover:shadow-xl hover:shadow-sky-500/40 hover:scale-[1.02] disabled:opacity-50 disabled:cursor-not-allowed disabled:hover:scale-100 transition-all duration-200 mt-6"
+          className="w-full cursor-pointer rounded-xl bg-linear-to-r from-sky-500 to-sky-600 py-4 font-semibold text-white shadow-lg shadow-sky-500/30 hover:shadow-xl hover:shadow-sky-500/40 hover:scale-[1.02] disabled:opacity-50 disabled:cursor-not-allowed disabled:hover:scale-100 transition-all duration-200 mt-6"
         >
           {isLoading ? (
             <span className="flex items-center justify-center gap-2">

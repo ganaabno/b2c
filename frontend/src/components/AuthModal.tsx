@@ -55,7 +55,7 @@ export default function AuthModal({
               {/* Close Button */}
               <button
                 onClick={onClose}
-                className="absolute right-6 top-6 z-20 rounded-full bg-white/90 p-3 text-gray-700 hover:bg-white hover:scale-110 transition dark:bg-gray-800/90"
+                className="absolute cursor-pointer right-6 top-6 z-20 rounded-full bg-white/90 p-3 text-gray-700 hover:bg-white hover:scale-110 transition dark:bg-gray-800/90"
                 aria-label="Close"
               >
                 <X className="h-7 w-7" />
@@ -86,7 +86,7 @@ export default function AuthModal({
                             onClick={toggleMode}
                             className="font-bold text-sky-600 hover:underline hover:cursor-pointer hover:text-sky-800"
                           >
-                            энэд дарна уу
+                            энд дарна уу
                           </button>
                         </p>
                       </div>
@@ -122,12 +122,12 @@ export default function AuthModal({
                       <SignupForm />
                       <div className="mt-10 text-center text-gray-600 dark:text-gray-400">
                         <p className="text-lg">
-                          Бүртгүүлтэй бол{" "}
+                          Бүртгэлтэй бол{" "}
                           <button
                             onClick={toggleMode}
                             className="font-bold text-sky-600 hover:underline hover:cursor-pointer hover:text-sky-800"
                           >
-                            Энэд дарж нэвтэрнэ үү.
+                            энд дарж нэвтэрнэ үү.
                           </button>
                         </p>
                       </div>

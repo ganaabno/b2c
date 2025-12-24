@@ -125,7 +125,6 @@ CREATE TABLE "users" (
     "email" TEXT NOT NULL,
     "role" TEXT DEFAULT ARRAY['CLIENT'::"UserRole"],
     "status" "Status"[] DEFAULT ARRAY['not_on_trip']::"Status"[],
-    "profile_picture" TEXT,
     "phone_number" TEXT,
     "password" TEXT,
     "created_at" TIMESTAMP(3) DEFAULT CURRENT_TIMESTAMP,

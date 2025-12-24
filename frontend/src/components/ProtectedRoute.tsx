@@ -1,9 +1,12 @@
 import { Navigate, Outlet } from "react-router-dom";
 import { useAuth } from "../context/AuthContext";
-
-export default function ProtectedRoute() {
+import { useState } from "react";
+function ProtectedRoute(props) {
+  console.log(props);
+  console.log(props.allowedRoles);
+  const [youHaveAccessOfManager, setYouHaveAccessOfManager] = useState(false);
+  const [youHaveAccessOfAdmin, setYouHaveAccessOfAdmin] = useState(false);
   const { user, isLoading } = useAuth();
-
   if (isLoading)
     return (
       <div className="flex min-h-screen items-center justify-center">
@@ -11,5 +14,14 @@ export default function ProtectedRoute() {
       </div>
     );
 
+  // if (user?.role === "MANAGER") {
+  //   setYouHaveAccessOfManager(true);
+  // }
+  // if (user?.role === "ADMIN") {
+  //   setYouHaveAccessOfAdmin(true);
+  // }
+
   return user ? <Outlet /> : <Navigate to="/" replace />;
 }
+
+export default ProtectedRoute;
