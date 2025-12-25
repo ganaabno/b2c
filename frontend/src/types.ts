@@ -21,6 +21,7 @@ export interface AuthContextType {
 }
 
 export interface Tour {
+  breakfast(breakfast: any): unknown;
   id: string;
   title: string;
   description: string;
@@ -35,7 +36,7 @@ export interface Tour {
   country_temperature: string | null;
   created_at: string;
   duration_day: string;
-  duration_night:string;
+  duration_night: string;
   group_size: number;
   is_featured: boolean;
   subtitle: string;

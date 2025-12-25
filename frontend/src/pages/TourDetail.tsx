@@ -100,7 +100,7 @@ export default function TourDetail() {
       case "Thailand_Banggok":
         return <Thailand_Banggok />;
       default:
-        return null; // or a fallback component
+        return null;
     }
   };
   useEffect(() => {
@@ -172,7 +172,8 @@ export default function TourDetail() {
         <div className="absolute top-0 left-0 w-full p-6 flex justify-between items-center z-20">
           <button
             onClick={() => navigate(-1)}
-            className="bg-white/10 cursor-pointer backdrop-blur-md p-3 rounded-full text-white hover:bg-white/20 border border-white/10 transition">
+            className="bg-white/10 cursor-pointer backdrop-blur-md p-3 rounded-full text-white hover:bg-white/20 border border-white/10 transition"
+          >
             <ArrowLeft className="h-6 w-6" />
           </button>
           <div className="flex gap-3">
@@ -225,7 +226,8 @@ export default function TourDetail() {
                   activeTab === item.id
                     ? "border-amber-600 text-amber-600 dark:text-amber-500"
                     : "border-transparent text-gray-500 hover:text-gray-800 dark:text-gray-400 dark:hover:text-gray-200"
-                }`}>
+                }`}
+              >
                 {item.label}
               </button>
             ))}
@@ -446,7 +448,8 @@ export default function TourDetail() {
                           prev === 0 ? galleryImages.length - 1 : prev - 1
                         );
                       }}
-                      className="absolute cursor-pointer left-4 top-1/2 -translate-y-1/2 bg-black/50 hover:bg-black/70 text-white p-2 rounded-full opacity-0 group-hover:opacity-100 transition-opacity">
+                      className="absolute cursor-pointer left-4 top-1/2 -translate-y-1/2 bg-black/50 hover:bg-black/70 text-white p-2 rounded-full opacity-0 group-hover:opacity-100 transition-opacity"
+                    >
                       <ArrowLeft className="h-6 w-6" />
                     </button>
 
@@ -458,7 +461,8 @@ export default function TourDetail() {
                           prev === galleryImages.length - 1 ? 0 : prev + 1
                         );
                       }}
-                      className="absolute cursor-pointer right-4 top-1/2 -translate-y-1/2 bg-black/50 hover:bg-black/70 text-white p-2 rounded-full opacity-0 group-hover:opacity-100 transition-opacity">
+                      className="absolute cursor-pointer right-4 top-1/2 -translate-y-1/2 bg-black/50 hover:bg-black/70 text-white p-2 rounded-full opacity-0 group-hover:opacity-100 transition-opacity"
+                    >
                       <ArrowRight className="h-6 w-6" />{" "}
                       {/* Make sure to import ArrowRight */}
                     </button>
@@ -474,7 +478,8 @@ export default function TourDetail() {
                           selectedImageIndex === idx
                             ? "border-amber-600 ring-2 ring-amber-600/30"
                             : "border-transparent opacity-70 hover:opacity-100"
-                        }`}>
+                        }`}
+                      >
                         <img
                           src={img}
                           alt={`Thumbnail ${idx}`}
@@ -493,7 +498,8 @@ export default function TourDetail() {
             </div>
 
             <Suspense
-              fallback={<div>Components are loading please wait...</div>}>
+              fallback={<div>Components are loading please wait...</div>}
+            >
               {showHutulbur(tour)}
             </Suspense>
           </div>

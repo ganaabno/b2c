@@ -2,15 +2,15 @@ import { useState } from "react";
 import { useQuery } from "@tanstack/react-query";
 import axios from "axios";
 import { Link } from "react-router-dom";
-import { 
-  MapPin, 
-  Calendar, 
-  Clock, 
-  ArrowRight, 
-
+import {
+  MapPin,
+  Calendar,
+  Clock,
+  ArrowRight,
+  Utensils,
   AlertCircle,
   Loader2,
-  Search
+  Search,
 } from "lucide-react";
 import type { Tour } from "@/types";
 import { Button } from "@/components/ui/button";
@@ -18,7 +18,7 @@ import { Input } from "@/components/ui/input";
 
 export default function Tours() {
   const [searchTerm, setSearchTerm] = useState("");
-  
+
   const {
     data: tours = [],
     isLoading,
@@ -32,9 +32,10 @@ export default function Tours() {
   });
 
   // Filter tours based on search
-  const filteredTours = tours.filter(tour => 
-    tour.title.toLowerCase().includes(searchTerm.toLowerCase()) ||
-    tour.country.toLowerCase().includes(searchTerm.toLowerCase())
+  const filteredTours = tours.filter(
+    (tour) =>
+      tour.title.toLowerCase().includes(searchTerm.toLowerCase()) ||
+      tour.country.toLowerCase().includes(searchTerm.toLowerCase())
   );
 
   if (isLoading) {
@@ -57,9 +58,12 @@ export default function Tours() {
           <div className="bg-red-100 dark:bg-red-900/30 p-4 rounded-full w-fit mx-auto">
             <AlertCircle className="h-8 w-8 text-red-600 dark:text-red-400" />
           </div>
-          <h3 className="text-xl font-bold text-gray-900 dark:text-gray-100">Unable to load tours</h3>
+          <h3 className="text-xl font-bold text-gray-900 dark:text-gray-100">
+            Unable to load tours
+          </h3>
           <p className="text-gray-500 dark:text-gray-400">
-            We couldn't fetch the latest tours. Please check your connection or try again later.
+            We couldn't fetch the latest tours. Please check your connection or
+            try again later.
           </p>
           <Button onClick={() => window.location.reload()} variant="outline">
             Try Again
@@ -69,18 +73,21 @@ export default function Tours() {
     );
   }
 
- 
+  const hasMeal = (meal?: string | null) => {
+    if (!meal) return false;
+    const m = meal.toLowerCase();
+    return m.includes("included") || m.includes("yes") || m.includes("багтсан");
+  };
 
   // Helper to format price nicely
   const formatPrice = (price: string | number) => {
-    const num = String(price).replace(/[^0-9]/g, '');
+    const num = String(price).replace(/[^0-9]/g, "");
     if (!num) return "Price TBD";
     return `₮${Number(num).toLocaleString()}`;
   };
 
   return (
     <div className="min-h-screen bg-gray-50 dark:bg-gray-900 font-sans transition-colors duration-300">
-      
       {/* --- Header Section --- */}
       <div className="bg-white dark:bg-gray-800 border-b border-gray-200 dark:border-gray-700 pt-24 pb-12 px-4">
         <div className="max-w-7xl mx-auto text-center space-y-6">
@@ -88,15 +95,16 @@ export default function Tours() {
             Explore the <span className="text-amber-600">World</span>
           </h1>
           <p className="text-lg text-gray-600 dark:text-gray-300 max-w-2xl mx-auto">
-            Discover unforgettable journeys, curated just for you. From mountain peaks to city streets, find your next adventure here.
+            Discover unforgettable journeys, curated just for you. From mountain
+            peaks to city streets, find your next adventure here.
           </p>
-          
+
           {/* Search Bar */}
           <div className="max-w-md mx-auto relative">
             <Search className="absolute left-3 top-1/2 -translate-y-1/2 h-5 w-5 text-gray-400" />
-            <Input 
-              type="text" 
-              placeholder="Search destinations..." 
+            <Input
+              type="text"
+              placeholder="Search destinations..."
               className="pl-10 h-12 rounded-full bg-gray-100 dark:bg-gray-700 border-transparent focus:border-amber-500 focus:ring-amber-500 text-base"
               value={searchTerm}
               onChange={(e) => setSearchTerm(e.target.value)}
@@ -110,10 +118,16 @@ export default function Tours() {
         {filteredTours.length === 0 ? (
           <div className="text-center py-20">
             <p className="text-2xl text-gray-500 dark:text-gray-400 font-medium">
-              {searchTerm ? "No tours found matching your search." : "No tours available at the moment."}
+              {searchTerm
+                ? "No tours found matching your search."
+                : "No tours available at the moment."}
             </p>
             {searchTerm && (
-              <Button variant="link" onClick={() => setSearchTerm("")} className="mt-2 text-amber-600">
+              <Button
+                variant="link"
+                onClick={() => setSearchTerm("")}
+                className="mt-2 text-amber-600"
+              >
                 Clear search
               </Button>
             )}
@@ -121,20 +135,22 @@ export default function Tours() {
         ) : (
           <div className="grid gap-8 md:grid-cols-2 lg:grid-cols-3">
             {filteredTours.map((tour) => (
-              <Link 
-                key={tour.id} 
+              <Link
+                key={tour.id}
                 to={`/tours/${tour.slug}`}
                 className="group flex flex-col bg-white dark:bg-gray-800 rounded-2xl overflow-hidden shadow-lg hover:shadow-2xl transition-all duration-300 border border-gray-100 dark:border-gray-700 hover:-translate-y-1"
               >
                 {/* Image Container */}
                 <div className="relative h-64 overflow-hidden">
                   <img
-                    src={tour.image || "https://placehold.co/800x600?text=No+Image"}
+                    src={
+                      tour.image || "https://placehold.co/800x600?text=No+Image"
+                    }
                     alt={tour.title}
                     className="h-full w-full object-cover transition-transform duration-700 group-hover:scale-110"
                   />
                   <div className="absolute inset-0 bg-linear-to-t from-black/60 to-transparent opacity-60" />
-                  
+
                   {/* Badges */}
                   <div className="absolute top-4 left-4 flex flex-col gap-2">
                     {tour.duration_day && (
@@ -144,7 +160,7 @@ export default function Tours() {
                       </span>
                     )}
                   </div>
-                  
+
                   <div className="absolute bottom-4 left-4 right-4">
                     <p className="text-white/90 text-sm font-medium flex items-center gap-1 mb-1">
                       <MapPin className="h-4 w-4 text-amber-400" />
@@ -167,18 +183,34 @@ export default function Tours() {
                     {tour.departure_date && (
                       <div className="flex items-center gap-1.5">
                         <Calendar className="h-4 w-4 text-amber-600" />
-                        <span>{new Date(tour.departure_date).toLocaleDateString("mn-MN")}</span>
+                        <span>
+                          {new Date(tour.departure_date).toLocaleDateString(
+                            "mn-MN"
+                          )}
+                        </span>
                       </div>
                     )}
-                   
+                    {(hasMeal(tour.breakfast) ||
+                      hasMeal(tour.lunch) ||
+                      hasMeal(tour.dinner)) && (
+                      <div
+                        className="flex items-center gap-1.5"
+                        title="Meals Included"
+                      >
+                        <Utensils className="h-4 w-4 text-green-600" />
+                        <span>Meals</span>
+                      </div>
+                    )}
                   </div>
 
                   {/* Footer */}
                   <div className="flex items-center justify-between mt-auto">
                     <div>
-                      <p className="text-xs text-gray-500 dark:text-gray-400 uppercase font-semibold">Price per person</p>
+                      <p className="text-xs text-gray-500 dark:text-gray-400 uppercase font-semibold">
+                        Price per person
+                      </p>
                       <p className="text-2xl font-black text-amber-600 dark:text-amber-500">
-                        {formatPrice(tour.single_supply_price ||"")}
+                        {formatPrice(tour.single_supply_price || "")}
                       </p>
                     </div>
                     <div className="h-10 w-10 rounded-full bg-amber-100 dark:bg-amber-900/30 flex items-center justify-center text-amber-600 dark:text-amber-500 group-hover:bg-amber-600 group-hover:text-white transition-colors">

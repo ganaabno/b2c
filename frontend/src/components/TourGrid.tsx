@@ -4,6 +4,7 @@ import { useQuery } from "@tanstack/react-query";
 import axios from "axios";
 import { motion } from "framer-motion"; // Import framer-motion
 import type { Tour } from "@/types";
+import BookTourButton from "./BookTourButton";
 
 // --- SKELETON COMPONENT (For loading state) ---
 const TourSkeleton = () => (
@@ -37,19 +38,18 @@ export default function TourGrid() {
     show: {
       opacity: 1,
       transition: {
-        staggerChildren: 0.1
-      }
-    }
+        staggerChildren: 0.1,
+      },
+    },
   };
 
   const item = {
     hidden: { opacity: 0, y: 20 },
-    show: { opacity: 1, y: 0 }
+    show: { opacity: 1, y: 0 },
   };
 
   return (
     <section className="container mx-auto my-24 px-4">
-      
       {/* --- HEADER --- */}
       <div className="flex flex-col md:flex-row justify-between items-end mb-12 gap-4">
         <div>
@@ -58,7 +58,10 @@ export default function TourGrid() {
             <span>Бидний</span>
           </div>
           <h2 className="text-4xl font-extrabold text-gray-900 dark:text-white tracking-tight">
-            Онцлох <span className="text-transparent bg-clip-text bg-linear-to-r from-green-600 to-emerald-400">Аялалууд</span>
+            Онцлох{" "}
+            <span className="text-transparent bg-clip-text bg-linear-to-r from-green-600 to-emerald-400">
+              Аялалууд
+            </span>
           </h2>
         </div>
 
@@ -76,10 +79,12 @@ export default function TourGrid() {
       {/* --- GRID CONTENT --- */}
       {isLoading ? (
         <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-8">
-          {[1, 2, 3].map((i) => <TourSkeleton key={i} />)}
+          {[1, 2, 3].map((i) => (
+            <TourSkeleton key={i} />
+          ))}
         </div>
       ) : (
-        <motion.div 
+        <motion.div
           variants={container}
           initial="hidden"
           whileInView="show"
@@ -95,11 +100,14 @@ export default function TourGrid() {
               {/* Image Section */}
               <div className="relative h-72 overflow-hidden">
                 <img
-                  src={tour.image || "https://via.placeholder.com/800x600?text=No+Image"}
+                  src={
+                    tour.image ||
+                    "https://via.placeholder.com/800x600?text=No+Image"
+                  }
                   alt={tour.title}
                   className="w-full h-full object-cover transition-transform duration-700 group-hover:scale-110"
                 />
-                
+
                 {/* Glassmorphism Overlay Gradient */}
                 <div className="absolute inset-0 bg-linear-to-t from-black/60 via-transparent to-transparent opacity-60" />
 
@@ -107,7 +115,11 @@ export default function TourGrid() {
                 {tour.single_supply_price && (
                   <div className="absolute top-4 right-4 bg-white/90 dark:bg-gray-900/90 backdrop-blur-md px-4 py-2 rounded-full shadow-lg border border-white/20">
                     <span className="text-sm font-bold text-gray-900 dark:text-white">
-                      {tour.single_supply_price.includes("₮") ? tour.single_supply_price : `₮${Number(tour.single_supply_price).toLocaleString()}`}
+                      {tour.single_supply_price.includes("₮")
+                        ? tour.single_supply_price
+                        : `₮${Number(
+                            tour.single_supply_price
+                          ).toLocaleString()}`}
                     </span>
                   </div>
                 )}
@@ -122,7 +134,10 @@ export default function TourGrid() {
               {/* Content Section */}
               <div className="p-6 relative">
                 {/* Floating Action Button (Optional visual flair) */}
-                <Link to={`/tours/${tour.slug}`} className="absolute cursor-pointer -top-6 right-6 bg-green-500 text-white p-3 rounded-full shadow-lg shadow-green-500/30 opacity-0 group-hover:opacity-100 translate-y-4 group-hover:translate-y-0 transition-all duration-300">
+                <Link
+                  to={`/tours/${tour.slug}`}
+                  className="absolute cursor-pointer -top-6 right-6 bg-green-500 text-white p-3 rounded-full shadow-lg shadow-green-500/30 opacity-0 group-hover:opacity-100 translate-y-4 group-hover:translate-y-0 transition-all duration-300"
+                >
                   <ArrowRight className="w-5 h-5" />
                 </Link>
 
@@ -152,11 +167,10 @@ export default function TourGrid() {
                     to={`/tours/${tour.slug}`}
                     className="py-2.5 rounded-xl text-sm font-bold text-gray-600 dark:text-gray-300 bg-gray-100 dark:bg-gray-800 hover:bg-gray-200 dark:hover:bg-gray-700 text-center transition-colors"
                   >
-                    Дэлгэрэнгүй 
+                    Дэлгэрэнгүй
                   </Link>
-                  <button className="cursor-pointer py-2.5 rounded-xl text-sm font-bold text-white bg-green-600 hover:bg-green-700 shadow-lg shadow-green-600/20 transition-all active:scale-95">
-                    Захиалах
-                  </button>
+
+                  <BookTourButton tour={tour} />
                 </div>
               </div>
             </motion.div>

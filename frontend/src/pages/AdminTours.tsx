@@ -110,13 +110,39 @@ function TourFormModal({
           seats: 20,
           is_featured: false,
           status: "ACTIVE",
+          hotel: undefined,
+          breakfast: undefined,
+          lunch: undefined,
+          dinner: undefined,
+          single_supply_price: undefined,
+          additional_bed: undefined,
+          country_temperature: undefined,
+          departure_date: undefined,
+          arrival_date: undefined,
+          image: undefined,
+          image_public_id: undefined,
+          slug: undefined,
+          photos: undefined,
         },
   });
 
   const onSubmit = methods.handleSubmit(async (data) => {
     setIsSaving(true);
     try {
-      await upsertTour({ ...data, id: tour?.id });
+      await upsertTour({
+        ...data,
+        id: tour?.id,
+        title: "",
+        subtitle: "",
+        description: "",
+        country: "",
+        duration_day: "",
+        duration_night: "",
+        group_size: 0,
+        seats: 0,
+        is_featured: false,
+        status: "ACTIVE",
+      });
       queryClient.invalidateQueries({ queryKey: ["tours"] });
       onClose();
     } catch (err: any) {

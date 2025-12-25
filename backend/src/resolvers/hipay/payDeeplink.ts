@@ -1,24 +1,33 @@
-import axios from "axios";
 import { Request, Response } from "express";
 
-const paymentDeeplink = (req: Request, res: Response) => {
-    const {checkoutId} = req.body
-  let config = {
-  method: 'get',
-  maxBodyLength: Infinity,
-  url: `hipay://pay/${checkoutId}`,
-  headers: { }
+const HIPAY_BASE_URL = process.env.HIPAY_BASE_URL || "https://test.hipay.mn";
+
+export const getPaymentDeeplink = (req: Request, res: Response) => {
+  // checkoutId-г body эсвэл params-аас авах боломжтой болгож байна (илүү уян хатан)
+  const checkoutId = (req.body.checkoutId ||
+    req.params.checkoutId ||
+    req.query.checkoutId) as string;
+
+  if (
+    !checkoutId ||
+    typeof checkoutId !== "string" ||
+    checkoutId.trim() === ""
+  ) {
+    return res.status(400).json({
+      success: false,
+      message: "checkoutId шаардлагатай бөгөөд зөв string байх ёстой",
+    });
+  }
+
+  const deeplink = `hipay:///pay/${checkoutId.trim()}`;
+  const webPaymentUrl = `${HIPAY_BASE_URL}/pay/${checkoutId.trim()}`;
+
+  return res.json({
+    success: true,
+    checkoutId: checkoutId.trim(),
+    deeplink, // Mobile HiPay app руу шууд нээх
+    webPaymentUrl, // Browser дээр fallback болгох
+    message:
+      "Deeplink-ийг ашиглан HiPay аппыг нээж төлбөр төлнө үү. Хэрэв апп байхгүй бол webPaymentUrl руу орно уу.",
+  });
 };
-
-axios.request(config)
-.then((response) => {
-  console.log(JSON.stringify(response.data));
-})
-.catch((error) => {
-  console.log(error);
-});
-};
-export default paymentDeeplink;
-
-
-
