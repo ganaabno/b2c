@@ -133,6 +133,7 @@ export default function ManagerDashboard() {
         onSave={handleSave}
         isSaving={saveMutation.isPending}
       />
+     
     </div>
   );
 }

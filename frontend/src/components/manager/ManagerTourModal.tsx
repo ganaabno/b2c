@@ -1,7 +1,8 @@
-import { useState, useEffect } from "react";
+import { useState, useEffect, useCallback } from "react";
 import { X, Upload, Plus, Loader2 } from "lucide-react";
 import type { Tour } from "@/types";
-
+import { Hainan_Default, Bali_Default } from "./ManagerDefaultData";
+import * as React from "react";
 interface ManagerTourModalProps {
   isOpen: boolean;
   onClose: () => void;
@@ -24,7 +25,7 @@ const INITIAL_FORM_STATE = {
   seats: 20,
   duration_day: "",
   duration_night: "",
-  genre: "",
+  genre: "Bali",
 };
 
 export default function ManagerTourModal({
@@ -39,6 +40,17 @@ export default function ManagerTourModal({
   const [previewUrl, setPreviewUrl] = useState<string | null>(null);
   const [galleryFiles, setGalleryFiles] = useState<File[]>([]);
   const [existingPhotos, setExistingPhotos] = useState<string[]>([]);
+
+  const handleGenreChange = useCallback(() => {
+    if (formData.genre === "Hainan") {
+      setFormData(Hainan_Default);
+    }
+    if (formData.genre === "Bali") {
+      setFormData(Bali_Default);
+      console.log("working")
+      console.log("formData:",formData)
+    }
+  }, [formData.genre, formData]);
 
   // --- DATA POPULATION LOGIC ---
   useEffect(() => {
@@ -56,7 +68,7 @@ export default function ManagerTourModal({
             ? tourToEdit.arrival_date.split("T")[0]
             : "",
           hotel: tourToEdit.hotel || "",
-
+          child_price: tourToEdit.child_price || "",
           single_supply_price: tourToEdit.single_supply_price || "",
           additional_bed: tourToEdit.additional_bed || "",
           country_temperature: tourToEdit.country_temperature || "",
@@ -64,7 +76,7 @@ export default function ManagerTourModal({
           seats: tourToEdit.seats || 20,
           duration_day: tourToEdit.duration_day || "",
           duration_night: tourToEdit.duration_night || "",
-          genre: tourToEdit.genre || "",
+         
         });
         setPreviewUrl(tourToEdit.image || null);
 
@@ -82,6 +94,7 @@ export default function ManagerTourModal({
         }
       } else {
         // CREATE MODE: Reset form
+        console.log("AHGAGHAH");
         setFormData(INITIAL_FORM_STATE);
         setPreviewUrl(null);
         setExistingPhotos([]);
@@ -135,15 +148,15 @@ export default function ManagerTourModal({
         <div className="flex justify-between items-center p-6 border-b border-gray-100 dark:border-slate-700/80 shrink-0">
           <div>
             <h2 className="text-xl font-bold text-gray-900 dark:text-white">
-              {tourToEdit ? "Edit Tour" : "Create New Tour"}
+              {tourToEdit ? "Аялалын мэдээлэл засах" : "Шинэ аялал үүсгэх"}
             </h2>
             <p className="text-sm text-gray-500 dark:text-slate-400 mt-1">
-              Fill in the details below to manage your tour package.
+              Аялалын мэдээллээ оруулахаасаа өмнө шалгана уу
             </p>
           </div>
           <button
             onClick={onClose}
-            className="p-2 rounded-full text-gray-400 hover:text-gray-600 dark:text-slate-400 dark:hover:text-slate-200 hover:bg-gray-100 dark:hover:bg-slate-700 transition-colors">
+            className="p-2 cursor-pointer rounded-full text-gray-400 hover:text-gray-600 dark:text-slate-400 dark:hover:text-slate-200 hover:bg-gray-100 dark:hover:bg-slate-700 transition-colors">
             <X className="h-5 w-5" />
           </button>
         </div>
@@ -156,7 +169,7 @@ export default function ManagerTourModal({
               <div className="md:col-span-1 space-y-6">
                 {/* Cover Photo Input */}
                 <div>
-                  <label className={labelClass}>Cover Photo</label>
+                  <label className={labelClass}>Нүүр зураг</label>
                   <div className="relative h-40 w-full rounded-xl bg-gray-50 dark:bg-slate-900/50 border-2 border-dashed border-gray-300 dark:border-slate-600 hover:border-amber-500 dark:hover:border-amber-500 transition-colors flex items-center justify-center overflow-hidden group">
                     {previewUrl ? (
                       <img
@@ -168,12 +181,12 @@ export default function ManagerTourModal({
                       <div className="text-center p-4">
                         <Upload className="h-8 w-8 mx-auto text-gray-400 dark:text-slate-500 mb-2" />
                         <span className="text-gray-400 dark:text-slate-500 text-xs">
-                          Upload Cover Image
+                          Нүүр зураг оруулах
                         </span>
                       </div>
                     )}
                     <label className="absolute inset-0 flex items-center justify-center bg-black/60 opacity-0 group-hover:opacity-100 transition-opacity cursor-pointer text-white text-sm font-medium backdrop-blur-[2px]">
-                      <Upload className="h-4 w-4 mr-2" /> Change Photo
+                      <Upload className="h-4 w-4 mr-2" /> Зураг солих
                       <input
                         type="file"
                         className="hidden"
@@ -187,9 +200,9 @@ export default function ManagerTourModal({
                 {/* Gallery Input */}
                 <div>
                   <div className="flex justify-between items-center mb-2">
-                    <label className={labelClass}>Gallery</label>
+                    <label className={labelClass}>Зурагнууд</label>
                     <label className="cursor-pointer text-amber-600 dark:text-amber-400 text-xs font-medium hover:underline flex items-center">
-                      <Plus className="h-3 w-3 mr-1" /> Add Photos
+                      <Plus className="h-3 w-3 mr-1" /> зураг нэмэх
                       <input
                         type="file"
                         multiple
@@ -221,7 +234,7 @@ export default function ManagerTourModal({
                         </button>
                       </div>
                     ))}
-                    {galleryFiles.slice(0, 3).map((file, idx) => (
+                    {galleryFiles.map((file, idx) => (
                       <div
                         key={`new-${idx}`}
                         className="aspect-square rounded-lg bg-amber-50 dark:bg-amber-900/20 relative border border-amber-200 dark:border-amber-700/50 overflow-hidden">
@@ -255,7 +268,7 @@ export default function ManagerTourModal({
               {/* Right Column: Inputs */}
               <div className="md:col-span-2 space-y-5">
                 <div>
-                  <label className={labelClass}>Tour Title</label>
+                  <label className={labelClass}>Аялалын гарчиг</label>
                   <input
                     name="title"
                     value={formData.title}
@@ -266,19 +279,20 @@ export default function ManagerTourModal({
                   />
                 </div>
 
-                <div className="grid grid-cols-3 gap-4">
+                <div className="grid grid-cols-4 gap-4">
                   <div>
-                    <label className={labelClass}>Country</label>
+                    <label className={labelClass}>Улс</label>
                     <input
                       name="country"
                       value={formData.country}
                       onChange={handleChange}
                       className={inputClass}
                       placeholder="Mongolia"
+                      required
                     />
                   </div>
                   <div>
-                    <label className={labelClass}>Price (₮)</label>
+                    <label className={labelClass}>Үнэ (₮)</label>
                     <input
                       name="single_supply_price"
                       value={formData.single_supply_price}
@@ -289,7 +303,18 @@ export default function ManagerTourModal({
                     />
                   </div>
                   <div>
-                    <label className={labelClass}>Hotel</label>
+                    <label className={labelClass}>Хүүхдийн үнэ (₮)</label>
+                    <input
+                      name="child_price"
+                      value={formData.child_price}
+                      onChange={handleChange}
+                      className={inputClass}
+                      placeholder="0.00"
+                      required
+                    />
+                  </div>
+                  <div>
+                    <label className={labelClass}>Зочид буудал</label>
                     <input
                       name="hotel"
                       value={formData.hotel}
@@ -302,12 +327,16 @@ export default function ManagerTourModal({
 
                 <div className="grid grid-cols-3 gap-4">
                   <div>
-                    <label className={labelClass}>Genre</label>
+                    <label className={labelClass}>Genre:</label>
                     <select
                       name="genre"
                       value={formData.genre}
-                      onChange={handleChange}
+                      onChange={(e) => {
+                        handleGenreChange(e);
+                        handleChange(e);
+                      }}
                       className={inputClass}>
+                      <option value=""></option>
                       <option value="Bali">Bali</option>
                       <option value="Dalyan">Dalyan</option>
                       <option value="Hainan">Hainan</option>
@@ -325,17 +354,18 @@ export default function ManagerTourModal({
                     </select>
                   </div>
                   <div>
-                    <label className={labelClass}>Start Date</label>
+                    <label className={labelClass}>departure date</label>
                     <input
                       type="date"
                       name="departure_date"
                       value={formData.departure_date}
                       onChange={handleChange}
                       className={`${inputClass} dark:scheme-dark `}
+                      required
                     />
                   </div>
                   <div>
-                    <label className={labelClass}>End Date</label>
+                    <label className={labelClass}>Arrival date</label>
                     <input
                       type="date"
                       name="arrival_date"
@@ -361,7 +391,7 @@ export default function ManagerTourModal({
                     </select>
                   </div>
                   <div>
-                    <label className={labelClass}>Seats</label>
+                    <label className={labelClass}>Үлдсэн суудал</label>
                     <input
                       type="number"
                       name="seats"
@@ -371,7 +401,7 @@ export default function ManagerTourModal({
                     />
                   </div>
                   <div>
-                    <label className={labelClass}>Days</label>
+                    <label className={labelClass}>Өдөр</label>
                     <input
                       name="duration_day"
                       value={formData.duration_day}
@@ -381,7 +411,7 @@ export default function ManagerTourModal({
                     />
                   </div>
                   <div>
-                    <label className={labelClass}>Nights</label>
+                    <label className={labelClass}>Шөнө</label>
                     <input
                       name="duration_night"
                       value={formData.duration_night}
@@ -394,7 +424,7 @@ export default function ManagerTourModal({
 
                 {/* Description */}
                 <div>
-                  <label className={labelClass}>Description</label>
+                  <label className={labelClass}>Дэлгэрэнгүй мэдээлэл</label>
                   <textarea
                     name="description"
                     rows={6}
@@ -402,6 +432,7 @@ export default function ManagerTourModal({
                     onChange={handleChange}
                     className={`${inputClass} resize-none leading-relaxed`}
                     placeholder="Write a detailed description of the tour..."
+                    required
                   />
                 </div>
               </div>
@@ -416,7 +447,7 @@ export default function ManagerTourModal({
             type="button"
             onClick={onClose}
             className="px-5 py-2.5 cursor-pointer text-sm font-semibold text-gray-700 dark:text-slate-300 hover:bg-gray-100 dark:hover:bg-slate-700 rounded-lg transition-colors">
-            Cancel
+            Буцах
           </button>
           <button
             disabled={isSaving}
@@ -424,7 +455,7 @@ export default function ManagerTourModal({
             form="tourForm"
             className="px-6 py-2.5 cursor-pointer text-sm font-bold bg-amber-600 hover:bg-amber-700 dark:bg-amber-600 dark:hover:bg-amber-500 text-white rounded-lg shadow-lg shadow-amber-600/20 flex items-center gap-2 transition-all transform active:scale-95">
             {isSaving ? <Loader2 className="h-4 w-4 animate-spin" /> : null}
-            {tourToEdit ? "Update Tour" : "Create Tour"}
+            {tourToEdit ? "Аялал засах" : "Аялал үүсгэх"}
           </button>
         </div>
       </div>

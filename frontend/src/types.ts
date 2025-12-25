@@ -32,6 +32,7 @@ export interface Tour {
   hotel: string | null;
   photos: string | null; // JSON or text[] – can be any for now
   single_supply_price: string | null; // from single_supply_price AS price
+  child_price: string | null;
   additional_bed: string | null;
   country_temperature: string | null;
   created_at: string;
