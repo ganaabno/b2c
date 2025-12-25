@@ -112,6 +112,7 @@ router.post(
       lunch,
       dinner,
       single_supply_price,
+      child_price,
       additional_bed,
       country_temperature,
       status,
@@ -148,12 +149,12 @@ router.post(
       // Note: We pass galleryUrls array directly because we changed the column to text[]
       const [newTour] = await sql`
         INSERT INTO tours (
-          title, slug, description, cover_photo, country, departure_date, arrival_date, 
+          title, slug, description, cover_photo, country, departure_date, arrival_date, child_price,
           duration_day, duration_night, hotel, breakfast, lunch, dinner, genre,
           single_supply_price, additional_bed, country_temperature, status, 
           seats, image_public_id, photos
         ) VALUES (
-          ${title}, ${slug}, ${description}, ${imageUrl}, ${country}, ${departure_date}, ${arrival_date}, 
+          ${title}, ${slug}, ${description}, ${imageUrl}, ${country}, ${departure_date}, ${arrival_date}, ${child_price},
           ${duration_day}, ${duration_night}, ${hotel}, ${breakfast}, ${lunch}, ${dinner}, ${genre},
           ${single_supply_price}, ${additional_bed}, ${country_temperature}, 
           ${status || "ACTIVE"}, ${
@@ -260,6 +261,7 @@ router.put(
           lunch = COALESCE(${updates.lunch}, lunch),
           dinner = COALESCE(${updates.dinner}, dinner),
           single_supply_price = COALESCE(${updates.single_supply_price}, single_supply_price),
+          child_price = COALESCE(${updates.child_price}, child_price),
           additional_bed = COALESCE(${updates.additional_bed}, additional_bed),
           country_temperature = COALESCE(${updates.country_temperature}, country_temperature),
           status = COALESCE(${updates.status}, status),
