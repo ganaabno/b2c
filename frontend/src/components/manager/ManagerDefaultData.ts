@@ -1,21 +1,3 @@
-export const Hainan_Default = {
-  title: "HAINAN TITLE",
-  description: "HAINAN DESCRIPTION LONG",
-  country: "China",
-  departure_date: "",
-  arrival_date: "",
-  hotel: "HAINAN HOTEL",
-  single_supply_price: "HAINAN ADULT PRICE",
-  child_price: "HAINAN CHILD PRICE",
-  additional_bed: "HAINAN ADDITIONAL BED",
-  country_temperature: "HAINAN TEMPERATURE",
-  status: "ACTIVE",
-  seats: 20,
-  duration_day: "HAINAN DURATION DAY",
-  duration_night: "HAINAN DURATION NIGHT",
-  genre:"Hainan"
-};
-
 export const Bali_Default = {
   title: "BALI TITLE",
   description: "BALI DESCRIPTION LONG",
@@ -31,41 +13,226 @@ export const Bali_Default = {
   seats: 20,
   duration_day: "BALI DURATION DAY",
   duration_night: "BALI DURATION NIGHT",
-  genre:"Bali"
+  cover_photo:
+    "https://res.cloudinary.com/dvnzk53kp/cover_photo/upload/v1766382788/travel-app-tours/p2cnux1pdc1dpzlhxewg.jpg",
 };
 
-export const DALYAN_Default = {
-  title: "DALYAN TITLE",
-  description: "DALYAN DESCRIPTION LONG",
+export const Dalyan_Default = {
+  title: "Dalyan TITLE",
+  description: "Dalyan DESCRIPTION LONG",
   country: "Turkey",
   departure_date: "",
   arrival_date: "",
-  hotel: "DALYAN HOTEL",
-  single_supply_price: "DALYAN ADULT PRICE",
-  child_price: "DALYAN CHILD PRICE",
-  additional_bed: "DALYAN ADDITIONAL BED",
-  country_temperature: "DALYAN TEMPERATURE",
+  hotel: "Dalyan HOTEL",
+  single_supply_price: "Dalyan ADULT PRICE",
+  child_price: "Dalyan CHILD PRICE",
+  additional_bed: "Dalyan ADDITIONAL BED",
+  country_temperature: "Dalyan TEMPERATURE",
   status: "ACTIVE",
   seats: 20,
-  duration_day: "DALYAN DURATION DAY",
-  duration_night: "DALYAN DURATION NIGHT",
-  genre:"Dalyan"
+  duration_day: "Dalyan DURATION DAY",
+  duration_night: "Dalyan DURATION NIGHT",
+  cover_photo:
+    "https://res.cloudinary.com/dvnzk53kp/cover_photo/upload/v1766382788/travel-app-tours/p2cnux1pdc1dpzlhxewg.jpg",
+};
+export const Hainan_Default = {
+  title: "HAINAN TITLE",
+  description: "HAINAN DESCRIPTION LONG",
+  country: "China",
+  departure_date: "",
+  arrival_date: "",
+  hotel: "HAINAN HOTEL",
+  single_supply_price: "HAINAN ADULT PRICE",
+  child_price: "HAINAN CHILD PRICE",
+  additional_bed: "HAINAN ADDITIONAL BED",
+  country_temperature: "HAINAN TEMPERATURE",
+  status: "ACTIVE",
+  seats: 20,
+  duration_day: "HAINAN DURATION DAY",
+  duration_night: "HAINAN DURATION NIGHT",
+  cover_photo:
+    "https://res.cloudinary.com/dvnzk53kp/cover_photo/upload/v1766382788/travel-app-tours/p2cnux1pdc1dpzlhxewg.jpg",
 };
 
-export const HALONG_BAY_Default = {
-  title: "HALONG_BAY TITLE",
-  description: "HALONG_BAY DESCRIPTION LONG",
+export const Halong_Bay_Default = {
+  title: "Halong_Bay TITLE",
+  description: "Halong_Bay DESCRIPTION LONG",
   country: "Vietnam",
   departure_date: "",
   arrival_date: "",
-  hotel: "HALONG_BAY HOTEL",
-  single_supply_price: "HALONG_BAY ADULT PRICE",
-  child_price: "HALONG_BAY CHILD PRICE",
-  additional_bed: "HALONG_BAY ADDITIONAL BED",
-  country_temperature: "HALONG_BAY TEMPERATURE",
+  hotel: "Halong_Bay HOTEL",
+  single_supply_price: "Halong_Bay ADULT PRICE",
+  child_price: "Halong_Bay CHILD PRICE",
+  additional_bed: "Halong_Bay ADDITIONAL BED",
+  country_temperature: "Halong_Bay TEMPERATURE",
   status: "ACTIVE",
   seats: 20,
-  duration_day: "HALONG_BAY DURATION DAY",
-  duration_night: "HALONG_BAY DURATION NIGHT",
-  genre:"Halong_Bay"
+  duration_day: "Halong_Bay DURATION DAY",
+  duration_night: "Halong_Bay DURATION NIGHT",
+  cover_photo:
+    "https://res.cloudinary.com/dvnzk53kp/cover_photo/upload/v1766382788/travel-app-tours/p2cnux1pdc1dpzlhxewg.jpg",
+};
+
+export const HoChiMinh_Phu_coac_Default = {
+  title: "HoChiMinh_Phu_coac TITLE",
+  description: "HoChiMinh_Phu_coac DESCRIPTION LONG",
+  country: "Vietnam",
+  departure_date: "",
+  arrival_date: "",
+  hotel: "HoChiMinh_Phu_coac HOTEL",
+  single_supply_price: "HoChiMinh_Phu_coac ADULT PRICE",
+  child_price: "HoChiMinh_Phu_coac CHILD PRICE",
+  additional_bed: "HoChiMinh_Phu_coac ADDITIONAL BED",
+  country_temperature: "HoChiMinh_Phu_coac TEMPERATURE",
+  status: "ACTIVE",
+  seats: 20,
+  duration_day: "HoChiMinh_Phu_coac DURATION DAY",
+  duration_night: "HoChiMinh_Phu_coac DURATION NIGHT",
+  cover_photo:
+    "https://res.cloudinary.com/dvnzk53kp/cover_photo/upload/v1766382788/travel-app-tours/p2cnux1pdc1dpzlhxewg.jpg",
+};
+export const Janjieje_Default = {
+  title: "Janjieje TITLE",
+  description: "Janjieje DESCRIPTION LONG",
+  country: "Vietnam",
+  departure_date: "",
+  arrival_date: "",
+  hotel: "Janjieje HOTEL",
+  single_supply_price: "Janjieje ADULT PRICE",
+  child_price: "Janjieje CHILD PRICE",
+  additional_bed: "Janjieje ADDITIONAL BED",
+  country_temperature: "Janjieje TEMPERATURE",
+  status: "ACTIVE",
+  seats: 20,
+  duration_day: "Janjieje DURATION DAY",
+  duration_night: "Janjieje DURATION NIGHT",
+  cover_photo:
+    "https://res.cloudinary.com/dvnzk53kp/cover_photo/upload/v1766382788/travel-app-tours/p2cnux1pdc1dpzlhxewg.jpg",
+};
+export const Japan_Default = {
+  title: "Japan TITLE",
+  description: "Japan DESCRIPTION LONG",
+  country: "Vietnam",
+  departure_date: "",
+  arrival_date: "",
+  hotel: "Japan HOTEL",
+  single_supply_price: "Japan ADULT PRICE",
+  child_price: "Japan CHILD PRICE",
+  additional_bed: "Japan ADDITIONAL BED",
+  country_temperature: "Japan TEMPERATURE",
+  status: "ACTIVE",
+  seats: 20,
+  duration_day: "Japan DURATION DAY",
+  duration_night: "Japan DURATION NIGHT",
+  cover_photo:
+    "https://res.cloudinary.com/dvnzk53kp/cover_photo/upload/v1766382788/travel-app-tours/p2cnux1pdc1dpzlhxewg.jpg",
+};
+export const Natrang_Default = {
+  title: "Natrang TITLE",
+  description: "Natrang DESCRIPTION LONG",
+  country: "Vietnam",
+  departure_date: "",
+  arrival_date: "",
+  hotel: "Natrang HOTEL",
+  single_supply_price: "Natrang ADULT PRICE",
+  child_price: "Natrang CHILD PRICE",
+  additional_bed: "Natrang ADDITIONAL BED",
+  country_temperature: "Natrang TEMPERATURE",
+  status: "ACTIVE",
+  seats: 20,
+  duration_day: "Natrang DURATION DAY",
+  duration_night: "Natrang DURATION NIGHT",
+  cover_photo:
+    "https://res.cloudinary.com/dvnzk53kp/cover_photo/upload/v1766382788/travel-app-tours/p2cnux1pdc1dpzlhxewg.jpg",
+};
+export const Phu_Coac_Default = {
+  title: "Phu_Coac TITLE",
+  description: "Phu_Coac DESCRIPTION LONG",
+  country: "Vietnam",
+  departure_date: "",
+  arrival_date: "",
+  hotel: "Phu_Coac HOTEL",
+  single_supply_price: "Phu_Coac ADULT PRICE",
+  child_price: "Phu_Coac CHILD PRICE",
+  additional_bed: "Phu_Coac ADDITIONAL BED",
+  country_temperature: "Phu_Coac TEMPERATURE",
+  status: "ACTIVE",
+  seats: 20,
+  duration_day: "Phu_Coac DURATION DAY",
+  duration_night: "Phu_Coac DURATION NIGHT",
+  cover_photo:
+    "https://res.cloudinary.com/dvnzk53kp/cover_photo/upload/v1766382788/travel-app-tours/p2cnux1pdc1dpzlhxewg.jpg",
+};
+export const Shanghai_Default = {
+  title: "Shanghai TITLE",
+  description: "Shanghai DESCRIPTION LONG",
+  country: "Vietnam",
+  departure_date: "",
+  arrival_date: "",
+  hotel: "Shanghai HOTEL",
+  single_supply_price: "Shanghai ADULT PRICE",
+  child_price: "Shanghai CHILD PRICE",
+  additional_bed: "Shanghai ADDITIONAL BED",
+  country_temperature: "Shanghai TEMPERATURE",
+  status: "ACTIVE",
+  seats: 20,
+  duration_day: "Shanghai DURATION DAY",
+  duration_night: "Shanghai DURATION NIGHT",
+  cover_photo:
+    "https://res.cloudinary.com/dvnzk53kp/cover_photo/upload/v1766382788/travel-app-tours/p2cnux1pdc1dpzlhxewg.jpg",
+};
+export const Singapore_Default = {
+  title: "Singapore TITLE",
+  description: "Singapore DESCRIPTION LONG",
+  country: "Vietnam",
+  departure_date: "",
+  arrival_date: "",
+  hotel: "Singapore HOTEL",
+  single_supply_price: "Singapore ADULT PRICE",
+  child_price: "Singapore CHILD PRICE",
+  additional_bed: "Singapore ADDITIONAL BED",
+  country_temperature: "Singapore TEMPERATURE",
+  status: "ACTIVE",
+  seats: 20,
+  duration_day: "Singapore DURATION DAY",
+  duration_night: "Singapore DURATION NIGHT",
+  cover_photo:
+    "https://res.cloudinary.com/dvnzk53kp/cover_photo/upload/v1766382788/travel-app-tours/p2cnux1pdc1dpzlhxewg.jpg",
+};
+
+export const Thailand_Banggok_Default = {
+  title: "Thailand_Banggok TITLE",
+  description: "Thailand_Banggok DESCRIPTION LONG",
+  country: "Vietnam",
+  departure_date: "",
+  arrival_date: "",
+  hotel: "Thailand_Banggok HOTEL",
+  single_supply_price: "Thailand_Banggok ADULT PRICE",
+  child_price: "Thailand_Banggok CHILD PRICE",
+  additional_bed: "Thailand_Banggok ADDITIONAL BED",
+  country_temperature: "Thailand_Banggok TEMPERATURE",
+  status: "ACTIVE",
+  seats: 20,
+  duration_day: "Thailand_Banggok DURATION DAY",
+  duration_night: "Thailand_Banggok DURATION NIGHT",
+  cover_photo:
+    "https://res.cloudinary.com/dvnzk53kp/cover_photo/upload/v1766382788/travel-app-tours/p2cnux1pdc1dpzlhxewg.jpg",
+};
+export const Turkey_Default = {
+  title: "Turkey TITLE",
+  description: "Turkey DESCRIPTION LONG",
+  country: "Vietnam",
+  departure_date: "",
+  arrival_date: "",
+  hotel: "Turkey HOTEL",
+  single_supply_price: "Turkey ADULT PRICE",
+  child_price: "Turkey CHILD PRICE",
+  additional_bed: "Turkey ADDITIONAL BED",
+  country_temperature: "Turkey TEMPERATURE",
+  status: "ACTIVE",
+  seats: 20,
+  duration_day: "Turkey DURATION DAY",
+  duration_night: "Turkey DURATION NIGHT",
+  cover_photo:
+    "https://res.cloudinary.com/dvnzk53kp/cover_photo/upload/v1766382788/travel-app-tours/p2cnux1pdc1dpzlhxewg.jpg",
 };

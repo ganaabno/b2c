@@ -32,7 +32,6 @@ export function ThemeProvider({
 
   useEffect(() => {
     const root = window.document.documentElement
-
     root.classList.remove("light", "dark")
 
     if (theme === "system") {
@@ -44,7 +43,6 @@ export function ThemeProvider({
       root.classList.add(systemTheme)
       return
     }
-
     root.classList.add(theme)
   }, [theme])
 

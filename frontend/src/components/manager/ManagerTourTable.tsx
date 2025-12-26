@@ -74,7 +74,7 @@ export default function ManagerTourTable({
                 className="hover:bg-gray-50 dark:hover:bg-gray-700/50 transition">
                 <td className="p-2 flex items-center gap-4">
                   <img
-                    src={tour.image || "https://placehold.co/100x60"}
+                    src={tour.cover_photo || "https://placehold.co/100x60"}
                     alt=""
                     className="h-12 w-16 rounded object-cover bg-gray-200 dark:bg-gray-700"
                   />

@@ -6,7 +6,7 @@ const router = express.Router();
 
 // Get my profile
 router.get("/me", protect, async (req: AuthRequest, res) => {
-  const [user] = await sql`SELECT id, name, email, role FROM users WHERE id = ${
+  const [user] = await sql`SELECT id, name, email, role, avatar FROM users WHERE id = ${
     req.user!.id
   }`;
   res.json(user);
@@ -27,7 +27,6 @@ router.put("/me", protect, async (req: AuthRequest, res) => {
         firstname = ${firstname ?? null},
         lastname = ${lastname ?? null},
         phone_number = ${phone_number ?? null},
-       
         avatar = ${avatar ?? null}
       WHERE id = ${req.user.id}  -- 👈 This is how it knows WHICH user to update
       RETURNING id, firstname, lastname, email, phone_number,  avatar, role

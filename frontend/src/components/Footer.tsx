@@ -9,20 +9,16 @@ import { FaTiktok } from "react-icons/fa";
 export default function Footer() {
   return (
     <>
-      <footer className="bg-gray-100 dark:bg-gray-800 text-gray-900 dark:text-gray-300 transition-colors duration-300 font-sans">
+      <footer className=" bg-gray-100 dark:bg-gray-800 text-gray-900 dark:text-gray-300 transition-colors duration-300 font-sans">
         <div className="w-full grid grid-cols-1 md:grid-cols-3 gap-8 md:gap-0">
           {/* Column 1 */}
           <div className="pt-8 pl-12 pr-4 flex flex-col gap-4">
-            <h1 className="text-2xl font-bold text-teal-700 dark:text-white">
+            <h1 className="text-2xl font-bold text-gray-900 dark:text-white">
               GTC Mongolia
             </h1>
-            <p className=" dark:text-gray-400 leading-relaxed">
-              Дэлхийгээр аялж , Дэлхийн дайтай сэтгэе! <br /> Мөрөөдлийн аяллаа
-              <span className="text-blue-600 font-semibold">
-                {" "}
-                бидэнтэй{" "}
-              </span>{" "}
-              эхлүүл!
+            <p className="text-gray-600 dark:text-gray-400 leading-relaxed">
+              Дэлхийгээр аялж , Дэлхийн дайтай сэтгэе! Мөрөөдлийн аяллаа
+              бидэнтэй эхлүүл!
             </p>
             <div className="flex gap-4 mb-4 items-center">
               <div className="font-medium text-gray-900 dark:text-gray-200">
@@ -31,31 +27,27 @@ export default function Footer() {
               <a
                 href="https://www.facebook.com/global.travel.corporation.mongolia"
                 target="blank"
-                className="text-gray-700 dark:text-white hover:text-green-600 dark:hover:text-green-500 transition-colors"
-              >
+                className="text-gray-700 dark:text-white hover:text-green-600 dark:hover:text-green-500 transition-colors">
                 <FacebookIcon fontSize="large" />{" "}
               </a>
               <a
                 href="https://www.instagram.com/gtc_mongolia/"
                 target="blank"
-                className="text-gray-700 dark:text-white hover:text-green-600 dark:hover:text-green-500 transition-colors"
-              >
+                className="text-gray-700 dark:text-white hover:text-green-600 dark:hover:text-green-500 transition-colors">
                 {" "}
                 <InstagramIcon fontSize="large" />
               </a>
               <a
                 href="https://www.youtube.com/@GLOBAL_TRAVEL_CORPORATION"
                 target="blank"
-                className="text-gray-700 dark:text-white hover:text-green-600 dark:hover:text-green-500 transition-colors"
-              >
+                className="text-gray-700 dark:text-white hover:text-green-600 dark:hover:text-green-500 transition-colors">
                 {" "}
                 <YouTubeIcon fontSize="large" />
               </a>
               <a
                 href="https://www.tiktok.com/@gtc.mongolia"
                 target="blank"
-                className="text-gray-700 dark:text-white hover:text-green-600 dark:hover:text-green-500 transition-colors"
-              >
+                className="text-gray-700 dark:text-white hover:text-green-600 dark:hover:text-green-500 transition-colors">
                 {" "}
                 <FaTiktok fontSize="large" />
               </a>
@@ -72,7 +64,10 @@ export default function Footer() {
               </div>
               <div className="flex gap-2 items-center text-gray-600 dark:text-gray-400">
                 <Email className="text-green-600 dark:text-green-500 shrink-0" />
-                Майл : info@global-travel.mn
+                <div>Майл:</div>{" "}
+                <span className="text-gray-700 dark:text-gray-300 text-[1rem]">
+                  info@global-travel.mn
+                </span>
               </div>
               <div className="flex gap-2 mb-4 items-center text-gray-600 dark:text-gray-400">
                 <LocalPhone className="text-green-600 dark:text-green-500 shrink-0" />{" "}

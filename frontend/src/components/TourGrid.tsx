@@ -101,7 +101,7 @@ export default function TourGrid() {
               <div className="relative h-72 overflow-hidden">
                 <img
                   src={
-                    tour.image ||
+                    tour.cover_photo ||
                     "https://via.placeholder.com/800x600?text=No+Image"
                   }
                   alt={tour.title}

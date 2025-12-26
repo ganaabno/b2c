@@ -15,15 +15,16 @@ import ProtectedRoute from "./components/ProtectedRoute";
 import Layout from "./Layout";
 import { AuthProvider } from "./context/AuthContext";
 import MembershipPage from "./pages/MembershipPage";
-
+import ScrollToTop from "./components/ScrollToTop";
 const queryClient = new QueryClient();
 
 export default function App() {
   return (
-    <ThemeProvider defaultTheme="light" storageKey="vite-ui-theme">
+    <ThemeProvider defaultTheme="system" storageKey="vite-ui-theme">
       <QueryClientProvider client={queryClient}>
         <AuthProvider>
           <BrowserRouter>
+            <ScrollToTop />
             <Routes>
               <Route element={<Layout />}>
                 <Route path="/" element={<Home />} />
@@ -42,8 +43,7 @@ export default function App() {
                   <Route
                     element={
                       <ProtectedRoute allowedRoles={["ADMIN", "MANAGER"]} />
-                    }
-                  >
+                    }>
                     <Route path="/manager" element={<ManagerDashboard />} />
                   </Route>
                 </Route>

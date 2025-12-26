@@ -7,7 +7,6 @@ import {
   Calendar,
   Clock,
   ArrowRight,
-  Utensils,
   AlertCircle,
   Loader2,
   Search,
@@ -72,11 +71,7 @@ export default function Tours() {
     );
   }
 
-  const hasMeal = (meal?: string | null) => {
-    if (!meal) return false;
-    const m = meal.toLowerCase();
-    return m.includes("included") || m.includes("yes") || m.includes("багтсан");
-  };
+ 
 
   // Helper to format price nicely
   const formatPrice = (price: string | number) => {
@@ -143,7 +138,7 @@ export default function Tours() {
                 <div className="relative h-64 overflow-hidden">
                   <img
                     src={
-                      tour.image || "https://placehold.co/800x600?text=No+Image"
+                      tour.cover_photo || "https://placehold.co/800x600?text=No+Image"
                     }
                     alt={tour.title}
                     className="h-full w-full object-cover transition-transform duration-700 group-hover:scale-110"
@@ -189,17 +184,7 @@ export default function Tours() {
                         </span>
                       </div>
                     )}
-                    {(hasMeal(tour.breakfast) ||
-                      hasMeal(tour.lunch) ||
-                      hasMeal(tour.dinner)) && (
-                      <div
-                        className="flex items-center gap-1.5"
-                        title="Meals Included"
-                      >
-                        <Utensils className="h-4 w-4 text-green-600" />
-                        <span>Meals</span>
-                      </div>
-                    )}
+                   
                   </div>
 
                   {/* Footer */}

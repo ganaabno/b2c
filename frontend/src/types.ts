@@ -21,11 +21,10 @@ export interface AuthContextType {
 }
 
 export interface Tour {
-  breakfast(breakfast: any): unknown;
   id: string;
   title: string;
   description: string;
-  image: string | null; // from cover_photo AS image
+  cover_photo: string | null; // from cover_photo AS image
   country: string;
   departure_date: string | null;
   arrival_date: string | null;

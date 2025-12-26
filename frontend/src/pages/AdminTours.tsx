@@ -26,7 +26,7 @@ const tourSchema = z.object({
   country_temperature: z.string().nullable().optional(),
   departure_date: z.string().nullable().optional(),
   arrival_date: z.string().nullable().optional(),
-  image: z.string().url().nullable().optional(),
+  cover_photo: z.string().url().nullable().optional(),
   image_public_id: z.string().nullable().optional(),
   slug: z.string().nullable().optional(),
   photos: z.string().nullable().optional(),
@@ -86,15 +86,12 @@ function TourFormModal({
           is_featured: tour.is_featured,
           status: tour.status,
           hotel: tour.hotel ?? undefined,
-          breakfast: tour.breakfast ?? undefined,
-          lunch: tour.lunch ?? undefined,
-          dinner: tour.dinner ?? undefined,
           single_supply_price: tour.single_supply_price ?? undefined,
           additional_bed: tour.additional_bed ?? undefined,
           country_temperature: tour.country_temperature ?? undefined,
           departure_date: tour.departure_date ?? undefined,
           arrival_date: tour.arrival_date ?? undefined,
-          image: tour.image ?? undefined,
+          cover_photo: tour.cover_photo ?? undefined,
           image_public_id: tour.image_public_id ?? undefined,
           slug: tour.slug ?? undefined,
           photos: tour.photos ?? undefined,
@@ -145,8 +142,10 @@ function TourFormModal({
       });
       queryClient.invalidateQueries({ queryKey: ["tours"] });
       onClose();
-    } catch (err: any) {
-      alert(`Алдаа: ${err.message}`);
+    } catch (err: unknown) {
+      if (err instanceof Error) {
+        alert(`Алдаа: ${err.message}`);
+      }
     } finally {
       setIsSaving(false);
     }
@@ -254,8 +253,7 @@ function TourFormModal({
             <label className="block text-sm font-medium mb-1">Төлөв</label>
             <select
               {...methods.register("status")}
-              className="px-4 py-2 border rounded-lg"
-            >
+              className="px-4 py-2 border rounded-lg">
               <option value="ACTIVE">Идэвхтэй</option>
               <option value="FULL">Дүүрсэн</option>
               <option value="COMPLETED">Дууссан</option>
@@ -268,15 +266,13 @@ function TourFormModal({
           <button
             type="button"
             onClick={onClose}
-            className="px-6 py-2 bg-gray-300 rounded-lg hover:bg-gray-400"
-          >
+            className="px-6 py-2 bg-gray-300 rounded-lg hover:bg-gray-400">
             Болих
           </button>
           <button
             type="submit"
             disabled={isSaving}
-            className="px-8 py-2 bg-green-600 text-white rounded-lg hover:bg-green-700 disabled:opacity-50 flex items-center gap-2"
-          >
+            className="px-8 py-2 bg-green-600 text-white rounded-lg hover:bg-green-700 disabled:opacity-50 flex items-center gap-2">
             {isSaving && <Loader2 className="w-4 h-4 animate-spin" />}
             {tour ? "Шинэчлэх" : "Үүсгэх"}
           </button>
@@ -314,8 +310,7 @@ export default function AdminTours() {
         <h1 className="text-3xl font-bold">Аялалууд</h1>
         <button
           onClick={() => setEditingTour({} as Tour)}
-          className="flex items-center gap-2 bg-green-600 text-white px-6 py-3 rounded-lg hover:bg-green-700"
-        >
+          className="flex items-center gap-2 bg-green-600 text-white px-6 py-3 rounded-lg hover:bg-green-700">
           <Plus className="w-5 h-5" />
           Шинэ Аялал
         </button>
@@ -325,21 +320,18 @@ export default function AdminTours() {
         {tours.map((tour) => (
           <div
             key={tour.id}
-            className="bg-white rounded-xl shadow-sm border p-6 hover:shadow-md transition"
-          >
+            className="bg-white rounded-xl shadow-sm border p-6 hover:shadow-md transition">
             <div className="flex justify-between items-start mb-4">
               <h3 className="text-xl font-semibold">{tour.title}</h3>
               <div className="flex gap-2">
                 <button
                   onClick={() => setEditingTour(tour)}
-                  className="p-2 hover:bg-blue-50 rounded"
-                >
+                  className="p-2 hover:bg-blue-50 rounded">
                   <Edit className="w-5 h-5 text-blue-600" />
                 </button>
                 <button
                   onClick={() => deleteMutation.mutate(tour.id)}
-                  className="p-2 hover:bg-red-50 rounded"
-                >
+                  className="p-2 hover:bg-red-50 rounded">
                   <Trash2 className="w-5 h-5 text-red-600" />
                 </button>
               </div>
@@ -371,8 +363,7 @@ export default function AdminTours() {
               </h2>
               <button
                 onClick={() => setEditingTour(null)}
-                className="p-2 hover:bg-gray-100 rounded"
-              >
+                className="p-2 hover:bg-gray-100 rounded">
                 <X className="w-6 h-6" />
               </button>
             </div>

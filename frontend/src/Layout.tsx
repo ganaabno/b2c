@@ -1,4 +1,4 @@
-import { Outlet, Link, useLocation } from "react-router-dom";
+import { Outlet, Link} from "react-router-dom";
 import { useAuth } from "./context/AuthContext";
 import { Shield, Menu, X } from "lucide-react";
 import Logo from "@/assets/logo.png";
@@ -9,30 +9,30 @@ import AuthModal from "./components/AuthModal";
 
 export default function Layout() {
   const { user } = useAuth();
-  const location = useLocation();
+  //const location = useLocation();
 
-  const isHomePage = location.pathname === "/";
+  // const isHomePage = location.pathname === "/";
 
-  const [isScrolled, setIsScrolled] = useState(false);
+  // const [isScrolled, setIsScrolled] = useState(false);
   const [isMobileMenuOpen, setIsMobileMenuOpen] = useState(false);
   const [isAuthModalOpen, setIsAuthModalOpen] = useState(false);
   const [authMode, setAuthMode] = useState<"login" | "signup">("login");
 
-  useEffect(() => {
-    // Only apply scroll listener on home page
-    if (!isHomePage) {
-      setIsScrolled(true); // Force scrolled state on non-home pages
-      return;
-    }
+  // useEffect(() => {
+  //   // Only apply scroll listener on home page
+  //   if (!isHomePage) {
+  //     setIsScrolled(true); // Force scrolled state on non-home pages
+  //     return;
+  //   }
 
-    const handleScroll = () => {
-      setIsScrolled(window.scrollY > 40);
-    };
+  //   const handleScroll = () => {
+  //     setIsScrolled(window.scrollY > 40);
+  //   };
 
-    handleScroll(); // Initial check
-    window.addEventListener("scroll", handleScroll);
-    return () => window.removeEventListener("scroll", handleScroll);
-  }, [isHomePage]);
+  //   handleScroll(); // Initial check
+  //   window.addEventListener("scroll", handleScroll);
+  //   return () => window.removeEventListener("scroll", handleScroll);
+  // }, [isHomePage]);
 
   useEffect(() => {
     const handleResize = () => {
@@ -55,7 +55,7 @@ export default function Layout() {
     };
   }, [isMobileMenuOpen, isAuthModalOpen]);
 
-  const closeMobileMenu = () => setIsMobileMenuOpen(false);
+  const closeMobileMenu = () => {setIsMobileMenuOpen(false)};
 
   const openAuthModal = (mode: "login" | "signup") => {
     setAuthMode(mode);
@@ -64,16 +64,12 @@ export default function Layout() {
   };
 
   // Determine if we should show the "scrolled" appearance
-  const showScrolledStyle = isHomePage ? isScrolled : true;
+ // const showScrolledStyle = isHomePage ? isScrolled : true;
 
   return (
     <div className="min-h-screen bg-gray-50 dark:bg-gray-900">
       <nav
-        className={`fixed top-0 left-0 z-50 w-full transition-all duration-500 ${
-          showScrolledStyle
-            ? "bg-white/90 dark:bg-gray-900/90 backdrop-blur-md shadow-lg"
-            : "bg-transparent"
-        }`}
+        className={`fixed top-0 left-0 z-50 w-full transition-all duration-500 bg-white/90 dark:bg-gray-900/90 backdrop-blur-md shadow-lg `}
       >
         <div className="mx-auto max-w-[2000px] px-8 py-4 md:py-8">
           <div className="flex h-4 items-center justify-between">
@@ -87,34 +83,22 @@ export default function Layout() {
                 width={320}
                 src={Logo}
                 alt="LogoImage"
-                className={`scale-50 transition-all duration-500 ${
-                  showScrolledStyle
-                    ? "brightness-0 dark:brightness-100"
-                    : "sepia hue-rotate-15 saturate-50 dark:brightness-0 dark:invert dark:sepia-0 dark:hue-rotate-0 dark:saturate-100"
-                }`}
+                className={`scale-50 transition-all duration-500 brightness-0 dark:brightness-100  `}
               />
             </Link>
 
             {/* Desktop Navigation */}
-            <div className="hidden md:flex items-center gap-6">
+            <div className="hidden md:flex items-center gap-12">
               <Link
                 to="/"
-                className={`font-semibold text-2xl duration-900 ${
-                  showScrolledStyle
-                    ? "text-gray-900 dark:text-gray-100"
-                    : "text-white dark:text-gray-200"
-                } hover:text-sky-300 dark:hover:text-sky-600 hover:underline`}
+                className={`font-semibold text-2xl duration-500 text-gray-900 dark:text-gray-200 hover:text-amber-500 dark:hover:text-amber-400`}
                 onClick={closeMobileMenu}
               >
                 Нүүр Хуудас
               </Link>
               <Link
                 to="/tours"
-                className={`font-semibold text-2xl duration-900 ${
-                  showScrolledStyle
-                    ? "text-gray-900 dark:text-gray-100"
-                    : "text-white dark:text-gray-200"
-                } hover:text-sky-300 dark:hover:text-sky-300 hover:underline`}
+                className={`font-semibold text-2xl duration-500 text-gray-900 dark:text-gray-100 hover:text-amber-500 dark:hover:text-amber-400`}
               >
                 Бүх аялалууд
               </Link>
@@ -124,11 +108,7 @@ export default function Layout() {
                   {user.role === "MANAGER" && (
                     <Link
                       to="/manager"
-                      className={`font-semibold text-2xl duration-500 ${
-                        showScrolledStyle
-                          ? "text-gray-900 dark:text-gray-100"
-                          : "text-white dark:text-gray-200"
-                      } hover:text-amber-500 dark:hover:text-amber-400`}
+                      className={`font-semibold text-2xl duration-500 text-gray-900 dark:text-gray-100 hover:text-amber-500 dark:hover:text-amber-400`}
                     >
                       Manager
                     </Link>
@@ -136,11 +116,7 @@ export default function Layout() {
                   {user.role === "ADMIN" && (
                     <Link
                       to="/admin"
-                      className={`flex items-center gap-2 font-semibold duration-500 ${
-                        showScrolledStyle
-                          ? "text-gray-900 dark:text-gray-100"
-                          : "text-white dark:text-gray-200"
-                      } hover:text-amber-500 dark:hover:text-amber-400`}
+                      className={`flex items-center gap-2 font-semibold duration-500 text-gray-900 dark:text-gray-100 hover:text-amber-500 dark:hover:text-amber-400`}
                     >
                       <Shield className="h-5 w-5" />
                       Admin
@@ -148,22 +124,14 @@ export default function Layout() {
                   )}
 
                   <span
-                    className={`font-semibold text-2xl duration-500 ${
-                      showScrolledStyle
-                        ? "text-gray-900 dark:text-gray-100"
-                        : "text-white dark:text-gray-200"
-                    }`}
+                    className={`font-semibold text-2xl duration-500 text-gray-900 dark:text-gray-100`}
                   >
                     Сайн уу, {user.firstname}
                   </span>
 
                   <Link
                     to="/membership"
-                    className={`font-semibold text-2xl duration-900 ${
-                      showScrolledStyle
-                        ? "text-gray-900 dark:text-gray-100"
-                        : "text-white dark:text-gray-200"
-                    } hover:text-sky-300 dark:hover:text-sky-600 hover:underline`}
+                    className={`font-semibold text-2xl duration-900 text-gray-900 dark:text-gray-100 hover:text-sky-300 dark:hover:text-sky-600 hover:underline`}
                     onClick={closeMobileMenu}
                   >
                     Гишүүнчлэл
@@ -191,17 +159,13 @@ export default function Layout() {
                 <>
                   <button
                     onClick={() => openAuthModal("login")}
-                    className={`font-semibold text-2xl duration-500 ${
-                      showScrolledStyle
-                        ? "text-gray-900 dark:text-gray-100"
-                        : "text-white dark:text-gray-200"
-                    } hover:text-amber-500 dark:hover:text-amber-400`}
+                    className={`font-semibold cursor-pointer text-2xl duration-500 text-gray-900 dark:text-gray-100 hover:text-amber-500 dark:hover:text-amber-400`}
                   >
                     Нэвтрэх
                   </button>
                   <button
                     onClick={() => openAuthModal("signup")}
-                    className="rounded-2xl font-semibold bg-amber-500 dark:bg-amber-600 text-white px-4 py-2 hover:bg-amber-600 dark:hover:bg-amber-500 duration-500 shadow-md"
+                    className="rounded-2xl cursor-pointer font-semibold bg-amber-500 dark:bg-amber-600 text-white px-4 py-2 hover:bg-amber-600 dark:hover:bg-amber-500 duration-500 shadow-md"
                   >
                     Бүртгүүлэх
                   </button>

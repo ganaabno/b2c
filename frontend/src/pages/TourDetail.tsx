@@ -71,6 +71,7 @@ export default function TourDetail() {
   const galleryRef = useRef<HTMLDivElement>(null);
 
   const showHutulbur = (tour: Tour) => {
+    console.log(tour.genre)
     switch (tour?.genre) {
       case "Hainan":
         return <Hainan />;
@@ -161,7 +162,7 @@ export default function TourDetail() {
       {/* --- 1. HERO HEADER (TravelX Style) --- */}
       <div className="relative h-[50vh] lg:h-[60vh] w-full overflow-hidden">
         <img
-          src={tour.image || "https://placehold.co/1200x800"}
+          src={tour.cover_photo || "https://placehold.co/1200x800"}
           alt={tour.title}
           className="h-full w-full object-cover transition-transform duration-1000 hover:scale-105"
         />

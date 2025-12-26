@@ -121,7 +121,7 @@ export default function UserProfile() {
     );
 
   return (
-    <div className="min-h-screen bg-gray-50 dark:bg-gray-900 py-10 px-[5%]">
+    <div className="min-h-[80vh] bg-gray-50 dark:bg-gray-900 py-10 px-[5%]">
       <div className="max-w-3xl mx-auto">
         <h1 className="text-2xl font-bold text-gray-900 dark:text-gray-100 mb-8">
           Хувийн мэдээлэл

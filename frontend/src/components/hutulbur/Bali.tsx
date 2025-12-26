@@ -15,7 +15,7 @@ const Bali = () => {
       day: 1,
       title: "Улаанбаатар - Ханой",
       date: "2025.12.27 (Бямба)",
-      image: "https://placehold.co/600x400/87CEEB/ffffff?text=Bangkok",
+      cover_photo: "https://placehold.co/600x400/87CEEB/ffffff?text=Bangkok",
       location: "Улаанбаатар City",
       route: [
         { name: "Улаанбаатар ", distance: "3822km", duration: "4 цаг" },
@@ -34,7 +34,7 @@ const Bali = () => {
       day: 2,
       title: "Pattaya Tour",
       date: "2025.12.28 (Ням)",
-      image: "https://placehold.co/600x400/8B4513/ffffff?text=Pattaya",
+      cover_photo: "https://placehold.co/600x400/8B4513/ffffff?text=Pattaya",
       location: "Pattaya City",
       description: [
         "06:00-07:00 Өглөөний цай",
@@ -51,7 +51,7 @@ const Bali = () => {
       title:
         "БҮТЭН ӨДРИЙН УБУД ХОТЫН АЯЛАЛ + KINTAMANI ГАЛТ УУЛЫН АЯЛАЛ/ӨДӨР & ОРОЙН ХООЛ/",
       date: "2025.12.29 (Даваа)",
-      image: "https://placehold.co/600x400/00CED1/ffffff?text=Island",
+      cover_photo: "https://placehold.co/600x400/00CED1/ffffff?text=Island",
       location: "Pattaya City",
       route: [{ name: "Pattaya City", distance: "15km", duration: "30min" }],
       description: [
@@ -70,7 +70,7 @@ const Bali = () => {
       title:
         "БҮТЭН ӨДРИЙН BEDUGUL ХЭСГИЙН АЯЛАЛ + TANAH LOT/ӨДӨР & ОРОЙН ХООЛ/",
       date: "2025.12.30 (Мягмар)",
-      image: "https://placehold.co/600x400/00CED1/ffffff?text=Island",
+      cover_photo: "https://placehold.co/600x400/00CED1/ffffff?text=Island",
       location: "Pattaya City",
       route: [{ name: "Pattaya City", distance: "15km", duration: "30min" }],
       description: [
@@ -86,7 +86,7 @@ const Bali = () => {
       day: 5,
       title: "ХАГАС ӨДӨР WATER BOM PARK + ЧӨЛӨӨТ ЦАГ/ӨДӨР & ОРОЙН ХООЛ/",
       date: "2025.12.31 (Лхагва)",
-      image: "https://placehold.co/600x400/00CED1/ffffff?text=Island",
+      cover_photo: "https://placehold.co/600x400/00CED1/ffffff?text=Island",
       location: "Pattaya City",
       route: [{ name: "Pattaya City", distance: "15km", duration: "30min" }],
       description: ["08:00 Өглөөний цай"],
@@ -98,7 +98,7 @@ const Bali = () => {
       title:
         "БҮТЭН ӨДРИЙН ТЭНГЭРИЙН ХААЛГА БОЛОН TIRTA GANGGA УСАН ОРДОНГИЙН АЯЛАЛ/ӨДӨР& ОРОЙН ХООЛ/",
       date: "2025.1.1 (Пүрэв)",
-      image: "https://placehold.co/600x400/00CED1/ffffff?text=Island",
+      cover_photo: "https://placehold.co/600x400/00CED1/ffffff?text=Island",
       location: "Pattaya City",
       route: [{ name: "Pattaya City", distance: "15km", duration: "30min" }],
       description: [
@@ -117,7 +117,7 @@ const Bali = () => {
       day: 7,
       title: "",
       date: "2025.1.2 (Баасан)",
-      image: "https://placehold.co/600x400/00CED1/ffffff?text=Island",
+      cover_photo: "https://placehold.co/600x400/00CED1/ffffff?text=Island",
       location: "Pattaya City",
       route: [{ name: "Pattaya City", distance: "15km", duration: "30min" }],
       description: [
@@ -138,7 +138,7 @@ const Bali = () => {
       day: 8,
       title: "Сүүлийн өдөр",
       date: "2025.1.3 (Бямба)",
-      image: "https://placehold.co/600x400/00CED1/ffffff?text=Island",
+      cover_photo: "https://placehold.co/600x400/00CED1/ffffff?text=Island",
       location: "Pattaya City",
       route: [{ name: "Pattaya City", distance: "15km", duration: "30min" }],
       description: [
@@ -173,10 +173,10 @@ const Bali = () => {
             <div
               key={tour.day}
               className="bg-white dark:bg-gray-800 rounded-xl shadow-sm border border-gray-200 dark:border-gray-700 overflow-hidden flex flex-col md:flex-row transition-all hover:shadow-md">
-              {/* Left: Image Section */}
+              {/* Left: cover_photo Section */}
               <div className="md:w-56 h-56 md:h-auto bg-gray-100 dark:bg-gray-700 shrink-0 relative group">
                 <img
-                  src={tour.image}
+                  src={tour.cover_photo}
                   alt={`Day ${tour.day}`}
                   className="w-full h-full object-cover transition-transform duration-500 group-hover:scale-105"
                 />

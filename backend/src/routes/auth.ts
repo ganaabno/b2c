@@ -128,7 +128,7 @@ router.get("/me", async (req, res) => {
     const payload = jwt.verify(token, JWT_SECRET) as { id: string };
 
     const [user] = await sql`
-      SELECT id, firstname, lastname, email, role
+      SELECT id, firstname, lastname, email, role, avatar
       FROM users WHERE id = ${payload.id}
     `;
     console.log(user);

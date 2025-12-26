@@ -4,6 +4,7 @@ import TourTable from "../components/TourTable";
 import SearchBox from "@/components/SearchBox";
 
 export default function Home() {
+  
   return (
     <>
       <div className="w-screen h-[70vh] relative -mt-20 md:-mt-32">

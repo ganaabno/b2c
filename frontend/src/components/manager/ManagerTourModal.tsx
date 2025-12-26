@@ -1,4 +1,4 @@
-import { useState, useEffect, useCallback } from "react";
+import { useState, useEffect } from "react";
 import { X, Upload, Plus, Loader2 } from "lucide-react";
 import type { Tour } from "@/types";
 import { Hainan_Default, Bali_Default } from "./ManagerDefaultData";
@@ -26,6 +26,9 @@ const INITIAL_FORM_STATE = {
   duration_day: "",
   duration_night: "",
   genre: "Bali",
+  cover_photo: "",
+  child_price: "",
+  group_size:""
 };
 
 export default function ManagerTourModal({
@@ -41,16 +44,37 @@ export default function ManagerTourModal({
   const [galleryFiles, setGalleryFiles] = useState<File[]>([]);
   const [existingPhotos, setExistingPhotos] = useState<string[]>([]);
 
-  const handleGenreChange = useCallback(() => {
-    if (formData.genre === "Hainan") {
-      setFormData(Hainan_Default);
+  // --- GENRE DEFAULT DATA LOGIC ---
+  useEffect(() => {
+    // Only apply defaults if we are NOT in edit mode (or if you want to overwrite edits)
+    // Assuming we only want this when creating new or explicitly changing genre
+    if (!tourToEdit) {
+      if (formData.genre === "Hainan") {
+        setFormData((prev: any) => ({ ...prev, ...Hainan_Default }));
+      }
+      if (formData.genre === "Bali") {
+        setFormData((prev: any) => ({ ...prev, ...Bali_Default }));
+      }
     }
-    if (formData.genre === "Bali") {
-      setFormData(Bali_Default);
-      console.log("working")
-      console.log("formData:",formData)
+  }, [formData.genre, tourToEdit]);
+
+  // --- SYNC PREVIEW WITH FORM DATA (Fix for Dropdown/Defaults) ---
+  useEffect(() => {
+    // If user hasn't uploaded a file manually, try to use the formData.cover_photo
+    if (!selectedFile) {
+      const photo = formData.cover_photo;
+      // FIX: Only set preview if it's a valid URL (starts with http/https)
+      // This prevents "Dalyan" or "Turkey" from causing GET 400 errors
+      if (
+        typeof photo === "string" &&
+        (photo.startsWith("http") || photo.startsWith("data:"))
+      ) {
+        setPreviewUrl(photo);
+      } else if (!photo) {
+        setPreviewUrl(null);
+      }
     }
-  }, [formData.genre, formData]);
+  }, [formData.cover_photo, selectedFile]);
 
   // --- DATA POPULATION LOGIC ---
   useEffect(() => {
@@ -76,10 +100,19 @@ export default function ManagerTourModal({
           seats: tourToEdit.seats || 20,
           duration_day: tourToEdit.duration_day || "",
           duration_night: tourToEdit.duration_night || "",
-         
+          cover_photo: tourToEdit.cover_photo || "",
+          genre: tourToEdit.genre || "",
+          group_size:tourToEdit.group_size || ""
         });
-        setPreviewUrl(tourToEdit.image || null);
-
+        // Set initial preview from edit data
+        if (
+          tourToEdit.cover_photo &&
+          tourToEdit.cover_photo.startsWith("http")
+        ) {
+          setPreviewUrl(tourToEdit.cover_photo);
+        } else {
+          setPreviewUrl(null);
+        }
         // Handle Gallery Photos safely
         try {
           if (Array.isArray(tourToEdit.photos)) {
@@ -114,6 +147,7 @@ export default function ManagerTourModal({
       const file = e.target.files[0];
       setSelectedFile(file);
       setPreviewUrl(URL.createObjectURL(file));
+      console.log(URL.createObjectURL(file));
     }
   };
 
@@ -151,7 +185,8 @@ export default function ManagerTourModal({
               {tourToEdit ? "Аялалын мэдээлэл засах" : "Шинэ аялал үүсгэх"}
             </h2>
             <p className="text-sm text-gray-500 dark:text-slate-400 mt-1">
-              Аялалын мэдээллээ оруулахаасаа өмнө шалгана уу
+              Зураг оруулахад анхаарах нь : Нүүр зураг оруулахдаа 2 сонголтын
+              зөвхөн нэгийг л сонгоно уу :)
             </p>
           </div>
           <button
@@ -195,6 +230,37 @@ export default function ManagerTourModal({
                       />
                     </label>
                   </div>
+                </div>
+{/* END NUUR ZURAGNUUDIIN URL IIG ORUULNA */}
+                <div>
+                  <label className={labelClass}>Нүүр зураг сонгох</label>
+                  <select
+                    name="cover_photo"
+                    value={formData.cover_photo}
+                    onChange={(e) => {
+                      handleChange(e);
+                    }}
+                    className={inputClass}>
+                    <option value=""></option>
+                    <option value="https://res.cloudinary.com/dvnzk53kp/image/upload/v1766478126/travel-app-tours/h1yj8mszo8z8twhd51e0.jpg">
+                      Bali
+                    </option>
+                    <option value="Dalyan">Dalyan</option>
+                    <option value="https://res.cloudinary.com/dvnzk53kp/image/upload/v1766721724/hainan_poster_yzaxhu.png">
+                      Hainan
+                    </option>
+                    <option value="Halong_Bay">Halong_Bay</option>
+                    <option value="HoChiMinh_Phu_coac">
+                      HoChiMinh_Phu_coac
+                    </option>
+                    <option value="Janjieje">Janjieje</option>
+                    <option value="Japan">Japan</option>
+                    <option value="Natrang">Natrang</option>
+                    <option value="Phu_Coac">Phu_Coac</option>
+                    <option value="Shanghai">Shanghai</option>
+                    <option value="Thailand_Banggok">Thailand_Banggok</option>
+                    <option value="Turkey">Turkey</option>
+                  </select>
                 </div>
 
                 {/* Gallery Input */}
@@ -332,7 +398,6 @@ export default function ManagerTourModal({
                       name="genre"
                       value={formData.genre}
                       onChange={(e) => {
-                        handleGenreChange(e);
                         handleChange(e);
                       }}
                       className={inputClass}>
@@ -376,7 +441,7 @@ export default function ManagerTourModal({
                   </div>
                 </div>
 
-                <div className="grid grid-cols-4 gap-4">
+                <div className="grid grid-cols-5 gap-4">
                   <div>
                     <label className={labelClass}>Status</label>
                     <select
@@ -391,7 +456,7 @@ export default function ManagerTourModal({
                     </select>
                   </div>
                   <div>
-                    <label className={labelClass}>Үлдсэн суудал</label>
+                    <label className={labelClass}> суудал</label>
                     <input
                       type="number"
                       name="seats"
@@ -420,6 +485,16 @@ export default function ManagerTourModal({
                       placeholder="e.g. 4"
                     />
                   </div>
+                   <div>
+                   <label className={labelClass}>group size</label>
+                    <input
+                      name="group_size"
+                      value={formData.group_size}
+                      onChange={handleChange}
+                      className={inputClass}
+                      placeholder="e.g. 40"
+                    />
+                  </div>
                 </div>
 
                 {/* Description */}
@@ -427,7 +502,7 @@ export default function ManagerTourModal({
                   <label className={labelClass}>Дэлгэрэнгүй мэдээлэл</label>
                   <textarea
                     name="description"
-                    rows={6}
+                    rows={10}
                     value={formData.description}
                     onChange={handleChange}
                     className={`${inputClass} resize-none leading-relaxed`}
