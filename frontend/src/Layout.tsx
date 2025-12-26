@@ -1,4 +1,4 @@
-import { Outlet, Link } from "react-router-dom";
+import { Outlet, Link, useLocation } from "react-router-dom";
 import { useAuth } from "./context/AuthContext";
 import { Shield, Menu, X } from "lucide-react";
 import Logo from "@/assets/logo.png";
@@ -9,18 +9,30 @@ import AuthModal from "./components/AuthModal";
 
 export default function Layout() {
   const { user } = useAuth();
-  const [isScrolled, setIsScrolled] = useState(false); // renamed for clarity
+  const location = useLocation();
+
+  const isHomePage = location.pathname === "/";
+
+  const [isScrolled, setIsScrolled] = useState(false);
   const [isMobileMenuOpen, setIsMobileMenuOpen] = useState(false);
   const [isAuthModalOpen, setIsAuthModalOpen] = useState(false);
   const [authMode, setAuthMode] = useState<"login" | "signup">("login");
 
   useEffect(() => {
+    // Only apply scroll listener on home page
+    if (!isHomePage) {
+      setIsScrolled(true); // Force scrolled state on non-home pages
+      return;
+    }
+
     const handleScroll = () => {
       setIsScrolled(window.scrollY > 40);
     };
+
+    handleScroll(); // Initial check
     window.addEventListener("scroll", handleScroll);
     return () => window.removeEventListener("scroll", handleScroll);
-  }, []);
+  }, [isHomePage]);
 
   useEffect(() => {
     const handleResize = () => {
@@ -51,11 +63,14 @@ export default function Layout() {
     closeMobileMenu();
   };
 
+  // Determine if we should show the "scrolled" appearance
+  const showScrolledStyle = isHomePage ? isScrolled : true;
+
   return (
     <div className="min-h-screen bg-gray-50 dark:bg-gray-900">
       <nav
         className={`fixed top-0 left-0 z-50 w-full transition-all duration-500 ${
-          isScrolled
+          showScrolledStyle
             ? "bg-white/90 dark:bg-gray-900/90 backdrop-blur-md shadow-lg"
             : "bg-transparent"
         }`}
@@ -73,8 +88,8 @@ export default function Layout() {
                 src={Logo}
                 alt="LogoImage"
                 className={`scale-50 transition-all duration-500 ${
-                  isScrolled
-                    ? "brightness-0 dark:brightness-100 "
+                  showScrolledStyle
+                    ? "brightness-0 dark:brightness-100"
                     : "sepia hue-rotate-15 saturate-50 dark:brightness-0 dark:invert dark:sepia-0 dark:hue-rotate-0 dark:saturate-100"
                 }`}
               />
@@ -84,22 +99,22 @@ export default function Layout() {
             <div className="hidden md:flex items-center gap-6">
               <Link
                 to="/"
-                className={`font-semibold text-2xl duration-500 ${
-                  isScrolled
+                className={`font-semibold text-2xl duration-900 ${
+                  showScrolledStyle
                     ? "text-gray-900 dark:text-gray-100"
                     : "text-white dark:text-gray-200"
-                } hover:text-amber-500 dark:hover:text-amber-400`}
+                } hover:text-sky-300 dark:hover:text-sky-600 hover:underline`}
                 onClick={closeMobileMenu}
               >
                 Нүүр Хуудас
               </Link>
               <Link
                 to="/tours"
-                className={`font-semibold text-2xl duration-500 ${
-                  isScrolled
+                className={`font-semibold text-2xl duration-900 ${
+                  showScrolledStyle
                     ? "text-gray-900 dark:text-gray-100"
                     : "text-white dark:text-gray-200"
-                } hover:text-amber-500 dark:hover:text-amber-400`}
+                } hover:text-sky-300 dark:hover:text-sky-300 hover:underline`}
               >
                 Бүх аялалууд
               </Link>
@@ -110,7 +125,7 @@ export default function Layout() {
                     <Link
                       to="/manager"
                       className={`font-semibold text-2xl duration-500 ${
-                        isScrolled
+                        showScrolledStyle
                           ? "text-gray-900 dark:text-gray-100"
                           : "text-white dark:text-gray-200"
                       } hover:text-amber-500 dark:hover:text-amber-400`}
@@ -122,7 +137,7 @@ export default function Layout() {
                     <Link
                       to="/admin"
                       className={`flex items-center gap-2 font-semibold duration-500 ${
-                        isScrolled
+                        showScrolledStyle
                           ? "text-gray-900 dark:text-gray-100"
                           : "text-white dark:text-gray-200"
                       } hover:text-amber-500 dark:hover:text-amber-400`}
@@ -134,13 +149,25 @@ export default function Layout() {
 
                   <span
                     className={`font-semibold text-2xl duration-500 ${
-                      isScrolled
+                      showScrolledStyle
                         ? "text-gray-900 dark:text-gray-100"
                         : "text-white dark:text-gray-200"
                     }`}
                   >
                     Сайн уу, {user.firstname}
                   </span>
+
+                  <Link
+                    to="/membership"
+                    className={`font-semibold text-2xl duration-900 ${
+                      showScrolledStyle
+                        ? "text-gray-900 dark:text-gray-100"
+                        : "text-white dark:text-gray-200"
+                    } hover:text-sky-300 dark:hover:text-sky-600 hover:underline`}
+                    onClick={closeMobileMenu}
+                  >
+                    Гишүүнчлэл
+                  </Link>
 
                   <Link
                     to="/profile"
@@ -165,7 +192,7 @@ export default function Layout() {
                   <button
                     onClick={() => openAuthModal("login")}
                     className={`font-semibold text-2xl duration-500 ${
-                      isScrolled
+                      showScrolledStyle
                         ? "text-gray-900 dark:text-gray-100"
                         : "text-white dark:text-gray-200"
                     } hover:text-amber-500 dark:hover:text-amber-400`}
@@ -284,7 +311,6 @@ export default function Layout() {
 
       <Footer />
 
-      {/* AUTH MODAL */}
       <AuthModal
         isOpen={isAuthModalOpen}
         onClose={() => setIsAuthModalOpen(false)}

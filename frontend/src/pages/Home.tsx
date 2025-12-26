@@ -1,6 +1,7 @@
 import Comments from "@/components/ui/comments";
 import TourGrid from "../components/TourGrid";
 import TourTable from "../components/TourTable";
+import SearchBox from "@/components/SearchBox";
 
 export default function Home() {
   return (
@@ -16,7 +17,7 @@ export default function Home() {
         >
           <source src="video.mp4" type="video/mp4" />
         </video>
-        <div className="absolute bottom-40 left-140 flex flex-col gap-8 -mb-20">
+        <div className="absolute bottom-50 left-60 flex flex-col gap-8 -mb-20">
           <h1
             className="font-bold text-5xl
               bg-linear-to-b from-white to-white/60
@@ -53,52 +54,13 @@ export default function Home() {
             хамгийн хямдаар санал болгож байна
           </p>
         </div>
-        {/* <div
-          className="absolute -bottom-10 left-1/2 -translate-x-1/2  rounded-[980px] shadow-lg flex justify-center items-center
-        py-12 px-36 bg-white"
-        >
-          <div className="flex gap-16">
-            <div className="flex flex-col">
-              <label htmlFor="from">From:</label>
-              <select
-                id="from"
-                name="from"
-                className="py-2 px-12 border rounded-4xl"
-              >
-                <option value="mongolia">Mongolia</option>
-                <option value="china">China</option>
-                <option value="us">US</option>
-              </select>
-            </div>
-
-            <div className="flex flex-col">
-              <label htmlFor="to">To:</label>
-              <select
-                id="to"
-                name="to"
-                className="py-2 px-12 border rounded-4xl"
-              >
-                <option value="mongolia">Mongolia</option>
-                <option value="china">China</option>
-                <option value="us">US</option>
-              </select>
-            </div>
-
-            <div className="flex flex-col">
-              <label htmlFor="departure">Departure Date:</label>
-              <input
-                type="date"
-                id="departure"
-                name="departure"
-                className="py-2 px-12 border rounded-4xl"
-              />
-            </div> 
-          </div>
-        </div>*/}
+        <div>
+          <SearchBox />
+        </div>
       </div>
 
       {/* Margin top 10 aar zai avch bgaa */}
-      <div className="w-full mt-10"></div>
+      <div className="w-full mt-30"></div>
       <TourTable />
       <div>
         <TourGrid />

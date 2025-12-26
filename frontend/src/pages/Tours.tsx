@@ -31,7 +31,6 @@ export default function Tours() {
     },
   });
 
-  // Filter tours based on search
   const filteredTours = tours.filter(
     (tour) =>
       tour.title.toLowerCase().includes(searchTerm.toLowerCase()) ||

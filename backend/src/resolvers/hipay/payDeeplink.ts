@@ -3,7 +3,6 @@ import { Request, Response } from "express";
 const HIPAY_BASE_URL = process.env.HIPAY_BASE_URL || "https://test.hipay.mn";
 
 export const getPaymentDeeplink = (req: Request, res: Response) => {
-  // checkoutId-г body эсвэл params-аас авах боломжтой болгож байна (илүү уян хатан)
   const checkoutId = (req.body.checkoutId ||
     req.params.checkoutId ||
     req.query.checkoutId) as string;

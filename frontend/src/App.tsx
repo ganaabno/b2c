@@ -14,6 +14,7 @@ import UserProfile from "./pages/UserProfile";
 import ProtectedRoute from "./components/ProtectedRoute";
 import Layout from "./Layout";
 import { AuthProvider } from "./context/AuthContext";
+import MembershipPage from "./pages/MembershipPage";
 
 const queryClient = new QueryClient();
 
@@ -33,6 +34,7 @@ export default function App() {
                 {/* ← NEW DETAIL PAGE */}
                 <Route element={<ProtectedRoute />}>
                   <Route path="/profile" element={<UserProfile />} />
+                  <Route path="/membership" element={<MembershipPage />} />
 
                   <Route element={<ProtectedRoute allowedRoles={["ADMIN"]} />}>
                     <Route path="/admin" element={<AdminDashboard />} />
@@ -40,7 +42,8 @@ export default function App() {
                   <Route
                     element={
                       <ProtectedRoute allowedRoles={["ADMIN", "MANAGER"]} />
-                    }>
+                    }
+                  >
                     <Route path="/manager" element={<ManagerDashboard />} />
                   </Route>
                 </Route>

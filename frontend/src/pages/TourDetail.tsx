@@ -26,7 +26,6 @@ import {
 import { Loader2 } from "lucide-react";
 import type { Tour } from "@/types";
 import { Button } from "@/components/ui/button";
-import BookingDialog from "@/components/BookingDialog";
 
 const Hainan = lazy(() => import("../components/hutulbur/Hainan"));
 const Turkey = lazy(() => import("../components/hutulbur/Turkey"));
@@ -559,11 +558,9 @@ export default function TourDetail() {
                     </div>
                   </div>
 
-                  <BookingDialog tour={tour}>
-                    <Button className="w-full h-12 text-lg font-bold bg-amber-600 hover:bg-amber-700 text-white shadow-lg shadow-amber-200 dark:shadow-none">
-                      Book This Tour
-                    </Button>
-                  </BookingDialog>
+                  <Button className="w-full h-12 text-lg font-bold bg-amber-600 hover:bg-amber-700 text-white shadow-lg shadow-amber-200 dark:shadow-none">
+                    Book This Tour
+                  </Button>
 
                   <div className="flex items-center justify-center gap-2 text-xs text-gray-400">
                     <ShieldCheck className="h-4 w-4" /> No hidden fees • Secure

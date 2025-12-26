@@ -1,6 +1,5 @@
-// src/components/BookTourButton.tsx
-
 import { useState } from "react";
+import axios from "axios";
 import { motion } from "framer-motion";
 import type { Tour } from "@/types";
 
@@ -53,7 +52,7 @@ const PaymentModal = ({
           {paymentUrl ? (
             <iframe
               src={paymentUrl}
-              title="HiPay Төлбөр (Mock)"
+              title="HiPay Төлбөр"
               className="w-full h-full border-0"
               allow="payment"
             />
@@ -62,7 +61,7 @@ const PaymentModal = ({
               <div className="text-center">
                 <div className="w-12 h-12 border-4 border-green-600 border-t-transparent rounded-full animate-spin mx-auto mb-4" />
                 <p className="text-gray-600 dark:text-gray-400">
-                  Төлбөр бэлтгэж байна...
+                  Бэлтгэж байна...
                 </p>
               </div>
             </div>
@@ -72,15 +71,13 @@ const PaymentModal = ({
         {deeplink && (
           <div className="p-6 bg-gray-50 dark:bg-gray-800 text-center">
             <p className="text-sm text-gray-600 dark:text-gray-400 mb-4">
-              Төлбөр нээгдэхгүй байна уу? HiPay аппаар нээх (Mock):
+              HiPay аппаар нээх:
             </p>
             <a
               href={deeplink}
-              target="_blank"
-              rel="noopener noreferrer"
               className="inline-block px-6 py-3 bg-green-600 hover:bg-green-700 text-white font-bold rounded-xl transition"
             >
-              HiPay аппаар төлөх (Mock)
+              HiPay аппаар төлөх
             </a>
           </div>
         )}
@@ -101,70 +98,49 @@ export default function BookTourButton({
   const handleBook = async () => {
     setLoading(true);
     setModalOpen(true);
-    setPaymentUrl(""); // reset
+    setPaymentUrl("");
 
-    // MOCK MODE – HiPay сервер down учраас жинхэнэ request илгээхгүй
     try {
-      const mockCheckoutId = "MOCK-" + Date.now();
-      const amount =
-        tour.single_supply_price?.replace(/[^\d]/g, "") || "1500000";
+      const response = await axios.post("/api/hipay/checkout", {
+        amount: tour.single_supply_price?.replace(/[^\d]/g, "") || "1500000",
+        redirectUri:
+          window.location.origin + `/tours/${tour.slug}?payment=success`, // буцах хуудас
+        webhookUrl: `${import.meta.env.VITE_API_URL || ""}/api/hipay/webhook`, // Webhook URL
+        items: [
+          {
+            name: tour.title,
+            quantity: 1,
+            price: tour.single_supply_price?.replace(/[^\d]/g, ""),
+          },
+        ],
+        qrData: false,
+      });
 
-      // Mock payment page – бодит HiPay-ийн төлбөрийн хуудас шиг харагдах энгийн HTML
-      const mockPaymentHtml = `
-        <!DOCTYPE html>
-        <html lang="mn">
-        <head>
-          <meta charset="UTF-8">
-          <meta name="viewport" content="width=device-width, initial-scale=1.0">
-          <title>HiPay Төлбөр (Mock)</title>
-          <style>
-            body { font-family: system-ui, sans-serif; background: #f3f4f6; display: flex; justify-content: center; align-items: center; height: 100vh; margin: 0; }
-            .container { background: white; padding: 2rem; border-radius: 1rem; box-shadow: 0 10px 25px rgba(0,0,0,0.1); text-align: center; max-width: 400px; width: 100%; }
-            h1 { color: #10b981; margin-bottom: 1rem; }
-            .amount { font-size: 2rem; font-weight: bold; color: #111; margin: 1.5rem 0; }
-            .tour { color: #666; margin-bottom: 2rem; }
-            button { background: #10b981; color: white; border: none; padding: 1rem 2rem; font-size: 1.1rem; border-radius: 0.75rem; cursor: pointer; width: 100%; }
-            button:hover { background: #059669; }
-            .mock-note { margin-top: 2rem; font-size: 0.875rem; color: #888; }
-          </style>
-        </head>
-        <body>
-          <div class="container">
-            <h1>🚀 HiPay Төлбөр (Mock Mode)</h1>
-            <p class="tour"><strong>Аялал:</strong> ${tour.title}</p>
-            <div class="amount">₮${Number(amount).toLocaleString()}</div>
-            <p>Та төлбөр төлөх гэж байна.</p>
-            <button onclick="simulateSuccess()">Төлбөр амжилттай хийх (Mock)</button>
-            <div class="mock-note">Энэ бол зөвхөн туршилтын mock хуудас. Жинхэнэ HiPay сервер сэргэхээр бодит төлбөр болно 💸</div>
-          </div>
-          <script>
-            function simulateSuccess() {
-              alert("🎉 Төлбөр амжилттай хийгдлээ! (Mock mode)");
-              setTimeout(() => window.close(), 1000);
-            }
-          </script>
-        </body>
-        </html>
-      `;
+      if (response.data.success) {
+        let finalPaymentUrl = paymentUrl;
 
-      // data URL болгоод iframe-д хийнэ
-      const mockPaymentUrl =
-        "data:text/html;charset=utf-8," + encodeURIComponent(mockPaymentHtml);
+        if (
+          response.data.checkoutId?.startsWith("MOCK_") ||
+          import.meta.env.DEV
+        ) {
+          finalPaymentUrl = "https://httpbin.org/html";
+        }
 
-      // Mock deeplink (mobile дээр туршихад нээгдэхгүй ч гоё харагдана xD)
-      const mockDeeplink = `hipay:///pay/${mockCheckoutId}`;
-
-      setPaymentUrl(mockPaymentUrl);
-      setDeeplink(mockDeeplink);
-
-      // 8 секундын дараа автоматаар "амжилттай" болгоод modal хаах (туршилтад гоё)
-      setTimeout(() => {
-        alert("🎉 Төлбөр амжилттай хийгдлээ! (Mock mode 🚀)");
-        setModalOpen(false);
-      }, 8000);
-    } catch (err) {
-      // Mock mode-д алдаа гарахгүй шүү xD
-      console.log("Mock mode-д алдаа гарахгүй ээ 😎");
+        setPaymentUrl(finalPaymentUrl);
+        setDeeplink(response.data.deeplink);
+      } else {
+        throw new Error(
+          response.data.message || "Нэхэмжлэх үүсгэхэд алдаа гарлаа"
+        );
+      }
+    } catch (err: any) {
+      console.error("HiPay checkout алдаа:", err);
+      alert(
+        `Алдаа гарлаа: ${
+          err.response?.data?.message || err.message || "Серверт асуудал гарлаа"
+        }`
+      );
+      setModalOpen(false);
     } finally {
       setLoading(false);
     }
