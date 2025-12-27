@@ -6,6 +6,7 @@ import {
   type ReactNode,
 } from "react";
 import axios from "axios";
+import { useNavigate } from "react-router-dom";
 import type { User, AuthContextType } from "@/types";
 
 const AuthContext = createContext<AuthContextType | undefined>(undefined);
@@ -13,6 +14,7 @@ const AuthContext = createContext<AuthContextType | undefined>(undefined);
 export function AuthProvider({ children }: { children: ReactNode }) {
   const [user, setUser] = useState<User | null>(null);
   const [isLoading, setIsLoading] = useState(true);
+  const navigate = useNavigate();
 
   const api = axios.create({
     baseURL: import.meta.env.VITE_API_URL,
@@ -21,6 +23,7 @@ export function AuthProvider({ children }: { children: ReactNode }) {
     },
   });
 
+  // Add token to every request
   api.interceptors.request.use((config) => {
     const token = localStorage.getItem("token");
     if (token) {
@@ -29,12 +32,14 @@ export function AuthProvider({ children }: { children: ReactNode }) {
     return config;
   });
 
+  // Handle 401 → auto logout
   api.interceptors.response.use(
     (res) => res,
     (err) => {
       if (err.response?.status === 401) {
         localStorage.removeItem("token");
         setUser(null);
+        navigate("/", { replace: true }); // Optional: redirect on expired token
       }
       return Promise.reject(err);
     }
@@ -47,7 +52,7 @@ export function AuthProvider({ children }: { children: ReactNode }) {
       localStorage.setItem("token", res.data.token);
       setUser(res.data.user);
     } catch (error) {
-      console.log("error:", error);
+      throw error; // Let LoginForm handle error display
     } finally {
       setIsLoading(false);
     }
@@ -70,18 +75,20 @@ export function AuthProvider({ children }: { children: ReactNode }) {
       localStorage.setItem("token", res.data.token);
       setUser(res.data.user);
     } catch (error) {
-      console.log(error);
+      throw error; // Let SignupForm handle error
     } finally {
       setIsLoading(false);
     }
   };
 
+  // FIXED: Logout now redirects to home!
   const logout = () => {
     localStorage.removeItem("token");
     setUser(null);
+    navigate("/", { replace: true }); // ← This is the magic!
   };
 
-  // Auto-login on mount/refresh
+  // Auto-login on page load/refresh
   useEffect(() => {
     const loadUser = async () => {
       const token = localStorage.getItem("token");
@@ -94,7 +101,7 @@ export function AuthProvider({ children }: { children: ReactNode }) {
         const res = await api.get("/api/auth/me");
         setUser(res.data);
       } catch (err) {
-        console.log(err);
+        console.log("Auto-login failed:", err);
         localStorage.removeItem("token");
         setUser(null);
       } finally {
@@ -103,7 +110,7 @@ export function AuthProvider({ children }: { children: ReactNode }) {
     };
 
     loadUser();
-  }, []);
+  }, [navigate]); // Add navigate to deps (good practice)
 
   return (
     <AuthContext.Provider value={{ user, login, signup, logout, isLoading }}>
@@ -111,7 +118,7 @@ export function AuthProvider({ children }: { children: ReactNode }) {
     </AuthContext.Provider>
   );
 }
-// eslint-disable-next-line react-refresh/only-export-components
+
 export const useAuth = () => {
   const context = useContext(AuthContext);
   if (!context) throw new Error("useAuth must be used within AuthProvider");

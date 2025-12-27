@@ -21,6 +21,8 @@ export interface AuthContextType {
 }
 
 export interface Tour {
+  from: any;
+  to: any;
   id: string;
   title: string;
   description: string;

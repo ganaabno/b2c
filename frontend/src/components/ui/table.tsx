@@ -1,5 +1,5 @@
+// components/ui/table.tsx
 import * as React from "react";
-
 import { cn } from "@/lib/utils";
 
 function Table({ className, ...props }: React.ComponentProps<"table">) {

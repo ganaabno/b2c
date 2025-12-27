@@ -1,5 +1,5 @@
-import { useState, useEffect } from "react";
-import axios from "axios";
+// components/TourTable.tsx
+import { useState } from "react";
 import { useNavigate } from "react-router-dom";
 import {
   Table,
@@ -11,57 +11,70 @@ import {
 } from "@/components/ui/table";
 import type { Tour } from "@/types";
 
-export default function TourTable() {
-  const [tours, setTours] = useState<Tour[]>([]);
+type TourTableProps = {
+  tours: Tour[];
+  filterCountry?: string;
+  filterDeparture?: string;
+};
+
+export default function TourTable({
+  tours,
+  filterCountry = "",
+  filterDeparture = "",
+}: TourTableProps) {
   const navigate = useNavigate();
 
-  useEffect(() => {
-    const fetchTours = async () => {
-      try {
-        const res = await axios.get("/api/tours");
-        setTours(res.data);
-      } catch (err: unknown) {
-        if (err instanceof Error) {
-          console.error("Error message:", err.message);
-        }
-        console.error("Failed to load tours");
-      }
-    };
-    fetchTours();
-  }, []);
+  const filteredTours = tours.filter((tour) => {
+    const matchesCountry =
+      !filterCountry || tour.country?.trim() === filterCountry.trim();
+    const matchesDate =
+      !filterDeparture ||
+      tour.departure_date?.trim() === filterDeparture.trim();
+    return matchesCountry && matchesDate;
+  });
 
   const INITIAL_COUNT = 10;
   const [visibleCount, setVisibleCount] = useState(INITIAL_COUNT);
+
+  const visibleTours = filteredTours.slice(0, visibleCount);
+  const hasMore = visibleCount < filteredTours.length;
+  const isExpanded = visibleCount > INITIAL_COUNT;
 
   const handleRowClick = (slug: string) => navigate(`/tours/${slug}`);
   const handleLoadMore = () => setVisibleCount((prev) => prev + 10);
   const handleCollapse = () => setVisibleCount(INITIAL_COUNT);
 
-  const visibleTours = tours.slice(0, visibleCount);
-  const hasMore = visibleCount < tours.length;
-  const isExpanded = visibleCount > INITIAL_COUNT;
-
-  const formatPrice = (price: number | string) => {
-    if (!price) return "0";
-    return Number(price).toLocaleString();
+  const formatPrice = (price: number | string | null | undefined) => {
+    if (!price) return "—";
+    const num = Number(String(price).replace(/,/g, ""));
+    return isNaN(num) ? "—" : num.toLocaleString();
   };
 
   return (
     <div
       id="tour-table-container"
-      className="w-full flex flex-col items-center px-[5%] py-12"
+      className="w-full flex flex-col items-center px-[5%] "
     >
-      <div className="text-center mb-8 font-serif py-5">
-        <h1 className="text-3xl">Ойрын Хугцааны Аялалууд</h1>
-        <p className="text-sm">Өөрт тохирох аялалыг хамгийн хямдаар.</p>
+      <div className="text-center font-serif py-5">
+        <h1 className="text-3xl">Ойрын Хугацааны Аялалууд</h1>
+        <p className="text-sm mt-2">
+          {filteredTours.length > 0
+            ? `Хамгийн хямд аялалыг зөвхөн танд! Нийт ${filteredTours.length} аялал байна.`
+            : "Аялал олдсонгүй..... Та өөр шалгуур ашиглан дахин оролдоно уу."}
+        </p>
       </div>
-      {/* --- MOBILE VIEW (Cards) --- */}
+
       <div className="w-full grid grid-cols-1 gap-3 md:hidden">
         {visibleTours.map((tour) => (
           <div
             key={tour.id}
-            onClick={() => handleRowClick(tour.id || "")}
-            className="group relative overflow-hidden rounded-2xl bg-white dark:bg-gray-900 border border-gray-100 dark:border-gray-800 hover:border-gray-200 dark:hover:border-gray-700 transition-all duration-300 hover:shadow-xl hover:shadow-gray-200/50 dark:hover:shadow-gray-900/50 active:scale-[0.99]"
+            role="button"
+            tabIndex={0}
+            onClick={() => handleRowClick(tour.slug || tour.id || "")}
+            onKeyDown={(e) =>
+              e.key === "Enter" && handleRowClick(tour.slug || tour.id || "")
+            }
+            className="group relative overflow-hidden rounded-2xl bg-white dark:bg-gray-900 border border-gray-100 dark:border-gray-800 hover:border-gray-200 dark:hover:border-gray-700 transition-all duration-300 hover:shadow-xl hover:shadow-gray-200/50 dark:hover:shadow-gray-900/50 active:scale-[0.99] cursor-pointer"
           >
             <div className="absolute inset-0 bg-linear-to-br from-blue-50/30 via-transparent to-purple-50/30 dark:from-blue-950/20 dark:via-transparent dark:to-purple-950/20 opacity-0 group-hover:opacity-100 transition-opacity duration-500"></div>
 
@@ -69,9 +82,10 @@ export default function TourTable() {
               <div className="flex items-start gap-3 mb-3">
                 <div className="relative h-14 w-14 shrink-0 overflow-hidden rounded-xl ring-1 ring-gray-200/50 dark:ring-gray-700/50">
                   <img
-                    src={tour.cover_photo || ""}
+                    src={tour.cover_photo || "/placeholder-tour.jpg"}
                     alt={tour.title}
                     className="h-full w-full object-cover transition-transform duration-500 group-hover:scale-110"
+                    loading="lazy"
                   />
                   <div className="absolute inset-0 bg-linear-to-t from-black/20 to-transparent"></div>
                 </div>
@@ -122,7 +136,6 @@ export default function TourTable() {
         ))}
       </div>
 
-      {/* --- DESKTOP VIEW (Table) --- */}
       <div className="hidden md:block w-full max-w-[1400px]">
         <div className="overflow-hidden rounded-2xl bg-white dark:bg-gray-900 border border-gray-100 dark:border-gray-800 shadow-sm">
           <Table className="min-w-[900px]">
@@ -146,20 +159,21 @@ export default function TourTable() {
               </TableRow>
             </TableHeader>
             <TableBody>
-              {visibleTours.map((tour, index) => (
+              {visibleTours.map((tour, idx) => (
                 <TableRow
                   key={tour.id}
-                  onClick={() => handleRowClick(tour.slug || "")}
+                  onClick={() => handleRowClick(tour.slug || tour.id || "")}
                   className="group cursor-pointer border-b border-gray-50 dark:border-gray-800/50 transition-all duration-200 hover:bg-linear-to-r hover:from-gray-50/50 hover:to-transparent dark:hover:from-gray-800/30 dark:hover:to-transparent"
-                  style={{ animationDelay: `${index * 30}ms` }}
+                  style={{ animationDelay: `${idx * 30}ms` }}
                 >
                   <TableCell className="py-4 pl-8">
                     <div className="flex items-center gap-4">
                       <div className="relative h-12 w-12 shrink-0 overflow-hidden rounded-xl ring-1 ring-gray-200/50 dark:ring-gray-700/50 transition-all duration-300 group-hover:ring-2 group-hover:ring-blue-500/30 dark:group-hover:ring-blue-400/30">
                         <img
-                          src={tour.cover_photo || ""}
+                          src={tour.cover_photo || "/placeholder-tour.jpg"}
                           alt={tour.title}
                           className="h-full w-full object-cover transition-transform duration-500 group-hover:scale-110"
+                          loading="lazy"
                         />
                         <div className="absolute inset-0 bg-linear-to-t from-black/10 to-transparent"></div>
                       </div>
@@ -223,57 +237,58 @@ export default function TourTable() {
         </div>
       </div>
 
-      {/* --- BUTTONS AREA --- */}
-      <div className="mt-10 flex justify-center gap-3">
-        {hasMore && (
-          <button
-            onClick={handleLoadMore}
-            className="group relative overflow-hidden rounded-xl bg-linear-to-r from-blue-600 to-indigo-600 dark:from-blue-500 dark:to-indigo-500 px-8 py-3 text-sm font-semibold text-white shadow-lg shadow-blue-500/25 dark:shadow-blue-900/25 transition-all duration-300 hover:shadow-xl hover:shadow-blue-500/30 dark:hover:shadow-blue-900/30 hover:-translate-y-0.5 active:translate-y-0"
-          >
-            <span className="relative z-10 flex items-center gap-2">
-              Цааш үзэх
-              <svg
-                className="h-4 w-4 transition-transform duration-300 group-hover:translate-y-0.5"
-                fill="none"
-                viewBox="0 0 24 24"
-                stroke="currentColor"
-                strokeWidth={2.5}
-              >
-                <path
-                  strokeLinecap="round"
-                  strokeLinejoin="round"
-                  d="M19 9l-7 7-7-7"
-                />
-              </svg>
-            </span>
-            <div className="absolute inset-0 bg-linear-to-r from-blue-500 to-indigo-500 opacity-0 transition-opacity duration-300 group-hover:opacity-100"></div>
-          </button>
-        )}
+      {filteredTours.length > 0 && (
+        <div className="mt-10 flex justify-center gap-3">
+          {hasMore && (
+            <button
+              onClick={handleLoadMore}
+              className="group relative overflow-hidden rounded-xl bg-linear-to-r from-blue-600 to-indigo-600 dark:from-blue-500 dark:to-indigo-500 px-8 py-3 text-sm font-semibold text-white shadow-lg shadow-blue-500/25 dark:shadow-blue-900/25 transition-all duration-300 hover:shadow-xl hover:shadow-blue-500/30 dark:hover:shadow-blue-900/30 hover:-translate-y-0.5 active:translate-y-0"
+            >
+              <span className="relative z-10 flex items-center gap-2">
+                Цааш үзэх
+                <svg
+                  className="h-4 w-4 transition-transform duration-300 group-hover:translate-y-0.5"
+                  fill="none"
+                  viewBox="0 0 24 24"
+                  stroke="currentColor"
+                  strokeWidth={2.5}
+                >
+                  <path
+                    strokeLinecap="round"
+                    strokeLinejoin="round"
+                    d="M19 9l-7 7-7-7"
+                  />
+                </svg>
+              </span>
+              <div className="absolute inset-0 bg-linear-to-r from-blue-500 to-indigo-500 opacity-0 transition-opacity duration-300 group-hover:opacity-100"></div>
+            </button>
+          )}
 
-        {isExpanded && (
-          <button
-            onClick={handleCollapse}
-            className="group rounded-xl border border-gray-200 dark:border-gray-700 bg-white dark:bg-gray-900 px-8 py-3 text-sm font-semibold text-gray-700 dark:text-gray-300 shadow-sm transition-all duration-300 hover:border-gray-300 dark:hover:border-gray-600 hover:shadow-md hover:-translate-y-0.5 active:translate-y-0"
-          >
-            <span className="flex items-center gap-2">
-              Хураах
-              <svg
-                className="h-4 w-4 transition-transform duration-300 group-hover:-translate-y-0.5"
-                fill="none"
-                viewBox="0 0 24 24"
-                stroke="currentColor"
-                strokeWidth={2.5}
-              >
-                <path
-                  strokeLinecap="round"
-                  strokeLinejoin="round"
-                  d="M5 15l7-7 7 7"
-                />
-              </svg>
-            </span>
-          </button>
-        )}
-      </div>
+          {isExpanded && (
+            <button
+              onClick={handleCollapse}
+              className="group rounded-xl border border-gray-200 dark:border-gray-700 bg-white dark:bg-gray-900 px-8 py-3 text-sm font-semibold text-gray-700 dark:text-gray-300 shadow-sm transition-all duration-300 hover:border-gray-300 dark:hover:border-gray-600 hover:shadow-md hover:-translate-y-0.5 active:translate-y-0"
+            >
+              <span className="flex items-center gap-2">
+                Хураах
+                <svg
+                  className="h-4 w-4 transition-transform duration-300 group-hover:-translate-y-0.5"
+                  fill="none"
+                  viewBox="0 0 24 24"
+                  stroke="currentColor"
+                  strokeWidth={2.5}
+                >
+                  <path
+                    strokeLinecap="round"
+                    strokeLinejoin="round"
+                    d="M5 15l7-7 7 7"
+                  />
+                </svg>
+              </span>
+            </button>
+          )}
+        </div>
+      )}
     </div>
   );
 }

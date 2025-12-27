@@ -25,22 +25,26 @@ function ProtectedRoute({ allowedRoles }: ProtectedRouteProps) {
   // If no user, redirect to login
   if (!user) {
     console.log("❌ No user, redirecting to login");
-    return <Navigate to="/login" replace />;
+    return <Navigate to="/" replace />;
   }
 
   // If allowedRoles is provided, check if user has required role
   if (allowedRoles && allowedRoles.length > 0) {
     const userRole = user.role || "CLIENT"; // Default to CLIENT if undefined
-    
-    console.log(`🔍 Checking role: ${userRole} against allowed: [${allowedRoles.join(", ")}]`);
-    
+
+    console.log(
+      `🔍 Checking role: ${userRole} against allowed: [${allowedRoles.join(
+        ", "
+      )}]`
+    );
+
     // Check if user's role is in the allowedRoles array
     const hasRequiredRole = allowedRoles.includes(userRole);
-    
+
     if (!hasRequiredRole) {
-  return <Navigate to="/access-denied" replace />;
-}
-    
+      return <Navigate to="/access-denied" replace />;
+    }
+
     console.log(`✅ Access granted for role: ${userRole}`);
   }
 

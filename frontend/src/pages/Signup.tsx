@@ -32,7 +32,8 @@ export default function SignupForm() {
       animate={{ opacity: 1, x: 0 }}
       exit={{ opacity: 0, x: -30 }}
       transition={{ duration: 0.4 }}
-      className="w-full max-w-md">
+      className="w-full max-w-md"
+    >
       <div className="mb-12 text-left">
         <img src={Logo} alt="Logo" className="w-64 invert dark:invert-0 mb-6" />
         <h1 className="text-4xl font-bold text-gray-900 dark:text-gray-50 mb-2">
@@ -47,7 +48,8 @@ export default function SignupForm() {
         <motion.div
           initial={{ opacity: 0, y: -10 }}
           animate={{ opacity: 1, y: 0 }}
-          className="mb-4 rounded-xl bg-red-50 border-2 border-red-200 p-4 text-red-700 text-center">
+          className="mb-4 rounded-xl bg-red-50 border-2 border-red-200 p-4 text-red-700 text-center"
+        >
           <div className="flex items-center justify-center gap-2">
             <svg className="w-5 h-5" fill="currentColor" viewBox="0 0 20 20">
               <path
@@ -122,7 +124,8 @@ export default function SignupForm() {
         <button
           type="submit"
           disabled={isLoading}
-          className="w-full cursor-pointer rounded-xl bg-linear-to-r from-sky-500 to-sky-600 py-4 font-semibold text-white shadow-lg shadow-sky-500/30 hover:shadow-xl hover:shadow-sky-500/40 hover:scale-[1.02] disabled:opacity-50 disabled:cursor-not-allowed disabled:hover:scale-100 transition-all duration-200 mt-6">
+          className="w-full cursor-pointer rounded-xl bg-linear-to-r from-sky-500 to-sky-600 py-4 font-semibold text-white shadow-lg shadow-sky-500/30 hover:shadow-xl hover:shadow-sky-500/40 hover:scale-[1.02] disabled:opacity-50 disabled:cursor-not-allowed disabled:hover:scale-100 transition-all duration-200 mt-6"
+        >
           {isLoading ? (
             <span className="flex items-center justify-center gap-2">
               <svg className="animate-spin h-5 w-5" viewBox="0 0 24 24">

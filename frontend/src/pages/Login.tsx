@@ -23,8 +23,8 @@ export default function LoginForm() {
       console.error("Login failed:", err);
 
       let errorMessage = "Нэвтрэхэд алдаа гарлаа. Дахин оролдоно уу.";
-      if(err instanceof Error){
-        console.log(err)
+      if (err instanceof Error) {
+        console.log(err);
       }
 
       if (axios.isAxiosError(err)) {
@@ -41,7 +41,7 @@ export default function LoginForm() {
           errorMessage =
             "Серверт алдаа гарлаа. Хэсэг хугацааны дараа оролдоно уу.";
         }
-      } 
+      }
 
       setError(errorMessage);
 
@@ -60,8 +60,12 @@ export default function LoginForm() {
     >
       <div className="mb-12 text-left">
         <img src={logo} alt="Logo" className="w-64 invert dark:invert-0 mb-6" />
-        <h1 className="text-4xl font-bold text-gray-900 mb-2 dark:text-gray-50">Тавтай морил</h1>
-        <p className="text-gray-600 dark:text-gray-200">Та өөрийн хаяг руу нэвтэрнэ үү</p>
+        <h1 className="text-4xl font-bold text-gray-900 mb-2 dark:text-gray-50">
+          Тавтай морил
+        </h1>
+        <p className="text-gray-600 dark:text-gray-200">
+          Та өөрийн хаяг руу нэвтэрнэ үү
+        </p>
       </div>
 
       {error && (
