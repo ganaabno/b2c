@@ -1,5 +1,5 @@
 import {
-  MapPin,
+  Soup,
   Utensils,
   BedDouble,
   Coffee,
@@ -13,145 +13,133 @@ const Singapore = () => {
   const tourData = [
     {
       day: 1,
-      title: "Улаанбаатар - Ханой",
+      title: "Улаанбаатар - Сингапур",
       date: "2025.12.27 (Бямба)",
       cover_photo: "https://placehold.co/600x400/87CEEB/ffffff?text=Bangkok",
-      location: "Улаанбаатар City",
+      location: "Улаанбаатар ",
       route: [
-        { name: "Улаанбаатар ", distance: "3822km", duration: "4 цаг" },
-        { name: "Ханой" },
+        { name: "Улаанбаатар ", distance: "5158 км", duration: "7 цаг 30 мин" },
+        { name: "Сингапур" },
       ],
       description: [
-        "05:00 Аялагчид Хөшигийн хөндийн “Чингис Хаан” олон улсын нисэх онгоцны буудалд ирсэн байна.",
-        "08:00 – 12:00 Улаанбаатар – Ханой нислэг",
-        "14:00 Ханой хотын зочид буудалд байрлана",
-        "Аялагчид нийтдээ 2 өдөр 2 шөнө Вьетнам улсын Ханой хотод байрлан амарна.",
+        "Өглөөний 06:30 цагт  Хөшигийн хөндийн “Чингис Хаан” олон улсын нисэх онгоцны буудалд цуглаж, үдэгчээс мэдээлэл авч бүртгэлээ хийлгэнэ. ",
+        "Улаанбаатар хотоос 09:30 цагт хөөрөөд Сингапур улсын ЧАНГИ олон улсын нисэх онгоцны буудалд 16:55 цагт буух ба  Зочид буудал руу хүргүүлж оройн хоолоо идээд амарна.",
       ],
-      meals: { lunch: "Restaurant" },
-      accommodation: "Jomtien Palm Beach Hotel",
+      meals: { dinner: "Оройн хоол: Зочид буудал" },
+      accommodation: "Hotel traveltine",
     },
     {
       day: 2,
-      title: "Pattaya Tour",
+      title: "Сингапур хотын аялал",
       date: "2025.12.28 (Ням)",
       cover_photo: "https://placehold.co/600x400/8B4513/ffffff?text=Pattaya",
-      location: "Pattaya City",
+      location: "Сингапур",
       description: [
-        "06:00-07:00 Өглөөний цай",
-        "07:30 цагт Зочид буудлын өрөөг хүлээлгэж өгөн Ной Бай олон улсын нисэх буудал руу хөдөлнө",
-        "10:05-16:25 Ханой-Бали нислэг",
-        "18:00-18:30 Зочид буудалд байрлана",
-        "Аялагчид нийтдээ 5 өдөр 5 шөнө Индонез улсын Бали аралд байрлан амарна.",
+        "Өглөөний цайгаа уугаад алдарт Марина Бэй Сэндс зочид буудлыг харж, Мерлион цэцэрлэгт хүрээлэнгээр зугаална. ",
+        "Өдрийн хоолны дараа Үүлэн ой ба Цэцгийн хүлэмжээр аялаад, Orchard Road-д худалдаа хийж болно.",
+        "Нэмэлтээр та бүхэн Сингапур хотын үдшийн криуз аялал хийж болно (нэмэлт төлбөртэй)",
       ],
-      meals: { breakfast: "Hotel breakfast", lunch: "Restaurant" },
-      accommodation: "Jomtien Palm Beach Hotel",
+      meals: {
+        breakfast: "Зочид буудлын өглөөний цай",
+        lunch: "Өдрийн хоол",
+        dinner: "Оройн хоол",
+      },
+      accommodation: "Hotel traveltine",
     },
     {
       day: 3,
-      title:
-        "БҮТЭН ӨДРИЙН УБУД ХОТЫН АЯЛАЛ + KINTAMANI ГАЛТ УУЛЫН АЯЛАЛ/ӨДӨР & ОРОЙН ХООЛ/",
+      title: "Индонез - Бинтан арал",
       date: "2025.12.29 (Даваа)",
       cover_photo: "https://placehold.co/600x400/00CED1/ffffff?text=Island",
-      location: "Pattaya City",
-      route: [{ name: "Pattaya City", distance: "15km", duration: "30min" }],
+      location: "Сингапур - Бинтан",
+
       description: [
-        "08:00 Өглөөний цай",
-        "Ubud Palace – Түүхэн дурсгалт хааны ордон",
-        "Uma Pakel Swing дүүжин – Нутгийн кофег амтлан шувууны үүрэнд зураг даруулах боломжтой",
-        "Tampak Siring хот – Tirta Empul ариун усны сүм",
-        "Tegalalang тосгон – Будааны дэнж",
-        "Batur галт уул болон Batur нуур",
+        "Энэ өдөр бид буудлаа хүлээлгэж өгөөд усан онгоцоор Инденоз улсын аялал жуулчлалын бүс болох Бинтан арал руу 1 цаг явна.",
+        "Хил гаалиар нэвтэрсний дараа далайн эрэгт байрлах буудалдаа хүргүүлж амрана.",
       ],
-      meals: { lunch: "Restaurant", dinner: "Included" },
-      accommodation: "Jomtien Palm Beach Hotel",
+      meals: { breakfast: "Зочид буудлын өглөөний цай" },
+      accommodation: "Hotel traveltine",
     },
     {
       day: 4,
-      title:
-        "БҮТЭН ӨДРИЙН BEDUGUL ХЭСГИЙН АЯЛАЛ + TANAH LOT/ӨДӨР & ОРОЙН ХООЛ/",
+      title: "Чөлөөт өдөр",
       date: "2025.12.30 (Мягмар)",
       cover_photo: "https://placehold.co/600x400/00CED1/ffffff?text=Island",
-      location: "Pattaya City",
-      route: [{ name: "Pattaya City", distance: "15km", duration: "30min" }],
+      location: "Бинтан арал",
+
       description: [
-        "08:00 Өглөөний цай",
-        "Mengwi тосгон – Taman Ayun язгууртны гэр бүлийн сүм",
-        "Bratan нуур – Ulun Danu усан дээрх хөвдөг сүм",
-        "Tanah Lot сүт",
+        "Яанода ойн паркийн аялал. (нэмэлт төлбөртэй: шилэн гүүр (98yuan), 12 төрлийн экстрэм тоглоомууд болон уулнаас завьтай гулгаж буух боломжтой (198 yuan). Хятадын цайны соёлтой танилцаж Кунг Фу цай амтлана.",
       ],
-      meals: { lunch: "Restaurant", dinner: "Included" },
-      accommodation: "Jomtien Palm Beach Hotel",
+      meals: {
+        breakfast: "Зочид буудлын өглөөний цай",
+        lunch: "Өдрийн хоол",
+        dinner: "Оройн хоол",
+      },
+      accommodation: "Angsana Bintan *****",
     },
     {
       day: 5,
-      title: "ХАГАС ӨДӨР WATER BOM PARK + ЧӨЛӨӨТ ЦАГ/ӨДӨР & ОРОЙН ХООЛ/",
+      title: "Усан бассейн",
       date: "2025.12.31 (Лхагва)",
       cover_photo: "https://placehold.co/600x400/00CED1/ffffff?text=Island",
-      location: "Pattaya City",
-      route: [{ name: "Pattaya City", distance: "15km", duration: "30min" }],
-      description: ["08:00 Өглөөний цай"],
-      meals: {},
-      accommodation: "Jomtien Palm Beach Hotel",
+      location: "Бинтан",
+
+      description: [
+        "Өглөөний цайны дараа Азийн хамгийн том усан бассейнд өдрийг өнгөрүүлнэ. /урт 150метр өргөн 800метр/",
+      ],
+      meals: { breakfast: "Зочид буудлын өглөөний цай" },
+      accommodation: "Angsana Bintan *****",
     },
     {
       day: 6,
-      title:
-        "БҮТЭН ӨДРИЙН ТЭНГЭРИЙН ХААЛГА БОЛОН TIRTA GANGGA УСАН ОРДОНГИЙН АЯЛАЛ/ӨДӨР& ОРОЙН ХООЛ/",
+      title: "Чөлөөт өдөр",
       date: "2025.1.1 (Пүрэв)",
       cover_photo: "https://placehold.co/600x400/00CED1/ffffff?text=Island",
-      location: "Pattaya City",
-      route: [{ name: "Pattaya City", distance: "15km", duration: "30min" }],
+      location: "Бинтан",
+
       description: [
-        "08:00 Өглөөний цай",
-        "The Heaven Gate – Бали арлын зүүн зүгт байрлах Lempuyang The Heaven’s Gate буюу Тэнгэрийн хаалгыг зорино",
-        "Tirta Gangga – Хааны усан ордон",
+        "Чөлөөт өдрөөр та далайн эрэг дээр амрах, хүсвэл нэмэлтээр хөтөлбөр авах боломжтой.",
       ],
       meals: {
-        breakfast: "Hotel breakfast",
-        lunch: "Restaurant",
-        dinner: "Restaurant",
+        breakfast: "Зочид буудлын өглөөний цай",
       },
-      accommodation: "Jomtien Palm Beach Hotel",
+      accommodation: "Angsana Bintan *****",
     },
     {
       day: 7,
-      title: "",
+      title: "Сингапур - Сентоза",
       date: "2025.1.2 (Баасан)",
       cover_photo: "https://placehold.co/600x400/00CED1/ffffff?text=Island",
-      location: "Pattaya City",
-      route: [{ name: "Pattaya City", distance: "15km", duration: "30min" }],
+      location: "Сентоза",
+
       description: [
-        "07:00-08:00 Өглөөний цай",
-        "11:00 Аялагчид зочид буудлын өрөөгөө хүлээлгэж өгөн Ngurah Rai олон улсын нисэх буудал руу хөдөлнө.",
-        "13:10-17:20 Бали-Ханой нислэг",
-        "19:00 Зочид буудалд байрлана",
+        "Өглөөний цайны дараа буудлаа хүлээлгэж өгөөд усан онгоцоор Сингапурт ирээд Сентоза арлаар цагийг зугаатай өнгөрүүлэх боломжтой ба шоппинг хийж орой нь алдарт Wings of Time шоу үзнэ.",
       ],
       meals: {
-        breakfast: "Hotel breakfast",
-        lunch: "Restaurant",
-        dinner: "Restaurant",
+        breakfast: "Зочид буудлын өглөөний цай",
+        lunch: "Өдрийн хоол",
       },
-      accommodation: "Jomtien Palm Beach Hotel",
+      accommodation: "Hotel traveltine",
     },
 
     {
       day: 8,
-      title: "Сүүлийн өдөр",
-      date: "2025.1.3 (Бямба)",
+      title: "Сингапур - Улаанбаатар",
+      date: "2025.1.4 (Ням)",
       cover_photo: "https://placehold.co/600x400/00CED1/ffffff?text=Island",
       location: "Pattaya City",
-      route: [{ name: "Pattaya City", distance: "15km", duration: "30min" }],
+      route: [
+        { name: "Сингапур", distance: "5158 км", duration: "7 цаг 30 мин" },
+        { name: "Улаанбаатар" },
+      ],
       description: [
-        "07:00-08:00 Өглөөний цай",
-        "08:30 Аялагчид зочид буудлын өрөөгөө хүлээлгэж өгөн Ной Бай олон улсын нисэх буудал руу хөдөлнө",
-        "13:00-19:00 Ханой-Улаанбаатар нислэг",
+        "Өглөөний цайны дараа чөлөөтэй бөгөөд та бүгд ойролцоох дэлгүүр, худалдааны төвөөр явах боломжтой.",
+        "Орой 19:25 цагт Сингапур- Монгол руу буцах ба 02.55 (+1) цагт газардаж бидний дурсамж дүүрэн аялал өндөрлөнө.",
       ],
       meals: {
-        breakfast: "Hotel breakfast",
-        lunch: "Restaurant",
-        dinner: "Restaurant",
+        breakfast: "Өглөөний цай",
       },
-      accommodation: "Jomtien Palm Beach Hotel",
+      accommodation: "",
     },
   ];
 
@@ -159,34 +147,13 @@ const Singapore = () => {
     <div className=" bg-gray-50 dark:bg-gray-900 p-4 md:p-8 font-sans">
       <div className=" ">
         {/* Header Section */}
-        <div className="flex items-center gap-3 mb-8 border-b border-gray-200 dark:border-gray-700 pb-4">
-          <div className="p-2 bg-amber-100 dark:bg-amber-900/30 rounded-lg text-amber-600 dark:text-amber-500">
-            <MapPin className="h-6 w-6" />
-          </div>
-          <h1 className="text-3xl font-bold text-gray-900 dark:text-gray-100">
-            Singapore tour itinerary
-          </h1>
-        </div>
-
         <div className="space-y-6">
           {tourData.map((tour) => (
             <div
               key={tour.day}
               className="bg-white dark:bg-gray-800 rounded-xl shadow-sm border border-gray-200 dark:border-gray-700 overflow-hidden flex flex-col md:flex-row transition-all hover:shadow-md">
-              {/* Left: cover_photo Section */}
-              <div className="md:w-56 h-56 md:h-auto bg-gray-100 dark:bg-gray-700 shrink-0 relative group">
-                <img
-                  src={tour.cover_photo}
-                  alt={`Day ${tour.day}`}
-                  className="w-full h-full object-cover transition-transform duration-500 group-hover:scale-105"
-                />
-                <div className="absolute top-3 left-3 bg-amber-600 text-white text-xs font-bold px-3 py-1 rounded shadow-lg">
-                  Day {tour.day}
-                </div>
-              </div>
-
-              {/* Right: Content Section */}
-              <div className="p-6 flex-1 flex flex-col">
+              {/*Content Section */}
+              <div className="px-6 py-4 flex-1 flex flex-col">
                 {/* Card Header */}
                 <div className="mb-4">
                   <div className="flex flex-col md:flex-row md:items-center md:justify-between gap-2 mb-2">
@@ -195,7 +162,7 @@ const Singapore = () => {
                     </h2>
                     <div className="flex items-center text-sm text-gray-500 dark:text-gray-400 bg-gray-100 dark:bg-gray-700/50 px-3 py-1 rounded-full w-fit">
                       <Calendar className="h-3.5 w-3.5 mr-2" />
-                      {tour.date}
+                      Өдөр {tour.day}
                     </div>
                   </div>
                 </div>
@@ -255,6 +222,14 @@ const Singapore = () => {
                           title="Lunch">
                           <Utensils className="h-4 w-4 text-amber-600" />
                           <span>{tour.meals.lunch}</span>
+                        </div>
+                      )}
+                      {tour.meals.dinner && (
+                        <div
+                          className="flex items-center gap-2 text-sm text-gray-600 dark:text-gray-400"
+                          title="Dinner">
+                          <Soup className="h-4 w-4 text-amber-600" />
+                          <span>{tour.meals.dinner}</span>
                         </div>
                       )}
                     </div>

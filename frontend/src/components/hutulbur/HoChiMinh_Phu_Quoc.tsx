@@ -1,5 +1,5 @@
 import {
-  MapPin,
+ 
   Utensils,
   BedDouble,
   Coffee,
@@ -8,7 +8,7 @@ import {
   ArrowRight,
 } from "lucide-react";
 
-const Phu_Coac = () => {
+const HoChiMinh_Phu_Quoc = () => {
   // Keeping your original data structure
   const tourData = [
     {
@@ -158,15 +158,7 @@ const Phu_Coac = () => {
   return (
     <div className=" bg-gray-50 dark:bg-gray-900 p-4 md:p-8 font-sans">
       <div className=" ">
-        {/* Header Section */}
-        <div className="flex items-center gap-3 mb-8 border-b border-gray-200 dark:border-gray-700 pb-4">
-          <div className="p-2 bg-amber-100 dark:bg-amber-900/30 rounded-lg text-amber-600 dark:text-amber-500">
-            <MapPin className="h-6 w-6" />
-          </div>
-          <h1 className="text-3xl font-bold text-gray-900 dark:text-gray-100">
-            Phu_Coac tour itinerary
-          </h1>
-        </div>
+    
 
         <div className="space-y-6">
           {tourData.map((tour) => (
@@ -302,4 +294,4 @@ const Phu_Coac = () => {
   );
 };
 
-export default Phu_Coac;
+export default HoChiMinh_Phu_Quoc;

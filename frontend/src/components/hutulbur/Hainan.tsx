@@ -1,6 +1,6 @@
 import {
-  MapPin,
   Utensils,
+  Soup,
   BedDouble,
   Coffee,
   Calendar,
@@ -18,7 +18,7 @@ const Hainan = () => {
       cover_photo: "https://placehold.co/600x400/87CEEB/ffffff?text=Bangkok",
       location: "Улаанбаатар City",
       route: [
-        { name: "Улаанбаатар ", distance: "3363km", duration: "5 цаг" },
+        { name: "Улаанбаатар ", distance: "3363 км", duration: "5 цаг" },
         { name: "Саняа" },
       ],
       description: [
@@ -27,7 +27,7 @@ const Hainan = () => {
         "22:10 цагт УБ-Саняа хотруу (5-н цаг) Хүннү эйрлайн шууд нислэг /онгоц нь хоолтой/",
         "03:10 цагт Саняа хотын Финикс олон улсын нисэх онгоцны буудалд буугаад хөтөч тосож буудалдаа хүргүүлж амарна.",
       ],
-      meals: { lunch: "Restaurant" },
+      meals: { breakfast:"Зочид буудлын өглөөний цай", lunch: "Өдрийн хоол: ресторан" },
       accommodation: "",
     },
     {
@@ -39,7 +39,7 @@ const Hainan = () => {
       description: [
         "Чөлөөт өдрүүдээр далайн эрэг орж цагийг өнгөрөөх, буудалдаа амрах, дэлгүүр хэсэх, нэмэлт сонирхолтой хөтөлбөр авах зэрэг бусад хүссэн зүйлсээ хийх боломжтой.",
       ],
-      meals: { breakfast: "Hotel breakfast" },
+      meals: { breakfast: "Зочид буудлын өглөөний цай" },
       accommodation: "",
     },
     {
@@ -49,12 +49,12 @@ const Hainan = () => {
       date: "2025.12.29 (Даваа)",
       cover_photo: "https://placehold.co/600x400/00CED1/ffffff?text=Island",
       location: "Pattaya City",
-      route: [{ name: "Pattaya City", distance: "15km", duration: "30min" }],
+    
       description: [
         "(Аяллын автобус)",
         "Товлосон цагт цугларч автобусандаа суун аварга загасны аж ахуйтай танилцана. 3-н давхар тансаг зэрэглэлийн усан онгоцоор Номхон далайд 3-н цаг аялна. Үүнд DJ, Karaoke, загасчлал, жимс, уух зүйлс, (хязгаартай) туршлагатай усан онгоцны баг зэрэг багтсан. Энэ аялалдаа та нэмэлтээр далайд шумбах, моторт завь, шүхэр, fly boarding зэрэг олон тоглоомууд тоглох боломжтой. (260-800 ЮАНЬ)",
       ],
-      meals: { breakfast: "Restaurant", dinner: "Included" },
+      meals: { breakfast: "Зочид буудлын өглөөний цай", dinner: "Оройн хоол" },
       accommodation: "",
     },
     {
@@ -64,11 +64,11 @@ const Hainan = () => {
       date: "2025.12.30 (Мягмар)",
       cover_photo: "https://placehold.co/600x400/00CED1/ffffff?text=Island",
       location: "Яанода ойн парк",
-      route: [{ name: "Pattaya City", distance: "15km", duration: "30min" }],
+      
       description: [
         "Яанода ойн паркийн аялал. (нэмэлт төлбөртэй: шилэн гүүр (98yuan), 12 төрлийн экстрэм тоглоомууд болон уулнаас завьтай гулгаж буух боломжтой (198 yuan). Хятадын цайны соёлтой танилцаж Кунг Фу цай амтлана.",
       ],
-      meals: { breakfast: "", lunch: "Restaurant", dinner: "Included" },
+      meals: { breakfast: "Зочид буудлын өглөөний цай", lunch: "Өдрийн хоол", dinner: "Оройн хоол" },
       accommodation: "",
     },
     {
@@ -77,11 +77,11 @@ const Hainan = () => {
       date: "2025.12.31 (Лхагва)",
       cover_photo: "https://placehold.co/600x400/00CED1/ffffff?text=Island",
       location: "Pattaya City",
-      route: [{ name: "Pattaya City", distance: "15km", duration: "30min" }],
+     
       description: [
         "Чөлөөт өдрүүдээр далайн эрэг орж цагийг өнгөрөөх, буудалдаа амрах, дэлгүүр хэсэх, нэмэлт сонирхолтой хөтөлбөр авах зэрэг бусад хүссэн зүйлсээ хийх боломжтой.",
       ],
-      meals: { breakfast: "" },
+      meals: { breakfast: "Зочид буудлын өглөөний цай" },
       accommodation: "",
     },
     {
@@ -90,14 +90,14 @@ const Hainan = () => {
       date: "2025.1.1 (Пүрэв)",
       cover_photo: "https://placehold.co/600x400/00CED1/ffffff?text=Island",
       location: "Pattaya City",
-      route: [{ name: "Pattaya City", distance: "15km", duration: "30min" }],
+   
       description: [
         "Товлосон цагт цугларч автобусандаа сууж аялалдаа гарна. Сувдны дэлгүүр ороод үүний дараа Дубайд салбартай ATLANTIS усан паркт очиж өдөржин хүссэнээрээ тоглоно.",
       ],
       meals: {
-        breakfast: "Hotel breakfast",
+        breakfast: "Зочид буудлын өглөөний цай",
 
-        dinner: "Restaurant",
+        dinner: "Оройн хоол",
       },
       accommodation: "",
     },
@@ -107,12 +107,12 @@ const Hainan = () => {
       date: "2025.1.2 (Баасан)",
       cover_photo: "https://placehold.co/600x400/00CED1/ffffff?text=Island",
       location: "Pattaya City",
-      route: [],
+   
       description: [
         "Чөлөөт өдрүүдээр далайн эрэг орж цагийг өнгөрөөх, буудалдаа амрах, дэлгүүр хэсэх, нэмэлт сонирхолтой хөтөлбөр авах зэрэг бусад хүссэн зүйлсээ хийх боломжтой.",
       ],
       meals: {
-        breakfast: "Hotel breakfast",
+        breakfast: "Зочид буудлын өглөөний цай",
       },
       accommodation: "",
     },
@@ -123,12 +123,12 @@ const Hainan = () => {
       date: "2025.1.3 (Бямба)",
       cover_photo: "https://placehold.co/600x400/00CED1/ffffff?text=Island",
       location: "Pattaya City",
-      route: [{ name: "Pattaya City", distance: "15km", duration: "30min" }],
+    
       description: [
         "Чөлөөт өдрүүдээр далайн эрэг орж цагийг өнгөрөөх, буудалдаа амрах, дэлгүүр хэсэх, нэмэлт сонирхолтой хөтөлбөр авах зэрэг бусад хүссэн зүйлсээ хийх боломжтой.",
       ],
       meals: {
-        breakfast: "Hotel breakfast",
+        breakfast: "Зочид буудлын өглөөний цай",
       },
       accommodation: "",
     },
@@ -138,18 +138,16 @@ const Hainan = () => {
       date: "2025.1.4 (Ням)",
       cover_photo: "https://placehold.co/600x400/00CED1/ffffff?text=Island",
       location: "Pattaya City",
-      route: [{ name: "Pattaya City", distance: "15km", duration: "30min" }],
+      route: [{ name: "Саняа", distance: "3363 км", duration: "5 цаг" },{ name: "Улаанбаатар" },],
       description: [
-        
         "Тогтсон цагт буудлаа хүлээлгэж өгөөд Дэлхийн миссийн 53,54,55,57,60,67 дахь удаагийн тэмцээнийг зохион явуулсан Beauty Crown Center дээр очиж ГРУПП аялагч нартайгаа дурсгалын зураг татуулна.",
-"2138м cable car-аар зорчин Саняа хотын гэрэлт уул дээрх Үзэсгэлэнт Fenghuangling Sea Oath уулын байгалийн цогцолборт газрыг үзнэ.",
-"17:00 цагт Саняа Финикс нисэх онгоцны буудал дээр ирж бүртгэлээ хийлгэнэ.",
-"20:10 цагт Улаанбаатар чиглэлд нисээд шөнийн 01:10 цагт газардаж бидний аялал өндөрлөнө."
-
+        "2138м cable car-аар зорчин Саняа хотын гэрэлт уул дээрх Үзэсгэлэнт Fenghuangling Sea Oath уулын байгалийн цогцолборт газрыг үзнэ.",
+        "17:00 цагт Саняа Финикс нисэх онгоцны буудал дээр ирж бүртгэлээ хийлгэнэ.",
+        "20:10 цагт Улаанбаатар чиглэлд нисээд шөнийн 01:10 цагт газардаж бидний аялал өндөрлөнө.",
       ],
       meals: {
-        breakfast: "Hotel breakfast",
-        dinner:""
+        breakfast: "Зочид буудлын өглөөний цай",
+        dinner: "Оройн хоол",
       },
       accommodation: "",
     },
@@ -159,34 +157,13 @@ const Hainan = () => {
     <div className=" bg-gray-50 dark:bg-gray-900 p-4 md:p-8 font-sans">
       <div className=" ">
         {/* Header Section */}
-        <div className="flex items-center gap-3 mb-8 border-b border-gray-200 dark:border-gray-700 pb-4">
-          <div className="p-2 bg-amber-100 dark:bg-amber-900/30 rounded-lg text-amber-600 dark:text-amber-500">
-            <MapPin className="h-6 w-6" />
-          </div>
-          <h1 className="text-3xl font-bold text-gray-900 dark:text-gray-100">
-            Hainan tour itinerary
-          </h1>
-        </div>
-
         <div className="space-y-6">
           {tourData.map((tour) => (
             <div
               key={tour.day}
               className="bg-white dark:bg-gray-800 rounded-xl shadow-sm border border-gray-200 dark:border-gray-700 overflow-hidden flex flex-col md:flex-row transition-all hover:shadow-md">
-              {/* Left: cover_photo Section */}
-              <div className="md:w-56 h-56 md:h-auto bg-gray-100 dark:bg-gray-700 shrink-0 relative group">
-                <img
-                  src={tour.cover_photo}
-                  alt={`Day ${tour.day}`}
-                  className="w-full h-full object-cover transition-transform duration-500 group-hover:scale-105"
-                />
-                <div className="absolute top-3 left-3 bg-amber-600 text-white text-xs font-bold px-3 py-1 rounded shadow-lg">
-                  Day {tour.day}
-                </div>
-              </div>
-
-              {/* Right: Content Section */}
-              <div className="p-6 flex-1 flex flex-col">
+              {/*Content Section */}
+              <div className="px-6 py-4 flex-1 flex flex-col">
                 {/* Card Header */}
                 <div className="mb-4">
                   <div className="flex flex-col md:flex-row md:items-center md:justify-between gap-2 mb-2">
@@ -195,7 +172,7 @@ const Hainan = () => {
                     </h2>
                     <div className="flex items-center text-sm text-gray-500 dark:text-gray-400 bg-gray-100 dark:bg-gray-700/50 px-3 py-1 rounded-full w-fit">
                       <Calendar className="h-3.5 w-3.5 mr-2" />
-                      {tour.date}
+                      Өдөр {tour.day}
                     </div>
                   </div>
                 </div>
@@ -255,6 +232,13 @@ const Hainan = () => {
                           title="Lunch">
                           <Utensils className="h-4 w-4 text-amber-600" />
                           <span>{tour.meals.lunch}</span>
+                        </div>
+                      )}{tour.meals.dinner && (
+                        <div
+                          className="flex items-center gap-2 text-sm text-gray-600 dark:text-gray-400"
+                          title="Dinner">
+                          <Soup className="h-4 w-4 text-amber-600" />
+                          <span>{tour.meals.dinner}</span>
                         </div>
                       )}
                     </div>

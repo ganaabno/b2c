@@ -32,18 +32,19 @@ const Turkey = lazy(() => import("../components/hutulbur/Turkey"));
 const Bali = lazy(() => import("../components/hutulbur/Bali"));
 const Dalyan = lazy(() => import("../components/hutulbur/Dalyan"));
 const Halong_Bay = lazy(() => import("../components/hutulbur/Halong_Bay"));
-const HoChiMinh_Phu_coac = lazy(
-  () => import("../components/hutulbur/HoChiMinh_Phu_coac")
+const HoChiMinh_Phu_Quoc = lazy(
+  () => import("../components/hutulbur/HoChiMinh_Phu_Quoc")
 );
 const Janjieje = lazy(() => import("../components/hutulbur/Janjieje"));
 const Japan = lazy(() => import("../components/hutulbur/Japan"));
-const Natrang = lazy(() => import("../components/hutulbur/Natrang"));
-const Phu_Coac = lazy(() => import("../components/hutulbur/Phu_Coac"));
+const Nha_Trang = lazy(() => import("../components/hutulbur/Nha_Trang"));
+const Phu_Quoc = lazy(() => import("../components/hutulbur/Phu_Quoc"));
 const Shanghai = lazy(() => import("../components/hutulbur/Shanghai"));
 const Singapore = lazy(() => import("../components/hutulbur/Singapore"));
 const Thailand_Banggok = lazy(
   () => import("../components/hutulbur/Thailand_Banggok")
 );
+const Phuket = lazy(() => import("../components/hutulbur/Phuket"));
 
 const SectionTitle = ({ icon: Icon, title }: { icon: any; title: string }) => (
   <div className="flex items-center gap-3 mb-6 border-b border-gray-100 dark:border-gray-700 pb-4">
@@ -71,7 +72,7 @@ export default function TourDetail() {
   const galleryRef = useRef<HTMLDivElement>(null);
 
   const showHutulbur = (tour: Tour) => {
-    console.log(tour.genre)
+    console.log(tour.genre);
     switch (tour?.genre) {
       case "Hainan":
         return <Hainan />;
@@ -83,22 +84,24 @@ export default function TourDetail() {
         return <Dalyan />;
       case "Halong_Bay":
         return <Halong_Bay />;
-      case "HoChiMinh_Phu_coac":
-        return <HoChiMinh_Phu_coac />;
+      case "HoChiMinh_Phu_Quoc":
+        return <HoChiMinh_Phu_Quoc />;
       case "Janjieje":
         return <Janjieje />;
       case "Japan":
         return <Japan />;
-      case "Natrang":
-        return <Natrang />;
-      case "Phu_Coac":
-        return <Phu_Coac />;
+      case "Nha_Trang":
+        return <Nha_Trang />;
+      case "Phu_Quoc":
+        return <Phu_Quoc />;
       case "Shanghai":
         return <Shanghai />;
       case "Singapore":
         return <Singapore />;
       case "Thailand_Banggok":
         return <Thailand_Banggok />;
+      case "Phuket":
+        return <Phuket />;
       default:
         return null;
     }
@@ -172,8 +175,7 @@ export default function TourDetail() {
         <div className="absolute top-0 left-0 w-full p-6 flex justify-between items-center z-20">
           <button
             onClick={() => navigate(-1)}
-            className="bg-white/10 cursor-pointer backdrop-blur-md p-3 rounded-full text-white hover:bg-white/20 border border-white/10 transition"
-          >
+            className="bg-white/10 cursor-pointer backdrop-blur-md p-3 rounded-full text-white hover:bg-white/20 border border-white/10 transition">
             <ArrowLeft className="h-6 w-6" />
           </button>
           <div className="flex gap-3">
@@ -191,7 +193,7 @@ export default function TourDetail() {
           <div className="max-w-7xl mx-auto">
             <div className="flex flex-wrap gap-3 mb-4">
               <span className="bg-amber-500 text-white px-3 py-1 rounded-full text-xs font-bold uppercase tracking-wider shadow-lg">
-                {tour.duration_day} Days Tour
+                {tour.duration_day} өдрийн аялал
               </span>
               <span className="bg-white/20 backdrop-blur-md text-white border border-white/20 px-3 py-1 rounded-full text-xs font-bold uppercase tracking-wider flex items-center gap-1">
                 <MapPin className="h-3 w-3" /> {tour.country}
@@ -214,10 +216,10 @@ export default function TourDetail() {
         <div className="max-w-7xl mx-auto px-4 md:px-8">
           <div className="flex items-center gap-8 overflow-x-auto no-scrollbar">
             {[
-              { id: "overview", label: "Overview", ref: overviewRef },
-              { id: "itinerary", label: "Itinerary", ref: itineraryRef },
-              { id: "hotel", label: "Accommodation", ref: hotelRef },
-              { id: "gallery", label: "Photos", ref: galleryRef },
+              { id: "overview", label: "Дэлгэрэнгүй", ref: overviewRef },
+              { id: "itinerary", label: "Хөтөлбөр", ref: itineraryRef },
+              { id: "hotel", label: "Зочид буудал", ref: hotelRef },
+              { id: "gallery", label: "Зураг", ref: galleryRef },
             ].map((item) => (
               <button
                 key={item.id}
@@ -226,8 +228,7 @@ export default function TourDetail() {
                   activeTab === item.id
                     ? "border-amber-600 text-amber-600 dark:text-amber-500"
                     : "border-transparent text-gray-500 hover:text-gray-800 dark:text-gray-400 dark:hover:text-gray-200"
-                }`}
-              >
+                }`}>
                 {item.label}
               </button>
             ))}
@@ -235,7 +236,7 @@ export default function TourDetail() {
         </div>
       </div>
 
-      <div className="max-w-7xl mx-auto px-4 md:px-8 py-8">
+      <div className="w-full px-8 py-8 lg:px-12">
         <div className="grid grid-cols-1 lg:grid-cols-3 gap-10">
           {/* --- LEFT COLUMN (Main Content) --- */}
           <div className="lg:col-span-2 space-y-12">
@@ -245,27 +246,27 @@ export default function TourDetail() {
                 <div className="bg-white dark:bg-gray-800 p-4 rounded-xl border border-gray-100 dark:border-gray-700 shadow-sm flex flex-col items-center text-center gap-2">
                   <Clock className="h-6 w-6 text-amber-600" />
                   <div>
-                    <p className="text-xs text-gray-500 uppercase">Duration</p>
+                    <p className="text-xs text-gray-500 uppercase">
+                      Аялалын үргэлжлэх хугацаа
+                    </p>
                     <p className="font-bold text-gray-900 dark:text-gray-100">
-                      {tour.duration_day} Days
+                      {tour.duration_day} өдөр
                     </p>
                   </div>
                 </div>
                 <div className="bg-white dark:bg-gray-800 p-4 rounded-xl border border-gray-100 dark:border-gray-700 shadow-sm flex flex-col items-center text-center gap-2">
                   <Users className="h-6 w-6 text-amber-600" />
                   <div>
-                    <p className="text-xs text-gray-500 uppercase">
-                      Group Size
-                    </p>
+                    <p className="text-xs text-gray-500 uppercase">Групп</p>
                     <p className="font-bold text-gray-900 dark:text-gray-100">
-                      {tour.group_size || 20} People
+                      {tour.group_size || 20} хүн
                     </p>
                   </div>
                 </div>
                 <div className="bg-white dark:bg-gray-800 p-4 rounded-xl border border-gray-100 dark:border-gray-700 shadow-sm flex flex-col items-center text-center gap-2">
                   <Thermometer className="h-6 w-6 text-amber-600" />
                   <div>
-                    <p className="text-xs text-gray-500 uppercase">Weather</p>
+                    <p className="text-xs text-gray-500 uppercase">Цаг агаар</p>
                     <p className="font-bold text-gray-900 dark:text-gray-100">
                       {tour.country_temperature || "25"}°C
                     </p>
@@ -274,15 +275,17 @@ export default function TourDetail() {
                 <div className="bg-white dark:bg-gray-800 p-4 rounded-xl border border-gray-100 dark:border-gray-700 shadow-sm flex flex-col items-center text-center gap-2">
                   <Plane className="h-6 w-6 text-amber-600" />
                   <div>
-                    <p className="text-xs text-gray-500 uppercase">Flight</p>
+                    <p className="text-xs text-gray-500 uppercase">
+                      Нислэгийн тийз
+                    </p>
                     <p className="font-bold text-gray-900 dark:text-gray-100">
-                      Included
+                      Үнэгүй
                     </p>
                   </div>
                 </div>
               </div>
 
-              <SectionTitle icon={Info} title="Tour Overview" />
+              <SectionTitle icon={Info} title="Аялалын тухай" />
               <div className="prose prose-lg dark:prose-invert max-w-none text-gray-600 dark:text-gray-300 leading-relaxed">
                 {tour.description}
               </div>
@@ -290,11 +293,66 @@ export default function TourDetail() {
 
             {/* ITINERARY SECTION (Visual Timeline) */}
             <div ref={itineraryRef} className="scroll-mt-24">
-              <SectionTitle icon={MapPin} title="Itinerary Highlights" />
+              <SectionTitle icon={MapPin} title="Хөтөлбөр" />
+              <div className="bg-gray-50 dark:bg-gray-800/50 rounded-2xl p-8 border border-gray-100 dark:border-gray-700">
+                <h3 className="text-xl font-bold text-gray-900 dark:text-gray-100 mb-6">
+                  Хөтөлбөрт орсон зүйлс:
+                </h3>
+                <div className="grid md:grid-cols-2 gap-8">
+                  {/* Included */}
+                  <ul className="space-y-3">
+                    <li className="flex items-start gap-3">
+                      <CheckCircle2 className="h-5 w-5 text-green-500 shrink-0 mt-0.5" />
+                      <span className="text-gray-700 dark:text-gray-300">
+                        2 талын нислэг
+                      </span>
+                    </li>
+                    <li className="flex items-start gap-3">
+                      <CheckCircle2 className="h-5 w-5 text-green-500 shrink-0 mt-0.5" />
+                      <span className="text-gray-700 dark:text-gray-300">
+                        Зочид буудал ({tour.hotel})
+                      </span>
+                    </li>
+
+                    <li className="flex items-start gap-3">
+                      <CheckCircle2 className="h-5 w-5 text-green-500 shrink-0 mt-0.5" />
+                      <span className="text-gray-700 dark:text-gray-300">
+                        Airport Transfers
+                      </span>
+                    </li>
+                  </ul>
+
+                  {/* Not Included */}
+                  <ul className="space-y-3">
+                    <li className="flex items-start gap-3">
+                      <XCircle className="h-5 w-5 text-red-400 shrink-0 mt-0.5" />
+                      <span className="text-gray-500 dark:text-gray-400">
+                        Personal expenses
+                      </span>
+                    </li>
+                    <li className="flex items-start gap-3">
+                      <XCircle className="h-5 w-5 text-red-400 shrink-0 mt-0.5" />
+                      <span className="text-gray-500 dark:text-gray-400">
+                        Travel Insurance
+                      </span>
+                    </li>
+                    <li className="flex items-start gap-3">
+                      <XCircle className="h-5 w-5 text-red-400 shrink-0 mt-0.5" />
+                      <span className="text-gray-500 dark:text-gray-400">
+                        Optional Tours
+                      </span>
+                    </li>
+                  </ul>
+                </div>
+              </div>
+              <Suspense
+                fallback={<div>Components are loading please wait...</div>}>
+                {showHutulbur(tour)}
+              </Suspense>
 
               {/* Since we don't have structured itinerary data yet, we create a visual placeholder or wrap the description */}
-              <div className="relative border-l-2 border-dashed border-amber-200 dark:border-amber-900/50 ml-4 space-y-8 pb-4">
-                {/* Mock Day 1 */}
+              {/* <div className="relative border-l-2 border-dashed border-amber-200 dark:border-amber-900/50 ml-4 space-y-8 pb-4">
+                
                 <div className="relative pl-8">
                   <div className="absolute -left-[9px] top-0 h-4 w-4 rounded-full bg-amber-500 ring-4 ring-white dark:ring-gray-900" />
                   <h3 className="text-lg font-bold text-gray-900 dark:text-gray-100 mb-2">
@@ -306,7 +364,7 @@ export default function TourDetail() {
                   </p>
                 </div>
 
-                {/* Mock Day 2 */}
+           
                 <div className="relative pl-8">
                   <div className="absolute -left-[9px] top-0 h-4 w-4 rounded-full bg-amber-500 ring-4 ring-white dark:ring-gray-900" />
                   <h3 className="text-lg font-bold text-gray-900 dark:text-gray-100 mb-2">
@@ -318,7 +376,7 @@ export default function TourDetail() {
                   </p>
                 </div>
 
-                {/* Mock Final Day */}
+              
                 <div className="relative pl-8">
                   <div className="absolute -left-[9px] top-0 h-4 w-4 rounded-full bg-gray-400 ring-4 ring-white dark:ring-gray-900" />
                   <h3 className="text-lg font-bold text-gray-900 dark:text-gray-100 mb-2">
@@ -329,65 +387,14 @@ export default function TourDetail() {
                     Ulaanbaatar.
                   </p>
                 </div>
-              </div>
+              </div> */}
             </div>
 
             {/* INCLUSIONS SECTION (New!) */}
-            <div className="bg-gray-50 dark:bg-gray-800/50 rounded-2xl p-8 border border-gray-100 dark:border-gray-700">
-              <h3 className="text-xl font-bold text-gray-900 dark:text-gray-100 mb-6">
-                What's Included
-              </h3>
-              <div className="grid md:grid-cols-2 gap-8">
-                {/* Included */}
-                <ul className="space-y-3">
-                  <li className="flex items-start gap-3">
-                    <CheckCircle2 className="h-5 w-5 text-green-500 shrink-0 mt-0.5" />
-                    <span className="text-gray-700 dark:text-gray-300">
-                      Round trip flight tickets
-                    </span>
-                  </li>
-                  <li className="flex items-start gap-3">
-                    <CheckCircle2 className="h-5 w-5 text-green-500 shrink-0 mt-0.5" />
-                    <span className="text-gray-700 dark:text-gray-300">
-                      Accommodation ({tour.hotel})
-                    </span>
-                  </li>
-
-                  <li className="flex items-start gap-3">
-                    <CheckCircle2 className="h-5 w-5 text-green-500 shrink-0 mt-0.5" />
-                    <span className="text-gray-700 dark:text-gray-300">
-                      Airport Transfers
-                    </span>
-                  </li>
-                </ul>
-
-                {/* Not Included */}
-                <ul className="space-y-3">
-                  <li className="flex items-start gap-3">
-                    <XCircle className="h-5 w-5 text-red-400 shrink-0 mt-0.5" />
-                    <span className="text-gray-500 dark:text-gray-400">
-                      Personal expenses
-                    </span>
-                  </li>
-                  <li className="flex items-start gap-3">
-                    <XCircle className="h-5 w-5 text-red-400 shrink-0 mt-0.5" />
-                    <span className="text-gray-500 dark:text-gray-400">
-                      Travel Insurance
-                    </span>
-                  </li>
-                  <li className="flex items-start gap-3">
-                    <XCircle className="h-5 w-5 text-red-400 shrink-0 mt-0.5" />
-                    <span className="text-gray-500 dark:text-gray-400">
-                      Optional Tours
-                    </span>
-                  </li>
-                </ul>
-              </div>
-            </div>
 
             {/* ACCOMMODATION SECTION */}
             <div ref={hotelRef} className="scroll-mt-24">
-              <SectionTitle icon={BedDouble} title="Accommodation" />
+              <SectionTitle icon={BedDouble} title="Зочид буудал" />
               <div className="bg-white dark:bg-gray-800 rounded-2xl overflow-hidden border border-gray-100 dark:border-gray-700 shadow-sm flex flex-col md:flex-row">
                 <div className="md:w-1/3 h-48 md:h-auto bg-gray-200 dark:bg-gray-700 relative">
                   {/* Placeholder for hotel image since we don't have a specific hotel_image field */}
@@ -448,8 +455,7 @@ export default function TourDetail() {
                           prev === 0 ? galleryImages.length - 1 : prev - 1
                         );
                       }}
-                      className="absolute cursor-pointer left-4 top-1/2 -translate-y-1/2 bg-black/50 hover:bg-black/70 text-white p-2 rounded-full opacity-0 group-hover:opacity-100 transition-opacity"
-                    >
+                      className="absolute cursor-pointer left-4 top-1/2 -translate-y-1/2 bg-black/50 hover:bg-black/70 text-white p-2 rounded-full opacity-0 group-hover:opacity-100 transition-opacity">
                       <ArrowLeft className="h-6 w-6" />
                     </button>
 
@@ -461,8 +467,7 @@ export default function TourDetail() {
                           prev === galleryImages.length - 1 ? 0 : prev + 1
                         );
                       }}
-                      className="absolute cursor-pointer right-4 top-1/2 -translate-y-1/2 bg-black/50 hover:bg-black/70 text-white p-2 rounded-full opacity-0 group-hover:opacity-100 transition-opacity"
-                    >
+                      className="absolute cursor-pointer right-4 top-1/2 -translate-y-1/2 bg-black/50 hover:bg-black/70 text-white p-2 rounded-full opacity-0 group-hover:opacity-100 transition-opacity">
                       <ArrowRight className="h-6 w-6" />{" "}
                       {/* Make sure to import ArrowRight */}
                     </button>
@@ -478,8 +483,7 @@ export default function TourDetail() {
                           selectedImageIndex === idx
                             ? "border-amber-600 ring-2 ring-amber-600/30"
                             : "border-transparent opacity-70 hover:opacity-100"
-                        }`}
-                      >
+                        }`}>
                         <img
                           src={img}
                           alt={`Thumbnail ${idx}`}
@@ -496,12 +500,6 @@ export default function TourDetail() {
                 </div>
               )}
             </div>
-
-            <Suspense
-              fallback={<div>Components are loading please wait...</div>}
-            >
-              {showHutulbur(tour)}
-            </Suspense>
           </div>
 
           {/* --- RIGHT COLUMN (Sticky Booking) --- */}
@@ -560,7 +558,7 @@ export default function TourDetail() {
                   </div>
 
                   <Button className="w-full h-12 text-lg font-bold bg-amber-600 hover:bg-amber-700 text-white shadow-lg shadow-amber-200 dark:shadow-none">
-                    Book This Tour
+                    Захиалах
                   </Button>
 
                   <div className="flex items-center justify-center gap-2 text-xs text-gray-400">
@@ -578,10 +576,10 @@ export default function TourDetail() {
                   </div>
                   <div>
                     <p className="text-sm text-blue-600 dark:text-blue-300 font-medium">
-                      Have questions?
+                      Танд асуулт байна уу?
                     </p>
                     <p className="font-bold text-blue-900 dark:text-blue-100">
-                      Talk to an expert
+                      Аялалын борлуулагчтай холбогдоорой
                     </p>
                   </div>
                 </div>
@@ -589,7 +587,13 @@ export default function TourDetail() {
                   +976 76060606
                 </p>
                 <p className="text-sm text-blue-600/80 dark:text-blue-300/80">
-                  Monday - Sunday, 9am - 8pm
+                 Даваа-Баасан: 09:00-19:00
+                </p>
+                 <p className="text-sm text-blue-600/80 dark:text-blue-300/80">
+                 Бямба: 10:00-18:00 
+                </p>
+                 <p className="text-sm text-blue-600/80 dark:text-blue-300/80">
+                 Ням: 13:00-18:00
                 </p>
               </div>
             </div>

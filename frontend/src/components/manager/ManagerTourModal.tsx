@@ -1,7 +1,22 @@
 import { useState, useEffect } from "react";
 import { X, Upload, Plus, Loader2 } from "lucide-react";
 import type { Tour } from "@/types";
-import { Hainan_Default, Bali_Default } from "./ManagerDefaultData";
+import {
+  Hainan_Default,
+  Bali_Default,
+  Dalyan_Default,
+  Halong_Bay_Default,
+  HoChiMinh_Phu_Quoc_Default,
+  Janjieje_Default,
+  Japan_Default,
+  Nha_Trang_Default,
+  Phu_Quoc_Default,
+  Shanghai_Default,
+  Singapore_Default,
+  Thailand_Banggok_Default,
+  Turkey_Default,
+  Phuket_Default,
+} from "./ManagerDefaultData";
 import * as React from "react";
 interface ManagerTourModalProps {
   isOpen: boolean;
@@ -25,10 +40,10 @@ const INITIAL_FORM_STATE = {
   seats: 20,
   duration_day: "",
   duration_night: "",
-  genre: "Bali",
+  genre: "",
   cover_photo: "",
   child_price: "",
-  group_size:""
+  group_size: "",
 };
 
 export default function ManagerTourModal({
@@ -54,6 +69,45 @@ export default function ManagerTourModal({
       }
       if (formData.genre === "Bali") {
         setFormData((prev: any) => ({ ...prev, ...Bali_Default }));
+      }
+      if (formData.genre === "Dalyan") {
+        setFormData((prev: any) => ({ ...prev, ...Dalyan_Default }));
+      }
+      if (formData.genre === "Halong_Bay") {
+        setFormData((prev: any) => ({ ...prev, ...Halong_Bay_Default }));
+      }
+      if (formData.genre === "HoChiMinh_Phu_Quoc") {
+        setFormData((prev: any) => ({
+          ...prev,
+          ...HoChiMinh_Phu_Quoc_Default,
+        }));
+      }
+      if (formData.genre === "Janjieje") {
+        setFormData((prev: any) => ({ ...prev, ...Janjieje_Default }));
+      }
+      if (formData.genre === "Japan") {
+        setFormData((prev: any) => ({ ...prev, ...Japan_Default }));
+      }
+      if (formData.genre === "Nha_Trang") {
+        setFormData((prev: any) => ({ ...prev, ...Nha_Trang_Default }));
+      }
+      if (formData.genre === "Phu_Quoc") {
+        setFormData((prev: any) => ({ ...prev, ...Phu_Quoc_Default }));
+      }
+      if (formData.genre === "Shanghai") {
+        setFormData((prev: any) => ({ ...prev, ...Shanghai_Default }));
+      }
+      if (formData.genre === "Singapore") {
+        setFormData((prev: any) => ({ ...prev, ...Singapore_Default }));
+      }
+      if (formData.genre === "Thailand_Banggok") {
+        setFormData((prev: any) => ({ ...prev, ...Thailand_Banggok_Default }));
+      }
+      if (formData.genre === "Turkey") {
+        setFormData((prev: any) => ({ ...prev, ...Turkey_Default }));
+      }
+      if (formData.genre === "Phuket") {
+        setFormData((prev: any) => ({ ...prev, ...Phuket_Default }));
       }
     }
   }, [formData.genre, tourToEdit]);
@@ -102,7 +156,7 @@ export default function ManagerTourModal({
           duration_night: tourToEdit.duration_night || "",
           cover_photo: tourToEdit.cover_photo || "",
           genre: tourToEdit.genre || "",
-          group_size:tourToEdit.group_size || ""
+          group_size: tourToEdit.group_size || "",
         });
         // Set initial preview from edit data
         if (
@@ -231,7 +285,7 @@ export default function ManagerTourModal({
                     </label>
                   </div>
                 </div>
-{/* END NUUR ZURAGNUUDIIN URL IIG ORUULNA */}
+                {/* END NUUR ZURAGNUUDIIN URL IIG ORUULNA */}
                 <div>
                   <label className={labelClass}>Нүүр зураг сонгох</label>
                   <select
@@ -241,25 +295,27 @@ export default function ManagerTourModal({
                       handleChange(e);
                     }}
                     className={inputClass}>
-                    <option value=""></option>
-                    <option value="https://res.cloudinary.com/dvnzk53kp/image/upload/v1766478126/travel-app-tours/h1yj8mszo8z8twhd51e0.jpg">
-                      Bali
-                    </option>
-                    <option value="Dalyan">Dalyan</option>
+                    <option value="">Хоосон</option>
                     <option value="https://res.cloudinary.com/dvnzk53kp/image/upload/v1766721724/hainan_poster_yzaxhu.png">
                       Hainan
                     </option>
-                    <option value="Halong_Bay">Halong_Bay</option>
-                    <option value="HoChiMinh_Phu_coac">
-                      HoChiMinh_Phu_coac
+                    <option value="HoChiMinh_Phu_Quoc">
+                      HoChiMinh_Phu_Quoc
+                    </option>
+                    <option value="Japan">Japan</option>
+                    <option value="Nha_Trang">Nha_Trang</option>
+                    <option value="Phu_Quoc">Phu_Quoc</option>
+                    <option value="Singapore">Singapore</option>
+                    <option value="Thailand_Banggok">Thailand_Banggok</option>
+                    <option value="Phuket">Phuket</option>
+                    <option value="Turkey">Turkey</option>
+                    <option value="https://res.cloudinary.com/dvnzk53kp/image/upload/v1766478126/travel-app-tours/h1yj8mszo8z8twhd51e0.jpg">
+                      Bali
                     </option>
                     <option value="Janjieje">Janjieje</option>
-                    <option value="Japan">Japan</option>
-                    <option value="Natrang">Natrang</option>
-                    <option value="Phu_Coac">Phu_Coac</option>
                     <option value="Shanghai">Shanghai</option>
-                    <option value="Thailand_Banggok">Thailand_Banggok</option>
-                    <option value="Turkey">Turkey</option>
+                    <option value="Halong_Bay">Halong_Bay</option>
+                    <option value="Dalyan">Dalyan</option>
                   </select>
                 </div>
 
@@ -401,21 +457,23 @@ export default function ManagerTourModal({
                         handleChange(e);
                       }}
                       className={inputClass}>
-                      <option value=""></option>
+                      <option value="">Хоосон</option>
+                      <option value="Hainan">Hainan</option>
+                      <option value="HoChiMinh_Phu_Quoc">
+                        HoChiMinh_Phu_Quoc
+                      </option>
+                      <option value="Japan">Japan</option>
+                      <option value="Nha_Trang">Nha_Trang</option>
+                      <option value="Phu_Quoc">Phu_Quoc</option>
+                      <option value="Singapore">Singapore</option>
+                      <option value="Thailand_Banggok">Thailand_Banggok</option>
+                      <option value="Phuket">Phuket</option>
+                      <option value="Turkey">Turkey</option>
                       <option value="Bali">Bali</option>
                       <option value="Dalyan">Dalyan</option>
-                      <option value="Hainan">Hainan</option>
-                      <option value="Halong_Bay">Halong_Bay</option>
-                      <option value="HoChiMinh_Phu_coac">
-                        HoChiMinh_Phu_coac
-                      </option>
-                      <option value="Janjieje">Janjieje</option>
-                      <option value="Japan">Japan</option>
-                      <option value="Natrang">Natrang</option>
-                      <option value="Phu_Coac">Phu_Coac</option>
                       <option value="Shanghai">Shanghai</option>
-                      <option value="Thailand_Banggok">Thailand_Banggok</option>
-                      <option value="Turkey">Turkey</option>
+                      <option value="Halong_Bay">Halong_Bay</option>
+                      <option value="Janjieje">Janjieje</option>
                     </select>
                   </div>
                   <div>
@@ -485,8 +543,8 @@ export default function ManagerTourModal({
                       placeholder="e.g. 4"
                     />
                   </div>
-                   <div>
-                   <label className={labelClass}>group size</label>
+                  <div>
+                    <label className={labelClass}>group size</label>
                     <input
                       name="group_size"
                       value={formData.group_size}
