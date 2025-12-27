@@ -18,8 +18,8 @@ const Hainan = () => {
       cover_photo: "https://placehold.co/600x400/87CEEB/ffffff?text=Bangkok",
       location: "Улаанбаатар City",
       route: [
-        { name: "Улаанбаатар ", distance: "3822km", duration: "4 цаг" },
-        { name: "Ханой" },
+        { name: "Улаанбаатар ", distance: "3363km", duration: "5 цаг" },
+        { name: "Саняа" },
       ],
       description: [
         "  19:45 цагт “Чингис хаан” олон улсын нисэх онгоцны буудал дээр цугларч үдэгчээс мэдээлэл авна.",

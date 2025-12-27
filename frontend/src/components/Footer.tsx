@@ -10,7 +10,7 @@ export default function Footer() {
   return (
     <>
       <footer className=" bg-gray-100 dark:bg-gray-800 text-gray-900 dark:text-gray-300 transition-colors duration-300 font-sans">
-        <div className="w-full grid grid-cols-1 md:grid-cols-3 gap-8 md:gap-0">
+        <div className="w-full grid grid-cols-[1fr_1fr_auto]">
           {/* Column 1 */}
           <div className="pt-8 pl-12 pr-4 flex flex-col gap-4">
             <h1 className="text-2xl font-bold text-gray-900 dark:text-white">
@@ -69,11 +69,23 @@ export default function Footer() {
                   info@global-travel.mn
                 </span>
               </div>
-              <div className="flex gap-2 mb-4 items-center text-gray-600 dark:text-gray-400">
+              <div className="flex flex-wrap gap-2 mb-4 items-center text-gray-600 dark:text-gray-400">
                 <LocalPhone className="text-green-600 dark:text-green-500 shrink-0" />{" "}
                 <div>Утас: </div>
                 <div className="text-gray-900 dark:text-white font-bold">
-                  76060606
+                  76060606 <span className="text-gray-600 dark:text-gray-400">,</span>
+                </div>
+                <div className="text-gray-900 dark:text-white font-bold">
+                  89451100 <span className="text-gray-600 dark:text-gray-400">,</span>
+                </div>
+                <div className="text-gray-900 dark:text-white font-bold">
+                  89461100 <span className="text-gray-600 dark:text-gray-400">,</span>
+                </div>
+                <div className="text-gray-900 dark:text-white font-bold">
+                  86311100 <span className="text-gray-600 dark:text-gray-400">,</span>
+                </div>
+                <div className="text-gray-900 dark:text-white font-bold">
+                  66997979
                 </div>
               </div>
             </div>
@@ -81,7 +93,7 @@ export default function Footer() {
 
           {/* Column 3 */}
           <div>
-            <div className="pt-8 px-4 flex flex-col gap-4">
+            <div className="pt-8 pl-8 pr-12 flex flex-col justify-center items-center gap-4">
               <h3 className="text-lg font-medium text-gray-900 dark:text-white text-center">
                 Ажлын цаг
               </h3>
