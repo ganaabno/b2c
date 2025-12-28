@@ -1,5 +1,4 @@
 import {
-  
   Utensils,
   BedDouble,
   Coffee,
@@ -8,8 +7,22 @@ import {
   ArrowRight,
 } from "lucide-react";
 
+const galleryImages = [
+  "https://cdn.britannica.com/27/189827-050-4D5E6E2D/Patong-Beach-Phuket-Thailand.jpg",
+  "https://lp-cms-production.imgix.net/2023-03/GettyImages-1255528220.jpg",
+  "https://media.tacdn.com/media/attractions-splice-spp-674x446/07/3a/5e/8c.jpg",
+  "https://media.tacdn.com/media/attractions-splice-spp-674x446/07/2f/50/6f.jpg",
+  "https://upload.wikimedia.org/wikipedia/commons/4/4b/Big_Buddha_Phuket.jpg",
+  "https://upload.wikimedia.org/wikipedia/commons/6/6c/Phuket_Old_Town.jpg",
+];
+
+const hotelImages = [
+  "https://media-cdn.tripadvisor.com/media/photo-s/29/4b/6b/5f/katathani-phuket-beach.jpg",
+  "https://pix10.agoda.net/hotelImages/665/66535/66535_15090414070035721416.jpg",
+  "https://images.trvl-media.com/lodging/2000000/1640000/1637800/1637723/9f5dc7a3.jpg",
+];
+
 const Dalyan = () => {
-  // Keeping your original data structure
   const tourData = [
     {
       day: 1,
@@ -158,13 +171,12 @@ const Dalyan = () => {
   return (
     <div className=" bg-gray-50 dark:bg-gray-900 p-4 md:p-8 font-sans">
       <div className=" ">
-       
-
         <div className="space-y-6">
           {tourData.map((tour) => (
             <div
               key={tour.day}
-              className="bg-white dark:bg-gray-800 rounded-xl shadow-sm border border-gray-200 dark:border-gray-700 overflow-hidden flex flex-col md:flex-row transition-all hover:shadow-md">
+              className="bg-white dark:bg-gray-800 rounded-xl shadow-sm border border-gray-200 dark:border-gray-700 overflow-hidden flex flex-col md:flex-row transition-all hover:shadow-md"
+            >
               {/* Left: cover_photo Section */}
               <div className="md:w-56 h-56 md:h-auto bg-gray-100 dark:bg-gray-700 shrink-0 relative group">
                 <img
@@ -222,7 +234,8 @@ const Dalyan = () => {
                   {tour.description?.map((desc, index) => (
                     <p
                       key={index}
-                      className="text-gray-600 dark:text-gray-300 text-sm leading-relaxed flex gap-3 items-start">
+                      className="text-gray-600 dark:text-gray-300 text-sm leading-relaxed flex gap-3 items-start"
+                    >
                       <span className="mt-1.5 w-1.5 h-1.5 rounded-full bg-gray-300 dark:bg-gray-600 shrink-0" />
                       {desc}
                     </p>
@@ -236,7 +249,8 @@ const Dalyan = () => {
                       {tour.meals.breakfast && (
                         <div
                           className="flex items-center gap-2 text-sm text-gray-600 dark:text-gray-400"
-                          title="Breakfast">
+                          title="Breakfast"
+                        >
                           <Coffee className="h-4 w-4 text-amber-600" />
                           <span>{tour.meals.breakfast}</span>
                         </div>
@@ -244,7 +258,8 @@ const Dalyan = () => {
                       {tour.meals.lunch && (
                         <div
                           className="flex items-center gap-2 text-sm text-gray-600 dark:text-gray-400"
-                          title="Lunch">
+                          title="Lunch"
+                        >
                           <Utensils className="h-4 w-4 text-amber-600" />
                           <span>{tour.meals.lunch}</span>
                         </div>
@@ -281,7 +296,8 @@ const Dalyan = () => {
               ].map((item, idx) => (
                 <li
                   key={idx}
-                  className="flex items-center gap-2 text-sm text-gray-700 dark:text-gray-300">
+                  className="flex items-center gap-2 text-sm text-gray-700 dark:text-gray-300"
+                >
                   <div className="w-1.5 h-1.5 rounded-full bg-amber-500" />
                   {item}
                 </li>
@@ -294,4 +310,5 @@ const Dalyan = () => {
   );
 };
 
+export { galleryImages as dalyanGallery, hotelImages as dalyanHotel };
 export default Dalyan;

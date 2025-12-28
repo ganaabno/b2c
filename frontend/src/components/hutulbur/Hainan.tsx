@@ -8,6 +8,21 @@ import {
   ArrowRight,
 } from "lucide-react";
 
+const galleryImages = [
+  "https://www.asiaodysseytravel.com/images/china-tours/group-tours/sanya-beaches-700-3.jpg",
+  "https://studycli.org/wp-content/uploads/2021/06/Hainan-China-beach.jpg.webp",
+  "https://cdn.theworldofchinese.com/media/images/Ocean-Breeze-and-Ease_inpost3.width-800.jpg",
+  "https://blooloop.com/wp-content/uploads/2018/10/Atlantis-Sanya-Aquaventure-Sanya-43.jpeg",
+  "https://upload.wikimedia.org/wikipedia/commons/3/3c/Glass_Trestle_with_Full_Sea_View_%28Yalong_Bay_Forest_Park_Glass_Bridge%29_in_July_2025.jpg",
+  "https://dynamic-media-cdn.tripadvisor.com/media/photo-o/15/f8/bb/ed/phoenix-park.jpg?w=800&h=-1&s=1",
+];
+
+const hotelImages = [
+  "https://media-cdn.tripadvisor.com/media/photo-s/2c/1f/f5/fe/overview-of-mandarin.jpg",
+  "https://pix10.agoda.net/hotelImages/393984/0/ad0eaa78f83f17e07ceaca9788fc1007.jpg?ce=2&s=1024x768",
+  "https://images.trvl-media.com/lodging/2000000/1460000/1453700/1453664/444a78f3.jpg?impolicy=resizecrop&rw=575&rh=575&ra=fill",
+];
+
 const Hainan = () => {
   // Keeping your original data structure
   const tourData = [
@@ -27,7 +42,10 @@ const Hainan = () => {
         "22:10 цагт УБ-Саняа хотруу (5-н цаг) Хүннү эйрлайн шууд нислэг /онгоц нь хоолтой/",
         "03:10 цагт Саняа хотын Финикс олон улсын нисэх онгоцны буудалд буугаад хөтөч тосож буудалдаа хүргүүлж амарна.",
       ],
-      meals: { breakfast:"Зочид буудлын өглөөний цай", lunch: "Өдрийн хоол: ресторан" },
+      meals: {
+        breakfast: "Зочид буудлын өглөөний цай",
+        lunch: "Өдрийн хоол: ресторан",
+      },
       accommodation: "",
     },
     {
@@ -49,7 +67,7 @@ const Hainan = () => {
       date: "2025.12.29 (Даваа)",
       cover_photo: "https://placehold.co/600x400/00CED1/ffffff?text=Island",
       location: "Pattaya City",
-    
+
       description: [
         "(Аяллын автобус)",
         "Товлосон цагт цугларч автобусандаа суун аварга загасны аж ахуйтай танилцана. 3-н давхар тансаг зэрэглэлийн усан онгоцоор Номхон далайд 3-н цаг аялна. Үүнд DJ, Karaoke, загасчлал, жимс, уух зүйлс, (хязгаартай) туршлагатай усан онгоцны баг зэрэг багтсан. Энэ аялалдаа та нэмэлтээр далайд шумбах, моторт завь, шүхэр, fly boarding зэрэг олон тоглоомууд тоглох боломжтой. (260-800 ЮАНЬ)",
@@ -64,11 +82,15 @@ const Hainan = () => {
       date: "2025.12.30 (Мягмар)",
       cover_photo: "https://placehold.co/600x400/00CED1/ffffff?text=Island",
       location: "Яанода ойн парк",
-      
+
       description: [
         "Яанода ойн паркийн аялал. (нэмэлт төлбөртэй: шилэн гүүр (98yuan), 12 төрлийн экстрэм тоглоомууд болон уулнаас завьтай гулгаж буух боломжтой (198 yuan). Хятадын цайны соёлтой танилцаж Кунг Фу цай амтлана.",
       ],
-      meals: { breakfast: "Зочид буудлын өглөөний цай", lunch: "Өдрийн хоол", dinner: "Оройн хоол" },
+      meals: {
+        breakfast: "Зочид буудлын өглөөний цай",
+        lunch: "Өдрийн хоол",
+        dinner: "Оройн хоол",
+      },
       accommodation: "",
     },
     {
@@ -77,7 +99,7 @@ const Hainan = () => {
       date: "2025.12.31 (Лхагва)",
       cover_photo: "https://placehold.co/600x400/00CED1/ffffff?text=Island",
       location: "Pattaya City",
-     
+
       description: [
         "Чөлөөт өдрүүдээр далайн эрэг орж цагийг өнгөрөөх, буудалдаа амрах, дэлгүүр хэсэх, нэмэлт сонирхолтой хөтөлбөр авах зэрэг бусад хүссэн зүйлсээ хийх боломжтой.",
       ],
@@ -90,7 +112,7 @@ const Hainan = () => {
       date: "2025.1.1 (Пүрэв)",
       cover_photo: "https://placehold.co/600x400/00CED1/ffffff?text=Island",
       location: "Pattaya City",
-   
+
       description: [
         "Товлосон цагт цугларч автобусандаа сууж аялалдаа гарна. Сувдны дэлгүүр ороод үүний дараа Дубайд салбартай ATLANTIS усан паркт очиж өдөржин хүссэнээрээ тоглоно.",
       ],
@@ -107,7 +129,7 @@ const Hainan = () => {
       date: "2025.1.2 (Баасан)",
       cover_photo: "https://placehold.co/600x400/00CED1/ffffff?text=Island",
       location: "Pattaya City",
-   
+
       description: [
         "Чөлөөт өдрүүдээр далайн эрэг орж цагийг өнгөрөөх, буудалдаа амрах, дэлгүүр хэсэх, нэмэлт сонирхолтой хөтөлбөр авах зэрэг бусад хүссэн зүйлсээ хийх боломжтой.",
       ],
@@ -123,7 +145,7 @@ const Hainan = () => {
       date: "2025.1.3 (Бямба)",
       cover_photo: "https://placehold.co/600x400/00CED1/ffffff?text=Island",
       location: "Pattaya City",
-    
+
       description: [
         "Чөлөөт өдрүүдээр далайн эрэг орж цагийг өнгөрөөх, буудалдаа амрах, дэлгүүр хэсэх, нэмэлт сонирхолтой хөтөлбөр авах зэрэг бусад хүссэн зүйлсээ хийх боломжтой.",
       ],
@@ -138,7 +160,10 @@ const Hainan = () => {
       date: "2025.1.4 (Ням)",
       cover_photo: "https://placehold.co/600x400/00CED1/ffffff?text=Island",
       location: "Pattaya City",
-      route: [{ name: "Саняа", distance: "3363 км", duration: "5 цаг" },{ name: "Улаанбаатар" },],
+      route: [
+        { name: "Саняа", distance: "3363 км", duration: "5 цаг" },
+        { name: "Улаанбаатар" },
+      ],
       description: [
         "Тогтсон цагт буудлаа хүлээлгэж өгөөд Дэлхийн миссийн 53,54,55,57,60,67 дахь удаагийн тэмцээнийг зохион явуулсан Beauty Crown Center дээр очиж ГРУПП аялагч нартайгаа дурсгалын зураг татуулна.",
         "2138м cable car-аар зорчин Саняа хотын гэрэлт уул дээрх Үзэсгэлэнт Fenghuangling Sea Oath уулын байгалийн цогцолборт газрыг үзнэ.",
@@ -161,7 +186,8 @@ const Hainan = () => {
           {tourData.map((tour) => (
             <div
               key={tour.day}
-              className="bg-white dark:bg-gray-800 rounded-xl shadow-sm border border-gray-200 dark:border-gray-700 overflow-hidden flex flex-col md:flex-row transition-all hover:shadow-md">
+              className="bg-white dark:bg-gray-800 rounded-xl shadow-sm border border-gray-200 dark:border-gray-700 overflow-hidden flex flex-col md:flex-row transition-all hover:shadow-md"
+            >
               {/*Content Section */}
               <div className="px-6 py-4 flex-1 flex flex-col">
                 {/* Card Header */}
@@ -207,7 +233,8 @@ const Hainan = () => {
                   {tour.description?.map((desc, index) => (
                     <p
                       key={index}
-                      className="text-gray-600 dark:text-gray-300 text-sm leading-relaxed flex gap-3 items-start">
+                      className="text-gray-600 dark:text-gray-300 text-sm leading-relaxed flex gap-3 items-start"
+                    >
                       <span className="mt-1.5 w-1.5 h-1.5 rounded-full bg-gray-300 dark:bg-gray-600 shrink-0" />
                       {desc}
                     </p>
@@ -221,7 +248,8 @@ const Hainan = () => {
                       {tour.meals.breakfast && (
                         <div
                           className="flex items-center gap-2 text-sm text-gray-600 dark:text-gray-400"
-                          title="Breakfast">
+                          title="Breakfast"
+                        >
                           <Coffee className="h-4 w-4 text-amber-600" />
                           <span>{tour.meals.breakfast}</span>
                         </div>
@@ -229,14 +257,17 @@ const Hainan = () => {
                       {tour.meals.lunch && (
                         <div
                           className="flex items-center gap-2 text-sm text-gray-600 dark:text-gray-400"
-                          title="Lunch">
+                          title="Lunch"
+                        >
                           <Utensils className="h-4 w-4 text-amber-600" />
                           <span>{tour.meals.lunch}</span>
                         </div>
-                      )}{tour.meals.dinner && (
+                      )}
+                      {tour.meals.dinner && (
                         <div
                           className="flex items-center gap-2 text-sm text-gray-600 dark:text-gray-400"
-                          title="Dinner">
+                          title="Dinner"
+                        >
                           <Soup className="h-4 w-4 text-amber-600" />
                           <span>{tour.meals.dinner}</span>
                         </div>
@@ -273,7 +304,8 @@ const Hainan = () => {
               ].map((item, idx) => (
                 <li
                   key={idx}
-                  className="flex items-center gap-2 text-sm text-gray-700 dark:text-gray-300">
+                  className="flex items-center gap-2 text-sm text-gray-700 dark:text-gray-300"
+                >
                   <div className="w-1.5 h-1.5 rounded-full bg-amber-500" />
                   {item}
                 </li>
@@ -286,4 +318,5 @@ const Hainan = () => {
   );
 };
 
+export { galleryImages as hainanGallery, hotelImages as hainanHotel };
 export default Hainan;

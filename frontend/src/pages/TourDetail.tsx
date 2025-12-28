@@ -46,9 +46,13 @@ const Thailand_Banggok = lazy(
 );
 const Phuket = lazy(() => import("../components/hutulbur/Phuket"));
 
+import { hainanGallery, hainanHotel } from "../components/hutulbur/Hainan";
+import { phuketGallery, phuketHotel } from "../components/hutulbur/Phuket";
+import { dalyanGallery, dalyanHotel } from "../components/hutulbur/Dalyan";
+
 const SectionTitle = ({ icon: Icon, title }: { icon: any; title: string }) => (
   <div className="flex items-center gap-3 mb-6 border-b border-gray-100 dark:border-gray-700 pb-4">
-    <div className="p-2 bg-amber-100 dark:bg-amber-900/30 rounded-lg text-amber-600 dark:text-amber-500">
+    <div className="p-2 bg-sky-100 dark:bg-sky-900/30 rounded-lg text-sky-600 dark:text-sky-500">
       <Icon className="h-6 w-6" />
     </div>
     <h2 className="text-2xl font-bold text-gray-900 dark:text-gray-100">
@@ -72,40 +76,52 @@ export default function TourDetail() {
   const galleryRef = useRef<HTMLDivElement>(null);
 
   const showHutulbur = (tour: Tour) => {
-    console.log(tour.genre);
     switch (tour?.genre) {
       case "Hainan":
-        return <Hainan />;
-      case "Turkey":
-        return <Turkey />;
-      case "Bali":
-        return <Bali />;
-      case "Dalyan":
-        return <Dalyan />;
-      case "Halong_Bay":
-        return <Halong_Bay />;
-      case "HoChiMinh_Phu_Quoc":
-        return <HoChiMinh_Phu_Quoc />;
-      case "Janjieje":
-        return <Janjieje />;
-      case "Japan":
-        return <Japan />;
-      case "Nha_Trang":
-        return <Nha_Trang />;
-      case "Phu_Quoc":
-        return <Phu_Quoc />;
-      case "Shanghai":
-        return <Shanghai />;
-      case "Singapore":
-        return <Singapore />;
-      case "Thailand_Banggok":
-        return <Thailand_Banggok />;
+        return {
+          component: <Hainan />,
+          gallery: hainanGallery,
+          hotel: hainanHotel,
+        };
       case "Phuket":
-        return <Phuket />;
+        return {
+          component: <Phuket />,
+          gallery: phuketGallery,
+          hotel: phuketHotel,
+        };
+      case "Dalyan":
+        return {
+          component: <Dalyan />,
+          gallery: dalyanGallery,
+          hotel: dalyanHotel,
+        };
+      case "Turkey":
+        return { component: <Turkey />, gallery: [], hotel: [] };
+      case "Bali":
+        return { component: <Bali />, gallery: [], hotel: [] };
+      case "Halong_Bay":
+        return { component: <Halong_Bay />, gallery: [], hotel: [] };
+      case "HoChiMinh_Phu_Quoc":
+        return { component: <HoChiMinh_Phu_Quoc />, gallery: [], hotel: [] };
+      case "Janjieje":
+        return { component: <Janjieje />, gallery: [], hotel: [] };
+      case "Japan":
+        return { component: <Japan />, gallery: [], hotel: [] };
+      case "Nha_Trang":
+        return { component: <Nha_Trang />, gallery: [], hotel: [] };
+      case "Phu_Quoc":
+        return { component: <Phu_Quoc />, gallery: [], hotel: [] };
+      case "Shanghai":
+        return { component: <Shanghai />, gallery: [], hotel: [] };
+      case "Singapore":
+        return { component: <Singapore />, gallery: [], hotel: [] };
+      case "Thailand_Banggok":
+        return { component: <Thailand_Banggok />, gallery: [], hotel: [] };
       default:
-        return null;
+        return { component: null, gallery: [], hotel: [] };
     }
   };
+
   useEffect(() => {
     if (!slug) return;
     const fetchTour = async () => {
@@ -132,25 +148,29 @@ export default function TourDetail() {
   if (loading) {
     return (
       <div className="flex h-screen items-center justify-center bg-gray-50 dark:bg-gray-900">
-        <Loader2 className="h-10 w-10 animate-spin text-amber-600" />
+        <Loader2 className="h-10 w-10 animate-spin text-sky-600" />
       </div>
     );
   }
 
   if (!tour) return null;
 
-  // Parse photos safely
-  let galleryImages: string[] = [];
+  const {
+    component: HutulburComponent,
+    gallery: customGallery,
+    hotel: customHotel,
+  } = showHutulbur(tour);
+
+  let fallbackGallery: string[] = [];
   try {
-    if (Array.isArray(tour.photos)) galleryImages = tour.photos;
+    if (Array.isArray(tour.photos)) fallbackGallery = tour.photos;
     else if (typeof tour.photos === "string")
-      galleryImages = JSON.parse(tour.photos);
+      fallbackGallery = JSON.parse(tour.photos);
   } catch (e) {
-    if (e) {
-      console.log("error", e);
-    }
-    galleryImages = [];
+    console.log("Photo parse error", e);
   }
+  const galleryImages =
+    customGallery.length > 0 ? customGallery : fallbackGallery;
 
   const formatDate = (date?: string | null) => {
     if (!date) return "TBD";
@@ -175,7 +195,8 @@ export default function TourDetail() {
         <div className="absolute top-0 left-0 w-full p-6 flex justify-between items-center z-20">
           <button
             onClick={() => navigate(-1)}
-            className="bg-white/10 cursor-pointer backdrop-blur-md p-3 rounded-full text-white hover:bg-white/20 border border-white/10 transition">
+            className="bg-white/10 cursor-pointer backdrop-blur-md p-3 rounded-full text-white hover:bg-white/20 border border-white/10 transition"
+          >
             <ArrowLeft className="h-6 w-6" />
           </button>
           <div className="flex gap-3">
@@ -192,7 +213,7 @@ export default function TourDetail() {
         <div className="absolute bottom-0 left-0 w-full p-6 md:p-12 lg:p-20 z-10">
           <div className="max-w-7xl mx-auto">
             <div className="flex flex-wrap gap-3 mb-4">
-              <span className="bg-amber-500 text-white px-3 py-1 rounded-full text-xs font-bold uppercase tracking-wider shadow-lg">
+              <span className="bg-sky-500 text-white px-3 py-1 rounded-full text-xs font-bold uppercase tracking-wider shadow-lg">
                 {tour.duration_day} өдрийн аялал
               </span>
               <span className="bg-white/20 backdrop-blur-md text-white border border-white/20 px-3 py-1 rounded-full text-xs font-bold uppercase tracking-wider flex items-center gap-1">
@@ -212,7 +233,7 @@ export default function TourDetail() {
       </div>
 
       {/* --- 2. STICKY NAV BAR (Global Travel Style) --- */}
-      <div className="sticky top-20 z-40 bg-white dark:bg-gray-800 shadow-md border-b border-gray-200 dark:border-gray-700">
+      <div className="sticky top-16 z-40 bg-white dark:bg-gray-800 shadow-md border-b border-gray-200 dark:border-gray-700">
         <div className="max-w-7xl mx-auto px-4 md:px-8">
           <div className="flex items-center gap-8 overflow-x-auto no-scrollbar">
             {[
@@ -226,9 +247,10 @@ export default function TourDetail() {
                 onClick={() => scrollToSection(item.ref, item.id)}
                 className={`py-4 text-sm font-bold uppercase tracking-wide border-b-2 transition-colors whitespace-nowrap ${
                   activeTab === item.id
-                    ? "border-amber-600 text-amber-600 dark:text-amber-500"
+                    ? "border-sky-600 text-sky-600 dark:text-sky-500"
                     : "border-transparent text-gray-500 hover:text-gray-800 dark:text-gray-400 dark:hover:text-gray-200"
-                }`}>
+                }`}
+              >
                 {item.label}
               </button>
             ))}
@@ -236,7 +258,7 @@ export default function TourDetail() {
         </div>
       </div>
 
-      <div className="w-full px-8 py-8 lg:px-12">
+      <div className="w-full px-8 py-8 lg:px-12 max-w-7xl mx-auto">
         <div className="grid grid-cols-1 lg:grid-cols-3 gap-10">
           {/* --- LEFT COLUMN (Main Content) --- */}
           <div className="lg:col-span-2 space-y-12">
@@ -244,7 +266,7 @@ export default function TourDetail() {
             <div ref={overviewRef} className="scroll-mt-24">
               <div className="grid grid-cols-2 md:grid-cols-4 gap-4 mb-8">
                 <div className="bg-white dark:bg-gray-800 p-4 rounded-xl border border-gray-100 dark:border-gray-700 shadow-sm flex flex-col items-center text-center gap-2">
-                  <Clock className="h-6 w-6 text-amber-600" />
+                  <Clock className="h-6 w-6 text-sky-600" />
                   <div>
                     <p className="text-xs text-gray-500 uppercase">
                       Аялалын үргэлжлэх хугацаа
@@ -255,7 +277,7 @@ export default function TourDetail() {
                   </div>
                 </div>
                 <div className="bg-white dark:bg-gray-800 p-4 rounded-xl border border-gray-100 dark:border-gray-700 shadow-sm flex flex-col items-center text-center gap-2">
-                  <Users className="h-6 w-6 text-amber-600" />
+                  <Users className="h-6 w-6 text-sky-600" />
                   <div>
                     <p className="text-xs text-gray-500 uppercase">Групп</p>
                     <p className="font-bold text-gray-900 dark:text-gray-100">
@@ -264,7 +286,7 @@ export default function TourDetail() {
                   </div>
                 </div>
                 <div className="bg-white dark:bg-gray-800 p-4 rounded-xl border border-gray-100 dark:border-gray-700 shadow-sm flex flex-col items-center text-center gap-2">
-                  <Thermometer className="h-6 w-6 text-amber-600" />
+                  <Thermometer className="h-6 w-6 text-sky-600" />
                   <div>
                     <p className="text-xs text-gray-500 uppercase">Цаг агаар</p>
                     <p className="font-bold text-gray-900 dark:text-gray-100">
@@ -273,7 +295,7 @@ export default function TourDetail() {
                   </div>
                 </div>
                 <div className="bg-white dark:bg-gray-800 p-4 rounded-xl border border-gray-100 dark:border-gray-700 shadow-sm flex flex-col items-center text-center gap-2">
-                  <Plane className="h-6 w-6 text-amber-600" />
+                  <Plane className="h-6 w-6 text-sky-600" />
                   <div>
                     <p className="text-xs text-gray-500 uppercase">
                       Нислэгийн тийз
@@ -293,7 +315,62 @@ export default function TourDetail() {
 
             {/* ITINERARY SECTION (Visual Timeline) */}
             <div ref={itineraryRef} className="scroll-mt-24">
-              <SectionTitle icon={MapPin} title="Хөтөлбөр" />
+              <SectionTitle icon={BedDouble} title="Зочид буудал" />
+              <div className="bg-white dark:bg-gray-800 rounded-2xl overflow-hidden border border-gray-100 dark:border-gray-700 shadow-sm flex flex-col md:flex-row">
+                <div className="md:w-1/3 h-48 md:h-auto relative overflow-hidden">
+                  {customHotel.length > 0 ? (
+                    <>
+                      <img
+                        src={customHotel[0]}
+                        alt={tour.hotel || "Hotel"}
+                        className="h-full w-full object-cover transition-transform duration-500 hover:scale-105"
+                      />
+                      {customHotel.length > 1 && (
+                        <div className="absolute bottom-3 left-1/2 -translate-x-1/2 flex gap-1">
+                          {customHotel.map((_, i) => (
+                            <div
+                              key={i}
+                              className="w-2 h-2 rounded-full bg-white/80"
+                            />
+                          ))}
+                        </div>
+                      )}
+                    </>
+                  ) : (
+                    <div className="absolute inset-0 flex items-center justify-center bg-gray-200 dark:bg-gray-700 text-gray-400">
+                      <Camera className="h-12 w-12" />
+                    </div>
+                  )}
+                </div>
+                <div className="p-6 md:w-2/3">
+                  <div className="flex justify-between items-start mb-2">
+                    <h3 className="text-xl font-bold text-gray-900 dark:text-gray-100">
+                      {tour.hotel || "Hotel TBD"}
+                    </h3>
+                    <div className="flex text-yellow-400">
+                      <Star className="h-4 w-4 fill-current" />
+                      <Star className="h-4 w-4 fill-current" />
+                      <Star className="h-4 w-4 fill-current" />
+                      <Star className="h-4 w-4 fill-current" />
+                    </div>
+                  </div>
+                  <p className="text-gray-600 dark:text-gray-400 mb-4 text-sm">
+                    Comfortable stay located near city center/beach. Includes
+                    modern amenities and free Wi-Fi.
+                  </p>
+                  <div className="flex flex-wrap gap-2">
+                    <span className="px-2 py-1 bg-gray-100 dark:bg-gray-700 rounded text-xs text-gray-600 dark:text-gray-300">
+                      Free Wifi
+                    </span>
+                    <span className="px-2 py-1 bg-gray-100 dark:bg-gray-700 rounded text-xs text-gray-600 dark:text-gray-300">
+                      Pool
+                    </span>
+                    <span className="px-2 py-1 bg-gray-100 dark:bg-gray-700 rounded text-xs text-gray-600 dark:text-gray-300">
+                      Gym
+                    </span>
+                  </div>
+                </div>
+              </div>
               <div className="bg-gray-50 dark:bg-gray-800/50 rounded-2xl p-8 border border-gray-100 dark:border-gray-700">
                 <h3 className="text-xl font-bold text-gray-900 dark:text-gray-100 mb-6">
                   Хөтөлбөрт орсон зүйлс:
@@ -346,15 +423,20 @@ export default function TourDetail() {
                 </div>
               </div>
               <Suspense
-                fallback={<div>Components are loading please wait...</div>}>
-                {showHutulbur(tour)}
+                fallback={
+                  <div className="py-8 text-center">
+                    Хөтөлбөр ачааллаж байна...
+                  </div>
+                }
+              >
+                {HutulburComponent}
               </Suspense>
 
               {/* Since we don't have structured itinerary data yet, we create a visual placeholder or wrap the description */}
-              {/* <div className="relative border-l-2 border-dashed border-amber-200 dark:border-amber-900/50 ml-4 space-y-8 pb-4">
+              {/* <div className="relative border-l-2 border-dashed border-sky-200 dark:border-sky-900/50 ml-4 space-y-8 pb-4">
                 
                 <div className="relative pl-8">
-                  <div className="absolute -left-[9px] top-0 h-4 w-4 rounded-full bg-amber-500 ring-4 ring-white dark:ring-gray-900" />
+                  <div className="absolute -left-[9px] top-0 h-4 w-4 rounded-full bg-sky-500 ring-4 ring-white dark:ring-gray-900" />
                   <h3 className="text-lg font-bold text-gray-900 dark:text-gray-100 mb-2">
                     Day 1: Departure & Arrival
                   </h3>
@@ -366,7 +448,7 @@ export default function TourDetail() {
 
            
                 <div className="relative pl-8">
-                  <div className="absolute -left-[9px] top-0 h-4 w-4 rounded-full bg-amber-500 ring-4 ring-white dark:ring-gray-900" />
+                  <div className="absolute -left-[9px] top-0 h-4 w-4 rounded-full bg-sky-500 ring-4 ring-white dark:ring-gray-900" />
                   <h3 className="text-lg font-bold text-gray-900 dark:text-gray-100 mb-2">
                     Day 2 - {Number(tour.duration_day) - 1}: Exploration
                   </h3>
@@ -455,7 +537,8 @@ export default function TourDetail() {
                           prev === 0 ? galleryImages.length - 1 : prev - 1
                         );
                       }}
-                      className="absolute cursor-pointer left-4 top-1/2 -translate-y-1/2 bg-black/50 hover:bg-black/70 text-white p-2 rounded-full opacity-0 group-hover:opacity-100 transition-opacity">
+                      className="absolute cursor-pointer left-4 top-1/2 -translate-y-1/2 bg-black/50 hover:bg-black/70 text-white p-2 rounded-full opacity-0 group-hover:opacity-100 transition-opacity"
+                    >
                       <ArrowLeft className="h-6 w-6" />
                     </button>
 
@@ -467,7 +550,8 @@ export default function TourDetail() {
                           prev === galleryImages.length - 1 ? 0 : prev + 1
                         );
                       }}
-                      className="absolute cursor-pointer right-4 top-1/2 -translate-y-1/2 bg-black/50 hover:bg-black/70 text-white p-2 rounded-full opacity-0 group-hover:opacity-100 transition-opacity">
+                      className="absolute cursor-pointer right-4 top-1/2 -translate-y-1/2 bg-black/50 hover:bg-black/70 text-white p-2 rounded-full opacity-0 group-hover:opacity-100 transition-opacity"
+                    >
                       <ArrowRight className="h-6 w-6" />{" "}
                       {/* Make sure to import ArrowRight */}
                     </button>
@@ -481,9 +565,10 @@ export default function TourDetail() {
                         onClick={() => setSelectedImageIndex(idx)}
                         className={`relative shrink-0 h-20 w-20 rounded-lg overflow-hidden border-2 transition-all ${
                           selectedImageIndex === idx
-                            ? "border-amber-600 ring-2 ring-amber-600/30"
+                            ? "border-sky-600 ring-2 ring-sky-600/30"
                             : "border-transparent opacity-70 hover:opacity-100"
-                        }`}>
+                        }`}
+                      >
                         <img
                           src={img}
                           alt={`Thumbnail ${idx}`}
@@ -496,7 +581,7 @@ export default function TourDetail() {
               ) : (
                 <div className="text-center py-12 bg-gray-50 dark:bg-gray-800/50 rounded-xl border border-dashed border-gray-300 dark:border-gray-700">
                   <Camera className="h-10 w-10 text-gray-300 mx-auto mb-3" />
-                  <p className="text-gray-500">Gallery images coming soon</p>
+                  <p className="text-gray-500">Зураг удахгүй нэмэгдэнэ</p>
                 </div>
               )}
             </div>
@@ -507,7 +592,7 @@ export default function TourDetail() {
             <div className="sticky top-40 space-y-6">
               {/* Price Card */}
               <div className="bg-white dark:bg-gray-800 rounded-2xl shadow-xl border border-gray-100 dark:border-gray-700 overflow-hidden">
-                <div className="bg-amber-600 p-4 text-white text-center">
+                <div className="bg-sky-600 p-4 text-white text-center">
                   <p className="text-sm opacity-90">Special Offer Price</p>
                   <h3 className="text-3xl font-bold">
                     ₮{Number(tour.single_supply_price).toLocaleString()}
@@ -557,7 +642,7 @@ export default function TourDetail() {
                     </div>
                   </div>
 
-                  <Button className="w-full h-12 text-lg font-bold bg-amber-600 hover:bg-amber-700 text-white shadow-lg shadow-amber-200 dark:shadow-none">
+                  <Button className="w-full h-12 text-lg font-bold bg-sky-600 hover:bg-sky-700 text-white shadow-lg shadow-sky-200 dark:shadow-none">
                     Захиалах
                   </Button>
 
@@ -587,13 +672,13 @@ export default function TourDetail() {
                   +976 76060606
                 </p>
                 <p className="text-sm text-blue-600/80 dark:text-blue-300/80">
-                 Даваа-Баасан: 09:00-19:00
+                  Даваа-Баасан: 09:00-19:00
                 </p>
-                 <p className="text-sm text-blue-600/80 dark:text-blue-300/80">
-                 Бямба: 10:00-18:00 
+                <p className="text-sm text-blue-600/80 dark:text-blue-300/80">
+                  Бямба: 10:00-18:00
                 </p>
-                 <p className="text-sm text-blue-600/80 dark:text-blue-300/80">
-                 Ням: 13:00-18:00
+                <p className="text-sm text-blue-600/80 dark:text-blue-300/80">
+                  Ням: 13:00-18:00
                 </p>
               </div>
             </div>

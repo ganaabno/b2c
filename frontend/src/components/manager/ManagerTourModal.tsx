@@ -245,7 +245,8 @@ export default function ManagerTourModal({
           </div>
           <button
             onClick={onClose}
-            className="p-2 cursor-pointer rounded-full text-gray-400 hover:text-gray-600 dark:text-slate-400 dark:hover:text-slate-200 hover:bg-gray-100 dark:hover:bg-slate-700 transition-colors">
+            className="p-2 cursor-pointer rounded-full text-gray-400 hover:text-gray-600 dark:text-slate-400 dark:hover:text-slate-200 hover:bg-gray-100 dark:hover:bg-slate-700 transition-colors"
+          >
             <X className="h-5 w-5" />
           </button>
         </div>
@@ -294,7 +295,8 @@ export default function ManagerTourModal({
                     onChange={(e) => {
                       handleChange(e);
                     }}
-                    className={inputClass}>
+                    className={inputClass}
+                  >
                     <option value="">Хоосон</option>
                     <option value="https://res.cloudinary.com/dvnzk53kp/image/upload/v1766721724/hainan_poster_yzaxhu.png">
                       Hainan
@@ -339,7 +341,8 @@ export default function ManagerTourModal({
                     {existingPhotos.slice(0, 6).map((url, idx) => (
                       <div
                         key={`ex-${idx}`}
-                        className="aspect-square rounded-lg bg-gray-100 dark:bg-slate-700 relative group overflow-hidden ring-1 ring-black/5 dark:ring-white/5">
+                        className="aspect-square rounded-lg bg-gray-100 dark:bg-slate-700 relative group overflow-hidden ring-1 ring-black/5 dark:ring-white/5"
+                      >
                         <img
                           src={url}
                           className="w-full h-full object-cover transition-transform group-hover:scale-110"
@@ -351,7 +354,8 @@ export default function ManagerTourModal({
                               p.filter((_, i) => i !== idx)
                             )
                           }
-                          className="absolute top-1 right-1 bg-red-500/90 hover:bg-red-600 text-white p-1 rounded-md opacity-0 group-hover:opacity-100 transition-all shadow-sm">
+                          className="absolute top-1 right-1 bg-red-500/90 hover:bg-red-600 text-white p-1 rounded-md opacity-0 group-hover:opacity-100 transition-all shadow-sm"
+                        >
                           <X className="h-3 w-3" />
                         </button>
                       </div>
@@ -359,7 +363,8 @@ export default function ManagerTourModal({
                     {galleryFiles.map((file, idx) => (
                       <div
                         key={`new-${idx}`}
-                        className="aspect-square rounded-lg bg-amber-50 dark:bg-amber-900/20 relative border border-amber-200 dark:border-amber-700/50 overflow-hidden">
+                        className="aspect-square rounded-lg bg-amber-50 dark:bg-amber-900/20 relative border border-amber-200 dark:border-amber-700/50 overflow-hidden"
+                      >
                         <img
                           src={URL.createObjectURL(file)}
                           className="w-full h-full object-cover opacity-80"
@@ -371,7 +376,8 @@ export default function ManagerTourModal({
                               p.filter((_, i) => i !== idx)
                             )
                           }
-                          className="absolute top-1 right-1 bg-red-500/90 hover:bg-red-600 text-white p-1 rounded-md shadow-sm">
+                          className="absolute top-1 right-1 bg-red-500/90 hover:bg-red-600 text-white p-1 rounded-md shadow-sm"
+                        >
                           <X className="h-3 w-3" />
                         </button>
                       </div>
@@ -456,7 +462,8 @@ export default function ManagerTourModal({
                       onChange={(e) => {
                         handleChange(e);
                       }}
-                      className={inputClass}>
+                      className={inputClass}
+                    >
                       <option value="">Хоосон</option>
                       <option value="Hainan">Hainan</option>
                       <option value="HoChiMinh_Phu_Quoc">
@@ -506,7 +513,8 @@ export default function ManagerTourModal({
                       name="status"
                       value={formData.status}
                       onChange={handleChange}
-                      className={inputClass}>
+                      className={inputClass}
+                    >
                       <option value="ACTIVE">Active</option>
                       <option value="FULL">Full</option>
                       <option value="INACTIVE">Inactive</option>
@@ -579,14 +587,16 @@ export default function ManagerTourModal({
             disabled={isSaving}
             type="button"
             onClick={onClose}
-            className="px-5 py-2.5 cursor-pointer text-sm font-semibold text-gray-700 dark:text-slate-300 hover:bg-gray-100 dark:hover:bg-slate-700 rounded-lg transition-colors">
+            className="px-5 py-2.5 cursor-pointer text-sm font-semibold text-gray-700 dark:text-slate-300 hover:bg-gray-100 dark:hover:bg-slate-700 rounded-lg transition-colors"
+          >
             Буцах
           </button>
           <button
             disabled={isSaving}
             type="submit"
             form="tourForm"
-            className="px-6 py-2.5 cursor-pointer text-sm font-bold bg-amber-600 hover:bg-amber-700 dark:bg-amber-600 dark:hover:bg-amber-500 text-white rounded-lg shadow-lg shadow-amber-600/20 flex items-center gap-2 transition-all transform active:scale-95">
+            className="px-6 py-2.5 cursor-pointer text-sm font-bold bg-amber-600 hover:bg-amber-700 dark:bg-amber-600 dark:hover:bg-amber-500 text-white rounded-lg shadow-lg shadow-amber-600/20 flex items-center gap-2 transition-all transform active:scale-95"
+          >
             {isSaving ? <Loader2 className="h-4 w-4 animate-spin" /> : null}
             {tourToEdit ? "Аялал засах" : "Аялал үүсгэх"}
           </button>

@@ -107,11 +107,12 @@ export default function ManagerDashboard() {
         {/* Header */}
         <div className="mb-8 flex items-center justify-between">
           <h1 className="text-3xl font-bold text-gray-900 dark:text-gray-100">
-            Tour Management ✈️
+            Аялал Зохицуулах:
           </h1>
           <button
             onClick={openCreateModal}
-            className="flex cursor-pointer items-center gap-2 rounded-lg bg-amber-600 dark:bg-amber-500 px-6 py-3 font-bold text-white hover:bg-amber-700 dark:hover:bg-amber-600 transition shadow-lg">
+            className="flex cursor-pointer items-center gap-2 rounded-lg bg-amber-600 dark:bg-amber-500 px-6 py-3 font-bold text-white hover:bg-amber-700 dark:hover:bg-amber-600 transition shadow-lg"
+          >
             <Plus className="h-5 w-5" /> Аялал нэмэх
           </button>
         </div>
@@ -133,7 +134,6 @@ export default function ManagerDashboard() {
         onSave={handleSave}
         isSaving={saveMutation.isPending}
       />
-     
     </div>
   );
 }

@@ -71,7 +71,7 @@ export default function Home() {
           Your browser does not support the video tag.
         </video>
 
-        <div className="absolute inset-0 flex flex-col justify-end pb-32 px-8 md:px-16">
+        <div className="absolute inset-0 flex flex-col justify-end left-20 pb-32 px-12 md:px-16">
           <div className="max-w-4xl">
             <h1 className="font-bold text-5xl md:text-6xl bg-linear-to-b from-white to-white/60 bg-clip-text text-transparent [webkit-text-stroke:1px_rgba(255,255,255,0.35)] drop-shadow-[0_2px_6px_rgba(0,0,0,0.25)]">
               GTC MONGOLIA

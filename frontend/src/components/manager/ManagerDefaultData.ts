@@ -1,8 +1,3 @@
-
-
-
-
-
 export const Bali_Default = {
   title: "Бали аялал",
   description: `Бали арлын аялал: Ханой хотоор дамжин, Бали арал руу шууд нислэгтэй GTC-ийн онцгой аялал
@@ -14,7 +9,8 @@ GTC Mongolia танд Вьетнамын нийслэл Ханой хотоор 
   country: "Индонез",
   departure_date: "",
   arrival_date: "",
-  hotel: "J4 Hotel Legian, Bintang Kuta, Bintang Bali Resort, Kuta Beach Heritage, Aryaduta Bali ",
+  hotel:
+    "J4 Hotel Legian, Bintang Kuta, Bintang Bali Resort, Kuta Beach Heritage, Aryaduta Bali ",
   single_supply_price: "5590000",
   child_price: "4790000",
   additional_bed: "",
@@ -185,7 +181,8 @@ export const Phu_Quoc_Default = {
   country: " Вьетнам ",
   departure_date: "",
   arrival_date: "",
-  hotel: "Wyndham Garden , Wyndham Grand, Vinpearl Melia Villa, Vinpearl Resort, Vinpearl Wonderworld ",
+  hotel:
+    "Wyndham Garden , Wyndham Grand, Vinpearl Melia Villa, Vinpearl Resort, Vinpearl Wonderworld ",
   single_supply_price: "4290000",
   child_price: "2990000",
   additional_bed: "",
@@ -299,6 +296,5 @@ export const Phuket_Default = {
   group_size: "+20",
   duration_day: "8",
   duration_night: "8",
-  cover_photo:
-    "https://res.cloudinary.com/dvnzk53kp/image/upload/v1766812636/%D0%97%D0%90%D0%A1%D0%A1%D0%90%D0%9D-%D0%9F%D0%A3%D0%9A%D0%95%D0%A2-%D0%90%D0%AF%D0%9B%D0%90%D0%9B_qkv2yn.png",
+  cover_photo: "The Nature Phuket , Patong Resort",
 };

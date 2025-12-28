@@ -1,129 +1,181 @@
+const carouselImages = [
+  "https://www.toursmongolia.com/uploads/Amazing_landscape_naiman_lake_bayar.jpg",
+  "https://www.discovermongolia.mn/uploads/1-Altai-5-bogd-top-10-places-bayar.JPG",
+  "https://lp-cms-production.imgix.net/2023-08/GettyImages-683712525.jpg?w=600&h=400",
+  "https://media.cnn.com/api/v1/images/stellar/prod/150907165607-beautiful-mongolia3-great-white-lake1.jpg",
+  "https://www.discovermongolia.mn/uploads/2-Kharkhiraa-turgen-top-10-places-bayar-2.jpg",
+  "https://resources.travellocal.com/wp/uploads/2023/09/10141335/Mongolia-sunset-ss-scaled.jpg",
+  "https://www.toursmongolia.com/uploads/Amazing_landscape_photography.jpg",
+  "https://media.cnn.com/api/v1/images/stellar/prod/150907165252-beautiful-mongolia-1-gobi-desert-v1.jpg",
+];
+
 export default function MembershipPage() {
   return (
-    <>
-      <div className="min-h-screen bg-linear-to-b from-blue-50 to-white">
-        <header className="bg-blue-600 text-white py-16 px-6 text-center">
-          <h1 className="text-5xl font-bold mb-4">Global Travel Rewards</h1>
-          <p className="text-xl mb-2">
-            Earn Travel Points, exclusive perks, and more with every booking!
-          </p>
-          <p className="text-lg">
-            100 Travel Points = $1 USD • Higher tiers = Bigger rewards
-          </p>
-        </header>
+    <div className="min-h-screen bg-gray-50">
+      {/* Hero Header */}
+      <div
+        className="relative overflow-hidden bg-cover bg-center bg-no-repeat h-96 md:h-[520px] flex items-center justify-center rounded-b-3xl"
+        style={{
+          backgroundImage:
+            "url('https://www.kamzangjourneys.com/wp-content/uploads/2021/05/Mongolia-Sunset-Lake-Sand-Dunes-photo.jpg')",
+        }}
+      >
+        {/* Тёмный оверлей + лёгкий градиент */}
+        <div className="absolute inset-0 bg-linear-to-b from-black/50 via-black/30 to-black/60"></div>
 
-        <div className="max-w-7xl mx-auto px-6 py-12">
-          <h2 className="text-4xl font-semibold text-center mb-12 text-gray-800">
-            Membership Tiers (2025)
-          </h2>
-
-          <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 xl:grid-cols-5 gap-8">
-            {/* Silver */}
-            <div className="bg-white rounded-xl shadow-lg overflow-hidden border-t-8 border-gray-400">
-              <div className="p-8 text-center">
-                <h3 className="text-3xl font-bold text-gray-600 mb-4">
-                  Silver
-                </h3>
-                <p className="text-sm text-gray-500 mb-6">
-                  <strong>How to get:</strong> Just register for free!
-                </p>
-                <ul className="text-left space-y-3 text-gray-700">
-                  <li>• Base Travel Points on bookings</li>
-                  <li>• Exclusive hotel deals & discounts</li>
-                  <li>• Member-only promotions</li>
-                </ul>
-              </div>
-            </div>
-
-            {/* Gold */}
-            <div className="bg-white rounded-xl shadow-lg overflow-hidden border-t-8 border-yellow-500">
-              <div className="p-8 text-center">
-                <h3 className="text-3xl font-bold text-yellow-600 mb-4">
-                  Gold
-                </h3>
-                <p className="text-sm text-gray-500 mb-6">
-                  <strong>How to get:</strong> Complete 1 eligible booking
-                </p>
-                <ul className="text-left space-y-3 text-gray-700">
-                  <li>• 20% more Travel Points</li>
-                  <li>• Train refund fee waivers</li>
-                  <li>• Exclusive deals + insurance discounts</li>
-                </ul>
-              </div>
-            </div>
-
-            {/* Platinum */}
-            <div className="bg-white rounded-xl shadow-lg overflow-hidden border-t-8 border-gray-300">
-              <div className="p-8 text-center">
-                <h3 className="text-3xl font-bold text-gray-700 mb-4">
-                  Platinum
-                </h3>
-                <p className="text-sm text-gray-500 mb-6">
-                  <strong>How to get:</strong> 3 eligible bookings after Gold
-                </p>
-                <ul className="text-left space-y-3 text-gray-700">
-                  <li>• 50% more Travel Points</li>
-                  <li>• 1-2 Free Airport VIP Lounge accesses/year</li>
-                  <li>• Free global eSIM data packages</li>
-                  <li>• Priority customer support</li>
-                </ul>
-              </div>
-            </div>
-
-            {/* Diamond */}
-            <div className="bg-white rounded-xl shadow-lg overflow-hidden border-t-8 border-cyan-400">
-              <div className="p-8 text-center">
-                <h3 className="text-3xl font-bold text-cyan-600 mb-4">
-                  Diamond
-                </h3>
-                <p className="text-sm text-gray-500 mb-6">
-                  <strong>How to get:</strong> 8 bookings (min $1,000) after
-                  Platinum
-                </p>
-                <ul className="text-left space-y-3 text-gray-700">
-                  <li>• Up to 100% more Travel Points</li>
-                  <li>• 2+ Free VIP Lounge accesses</li>
-                  <li>• Airport transfer upgrades</li>
-                  <li>• VIP dedicated support</li>
-                </ul>
-              </div>
-            </div>
-
-            {/* Diamond+ */}
-            <div className="bg-white rounded-xl shadow-lg overflow-hidden border-t-8 border-pink-500">
-              <div className="p-8 text-center">
-                <h3 className="text-3xl font-bold text-pink-600 mb-4">
-                  Diamond+
-                </h3>
-                <p className="text-sm text-gray-500 mb-6">
-                  <strong>How to get:</strong> Spend $10,000+ after Diamond
-                </p>
-                <ul className="text-left space-y-3 text-gray-700">
-                  <li>• Up to 150% more Travel Points</li>
-                  <li>• 3+ Free VIP Lounge accesses</li>
-                  <li>• Premium airport transfers</li>
-                  <li>• Free attraction tickets</li>
-                  <li>• One-stop VIP concierge service</li>
-                </ul>
-              </div>
-            </div>
-          </div>
-
-          <p className="text-center mt-12 text-gray-600 text-lg">
-            Tiers based on eligible bookings/spending in a 12-month period.
-            <br />
-            Earn Travel Points from flights, hotels, reviews, and more. Redeem
-            for discounts!
+        <div className="relative container mx-auto px-6 text-center z-10">
+          <h1 className="text-4xl md:text-6xl font-bold text-white font-serif drop-shadow-2xl leading-tight">
+            Илүү аял — илүү урамшуулал ав!
+          </h1>
+          <p className="mt-4 text-lg md:text-2xl text-white/95 font-light drop-shadow-md max-w-3xl mx-auto">
+            Илүү их аялвал илүү их шагнал урамшуулал хүлээж байна
           </p>
 
-          <div className="text-center mt-16">
-            <p className="text-sm text-gray-500">
-              Inspired by leading travel loyalty programs • For visualization
-              only • Customize as needed 🌍✈️
-            </p>
+          {/* Небольшая кнопка CTA — не обязалово, но добавляет огонька */}
+          <button className="mt-8 px-8 py-3 bg-white/20 backdrop-blur-md text-white font-semibold rounded-full border border-white/30 hover:bg-white/30 transition-all duration-300">
+            Эхэлцгээе 🚀
+          </button>
+        </div>
+      </div>
+
+      {/* Endless Looping Carousel - Simple & Minimal */}
+      <div className="py-12 bg-white overflow-hidden">
+        <div className="relative">
+          <div className="flex animate-carousel gap-6">
+            {[...carouselImages, ...carouselImages].map((src, i) => (
+              <div
+                key={i}
+                className="shrink-0 w-80 h-48 rounded-xl overflow-hidden shadow-lg"
+              >
+                <img
+                  src={src}
+                  alt="Mongolia tour"
+                  className="w-full h-full object-cover"
+                />
+              </div>
+            ))}
           </div>
         </div>
       </div>
-    </>
+
+      {/* Membership Tiers Visual */}
+      <div className="container mx-auto px-6 py-16">
+        <h2 className="text-3xl font-bold text-center mb-12">
+          Гишүүнчлэлийн зэрэглэл
+        </h2>
+        <div className="grid grid-cols-1 md:grid-cols-5 gap-8 max-w-5xl mx-auto">
+          {["Bronze", "Silver", "Gold", "Platinum", "Diamond"].map(
+            (tier, idx) => (
+              <div key={tier} className="text-center">
+                <div
+                  className={`h-32 w-32 mx-auto rounded-full flex items-center justify-center text-white font-bold text-2xl shadow-2xl
+                ${
+                  idx === 0
+                    ? "bg-bronze-linear bg-amber-900"
+                    : idx === 1
+                    ? "bg-silver-linear bg-slate-300"
+                    : idx === 2
+                    ? "bg-yellow-500"
+                    : idx === 3
+                    ? "bg-gray-400"
+                    : "bg-linear-to-br from-purple-600 to-pink-600"
+                }`}
+                >
+                  {tier}
+                </div>
+                <p className="mt-4 text-lg font-medium">
+                  {idx * 2 + (idx > 0 ? 1 : 0)} аялал худалдаж авсан
+                </p>
+              </div>
+            )
+          )}
+        </div>
+      </div>
+
+      {/* Benefits Table */}
+      <div className="container mx-auto px-6 py-16">
+        <h2 className="text-3xl font-bold text-center mb-12">
+          Давуу талуудын харьцуулалт
+        </h2>
+        <div className="overflow-x-auto">
+          <table className="w-full max-w-5xl mx-auto bg-white rounded-xl shadow-lg overflow-hidden">
+            <thead className="bg-linear-to-r from-sky-600 to-indigo-700 text-white">
+              <tr>
+                <th className="py-6 px-8 text-left">Давуу тал</th>
+                <th className="py-6 px-8">Bronze</th>
+                <th className="py-6 px-8">Silver</th>
+                <th className="py-6 px-8">Gold</th>
+                <th className="py-6 px-8">Platinum</th>
+                <th className="py-6 px-8">Diamond</th>
+              </tr>
+            </thead>
+            <tbody className="text-gray-700">
+              <tr className="border-b">
+                <td className="py-5 px-8 font-medium">Хуримтлагдсан оноо</td>
+                <td className="text-center">1x</td>
+                <td className="text-center">1.2x</td>
+                <td className="text-center">1.5x</td>
+                <td className="text-center">2x</td>
+                <td className="text-center">3x</td>
+              </tr>
+              <tr className="border-b bg-gray-50">
+                <td className="py-5 px-8 font-medium">Тусгай хөнгөлөлт</td>
+                <td className="text-center">-</td>
+                <td className="text-center">5%</td>
+                <td className="text-center">10%</td>
+                <td className="text-center">15%</td>
+                <td className="text-center">20%</td>
+              </tr>
+              <tr className="border-b">
+                <td className="py-5 px-8 font-medium">
+                  Тэргүүн ээлжийн захиалга
+                </td>
+                <td className="text-center">-</td>
+                <td className="text-center">-</td>
+                <td className="text-center">✓</td>
+                <td className="text-center">✓</td>
+                <td className="text-center">✓</td>
+              </tr>
+              <tr className="border-b bg-gray-50">
+                <td className="py-5 px-8 font-medium">Бэлэг, сюрприз</td>
+                <td className="text-center">-</td>
+                <td className="text-center">-</td>
+                <td className="text-center">-</td>
+                <td className="text-center">✓</td>
+                <td className="text-center">✓✓</td>
+              </tr>
+              <tr>
+                <td className="py-5 px-8 font-medium">Хувийн менежер</td>
+                <td className="text-center">-</td>
+                <td className="text-center">-</td>
+                <td className="text-center">-</td>
+                <td className="text-center">-</td>
+                <td className="text-center">✓</td>
+              </tr>
+            </tbody>
+          </table>
+        </div>
+      </div>
+
+      <style>{`
+        @keyframes carousel {
+          0% {
+            transform: translateX(0);
+          }
+          100% {
+            transform: translateX(-50%);
+          }
+        }
+        .animate-carousel {
+          animation: carousel 40s linear infinite;
+        }
+        .bg-bronze-linear {
+          background: linear-linear(to bottom, #cd7f32, #a0522d);
+        }
+        .bg-silver-linear {
+          background: linear-linear(to bottom, #c0c0c0, #808080);
+        }
+      `}</style>
+    </div>
   );
 }

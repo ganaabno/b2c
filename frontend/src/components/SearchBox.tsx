@@ -16,7 +16,6 @@ export default function SearchBox({
   availableCountries,
   onCountryChange,
   onDateChange,
-  onSearch,
 }: SearchBoxProps) {
   return (
     <div className="absolute -bottom-20 left-1/2 -translate-x-1/2 w-full max-w-5xl px-4 z-10">
