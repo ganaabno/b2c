@@ -1,12 +1,12 @@
 import { Utensils, Soup, Coffee, Calendar, Info } from "lucide-react";
 
 const galleryImages = [
-  "https://global-travel.mn/wp-content/uploads/2025/12/%D0%97%D0%90%D0%A1%D0%A1%D0%90%D0%9D-%D0%9F%D0%A3%D0%9A%D0%95%D0%A2-%D0%90%D0%AF%D0%9B%D0%90%D0%9B.png",
-  "https://voyagesautenteo.com/wp-content/uploads/2022/10/freedom-beach.jpg",
-  "https://imgs.search.brave.com/H66-FrJ7h5cMsz4AA7Ez8GyFIUPCxeAHCqd-_FeVGLc/rs:fit:860:0:0:0/g:ce/aHR0cHM6Ly9ub3J0/aGFicm9hZC5jb20v/d3AtY29udGVudC91/cGxvYWRzL3BodWtl/dC10aGFpbGFuZC1E/SklfMDMzNC5qcGc",
-  "https://voyagesautenteo.com/wp-content/uploads/2022/10/banana-beach.jpg",
-  "https://imgs.search.brave.com/KwJmEerb8l9JSv6vihrOIXKsJbxFLPV__83VbQPHNeM/rs:fit:860:0:0:0/g:ce/aHR0cHM6Ly9oYmxp/bWcubW10Y2RuLmNv/bS9jb250ZW50L2h1/YmJsZS9pbWcvZGVz/dHR2aW1nL21tdC9k/ZXN0aW5hdGlvbi9t/X1BodWtldF90dl9k/ZXN0aW5hdGlvbl9p/bWdfNF9sXzg1MF8x/Mjc2LmpwZw",
-  "https://imgs.search.brave.com/HJZCDak5fsOjK6hSawAXa9CyEKlSoRZqGo-xpSWejRU/rs:fit:860:0:0:0/g:ce/aHR0cHM6Ly9oYmxp/bWcubW10Y2RuLmNv/bS9jb250ZW50L2h1/YmJsZS9pbWcvZGVz/dHR2aW1nL21tdC9k/ZXN0aW5hdGlvbi9t/X1BodWtldF90dl9k/ZXN0aW5hdGlvbl9p/bWdfM19sXzY4OV8x/MTAyLmpwZw",
+  "https://res.cloudinary.com/di9bplyfy/image/upload/v1766991491/D0_97_D0_90_D0_A1_D0_A1_D0_90_D0_9D-_D0_9F_D0_A3_D0_9A_D0_95_D0_A2-_D0_90_D0_AF_D0_9B_D0_90_D0_9B_fazxcj.png",
+  "https://res.cloudinary.com/di9bplyfy/image/upload/v1766991570/MTAyLmpwZw_rcbxdn.jpg",
+  "https://res.cloudinary.com/di9bplyfy/image/upload/v1766991560/Mjc2LmpwZw_lpho5w.jpg",
+  "https://res.cloudinary.com/di9bplyfy/image/upload/v1766991541/banana-beach_ex8mjo.jpg",
+  "https://res.cloudinary.com/di9bplyfy/image/upload/v1766991517/freedom-beach_lnbjq9.jpg",
+  "https://res.cloudinary.com/di9bplyfy/image/upload/v1766991531/SklfMDMzNC5qcGc_g92wot.jpg",
 ];
 
 const hotelImages = [

@@ -9,22 +9,21 @@ import {
 } from "lucide-react";
 
 const galleryImages = [
-  "https://www.asiaodysseytravel.com/images/china-tours/group-tours/sanya-beaches-700-3.jpg",
-  "https://studycli.org/wp-content/uploads/2021/06/Hainan-China-beach.jpg.webp",
-  "https://cdn.theworldofchinese.com/media/images/Ocean-Breeze-and-Ease_inpost3.width-800.jpg",
-  "https://blooloop.com/wp-content/uploads/2018/10/Atlantis-Sanya-Aquaventure-Sanya-43.jpeg",
-  "https://upload.wikimedia.org/wikipedia/commons/3/3c/Glass_Trestle_with_Full_Sea_View_%28Yalong_Bay_Forest_Park_Glass_Bridge%29_in_July_2025.jpg",
-  "https://dynamic-media-cdn.tripadvisor.com/media/photo-o/15/f8/bb/ed/phoenix-park.jpg?w=800&h=-1&s=1",
+  "https://res.cloudinary.com/di9bplyfy/image/upload/v1766990242/sanya-beaches-700-3_wfkojz.jpg",
+  "https://res.cloudinary.com/di9bplyfy/image/upload/v1766990341/Hainan-China-beach.jpg_bklugy.webp",
+  "https://res.cloudinary.com/di9bplyfy/image/upload/v1766990353/Ocean-Breeze-and-Ease_inpost3.width-800_kagrb5.jpg",
+  "https://res.cloudinary.com/di9bplyfy/image/upload/v1766990361/Atlantis-Sanya-Aquaventure-Sanya-43_oixici.jpg",
+  "https://res.cloudinary.com/di9bplyfy/image/upload/v1766990370/Glass_Trestle_with_Full_Sea_View__28Yalong_Bay_Forest_Park_Glass_Bridge_29_in_July_2025_oswdbp.jpg",
+  "https://res.cloudinary.com/di9bplyfy/image/upload/v1766990389/phoenix-park_qkjra2.jpg",
 ];
 
 const hotelImages = [
-  "https://media-cdn.tripadvisor.com/media/photo-s/2c/1f/f5/fe/overview-of-mandarin.jpg",
-  "https://pix10.agoda.net/hotelImages/393984/0/ad0eaa78f83f17e07ceaca9788fc1007.jpg?ce=2&s=1024x768",
-  "https://images.trvl-media.com/lodging/2000000/1460000/1453700/1453664/444a78f3.jpg?impolicy=resizecrop&rw=575&rh=575&ra=fill",
+  "https://res.cloudinary.com/di9bplyfy/image/upload/v1766990434/444a78f3_as3vfb.jpg",
+  "https://res.cloudinary.com/di9bplyfy/image/upload/v1766990424/ad0eaa78f83f17e07ceaca9788fc1007_wuxidg.jpg",
+  "https://res.cloudinary.com/di9bplyfy/image/upload/v1766990434/444a78f3_as3vfb.jpg",
 ];
 
 const Hainan = () => {
-  // Keeping your original data structure
   const tourData = [
     {
       day: 1,
@@ -37,7 +36,7 @@ const Hainan = () => {
         { name: "Саняа" },
       ],
       description: [
-        "  19:45 цагт “Чингис хаан” олон улсын нисэх онгоцны буудал дээр цугларч үдэгчээс мэдээлэл авна.",
+        "19:45 цагт “Чингис хаан” олон улсын нисэх онгоцны буудал дээр цугларч үдэгчээс мэдээлэл авна.",
         "20:10 цагт Бүртгэл эхлэхээр суудлаа бичүүлнэ.",
         "22:10 цагт УБ-Саняа хотруу (5-н цаг) Хүннү эйрлайн шууд нислэг /онгоц нь хоолтой/",
         "03:10 цагт Саняа хотын Финикс олон улсын нисэх онгоцны буудалд буугаад хөтөч тосож буудалдаа хүргүүлж амарна.",

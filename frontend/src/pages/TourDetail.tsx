@@ -472,8 +472,6 @@ export default function TourDetail() {
               </div> */}
             </div>
 
-            {/* INCLUSIONS SECTION (New!) */}
-
             {/* ACCOMMODATION SECTION */}
             <div ref={hotelRef} className="scroll-mt-24">
               <SectionTitle icon={BedDouble} title="Зочид буудал" />
@@ -529,7 +527,6 @@ export default function TourDetail() {
                       className="h-full w-full object-cover transition-all duration-500"
                     />
 
-                    {/* Left Arrow */}
                     <button
                       onClick={(e) => {
                         e.stopPropagation();
@@ -542,7 +539,6 @@ export default function TourDetail() {
                       <ArrowLeft className="h-6 w-6" />
                     </button>
 
-                    {/* Right Arrow */}
                     <button
                       onClick={(e) => {
                         e.stopPropagation();
@@ -553,11 +549,9 @@ export default function TourDetail() {
                       className="absolute cursor-pointer right-4 top-1/2 -translate-y-1/2 bg-black/50 hover:bg-black/70 text-white p-2 rounded-full opacity-0 group-hover:opacity-100 transition-opacity"
                     >
                       <ArrowRight className="h-6 w-6" />{" "}
-                      {/* Make sure to import ArrowRight */}
                     </button>
                   </div>
 
-                  {/* 2. Thumbnail Strip */}
                   <div className="flex gap-2 overflow-x-auto pb-2 no-scrollbar">
                     {galleryImages.map((img, idx) => (
                       <button
