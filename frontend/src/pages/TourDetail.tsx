@@ -623,7 +623,7 @@ export default function TourDetail() {
                           <AlertCircle className="h-4 w-4" /> Дүүрсэн{" "}
                           {/* Sold Out */}
                         </span>
-                      ) : tour.seats <= 5 ? (
+                      ) : tour.seats <= 10 ? (
                         <span className="font-bold text-orange-500 flex items-center gap-1 animate-pulse">
                           <Flame className="h-4 w-4" /> Цөөхөн суудал үлдлээ!
                         </span>

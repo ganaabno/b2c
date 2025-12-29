@@ -40,7 +40,7 @@ export default function SignupForm() {
           Бүртгүүлэх
         </h1>
         <p className="text-gray-600 dark:text-gray-200">
-          Gloval Travel-д тавтай морил
+          Global Travel-д тавтай морил
         </p>
       </div>
 

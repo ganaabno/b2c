@@ -4,9 +4,8 @@ import { useNavigate } from "react-router-dom";
 import { motion } from "framer-motion";
 import logo from "@/assets/logo.png";
 import axios from "axios"; // Make sure axios is imported if needed
-import { Link } from "react-router-dom";
 
-export default function LoginForm() {
+export default function LoginForm({ onClose }: { onClose?: () => void } = {}) {
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
   const [error, setError] = useState<string>("");
@@ -57,8 +56,7 @@ export default function LoginForm() {
       animate={{ opacity: 1, x: 0 }}
       exit={{ opacity: 0, x: 30 }}
       transition={{ duration: 0.4 }}
-      className="w-full max-w-md"
-    >
+      className="w-full max-w-md">
       <div className="mb-12 text-left">
         <img src={logo} alt="Logo" className="w-64 invert dark:invert-0 mb-6" />
         <h1 className="text-4xl font-bold text-gray-900 mb-2 dark:text-gray-50">
@@ -74,17 +72,22 @@ export default function LoginForm() {
           initial={{ opacity: 0, y: -10 }}
           animate={{ opacity: 1, y: 0 }}
           exit={{ opacity: 0, y: -10 }}
-          className="mb-6 p-4 bg-red-50 border border-red-200 text-red-700 rounded-xl text-center font-medium shadow-sm"
-        >
+          className="mb-6 p-4 bg-red-50 border border-red-200 text-red-700 rounded-xl text-center font-medium shadow-sm">
           {error}
         </motion.div>
       )}
 
-      <form onSubmit={handleSubmit} className="space-y-5"> 
+      <form onSubmit={handleSubmit} className="space-y-5">
         <div className="text-right">
-          <Link to="/forgot-password" className="text-sm text-sky-600 underline">
+          <button
+            type="button"
+            onClick={() => {
+              onClose?.();
+              navigate("/forgot-password");
+            }}
+            className="text-sm text-sky-600 underline">
             Нууц үг мартсан
-          </Link>
+          </button>
         </div>
         <div className="space-y-2">
           <label className="text-sm font-medium text-gray-700 dark:text-gray-400 block">
@@ -119,8 +122,7 @@ export default function LoginForm() {
         <button
           type="submit"
           disabled={isLoading}
-          className="w-full cursor-pointer rounded-xl bg-linear-to-r from-sky-500 to-sky-600 py-4 font-semibold text-white shadow-lg shadow-sky-500/30 hover:shadow-xl hover:shadow-sky-500/40 hover:scale-[1.02] disabled:opacity-50 disabled:cursor-not-allowed disabled:hover:scale-100 transition-all duration-200 mt-6"
-        >
+          className="w-full cursor-pointer rounded-xl bg-linear-to-r from-sky-500 to-sky-600 py-4 font-semibold text-white shadow-lg shadow-sky-500/30 hover:shadow-xl hover:shadow-sky-500/40 hover:scale-[1.02] disabled:opacity-50 disabled:cursor-not-allowed disabled:hover:scale-100 transition-all duration-200 mt-6">
           {isLoading ? (
             <span className="flex items-center justify-center gap-2">
               <svg className="animate-spin h-5 w-5" viewBox="0 0 24 24">

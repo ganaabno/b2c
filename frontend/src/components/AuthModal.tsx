@@ -56,13 +56,12 @@ export default function AuthModal({
               <button
                 onClick={onClose}
                 className="absolute cursor-pointer right-6 top-6 z-20 rounded-full bg-white/90 p-3 text-gray-700 hover:bg-white hover:scale-110 transition dark:bg-gray-800/90"
-                aria-label="Close"
-              >
+                aria-label="Close">
                 <X className="h-7 w-7" />
               </button>
 
               <motion.div
-                className="relative w-full h-[760px] lg:h-[780px] xl:h-[820px]" 
+                className="relative w-full h-[760px] lg:h-[780px] xl:h-[820px]"
                 animate={{ rotateY: isLogin ? 0 : 180 }}
                 transition={{
                   duration: 0.9,
@@ -70,22 +69,19 @@ export default function AuthModal({
                   stiffness: 70,
                   damping: 20,
                 }}
-                style={{ transformStyle: "preserve-3d" }}
-              >
+                style={{ transformStyle: "preserve-3d" }}>
                 <div
                   className="absolute inset-0 grid grid-cols-1 lg:grid-cols-2 h-full"
-                  style={{ backfaceVisibility: "hidden" }}
-                >
+                  style={{ backfaceVisibility: "hidden" }}>
                   <div className="flex flex-col justify-center px-8 py-12 lg:px-16 lg:py-20">
                     <div className="w-full max-w-md mx-auto">
-                      <LoginForm />
+                      <LoginForm onClose={onClose} />
                       <div className="mt-10 text-center text-gray-600 dark:text-gray-400">
                         <p className="text-lg">
                           Бүртгэлгүй бол{" "}
                           <button
                             onClick={toggleMode}
-                            className="font-bold text-sky-600 hover:underline hover:cursor-pointer hover:text-sky-800"
-                          >
+                            className="font-bold text-sky-600 hover:underline hover:cursor-pointer hover:text-sky-800">
                             энд дарна уу
                           </button>
                         </p>
@@ -107,8 +103,7 @@ export default function AuthModal({
                   style={{
                     backfaceVisibility: "hidden",
                     transform: "rotateY(180deg)",
-                  }}
-                >
+                  }}>
                   <div className="hidden lg:flex relative overflow-hidden">
                     <img
                       src={logImg}
@@ -125,8 +120,7 @@ export default function AuthModal({
                           Бүртгэлтэй бол{" "}
                           <button
                             onClick={toggleMode}
-                            className="font-bold text-sky-600 hover:underline hover:cursor-pointer hover:text-sky-800"
-                          >
+                            className="font-bold text-sky-600 hover:underline hover:cursor-pointer hover:text-sky-800">
                             энд дарж нэвтэрнэ үү.
                           </button>
                         </p>

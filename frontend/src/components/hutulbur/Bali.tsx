@@ -2,7 +2,7 @@ import {
   Utensils,
   BedDouble,
   Coffee,
-  Calendar,
+ 
   Info,
   ArrowRight,
 } from "lucide-react";
@@ -162,17 +162,8 @@ const Bali = () => {
               key={tour.day}
               className="bg-white dark:bg-gray-800 rounded-xl shadow-sm border border-gray-200 dark:border-gray-700 overflow-hidden flex flex-col md:flex-row transition-all hover:shadow-md"
             >
-              {/* Left: cover_photo Section */}
-              <div className="md:w-56 h-56 md:h-auto bg-gray-100 dark:bg-gray-700 shrink-0 relative group">
-                <img
-                  src={tour.cover_photo}
-                  alt={`Day ${tour.day}`}
-                  className="w-full h-full object-cover transition-transform duration-500 group-hover:scale-105"
-                />
-                <div className="absolute top-3 left-3 bg-amber-600 text-white text-xs font-bold px-3 py-1 rounded shadow-lg">
-                  Day {tour.day}
-                </div>
-              </div>
+             
+             
 
               {/* Right: Content Section */}
               <div className="p-6 flex-1 flex flex-col">
@@ -182,10 +173,9 @@ const Bali = () => {
                     <h2 className="text-xl font-bold text-amber-700 dark:text-amber-500">
                       {tour.title}
                     </h2>
-                    <div className="flex items-center text-sm text-gray-500 dark:text-gray-400 bg-gray-100 dark:bg-gray-700/50 px-3 py-1 rounded-full w-fit">
-                      <Calendar className="h-3.5 w-3.5 mr-2" />
-                      {tour.date}
-                    </div>
+                    <div className="absolute top-3 right-3 bg-amber-600 text-white text-xs font-bold px-3 py-1 rounded shadow-lg">
+                  Day {tour.day}
+                </div>
                   </div>
                 </div>
 

@@ -23,11 +23,9 @@ export default function Layout() {
       setIsScrolled(true);
       return;
     }
-
     const handleScroll = () => {
       setIsScrolled(window.scrollY > 50);
     };
-
     handleScroll();
     window.addEventListener("scroll", handleScroll);
     return () => window.removeEventListener("scroll", handleScroll);
@@ -88,7 +86,7 @@ export default function Layout() {
                 className={`h-9 w-auto transition-all duration-500 ${
                   isTransparent
                     ? "brightness-0 invert drop-shadow-2xl"
-                    : "invert"
+                    : "invert dark:brightness-0"
                 }`}
               />
             </Link>
@@ -197,7 +195,7 @@ export default function Layout() {
                 <>
                   <button
                     onClick={() => openAuthModal("login")}
-                    className={`text-sm font-medium transition-colors flex items-center gap-2 ${
+                    className={`text-sm cursor-pointer font-medium transition-colors flex items-center gap-2 ${
                       isTransparent
                         ? "text-white drop-shadow-lg hover:text-amber-400 hover:scale-130 duration-700 hover:font-semibold hover:duration-700"
                         : "text-gray-700 dark:text-gray-300 hover:text-gray-900 dark:hover:text-white"
@@ -208,7 +206,7 @@ export default function Layout() {
                   </button>
                   <button
                     onClick={() => openAuthModal("signup")}
-                    className={`rounded-full px-6 py-2.5 text-sm font-semibold text-white shadow-md transition-all flex items-center gap-2 ${
+                    className={`rounded-full cursor-pointer px-6 py-2.5 text-sm font-semibold text-white shadow-md transition-all flex items-center gap-2 ${
                       isTransparent
                         ? "bg-teal-500 hover:bg-teal-600 dark:bg-teal-600 dark:hover:bg-teal-500"
                         : "bg-teal-500 hover:bg-teal-600 dark:bg-teal-600 dark:hover:bg-teal-500"

@@ -26,7 +26,7 @@ export default function ForgotPassword() {
     } catch (err: unknown) {
       if(err instanceof Error)  console.error(err);
       setError(
-        err?.response?.data?.message || "Сервертэй холбогдоход алдаа гарлаа"
+         "Сервертэй холбогдоход алдаа гарлаа"
       );
     } finally {
       setLoading(false);
@@ -38,29 +38,29 @@ export default function ForgotPassword() {
       initial={{ opacity: 0, x: -20 }}
       animate={{ opacity: 1, x: 0 }}
       className="w-full max-w-md mx-auto">
-      <h2 className="text-3xl font-bold mb-4">Нууц үг сэргээх</h2>
+      <h2 className="text-3xl font-bold mb-4 dark:text-gray-200">Нууц үг сэргээх</h2>
 
       {message && (
-        <div className="mb-4 p-4 bg-green-50 border border-green-200 text-green-800 rounded">
+        <div className="mb-4 p-4 dark:text-gray-200 bg-green-50 border border-green-200 text-green-800 rounded">
           {message}
         </div>
       )}
 
       {error && (
-        <div className="mb-4 p-4 bg-red-50 border border-red-200 text-red-700 rounded">
+        <div className="mb-4 p-4 dark:text-gray-200 bg-red-50 border border-red-200 text-red-700 rounded">
           {error}
         </div>
       )}
 
       <form onSubmit={handleSubmit} className="space-y-4">
         <div>
-          <label className="block text-sm font-medium mb-1">Имэйл</label>
+          <label className="block text-sm font-medium mb-1 dark:text-gray-200">Имэйл</label>
           <input
             type="email"
             value={email}
             onChange={(e) => setEmail(e.target.value)}
             required
-            className="w-full rounded-xl border-2 border-gray-200 px-4 py-3.5"
+            className="w-full rounded-xl border-2 dark:text-gray-200 border-gray-200 px-4 py-3.5"
             disabled={loading}
             placeholder="example@email.com"
           />
@@ -70,16 +70,16 @@ export default function ForgotPassword() {
           <button
             type="submit"
             disabled={loading}
-            className="w-full rounded-xl bg-linear-to-r from-sky-500 to-sky-600 py-3 text-white font-semibold disabled:opacity-50">
+            className="w-full rounded-xl dark:text-gray-200 bg-linear-to-r from-sky-500 to-sky-600 py-3 text-white font-semibold disabled:opacity-50">
             {loading ? "Илгээж байна..." : "OTP-ийг илгээх"}
           </button>
         </div>
       </form>
 
-      <p className="mt-4 text-sm text-gray-600">
+      <p className="mt-4 text-sm text-gray-600 dark:text-gray-400">
         Бүртгүүлсэн имэйл хаяг мартсан уу?{" "}
         <Link to="/reset-password" className="text-sky-600 underline">
-          OTP-тэй сэргээх
+          OTP-тэй сэргээх хэсэг
         </Link>
       </p>
     </motion.div>
