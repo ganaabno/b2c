@@ -10,7 +10,7 @@ import {
   TableRow,
 } from "@/components/ui/table";
 import type { Tour } from "@/types";
-
+import { AlertCircle, Flame, CheckCircle2 } from "lucide-react";
 type TourTableProps = {
   tours?: Tour[];
   filterCountry?: string;
@@ -84,8 +84,8 @@ export default function TourTable({
       className="w-full flex flex-col items-center px-[5%] "
     >
       <div className="text-center font-serif py-5">
-        <h1 className="text-3xl">Ойрын Хугацааны Аялалууд</h1>
-        <p className="text-sm mt-2">
+        <h1 className="text-3xl dark:text-gray-300">Ойрын Хугацааны Аялалууд</h1>
+        <p className="text-sm mt-2 dark:text-gray-400">
           {filteredTours.length > 0
             ? `Хамгийн хямд аялалыг зөвхөн танд! Нийт ${filteredTours.length} аялал байна.`
             : "Аялал олдсонгүй..... Та өөр шалгуур ашиглан дахин оролдоно уу."}
@@ -169,8 +169,11 @@ export default function TourTable({
           <Table className="min-w-[900px]">
             <TableHeader>
               <TableRow className="border-b border-gray-100 dark:border-gray-800 hover:bg-transparent">
-                <TableHead className="w-[320px] py-4 pl-8 text-xs font-semibold text-gray-600 dark:text-gray-400 uppercase tracking-wider">
+                <TableHead className="w-[200px] py-4 pl-8 text-xs font-semibold text-gray-600 dark:text-gray-400 uppercase tracking-wider">
                   Аяллын нэр
+                </TableHead>
+                <TableHead className="w-[140px] py-4 text-xs font-semibold text-gray-600 dark:text-gray-400 uppercase tracking-wider">
+                  Захиалга
                 </TableHead>
                 <TableHead className="w-[140px] py-4 text-xs font-semibold text-gray-600 dark:text-gray-400 uppercase tracking-wider">
                   Эхлэх өдөр
@@ -210,6 +213,21 @@ export default function TourTable({
                       </span>
                     </div>
                   </TableCell>
+                  <TableCell className="py-4">{tour.seats <= 0 ? (
+                        <span className="font-bold text-red-500 flex items-center gap-1">
+                          <AlertCircle className="h-4 w-4" /> Дүүрсэн{" "}
+                          {/* Sold Out */}
+                        </span>
+                      ) : tour.seats <= 10 ? (
+                        <span className="font-bold text-orange-500 flex items-center gap-1 animate-pulse">
+                          <Flame className="h-4 w-4" /> Цөөхөн суудал үлдлээ!
+                        </span>
+                      ) : (
+                        <span className="font-bold text-green-600 flex items-center gap-1">
+                          <CheckCircle2 className="h-4 w-4" /> Захиалга авч
+                          байна
+                        </span>
+                      )}</TableCell>
                   <TableCell className="py-4">
                     <span className="text-sm font-medium text-gray-700 dark:text-gray-300">
                       {tour.departure_date}

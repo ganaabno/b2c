@@ -79,6 +79,8 @@ import { AuthProvider } from "./context/AuthContext";
 import MembershipPage from "./pages/MembershipPage";
 import ScrollToTop from "./components/ScrollToTop";
 import AccessDenied from "./pages/AccessDenied";
+import ForgotPassword from "./pages/ForgotPassword";
+import ResetPassword from "./pages/ResetPassword";
 
 const queryClient = new QueryClient();
 
@@ -97,6 +99,8 @@ export default function App() {
               <Route path="/access-denied" element={<AccessDenied />} />
               <Route path="/tours" element={<Tours />} />
               <Route path="/tours/:slug" element={<TourDetail />} />
+              <Route path="/forgot-password" element={<ForgotPassword />} />
+              <Route path="/reset-password" element={<ResetPassword />} />
 
               <Route element={<ProtectedRoute />}>
                 <Route path="/profile" element={<UserProfile />} />

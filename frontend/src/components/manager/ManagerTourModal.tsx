@@ -181,7 +181,7 @@ export default function ManagerTourModal({
         }
       } else {
         // CREATE MODE: Reset form
-        console.log("AHGAGHAH");
+        
         setFormData(INITIAL_FORM_STATE);
         setPreviewUrl(null);
         setExistingPhotos([]);
@@ -201,7 +201,7 @@ export default function ManagerTourModal({
       const file = e.target.files[0];
       setSelectedFile(file);
       setPreviewUrl(URL.createObjectURL(file));
-      console.log(URL.createObjectURL(file));
+      
     }
   };
 
@@ -298,25 +298,25 @@ export default function ManagerTourModal({
                     className={inputClass}
                   >
                     <option value="">Хоосон</option>
-                    <option value="https://res.cloudinary.com/dvnzk53kp/image/upload/v1766721724/hainan_poster_yzaxhu.png">
+                    <option value="https://res.cloudinary.com/dvnzk53kp/image/upload/v1766721920/travel-app-tours/gezmh8amjydc10ywcak7.png">
                       Hainan
                     </option>
-                    <option value="HoChiMinh_Phu_Quoc">
+                    <option value="https://res.cloudinary.com/dvnzk53kp/image/upload/v1766810774/%D0%A5%D0%9E-%D0%A8%D0%98-%D0%9C%D0%98%D0%9D-%D0%A4%D0%A3-%D0%9A%D0%A3%D0%9E%D0%9A_b7lzko.webp">
                       HoChiMinh_Phu_Quoc
                     </option>
-                    <option value="Japan">Japan</option>
-                    <option value="Nha_Trang">Nha_Trang</option>
-                    <option value="Phu_Quoc">Phu_Quoc</option>
-                    <option value="Singapore">Singapore</option>
-                    <option value="Thailand_Banggok">Thailand_Banggok</option>
-                    <option value="Phuket">Phuket</option>
-                    <option value="Turkey">Turkey</option>
-                    <option value="https://res.cloudinary.com/dvnzk53kp/image/upload/v1766478126/travel-app-tours/h1yj8mszo8z8twhd51e0.jpg">
+                    <option value="https://res.cloudinary.com/dvnzk53kp/image/upload/v1766813643/idk_epgdsd.jpg">Japan</option>
+                    <option value="https://res.cloudinary.com/dvnzk53kp/image/upload/v1766815290/nha-trang_ocwlhc.avif">Nha_Trang</option>
+                    <option value="https://res.cloudinary.com/dvnzk53kp/image/upload/v1766814618/phu-quoc_esdojz.avif">Phu_Quoc</option>
+                    <option value="https://res.cloudinary.com/dvnzk53kp/image/upload/v1766808964/GTC-2025-2026-%D0%A1%D0%98%D0%9D%D0%93%D0%90%D0%9F%D0%A3%D0%A0_mgn20x.png">Singapore</option>
+                    <option value="https://res.cloudinary.com/dvnzk53kp/image/upload/v1766811281/Screenshot_2025-12-27_at_12.54.07_rawvoi.png">Thailand_Banggok</option>
+                    <option value="https://res.cloudinary.com/dvnzk53kp/image/upload/v1766812636/%D0%97%D0%90%D0%A1%D0%A1%D0%90%D0%9D-%D0%9F%D0%A3%D0%9A%D0%95%D0%A2-%D0%90%D0%AF%D0%9B%D0%90%D0%9B_qkv2yn.png">Phuket</option>
+                    <option value="https://res.cloudinary.com/dvnzk53kp/image/upload/v1766816644/turkey-antalya_dal0fu.jpg">Turkey</option>
+                    <option value="https://res.cloudinary.com/dvnzk53kp/image/upload/v1766816083/bali-island-hut-ocean-sea-scenery-uhdpaper.com-hd-6.936_nb6cdr.jpg">
                       Bali
                     </option>
                     <option value="Janjieje">Janjieje</option>
-                    <option value="Shanghai">Shanghai</option>
-                    <option value="Halong_Bay">Halong_Bay</option>
+                    <option value="https://res.cloudinary.com/dvnzk53kp/image/upload/v1766983510/shanghai_wloxzk.avif">Shanghai</option>
+                    <option value="https://res.cloudinary.com/dvnzk53kp/image/upload/v1766818915/halong_bay_xlmuaw.jpg">Halong_Bay</option>
                     <option value="Dalyan">Dalyan</option>
                   </select>
                 </div>

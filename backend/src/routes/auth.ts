@@ -4,7 +4,8 @@ import argon2 from "argon2";
 import jwt from "jsonwebtoken";
 import { sql } from "../utils/db";
 import { v4 as uuidv4 } from "uuid";
-
+import { generateOTP } from "../utils/otpGenerator";
+import sendEmail from "../utils/mailer";
 const router = express.Router();
 
 const JWT_SECRET = process.env.JWT_SECRET;
@@ -93,14 +94,18 @@ router.post("/login", async (req, res) => {
   const { email, password } = req.body;
 
   if (!email || !password) {
-    return res.status(400).json({ message: "Имэйл хаяг болон нууц үг шаардлагатай" });
+    return res
+      .status(400)
+      .json({ message: "Имэйл хаяг болон нууц үг шаардлагатай" });
   }
 
   try {
     const [user] =
       await sql`SELECT * FROM users WHERE email = ${email.toLowerCase()}`;
     if (!user || !(await argon2.verify(user.password, password))) {
-      return res.status(401).json({ message: "Имэйл эсвэл нууц үг буруу байна." });
+      return res
+        .status(401)
+        .json({ message: "Имэйл эсвэл нууц үг буруу байна." });
     }
 
     const token = signToken(user.id, user.role);
@@ -112,7 +117,9 @@ router.post("/login", async (req, res) => {
     });
   } catch (err: any) {
     console.error("🔥 Login failed:", err);
-    res.status(500).json({ message: "Нэвтрэхэд алдаа гарлаа. Дахин оролдоно уу." });
+    res
+      .status(500)
+      .json({ message: "Нэвтрэхэд алдаа гарлаа. Дахин оролдоно уу." });
   }
 });
 
@@ -139,6 +146,118 @@ router.get("/me", async (req, res) => {
   } catch (err: any) {
     console.error("🔥 /me error:", err);
     res.status(401).json({ message: "Имэйл эсвэл нууц үг буруу байна." });
+  }
+});
+
+// --------------------------
+// Forgot / Reset Password
+// --------------------------
+// Send an OTP to the user's email. We intentionally return a neutral message
+// to avoid disclosing whether the email exists in the system.
+router.post("/forgot-password", async (req, res) => {
+  const { email } = req.body;
+  if (!email) return res.status(400).json({ message: "Email required" });
+
+  try {
+    const [user] =
+      await sql`SELECT id, email FROM users WHERE email = ${email.toLowerCase()}`;
+
+    const neutralResponse = {
+      message: "If an account with that email exists, an OTP has been sent.",
+    };
+    console.log("neutralSENT")
+
+    if (!user) return res.json(neutralResponse);
+
+    // Ensure table exists (safe to call repeatedly)
+    await sql`CREATE TABLE IF NOT EXISTS password_reset_tokens (
+      id UUID PRIMARY KEY,
+      user_id TEXT REFERENCES users(id) ON DELETE CASCADE,
+      otp TEXT NOT NULL,
+      expires_at TIMESTAMP,
+      used BOOLEAN DEFAULT false,
+      created_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP
+    )`;
+
+    const otp = generateOTP(6);
+    const expires = new Date(Date.now() + 10 * 60 * 1000); // 10 minutes
+
+    await sql`
+      INSERT INTO password_reset_tokens (id, user_id, otp, expires_at)
+      VALUES (${uuidv4()}, ${user.id}, ${otp}, ${expires})
+    `;
+
+    // Send email (best-effort)
+    try {
+      await sendEmail(
+        user.email,
+        "Your password reset code",
+        `Your OTP is ${otp}. It expires in 10 minutes.`,
+        `
+      <div style="font-family: Arial, sans-serif; max-width: 600px; margin: 0 auto;">
+        <h2 style="color: #333;">Password Reset</h2>
+      
+        <p>Use this code to reset your password:</p>
+        <div style="background: #f5f5f5; padding: 15px; margin: 20px 0; text-align: center; font-size: 24px; font-weight: bold;">
+          ${otp}
+        </div>
+        <p>This code expires in 10 minutes.</p>
+        <p style="margin-top: 30px; color: #666;">GTC Mongolia</p>
+      </div>
+    `
+      );
+    } catch (mailErr) {
+      console.error("Failed to send reset email:", mailErr);
+      // do not throw — we still respond neutral to the client
+    }
+
+    res.json(neutralResponse);
+  } catch (err: any) {
+    console.error("🔥 Forgot password error:", err);
+    res
+      .status(500)
+      .json({ message: "Failed to process forgot password request" });
+  }
+});
+
+// Reset password using OTP
+router.post("/reset-password", async (req, res) => {
+  const { email, otp, newPassword } = req.body;
+  if (!email || !otp || !newPassword)
+    return res
+      .status(400)
+      .json({ message: "email, otp and newPassword are required" });
+
+  if (typeof newPassword !== "string" || newPassword.length < 8)
+    return res
+      .status(400)
+      .json({ message: "Password must be at least 8 characters" });
+
+  try {
+    const [user] =
+      await sql`SELECT id FROM users WHERE email = ${email.toLowerCase()}`;
+    if (!user) return res.status(400).json({ message: "Invalid OTP or email" });
+
+    const [tokenRow] = await sql`
+      SELECT id, expires_at, used FROM password_reset_tokens
+      WHERE user_id = ${user.id} AND otp = ${otp} AND used = false
+      ORDER BY created_at DESC LIMIT 1
+    `;
+
+    if (!tokenRow)
+      return res.status(400).json({ message: "Invalid OTP or email" });
+
+    if (new Date(tokenRow.expires_at) < new Date())
+      return res.status(400).json({ message: "OTP expired" });
+
+    const hash = await argon2.hash(newPassword);
+    await sql`UPDATE users SET password = ${hash} WHERE id = ${user.id}`;
+    await sql`UPDATE password_reset_tokens SET used = true WHERE id = ${tokenRow.id}`;
+
+    res.json({ message: "Password updated successfully" });
+  } catch (err: any) {
+    console.error("🔥 Reset password failed:", err);
+    res.status(500).json({ message: "Failed to reset password" });
   }
 });
 

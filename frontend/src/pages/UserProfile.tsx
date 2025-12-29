@@ -3,14 +3,11 @@ import type { ChangeEvent, FormEvent } from "react";
 import axios from "axios";
 import { Camera } from "lucide-react";
 import { useAuth } from "@/context/AuthContext";
-import { useNavigate } from "react-router-dom";
 import Button from "@mui/material/Button";
 import type { UserProfileData } from "@/types";
 
 export default function UserProfile() {
   const { logout } = useAuth();
-  const navigate = useNavigate(); // ← For redirecting
-
   const [loading, setLoading] = useState(true);
   const [saving, setSaving] = useState(false);
 
@@ -116,10 +113,7 @@ export default function UserProfile() {
     }
   };
 
-  const handleLogout = () => {
-    logout(); // This should clear user, token, etc. from your AuthContext
-    navigate("/"); // Redirect to home page
-  };
+ 
 
   if (loading)
     return (
