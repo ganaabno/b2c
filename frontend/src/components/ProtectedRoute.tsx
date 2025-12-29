@@ -8,12 +8,7 @@ interface ProtectedRouteProps {
 function ProtectedRoute({ allowedRoles }: ProtectedRouteProps) {
   const { user, isLoading } = useAuth();
 
-  // Debug log - remove after testing
-  console.log("🔐 ProtectedRoute Debug:");
-  console.log("User:", user?.email);
-  console.log("User role:", user?.role);
-  console.log("Allowed roles:", allowedRoles);
-
+ 
   if (isLoading) {
     return (
       <div className="flex min-h-screen items-center justify-center">

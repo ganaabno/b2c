@@ -4,6 +4,7 @@ import { useNavigate } from "react-router-dom";
 import { motion } from "framer-motion";
 import logo from "@/assets/logo.png";
 import axios from "axios"; // Make sure axios is imported if needed
+import { Link } from "react-router-dom";
 
 export default function LoginForm() {
   const [email, setEmail] = useState("");
@@ -79,7 +80,12 @@ export default function LoginForm() {
         </motion.div>
       )}
 
-      <form onSubmit={handleSubmit} className="space-y-5">
+      <form onSubmit={handleSubmit} className="space-y-5"> 
+        <div className="text-right">
+          <Link to="/forgot-password" className="text-sm text-sky-600 underline">
+            Нууц үг мартсан
+          </Link>
+        </div>
         <div className="space-y-2">
           <label className="text-sm font-medium text-gray-700 dark:text-gray-400 block">
             Имэйл хаяг
