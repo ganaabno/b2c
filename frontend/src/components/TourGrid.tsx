@@ -4,7 +4,6 @@ import { useQuery } from "@tanstack/react-query";
 import axios from "axios";
 import { motion } from "framer-motion"; // Import framer-motion
 import type { Tour } from "@/types";
-import BookTourButton from "./BookTourButton";
 
 // --- SKELETON COMPONENT (For loading state) ---
 const TourSkeleton = () => (

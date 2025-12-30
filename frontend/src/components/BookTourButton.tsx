@@ -1,24 +1,102 @@
-import { useState } from "react";
+import { QRCodeSVG } from "qrcode.react";
+import { useQPay } from "@/hooks/useQPay";
+import type { Tour } from "@/types";
 import axios from "axios";
 import { motion } from "framer-motion";
-import type { Tour } from "@/types";
+import { CheckCircle2 } from "lucide-react";
+import { useState, useEffect } from "react";
 
-interface BookTourButtonProps {
-  tour: Tour;
-  className?: string;
-}
-
-const PaymentModal = ({
+const UnifiedPaymentModal = ({
   isOpen,
   onClose,
-  paymentUrl,
-  deeplink,
+  paymentMethod,
+  tour,
 }: {
   isOpen: boolean;
   onClose: () => void;
-  paymentUrl: string;
-  deeplink?: string;
+  paymentMethod: "hipay" | "qpay";
+  tour: Tour;
 }) => {
+  const [hipayUrl, setHipayUrl] = useState("");
+  const [hipayDeeplink, setHipayDeeplink] = useState("");
+  const [hipayLoading, setHipayLoading] = useState(true);
+
+  const {
+    invoice,
+    createInvoice,
+    checkPaymentStatus,
+    isPaid,
+    loading: qpayLoading,
+    checking,
+    error,
+  } = useQPay();
+
+  const [pollInterval, setPollInterval] = useState<number | null>(null);
+
+  useEffect(() => {
+    if (!isOpen) return;
+
+    if (paymentMethod === "hipay") {
+      // Trigger HiPay checkout
+      handleHipay();
+    } else if (paymentMethod === "qpay") {
+      // Trigger QPay invoice
+      handleQPay();
+    }
+
+    return () => {
+      if (pollInterval) clearInterval(pollInterval);
+    };
+  }, [isOpen, paymentMethod]);
+
+  const handleHipay = async () => {
+    setHipayLoading(true);
+    try {
+      const res = await axios.post("/api/hipay/checkout", {
+        amount: tour.single_supply_price?.replace(/[^\d]/g, ""),
+        redirectUri:
+          window.location.origin + `/tours/${tour.slug}?payment=success`,
+        webhookUrl: `${import.meta.env.VITE_API_URL}/api/hipay/webhook`,
+        items: [
+          {
+            name: tour.title,
+            quantity: 1,
+            price: tour.single_supply_price?.replace(/[^\d]/g, ""),
+          },
+        ],
+        qrData: false,
+      });
+
+      if (res.data.success) {
+        setHipayUrl(
+          res.data.checkoutId?.startsWith("MOCK_") || import.meta.env.DEV
+            ? "https://httpbin.org/html"
+            : res.data.paymentUrl || ""
+        );
+        setHipayDeeplink(res.data.deeplink);
+      }
+    } catch (err) {
+      console.error(err);
+      alert("HiPay төлбөр үүсгэхэд алдаа гарлаа");
+      onClose();
+    } finally {
+      setHipayLoading(false);
+    }
+  };
+
+  const handleQPay = async () => {
+    const amount =
+      Number(tour.single_supply_price?.replace(/[^\d]/g, "")) || 1500000;
+    await createInvoice(amount, tour.title);
+
+    if (invoice?.invoice_id) {
+      const interval = setInterval(() => {
+        checkPaymentStatus(invoice.invoice_id);
+      }, 5000);
+      setPollInterval(interval);
+    }
+  };
+
   if (!isOpen) return null;
 
   return (
@@ -31,7 +109,7 @@ const PaymentModal = ({
       >
         <button
           onClick={onClose}
-          className="absolute top-4 right-4 text-gray-500 hover:text-gray-700 dark:text-gray-400 dark:hover:text-gray-200 z-10"
+          className="absolute top-4 right-4 text-gray-500 hover:text-gray-700 z-10"
         >
           <svg
             className="w-6 h-6"
@@ -41,134 +119,92 @@ const PaymentModal = ({
           >
             <path
               strokeLinecap="round"
-              strokeLinejoin="round"
               strokeWidth={2}
               d="M6 18L18 6M6 6l12 12"
             />
           </svg>
         </button>
 
-        <div className="h-96 md:h-128">
-          {paymentUrl ? (
-            <iframe
-              src={paymentUrl}
-              title="HiPay Төлбөр"
-              className="w-full h-full border-0"
-              allow="payment"
-            />
-          ) : (
-            <div className="flex items-center justify-center h-full bg-gray-100 dark:bg-gray-800">
-              <div className="text-center">
-                <div className="w-12 h-12 border-4 border-green-600 border-t-transparent rounded-full animate-spin mx-auto mb-4" />
-                <p className="text-gray-600 dark:text-gray-400">
-                  Бэлтгэж байна...
-                </p>
+        <div className="p-6 text-center border-b">
+          <h3 className="text-2xl font-bold">
+            {paymentMethod === "qpay" ? "QPay Төлбөр" : "HiPay Төлбөр"}
+          </h3>
+          <p className="text-gray-600">
+            ₮{Number(tour.single_supply_price).toLocaleString()}
+          </p>
+        </div>
+
+        <div className="min-h-96">
+          {paymentMethod === "hipay" ? (
+            hipayLoading ? (
+              <div className="flex items-center justify-center h-96">
+                <div className="text-center">
+                  <div className="w-12 h-12 border-4 border-green-600 border-t-transparent rounded-full animate-spin mx-auto mb-4" />
+                  <p>Бэлтгэж байна...</p>
+                </div>
               </div>
+            ) : (
+              <>
+                {hipayUrl && (
+                  <iframe
+                    src={hipayUrl}
+                    className="w-full h-96 border-0"
+                    allow="payment"
+                  />
+                )}
+                {hipayDeeplink && (
+                  <div className="p-6 bg-gray-50 text-center">
+                    <a
+                      href={hipayDeeplink}
+                      className="inline-block px-6 py-3 bg-green-600 hover:bg-green-700 text-white font-bold rounded-xl"
+                    >
+                      HiPay аппаар төлөх
+                    </a>
+                  </div>
+                )}
+              </>
+            )
+          ) : qpayLoading ? (
+            <div className="flex items-center justify-center h-96">
+              <div className="w-12 h-12 border-4 border-blue-600 border-t-transparent rounded-full animate-spin mx-auto mb-4" />
+              <p>Нэхэмжлэх үүсгэж байна...</p>
+            </div>
+          ) : invoice ? (
+            <div className="p-8 text-center">
+              {isPaid ? (
+                <div className="py-16">
+                  <div className="w-20 h-20 bg-green-100 rounded-full flex items-center justify-center mx-auto mb-4">
+                    <CheckCircle2 className="w-12 h-12 text-green-600" />
+                  </div>
+                  <h3 className="text-2xl font-bold text-green-600">
+                    Амжилттай төлөгдлөө! 🎉
+                  </h3>
+                  <p className="text-gray-600 mt-2">
+                    Таны захиалга баталгаажлаа
+                  </p>
+                </div>
+              ) : (
+                <>
+                  <p className="mb-6 text-gray-600">
+                    QR кодыг уншуулж төлнө үү
+                  </p>
+                  <div className="inline-block p-6 bg-white rounded-2xl shadow-xl">
+                    <QRCodeSVG value={invoice.qr_text} size={240} level="H" />
+                  </div>
+                  <p className="mt-6 text-sm text-gray-500">
+                    {checking ? "Шалгаж байна..." : "Төлбөр хүлээж байна..."}
+                  </p>
+                  {error && <p className="text-red-500 mt-2">{error}</p>}
+                </>
+              )}
+            </div>
+          ) : (
+            <div className="flex items-center justify-center h-96 text-red-500">
+              QPay нэхэмжлэх үүсгэхэд алдаа гарлаа
             </div>
           )}
         </div>
-
-        {deeplink && (
-          <div className="p-6 bg-gray-50 dark:bg-gray-800 text-center">
-            <p className="text-sm text-gray-600 dark:text-gray-400 mb-4">
-              HiPay аппаар нээх:
-            </p>
-            <a
-              href={deeplink}
-              className="inline-block px-6 py-3 bg-green-600 hover:bg-green-700 text-white font-bold rounded-xl transition"
-            >
-              HiPay аппаар төлөх
-            </a>
-          </div>
-        )}
       </motion.div>
     </div>
   );
 };
-
-export default function BookTourButton({
-  tour,
-  className = "",
-}: BookTourButtonProps) {
-  const [modalOpen, setModalOpen] = useState(false);
-  const [paymentUrl, setPaymentUrl] = useState("");
-  const [deeplink, setDeeplink] = useState("");
-  const [loading, setLoading] = useState(false);
-
-  const handleBook = async () => {
-    setLoading(true);
-    setModalOpen(true);
-    setPaymentUrl("");
-
-    try {
-      const response = await axios.post("/api/hipay/checkout", {
-        amount: tour.single_supply_price?.replace(/[^\d]/g, "") || "1500000",
-        redirectUri:
-          window.location.origin + `/tours/${tour.slug}?payment=success`, // буцах хуудас
-        webhookUrl: `${import.meta.env.VITE_API_URL || ""}/api/hipay/webhook`, // Webhook URL
-        items: [
-          {
-            name: tour.title,
-            quantity: 1,
-            price: tour.single_supply_price?.replace(/[^\d]/g, ""),
-          },
-        ],
-        qrData: false,
-      });
-
-      if (response.data.success) {
-        let finalPaymentUrl = paymentUrl;
-
-        if (
-          response.data.checkoutId?.startsWith("MOCK_") ||
-          import.meta.env.DEV
-        ) {
-          finalPaymentUrl = "https://httpbin.org/html";
-        }
-
-        setPaymentUrl(finalPaymentUrl);
-        setDeeplink(response.data.deeplink);
-      } else {
-        throw new Error(
-          response.data.message || "Нэхэмжлэх үүсгэхэд алдаа гарлаа"
-        );
-      }
-    } catch (err: any) {
-      console.error("HiPay checkout алдаа:", err);
-      alert(
-        `Алдаа гарлаа: ${
-          err.response?.data?.message || err.message || "Серверт асуудал гарлаа"
-        }`
-      );
-      setModalOpen(false);
-    } finally {
-      setLoading(false);
-    }
-  };
-
-  return (
-    <>
-      <button
-        onClick={handleBook}
-        disabled={loading}
-        className={`py-2.5 rounded-xl text-sm font-bold text-white bg-green-600 hover:bg-green-700 shadow-lg shadow-green-600/20 transition-all active:scale-95 disabled:opacity-70 disabled:cursor-not-allowed flex items-center justify-center gap-2 ${className}`}
-      >
-        {loading ? (
-          <>
-            <div className="w-4 h-4 border-2 border-white/30 border-t-white rounded-full animate-spin" />
-            Бэлтгэж байна...
-          </>
-        ) : (
-          "Захиалах"
-        )}
-      </button>
-
-      <PaymentModal
-        isOpen={modalOpen}
-        onClose={() => setModalOpen(false)}
-        paymentUrl={paymentUrl}
-        deeplink={deeplink}
-      />
-    </>
-  );
-}
