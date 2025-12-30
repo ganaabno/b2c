@@ -6,8 +6,15 @@ import {
   Info,
   ArrowRight,
 } from "lucide-react";
-
+import { useEffect } from "react";
 const Bali = () => {
+
+
+
+
+
+
+
   const tourData = [
     {
       day: 1,

@@ -7,6 +7,7 @@ import tourRouter from "./routes/tours";
 import userRouter from "./routes/users";
 import uploadRouter from "./routes/upload";
 import { hipayRouter } from "./routes/hipayRouter";
+import { priceTableRouter } from "./routes/price_tables";
 import axios from "axios";
 const app = express();
 
@@ -38,6 +39,7 @@ app.use("/api/auth", authRouter);
 app.use("/api/tours", tourRouter);
 app.use("/api/users", userRouter);
 app.use("/api/hipay", hipayRouter);
+app.use("/api/price_table", priceTableRouter)
 
 app.use("*", (req, res) => {
   res.status(404).json({ message: "Endpoint not found!!" });

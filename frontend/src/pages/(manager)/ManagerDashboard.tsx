@@ -1,11 +1,12 @@
 import { useState } from "react";
 import axios from "axios";
-import { Plus } from "lucide-react";
+import { Plus, ArrowRight } from "lucide-react";
 import toast from "react-hot-toast";
 import { useQuery, useMutation, useQueryClient } from "@tanstack/react-query";
 import type { Tour } from "@/types";
 import ManagerTourTable from "@/components/manager/ManagerTourTable";
 import ManagerTourModal from "@/components/manager/ManagerTourModal";
+import { Link } from "react-router-dom";
 
 export default function ManagerDashboard() {
   const queryClient = useQueryClient();
@@ -107,12 +108,18 @@ export default function ManagerDashboard() {
         {/* Header */}
         <div className="mb-8 flex items-center justify-between">
           <h1 className="text-3xl font-bold text-gray-900 dark:text-gray-100">
-            Аялал Зохицуулах:
+            Аялал Зохицуулалт
           </h1>
+          <Link
+            className="flex cursor-pointer items-center gap-2 rounded-lg bg-amber-600 dark:bg-amber-500 px-6 py-3 font-bold text-white hover:bg-amber-700 dark:hover:bg-amber-600 transition shadow-lg "
+            to="/manager/price-table">
+            Үнийн хүснэгт рүү орох
+            <ArrowRight />
+          </Link>
+
           <button
             onClick={openCreateModal}
-            className="flex cursor-pointer items-center gap-2 rounded-lg bg-amber-600 dark:bg-amber-500 px-6 py-3 font-bold text-white hover:bg-amber-700 dark:hover:bg-amber-600 transition shadow-lg"
-          >
+            className="flex cursor-pointer items-center gap-2 rounded-lg bg-amber-600 dark:bg-amber-500 px-6 py-3 font-bold text-white hover:bg-amber-700 dark:hover:bg-amber-600 transition shadow-lg">
             <Plus className="h-5 w-5" /> Аялал нэмэх
           </button>
         </div>
