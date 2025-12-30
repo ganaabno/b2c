@@ -49,6 +49,7 @@ const Phuket = lazy(() => import("../components/hutulbur/Phuket"));
 import { hainanGallery, hainanHotel } from "../components/hutulbur/Hainan";
 import { phuketGallery, phuketHotel } from "../components/hutulbur/Phuket";
 import { dalyanGallery, dalyanHotel } from "../components/hutulbur/Dalyan";
+import { turkeyGallery, turkeyHotel } from "../components/hutulbur/Turkey";
 
 const SectionTitle = ({ icon: Icon, title }: { icon: any; title: string }) => (
   <div className="flex items-center gap-3 mb-6 border-b border-gray-100 dark:border-gray-700 pb-4">
@@ -96,7 +97,11 @@ export default function TourDetail() {
           hotel: dalyanHotel,
         };
       case "Turkey":
-        return { component: <Turkey />, gallery: [], hotel: [] };
+        return {
+          component: <Turkey />,
+          gallery: turkeyGallery,
+          hotel: turkeyHotel,
+        };
       case "Bali":
         return { component: <Bali />, gallery: [], hotel: [] };
       case "Halong_Bay":

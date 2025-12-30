@@ -1,5 +1,4 @@
 import {
- 
   Utensils,
   BedDouble,
   Coffee,
@@ -8,8 +7,22 @@ import {
   ArrowRight,
 } from "lucide-react";
 
+const galleryImages = [
+  "https://res.cloudinary.com/di9bplyfy/image/upload/v1767002098/NhaTrang_s9fuqy.png",
+  "https://res.cloudinary.com/di9bplyfy/image/upload/v1767076145/NhaTrang5_qr15ui.jpg",
+  "https://res.cloudinary.com/di9bplyfy/image/upload/v1767076138/NhaTrang2_f4oxg2.jpg",
+  "https://res.cloudinary.com/di9bplyfy/image/upload/v1767076142/NhaTRang1_cqjofe.jpg",
+  "https://res.cloudinary.com/di9bplyfy/image/upload/v1767076139/NhaTrang3_uzlcxv.jpg",
+  "https://res.cloudinary.com/di9bplyfy/image/upload/v1767076052/NhaTrang4_rhbpqq.jpg",
+];
+
+const hotelImages = [
+  "https://res.cloudinary.com/di9bplyfy/image/upload/v1766990434/444a78f3_as3vfb.jpg",
+  "https://res.cloudinary.com/di9bplyfy/image/upload/v1766990424/ad0eaa78f83f17e07ceaca9788fc1007_wuxidg.jpg",
+  "https://res.cloudinary.com/di9bplyfy/image/upload/v1766990434/444a78f3_as3vfb.jpg",
+];
+
 const Nha_Trang = () => {
-  // Keeping your original data structure
   const tourData = [
     {
       day: 1,
@@ -158,13 +171,12 @@ const Nha_Trang = () => {
   return (
     <div className=" bg-gray-50 dark:bg-gray-900 p-4 md:p-8 font-sans">
       <div className=" ">
-       
-
         <div className="space-y-6">
           {tourData.map((tour) => (
             <div
               key={tour.day}
-              className="bg-white dark:bg-gray-800 rounded-xl shadow-sm border border-gray-200 dark:border-gray-700 overflow-hidden flex flex-col md:flex-row transition-all hover:shadow-md">
+              className="bg-white dark:bg-gray-800 rounded-xl shadow-sm border border-gray-200 dark:border-gray-700 overflow-hidden flex flex-col md:flex-row transition-all hover:shadow-md"
+            >
               {/* Left: cover_photo Section */}
               <div className="md:w-56 h-56 md:h-auto bg-gray-100 dark:bg-gray-700 shrink-0 relative group">
                 <img
@@ -222,7 +234,8 @@ const Nha_Trang = () => {
                   {tour.description?.map((desc, index) => (
                     <p
                       key={index}
-                      className="text-gray-600 dark:text-gray-300 text-sm leading-relaxed flex gap-3 items-start">
+                      className="text-gray-600 dark:text-gray-300 text-sm leading-relaxed flex gap-3 items-start"
+                    >
                       <span className="mt-1.5 w-1.5 h-1.5 rounded-full bg-gray-300 dark:bg-gray-600 shrink-0" />
                       {desc}
                     </p>
@@ -236,7 +249,8 @@ const Nha_Trang = () => {
                       {tour.meals.breakfast && (
                         <div
                           className="flex items-center gap-2 text-sm text-gray-600 dark:text-gray-400"
-                          title="Breakfast">
+                          title="Breakfast"
+                        >
                           <Coffee className="h-4 w-4 text-amber-600" />
                           <span>{tour.meals.breakfast}</span>
                         </div>
@@ -244,7 +258,8 @@ const Nha_Trang = () => {
                       {tour.meals.lunch && (
                         <div
                           className="flex items-center gap-2 text-sm text-gray-600 dark:text-gray-400"
-                          title="Lunch">
+                          title="Lunch"
+                        >
                           <Utensils className="h-4 w-4 text-amber-600" />
                           <span>{tour.meals.lunch}</span>
                         </div>
@@ -281,7 +296,8 @@ const Nha_Trang = () => {
               ].map((item, idx) => (
                 <li
                   key={idx}
-                  className="flex items-center gap-2 text-sm text-gray-700 dark:text-gray-300">
+                  className="flex items-center gap-2 text-sm text-gray-700 dark:text-gray-300"
+                >
                   <div className="w-1.5 h-1.5 rounded-full bg-amber-500" />
                   {item}
                 </li>
@@ -294,4 +310,5 @@ const Nha_Trang = () => {
   );
 };
 
+export { galleryImages as nhatrangImages, hotelImages as nhatrangHotel };
 export default Nha_Trang;

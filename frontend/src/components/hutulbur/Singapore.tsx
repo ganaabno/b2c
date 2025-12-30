@@ -8,8 +8,22 @@ import {
   ArrowRight,
 } from "lucide-react";
 
+const galleryImages = [
+  "https://res.cloudinary.com/di9bplyfy/image/upload/v1767002037/Singapore_fhvxca.png",
+  "https://res.cloudinary.com/di9bplyfy/image/upload/v1767073882/Singapore2_dk4tup.jpg",
+  "https://res.cloudinary.com/di9bplyfy/image/upload/v1767073878/Singapore5_ya9o9o.jpg",
+  "https://res.cloudinary.com/di9bplyfy/image/upload/v1767073883/Singapore1_wytage.jpg",
+  "https://res.cloudinary.com/di9bplyfy/image/upload/v1767073902/Singapore3_mwwx6b.jpg",
+  "https://res.cloudinary.com/di9bplyfy/image/upload/v1767073907/Singapore4_woi8o2.jpg",
+];
+
+const hotelImages = [
+  "https://res.cloudinary.com/di9bplyfy/image/upload/v1766990434/444a78f3_as3vfb.jpg",
+  "https://res.cloudinary.com/di9bplyfy/image/upload/v1766990424/ad0eaa78f83f17e07ceaca9788fc1007_wuxidg.jpg",
+  "https://res.cloudinary.com/di9bplyfy/image/upload/v1766990434/444a78f3_as3vfb.jpg",
+];
+
 const Singapore = () => {
-  // Keeping your original data structure
   const tourData = [
     {
       day: 1,
@@ -151,7 +165,8 @@ const Singapore = () => {
           {tourData.map((tour) => (
             <div
               key={tour.day}
-              className="bg-white dark:bg-gray-800 rounded-xl shadow-sm border border-gray-200 dark:border-gray-700 overflow-hidden flex flex-col md:flex-row transition-all hover:shadow-md">
+              className="bg-white dark:bg-gray-800 rounded-xl shadow-sm border border-gray-200 dark:border-gray-700 overflow-hidden flex flex-col md:flex-row transition-all hover:shadow-md"
+            >
               {/*Content Section */}
               <div className="px-6 py-4 flex-1 flex flex-col">
                 {/* Card Header */}
@@ -197,7 +212,8 @@ const Singapore = () => {
                   {tour.description?.map((desc, index) => (
                     <p
                       key={index}
-                      className="text-gray-600 dark:text-gray-300 text-sm leading-relaxed flex gap-3 items-start">
+                      className="text-gray-600 dark:text-gray-300 text-sm leading-relaxed flex gap-3 items-start"
+                    >
                       <span className="mt-1.5 w-1.5 h-1.5 rounded-full bg-gray-300 dark:bg-gray-600 shrink-0" />
                       {desc}
                     </p>
@@ -211,7 +227,8 @@ const Singapore = () => {
                       {tour.meals.breakfast && (
                         <div
                           className="flex items-center gap-2 text-sm text-gray-600 dark:text-gray-400"
-                          title="Breakfast">
+                          title="Breakfast"
+                        >
                           <Coffee className="h-4 w-4 text-amber-600" />
                           <span>{tour.meals.breakfast}</span>
                         </div>
@@ -219,7 +236,8 @@ const Singapore = () => {
                       {tour.meals.lunch && (
                         <div
                           className="flex items-center gap-2 text-sm text-gray-600 dark:text-gray-400"
-                          title="Lunch">
+                          title="Lunch"
+                        >
                           <Utensils className="h-4 w-4 text-amber-600" />
                           <span>{tour.meals.lunch}</span>
                         </div>
@@ -227,7 +245,8 @@ const Singapore = () => {
                       {tour.meals.dinner && (
                         <div
                           className="flex items-center gap-2 text-sm text-gray-600 dark:text-gray-400"
-                          title="Dinner">
+                          title="Dinner"
+                        >
                           <Soup className="h-4 w-4 text-amber-600" />
                           <span>{tour.meals.dinner}</span>
                         </div>
@@ -264,7 +283,8 @@ const Singapore = () => {
               ].map((item, idx) => (
                 <li
                   key={idx}
-                  className="flex items-center gap-2 text-sm text-gray-700 dark:text-gray-300">
+                  className="flex items-center gap-2 text-sm text-gray-700 dark:text-gray-300"
+                >
                   <div className="w-1.5 h-1.5 rounded-full bg-amber-500" />
                   {item}
                 </li>
@@ -277,4 +297,5 @@ const Singapore = () => {
   );
 };
 
+export { galleryImages as singaporeImages, hotelImages as singaporeHotel };
 export default Singapore;
