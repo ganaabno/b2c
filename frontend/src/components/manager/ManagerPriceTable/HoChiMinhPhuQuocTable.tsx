@@ -7,6 +7,8 @@ type Row = {
   departure_date: string | null;
   adult_price: string | null;
   availability: string | null;
+  child_two_to_four: string | null;
+  child_five_to_eleven: string | null;
 };
 
 const deleteHoChiMinhPhuQuoc = async (id: string) => {
@@ -97,10 +99,14 @@ const HoChiMinhPhuQuocTable = () => {
     departure_date: string;
     adult_price: string;
     availability: string;
+    child_two_to_four: string;
+    child_five_to_eleven: string;
   }>({
     departure_date: "",
     adult_price: "",
     availability: "",
+    child_two_to_four: "",
+    child_five_to_eleven: "",
   });
 
   const createMutation = useMutation({
@@ -108,7 +114,13 @@ const HoChiMinhPhuQuocTable = () => {
     onSuccess: () => {
       qc.invalidateQueries({ queryKey: ["hoChiMinhPhuQuocPrices"] });
       setCreating(false);
-      setNewRow({ departure_date: "", adult_price: "", availability: "" });
+      setNewRow({
+        departure_date: "",
+        adult_price: "",
+        availability: "",
+        child_two_to_four: "",
+        child_five_to_eleven: "",
+      });
     },
   });
 
@@ -140,6 +152,8 @@ const HoChiMinhPhuQuocTable = () => {
         departure_date: editing.departure_date,
         adult_price: editing.adult_price,
         availability: editing.availability,
+        child_two_to_four: editing.child_two_to_four,
+        child_five_to_eleven: editing.child_five_to_eleven,
       },
     });
   };
@@ -155,6 +169,8 @@ const HoChiMinhPhuQuocTable = () => {
               departure_date: "",
               adult_price: "",
               availability: "",
+              child_two_to_four: "",
+              child_five_to_eleven: "",
             });
           }}
           className="flex cursor-pointer items-center gap-2 px-3 py-1 rounded bg-amber-600 text-white">
@@ -167,8 +183,10 @@ const HoChiMinhPhuQuocTable = () => {
           <thead className="bg-gray-50 dark:bg-gray-900/50 text-gray-600 dark:text-gray-300 uppercase text-sm font-semibold">
             <tr>
               <th className="px-2 py-4 border-b">Departure</th>
-              <th className="px-2 py-4 border-b">Adult Price</th>
               <th className="px-2 py-4 border-b">Availability</th>
+              <th className="px-2 py-4 border-b">Adult Price</th>
+              <th className="px-2 py-4 border-b">5-11</th>
+              <th className="px-2 py-4 border-b">2-4</th>
               <th className="px-2 py-4 border-b text-right">Actions</th>
             </tr>
           </thead>
@@ -193,12 +211,19 @@ const HoChiMinhPhuQuocTable = () => {
                   <td className="p-2">
                     {row.departure_date ? row.departure_date.split("T")[0] : ""}
                   </td>
-                  <td className="p-2 font-bold text-amber-600">
-                    ₮{Number(row.adult_price || 0).toLocaleString()}
-                  </td>
                   <td className="p-2 text-sm text-gray-600 wrap-break-word max-w-xl">
                     {row.availability}
                   </td>
+                  <td className="p-2 font-bold text-amber-600">
+                    ₮{Number(row.adult_price || 0).toLocaleString()}
+                  </td>
+                  <td className="p-2 font-bold text-amber-600">
+                    ₮{Number(row.child_five_to_eleven || 0).toLocaleString()}
+                  </td>
+                  <td className="p-2 font-bold text-amber-600">
+                    ₮{Number(row.child_two_to_four || 0).toLocaleString()}
+                  </td>
+
                   <td className="p-2 text-right flex justify-end items-center gap-2">
                     <button
                       onClick={() => startEdit(row)}
@@ -264,6 +289,26 @@ const HoChiMinhPhuQuocTable = () => {
               value={editing.adult_price ?? ""}
               onChange={(e) =>
                 setEditing({ ...editing, adult_price: e.target.value })
+              }
+              className="w-full mb-3 px-3 py-2 rounded border"
+            />
+
+            <label className="block mb-2 text-sm">5-11</label>
+            <input
+              type="number"
+              value={editing.child_five_to_eleven ?? ""}
+              onChange={(e) =>
+                setEditing({ ...editing, child_five_to_eleven: e.target.value })
+              }
+              className="w-full mb-3 px-3 py-2 rounded border"
+            />
+
+            <label className="block mb-2 text-sm">2-4</label>
+            <input
+              type="number"
+              value={editing.child_two_to_four ?? ""}
+              onChange={(e) =>
+                setEditing({ ...editing, child_two_to_four: e.target.value })
               }
               className="w-full mb-3 px-3 py-2 rounded border"
             />
@@ -347,6 +392,26 @@ const HoChiMinhPhuQuocTable = () => {
               value={newRow.adult_price}
               onChange={(e) =>
                 setNewRow({ ...newRow, adult_price: e.target.value })
+              }
+              className="w-full mb-3 px-3 py-2 rounded border"
+            />
+
+            <label className="block mb-2 text-sm">5-11</label>
+            <input
+              type="number"
+              value={newRow.child_five_to_eleven}
+              onChange={(e) =>
+                setNewRow({ ...newRow, child_five_to_eleven: e.target.value })
+              }
+              className="w-full mb-3 px-3 py-2 rounded border"
+            />
+
+            <label className="block mb-2 text-sm">2-4</label>
+            <input
+              type="number"
+              value={newRow.child_two_to_four}
+              onChange={(e) =>
+                setNewRow({ ...newRow, child_two_to_four: e.target.value })
               }
               className="w-full mb-3 px-3 py-2 rounded border"
             />

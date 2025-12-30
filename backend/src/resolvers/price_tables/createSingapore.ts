@@ -8,8 +8,8 @@ export const createSingapore = async (req: Request, res: Response) => {
   try {
     const id = randomUUID();
     const [created] = await sql`
-      INSERT INTO singapore_price_table (id, departure_date, adult_price, availability)
-      VALUES (${id}, ${departure_date}, ${adult_price}, ${availability})
+      INSERT INTO singapore_price_table (id, departure_date, adult_price, availability, child_two_to_four, child_five_to_eleven)
+      VALUES (${id}, ${departure_date}, ${adult_price}, ${availability}, child_two_to_four, child_five_to_eleven)
       RETURNING *
     `;
 

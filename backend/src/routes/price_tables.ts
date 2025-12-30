@@ -67,7 +67,6 @@ export const priceTableRouter = express.Router();
 
 priceTableRouter.get(
   "/hainan",
-
   getHainan
 );
 

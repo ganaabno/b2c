@@ -4,12 +4,16 @@ import { sql } from "../../utils/db";
 export const getHainan = async (req: Request, res: Response) => {
   try {
     const rows = await sql`
-      SELECT id, departure_date, adult_price, availability, child_two_to_five, child_six_to_eleven
-      FROM hainan_price_table
+      SELECT * FROM hainan_price_table
       ORDER BY departure_date ASC
     `;
 
-    return res.status(200).json({ data: rows });
+     const normalized = rows.map((r: any) => ({
+      ...(r || {}),
+      id: r?.id ?? r?.ID ?? null,
+    }));
+
+     return res.status(200).json({ data: normalized });
   } catch (error) {
     console.error("getHainan error", error);
     return res

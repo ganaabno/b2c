@@ -4,10 +4,12 @@ import { Edit, Loader2, X, Plus, Trash2 } from "lucide-react";
 type Row = {
   id: string;
   departure_date: string | null;
-  adult_price: string | null;
+  five_star_adult_price: string | null;
+  four_star_adult_price: string | null;
   availability: string | null;
   child_two_to_five: string | null;
-  child_six_to_eleven: string | null;
+  four_star_child_six_to_eleven: string | null;
+  five_star_child_six_to_eleven: string | null;
 };
 
 const deleteHainan = async (id: string) => {
@@ -93,16 +95,20 @@ const HainanTable = () => {
   const [creating, setCreating] = useState(false);
   const [newRow, setNewRow] = useState<{
     departure_date: string;
-    adult_price: string;
+    five_star_adult_price: string;
+    four_star_adult_price: string;
     availability: string;
     child_two_to_five: string;
-    child_six_to_eleven: string;
+    four_star_child_six_to_eleven: string;
+    five_star_child_six_to_eleven: string;
   }>({
     departure_date: "",
-    adult_price: "",
+    five_star_adult_price: "",
+    four_star_adult_price: "",
     availability: "",
     child_two_to_five: "",
-    child_six_to_eleven: "",
+    four_star_child_six_to_eleven: "",
+    five_star_child_six_to_eleven: "",
   });
 
   const createMutation = useMutation({
@@ -112,10 +118,12 @@ const HainanTable = () => {
       setCreating(false);
       setNewRow({
         departure_date: "",
-        adult_price: "",
+        five_star_adult_price: "",
+        four_star_adult_price: "",
         availability: "",
         child_two_to_five: "",
-        child_six_to_eleven: "",
+        four_star_child_six_to_eleven: "",
+        five_star_child_six_to_eleven: "",
       });
     },
   });
@@ -145,10 +153,12 @@ const HainanTable = () => {
       id: editing.id,
       body: {
         departure_date: editing.departure_date,
-        adult_price: editing.adult_price,
+        five_star_adult_price: editing.five_star_adult_price,
+        four_star_adult_price: editing.four_star_adult_price,
         availability: editing.availability,
         child_two_to_five: editing.child_two_to_five,
-        child_six_to_eleven: editing.child_six_to_eleven,
+        four_star_child_six_to_eleven: editing.four_star_child_six_to_eleven,
+        five_star_child_six_to_eleven: editing.four_star_child_six_to_eleven,
       },
     });
   };
@@ -162,10 +172,12 @@ const HainanTable = () => {
             setCreating(true);
             setNewRow({
               departure_date: "",
-              adult_price: "",
+              five_star_adult_price: "",
+              four_star_adult_price: "",
               availability: "",
               child_two_to_five: "",
-              child_six_to_eleven: "",
+              four_star_child_six_to_eleven: "",
+              five_star_child_six_to_eleven: "",
             });
           }}
           className="flex cursor-pointer items-center gap-2 px-3 py-1 rounded bg-amber-600 text-white">
@@ -178,10 +190,13 @@ const HainanTable = () => {
           <thead className="bg-gray-50 dark:bg-gray-900/50 text-gray-600 dark:text-gray-300 uppercase text-sm font-semibold">
             <tr>
               <th className="px-2 py-4 border-b">Departure</th>
-              <th className="px-2 py-4 border-b">Adult Price</th>
               <th className="px-2 py-4 border-b">Availability</th>
-              <th className="px-2 py-4 border-b">Child (2-5)</th>
-              <th className="px-2 py-4 border-b">Child (6-11)</th>
+              <th className="px-2 py-4 border-b">5* Том хүн</th>
+              <th className="px-2 py-4 border-b">4* Том хүн</th>
+
+              <th className="px-2 py-4 border-b">5* хүүхэд (6-11)</th>
+              <th className="px-2 py-4 border-b">4* хүүхэд (6-11)</th>
+              <th className="px-2 py-4 border-b">Хүүхэд (2-5)</th>
               <th className="px-2 py-4 border-b text-right">Actions</th>
             </tr>
           </thead>
@@ -206,17 +221,24 @@ const HainanTable = () => {
                   <td className="p-2">
                     {row.departure_date ? row.departure_date.split("T")[0] : ""}
                   </td>
-                  <td className="p-2 font-bold text-amber-600">
-                    ₮{Number(row.adult_price || 0).toLocaleString()}
-                  </td>
                   <td className="p-2 text-sm text-gray-600 wrap-break-word max-w-xl">
                     {row.availability}
                   </td>
                   <td className="p-2 font-bold text-amber-600">
-                    ₮{Number(row.child_two_to_five || 0).toLocaleString()}
+                    ₮{Number(row.five_star_adult_price || 0).toLocaleString()}
                   </td>
                   <td className="p-2 font-bold text-amber-600">
-                    ₮{Number(row.child_six_to_eleven || 0).toLocaleString()}
+                    ₮{Number(row.four_star_adult_price || 0).toLocaleString()}
+                  </td>
+                  
+                  <td className="p-2 font-bold text-amber-600">
+                    ₮{Number(row.five_star_child_six_to_eleven || 0).toLocaleString()}
+                  </td>
+                  <td className="p-2 font-bold text-amber-600">
+                    ₮{Number(row.four_star_child_six_to_eleven || 0).toLocaleString()}
+                  </td>
+                  <td className="p-2 font-bold text-amber-600">
+                    ₮{Number(row.child_two_to_five || 0).toLocaleString()}
                   </td>
                   <td className="p-2 text-right flex justify-end items-center gap-2">
                     <button
@@ -277,12 +299,22 @@ const HainanTable = () => {
               className="w-full mb-3 px-3 py-2 rounded border"
             />
 
-            <label className="block mb-2 text-sm">Adult Price</label>
+            <label className="block mb-2 text-sm">5* Том хүн</label>
             <input
               type="number"
-              value={editing.adult_price ?? ""}
+              value={editing.five_star_adult_price ?? ""}
               onChange={(e) =>
-                setEditing({ ...editing, adult_price: e.target.value })
+                setEditing({ ...editing, five_star_adult_price: e.target.value })
+              }
+              className="w-full mb-3 px-3 py-2 rounded border"
+            />
+
+            <label className="block mb-2 text-sm">4* том хүн</label>
+            <input
+              type="number"
+              value={editing.four_star_adult_price ?? ""}
+              onChange={(e) =>
+                setEditing({ ...editing, four_star_adult_price: e.target.value })
               }
               className="w-full mb-3 px-3 py-2 rounded border"
             />
@@ -297,7 +329,7 @@ const HainanTable = () => {
               rows={4}
             />
 
-            <label className="block mb-2 text-sm">Child price (2-5)</label>
+            <label className="block mb-2 text-sm">хүүхэд (2-5)</label>
             <input
               type="number"
               inputMode="decimal"
@@ -308,13 +340,24 @@ const HainanTable = () => {
               className="w-full mb-3 px-3 py-2 rounded border"
             />
 
-            <label className="block mb-2 text-sm">Child price (6-11)</label>
+            <label className="block mb-2 text-sm">4* хүүхэд (6-11)</label>
             <input
               type="number"
               inputMode="decimal"
-              value={editing.child_six_to_eleven ?? ""}
+              value={editing.four_star_child_six_to_eleven ?? ""}
               onChange={(e) =>
-                setEditing({ ...editing, child_six_to_eleven: e.target.value })
+                setEditing({ ...editing, four_star_child_six_to_eleven: e.target.value })
+              }
+              className="w-full mb-3 px-3 py-2 rounded border"
+            />
+
+            <label className="block mb-2 text-sm">5* хүүхэд (6-11)</label>
+            <input
+              type="number"
+              inputMode="decimal"
+              value={editing.five_star_child_six_to_eleven ?? ""}
+              onChange={(e) =>
+                setEditing({ ...editing, five_star_child_six_to_eleven: e.target.value })
               }
               className="w-full mb-3 px-3 py-2 rounded border"
             />
@@ -382,12 +425,22 @@ const HainanTable = () => {
               className="w-full mb-3 px-3 py-2 rounded border"
             />
 
-            <label className="block mb-2 text-sm">Adult Price</label>
+            <label className="block mb-2 text-sm">5* Том хүн</label>
             <input
               type="number"
-              value={newRow.adult_price}
+              value={newRow.five_star_adult_price}
               onChange={(e) =>
-                setNewRow({ ...newRow, adult_price: e.target.value })
+                setNewRow({ ...newRow, five_star_adult_price: e.target.value })
+              }
+              className="w-full mb-3 px-3 py-2 rounded border"
+            />
+
+            <label className="block mb-2 text-sm">4* Том хүн</label>
+            <input
+              type="number"
+              value={newRow.four_star_adult_price}
+              onChange={(e) =>
+                setNewRow({ ...newRow, four_star_adult_price: e.target.value })
               }
               className="w-full mb-3 px-3 py-2 rounded border"
             />
@@ -402,7 +455,7 @@ const HainanTable = () => {
               rows={4}
             />
 
-            <label className="block mb-2 text-sm">Child price (2-5)</label>
+            <label className="block mb-2 text-sm">Хүүхэд (2-5)</label>
             <input
               type="number"
               inputMode="decimal"
@@ -413,13 +466,24 @@ const HainanTable = () => {
               className="w-full mb-3 px-3 py-2 rounded border"
             />
 
-            <label className="block mb-2 text-sm">Child price (6-11)</label>
+            <label className="block mb-2 text-sm">5* Хүүхэд (6-11)</label>
             <input
               type="number"
               inputMode="decimal"
-              value={newRow.child_six_to_eleven}
+              value={newRow.five_star_child_six_to_eleven}
               onChange={(e) =>
-                setNewRow({ ...newRow, child_six_to_eleven: e.target.value })
+                setNewRow({ ...newRow, five_star_child_six_to_eleven: e.target.value })
+              }
+              className="w-full mb-3 px-3 py-2 rounded border"
+            />
+
+            <label className="block mb-2 text-sm">4* Хүүхэд (6-11)</label>
+            <input
+              type="number"
+              inputMode="decimal"
+              value={newRow.four_star_child_six_to_eleven}
+              onChange={(e) =>
+                setNewRow({ ...newRow, four_star_child_six_to_eleven: e.target.value })
               }
               className="w-full mb-3 px-3 py-2 rounded border"
             />

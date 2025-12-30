@@ -3,7 +3,13 @@ import { sql } from "../../utils/db";
 
 export const updateSingapore = async (req: Request, res: Response) => {
   const id = req.params.id;
-  const { departure_date, adult_price, availability } = req.body;
+  const {
+    departure_date,
+    adult_price,
+    availability,
+    child_two_to_four,
+    child_five_to_eleven,
+  } = req.body;
 
   if (!id) return res.status(400).json({ message: "Missing id" });
 
@@ -15,7 +21,8 @@ export const updateSingapore = async (req: Request, res: Response) => {
         [existing] =
           await sql`SELECT * FROM singapore_price_table WHERE "ID" = ${id}`;
       } catch (e) {
-       if (!existing) return res.status(404).json({ message: "Row not found" });
+        if (!existing)
+          return res.status(404).json({ message: "Row not found" });
       }
     }
     if (!existing) return res.status(404).json({ message: "Row not found" });
@@ -24,7 +31,7 @@ export const updateSingapore = async (req: Request, res: Response) => {
     try {
       const [u] = await sql`
         UPDATE singapore_price_table
-        SET departure_date = ${departure_date}, adult_price = ${adult_price}, availability = ${availability}
+        SET departure_date = ${departure_date}, adult_price = ${adult_price}, availability = ${availability}, child_two_to_four = ${child_two_to_four}, child_five_to_eleven = ${child_five_to_eleven}
         WHERE id = ${id}
         RETURNING *
       `;
@@ -32,7 +39,7 @@ export const updateSingapore = async (req: Request, res: Response) => {
     } catch (e) {
       const [u2] = await sql`
         UPDATE singapore_price_table
-        SET departure_date = ${departure_date}, adult_price = ${adult_price}, availability = ${availability}
+        SET departure_date = ${departure_date}, adult_price = ${adult_price}, availability = ${availability}, child_two_to_four = ${child_two_to_four}, child_five_to_eleven = ${child_five_to_eleven}
         WHERE "ID" = ${id}
         RETURNING *
       `;

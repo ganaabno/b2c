@@ -7,6 +7,8 @@ type Row = {
   departure_date: string | null;
   adult_price: string | null;
   availability: string | null;
+  child_two_to_eleven_no_bed: string | null;
+  child_two_to_eleven_with_bed: string | null;
 };
 
 const deleteThailandBanggok = async (id: string) => {
@@ -94,14 +96,28 @@ const ThailandBanggokTable = () => {
     departure_date: string;
     adult_price: string;
     availability: string;
-  }>({ departure_date: "", adult_price: "", availability: "" });
+    child_two_to_eleven_no_bed: string ;
+    child_two_to_eleven_with_bed: string ;
+  }>({
+    departure_date: "",
+    adult_price: "",
+    availability: "",
+    child_two_to_eleven_no_bed: "",
+    child_two_to_eleven_with_bed: "",
+  });
 
   const createMutation = useMutation({
     mutationFn: (body: any) => createThailandBanggok(body),
     onSuccess: () => {
       qc.invalidateQueries({ queryKey: ["thailandBanggokPrices"] });
       setCreating(false);
-      setNewRow({ departure_date: "", adult_price: "", availability: "" });
+      setNewRow({
+        departure_date: "",
+        adult_price: "",
+        availability: "",
+        child_two_to_eleven_no_bed: "",
+        child_two_to_eleven_with_bed: "",
+      });
     },
   });
 
@@ -132,6 +148,8 @@ const ThailandBanggokTable = () => {
         departure_date: editing.departure_date,
         adult_price: editing.adult_price,
         availability: editing.availability,
+        child_two_to_eleven_no_bed: editing.child_two_to_eleven_no_bed,
+        child_two_to_eleven_with_bed: editing.child_two_to_eleven_with_bed,
       },
     });
   };
@@ -139,7 +157,7 @@ const ThailandBanggokTable = () => {
   return (
     <div className="w-auto">
       <div className="flex items-center justify-between mb-3">
-        <h3 className="font-bold">Thailand Price Table</h3>
+        <h3 className="font-bold">Thailand-Banggok Price Table</h3>
         <button
           onClick={() => {
             setCreating(true);
@@ -147,6 +165,8 @@ const ThailandBanggokTable = () => {
               departure_date: "",
               adult_price: "",
               availability: "",
+              child_two_to_eleven_no_bed: "",
+              child_two_to_eleven_with_bed: "",
             });
           }}
           className="flex cursor-pointer items-center gap-2 px-3 py-1 rounded bg-amber-600 text-white">
@@ -159,8 +179,11 @@ const ThailandBanggokTable = () => {
           <thead className="bg-gray-50 dark:bg-gray-900/50 text-gray-600 dark:text-gray-300 uppercase text-sm font-semibold">
             <tr>
               <th className="px-2 py-4 border-b">Departure</th>
-              <th className="px-2 py-4 border-b">Adult Price</th>
               <th className="px-2 py-4 border-b">Availability</th>
+              <th className="px-2 py-4 border-b">Adult Price</th>
+              <th className="px-2 py-4 border-b">2-11 ортой</th>
+              <th className="px-2 py-4 border-b">2-11 оргүй</th>
+
               <th className="px-2 py-4 border-b text-right">Actions</th>
             </tr>
           </thead>
@@ -185,12 +208,25 @@ const ThailandBanggokTable = () => {
                   <td className="p-2">
                     {row.departure_date ? row.departure_date.split("T")[0] : ""}
                   </td>
-                  <td className="p-2 font-bold text-amber-600">
-                    ₮{Number(row.adult_price || 0).toLocaleString()}
-                  </td>
                   <td className="p-2 text-sm text-gray-600 wrap-break-word max-w-xl">
                     {row.availability}
                   </td>
+                  <td className="p-2 font-bold text-amber-600">
+                    ₮{Number(row.adult_price || 0).toLocaleString()}
+                  </td>
+                  <td className="p-2 font-bold text-amber-600">
+                    ₮
+                    {Number(
+                      row.child_two_to_eleven_with_bed || 0
+                    ).toLocaleString()}
+                  </td>
+                  <td className="p-2 font-bold text-amber-600">
+                    ₮
+                    {Number(
+                      row.child_two_to_eleven_no_bed || 0
+                    ).toLocaleString()}
+                  </td>
+
                   <td className="p-2 text-right flex justify-end items-center gap-2">
                     <button
                       onClick={() => startEdit(row)}
@@ -255,6 +291,32 @@ const ThailandBanggokTable = () => {
               value={editing.adult_price ?? ""}
               onChange={(e) =>
                 setEditing({ ...editing, adult_price: e.target.value })
+              }
+              className="w-full mb-3 px-3 py-2 rounded border"
+            />
+
+            <label className="block mb-2 text-sm">2-11 ортой</label>
+            <input
+              type="number"
+              value={editing.child_two_to_eleven_with_bed ?? ""}
+              onChange={(e) =>
+                setEditing({
+                  ...editing,
+                  child_two_to_eleven_with_bed: e.target.value,
+                })
+              }
+              className="w-full mb-3 px-3 py-2 rounded border"
+            />
+
+            <label className="block mb-2 text-sm">2-11 оргүй</label>
+            <input
+              type="number"
+              value={editing.child_two_to_eleven_no_bed ?? ""}
+              onChange={(e) =>
+                setEditing({
+                  ...editing,
+                  child_two_to_eleven_no_bed: e.target.value,
+                })
               }
               className="w-full mb-3 px-3 py-2 rounded border"
             />
@@ -337,6 +399,26 @@ const ThailandBanggokTable = () => {
               value={newRow.adult_price}
               onChange={(e) =>
                 setNewRow({ ...newRow, adult_price: e.target.value })
+              }
+              className="w-full mb-3 px-3 py-2 rounded border"
+            />
+
+             <label className="block mb-2 text-sm">2-11 ортой</label>
+            <input
+              type="number"
+              value={newRow.child_two_to_eleven_with_bed}
+              onChange={(e) =>
+                setNewRow({ ...newRow, child_two_to_eleven_with_bed: e.target.value })
+              }
+              className="w-full mb-3 px-3 py-2 rounded border"
+            />
+
+             <label className="block mb-2 text-sm">2-11 оргүй</label>
+            <input
+              type="number"
+              value={newRow.child_two_to_eleven_no_bed}
+              onChange={(e) =>
+                setNewRow({ ...newRow, child_two_to_eleven_no_bed: e.target.value })
               }
               className="w-full mb-3 px-3 py-2 rounded border"
             />

@@ -3,7 +3,7 @@ import { sql } from "../../utils/db";
 
 export const updateThailandBanggok = async (req: Request, res: Response) => {
   const id = req.params.id;
-  const { departure_date, adult_price, availability } = req.body;
+  const { departure_date, adult_price, availability, child_two_to_eleven_no_bed, child_two_to_eleven_with_bed  } = req.body;
 
   if (!id) return res.status(400).json({ message: "Missing id" });
 
@@ -24,7 +24,7 @@ export const updateThailandBanggok = async (req: Request, res: Response) => {
     try {
       const [u] = await sql`
         UPDATE thailand_banggok_price_table
-        SET departure_date = ${departure_date}, adult_price = ${adult_price}, availability = ${availability}
+        SET departure_date = ${departure_date}, adult_price = ${adult_price}, availability = ${availability}, child_two_to_eleven_no_bed = ${child_two_to_eleven_no_bed}, child_two_to_eleven_with_bed = ${child_two_to_eleven_with_bed}
         WHERE id = ${id}
         RETURNING *
       `;
@@ -32,7 +32,7 @@ export const updateThailandBanggok = async (req: Request, res: Response) => {
     } catch (e) {
       const [u2] = await sql`
         UPDATE thailand_banggok_price_table
-        SET departure_date = ${departure_date}, adult_price = ${adult_price}, availability = ${availability}
+        SET departure_date = ${departure_date}, adult_price = ${adult_price}, availability = ${availability}, child_two_to_eleven_no_bed = ${child_two_to_eleven_no_bed}, child_two_to_eleven_with_bed = ${child_two_to_eleven_with_bed}
         WHERE "ID" = ${id}
         RETURNING *
       `;

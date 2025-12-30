@@ -5,10 +5,12 @@ export const updateHainan = async (req: Request, res: Response) => {
   const id = req.params.id;
   const {
     departure_date,
-    adult_price,
+    five_star_adult_price,
+    four_star_adult_price,
     availability,
     child_two_to_five,
-    child_six_to_eleven,
+    four_star_child_six_to_eleven,
+    five_star_child_six_to_eleven
   } = req.body;
 
   if (!id) return res.status(400).json({ message: "Missing id" });
@@ -22,12 +24,14 @@ export const updateHainan = async (req: Request, res: Response) => {
       UPDATE hainan_price_table
       SET
         departure_date = ${departure_date},
-        adult_price = ${adult_price},
+        five_star_adult_price = ${five_star_adult_price},
+        four_star_adult_price = ${four_star_adult_price},
         availability = ${availability},
         child_two_to_five = ${child_two_to_five},
-        child_six_to_eleven = ${child_six_to_eleven}
+        four_star_child_six_to_eleven = ${four_star_child_six_to_eleven},
+        five_star_child_six_to_eleven = ${five_star_child_six_to_eleven}
       WHERE id = ${id}
-      RETURNING id, departure_date, adult_price, availability, child_two_to_five, child_six_to_eleven
+      RETURNING id, departure_date, five_star_adult_price, four_star_adult_price, availability, child_two_to_five, five_star_child_six_to_eleven ,four_star_child_six_to_eleven
     `;
 
     return res.status(200).json({ data: updated });
