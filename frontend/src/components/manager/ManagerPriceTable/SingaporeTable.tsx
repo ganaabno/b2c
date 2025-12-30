@@ -141,7 +141,7 @@ const SingaporeTable = () => {
   };
 
   return (
-    <div className="w-[600px]">
+    <div className="w-auto">
       <div className="flex items-center justify-between mb-3">
         <h3 className="font-bold">Singapore Price Table</h3>
         <button
@@ -153,7 +153,7 @@ const SingaporeTable = () => {
               availability: "",
             });
           }}
-          className="flex items-center gap-2 px-3 py-1 rounded bg-amber-600 text-white">
+          className="flex cursor-pointer items-center gap-2 px-3 py-1 rounded bg-amber-600 text-white">
           <Plus className="h-4 w-4" /> Add Row
         </button>
       </div>
@@ -198,7 +198,7 @@ const SingaporeTable = () => {
                   <td className="p-2 text-right flex justify-end items-center gap-2">
                     <button
                       onClick={() => startEdit(row)}
-                      className="p-2 text-blue-600 hover:bg-blue-50 rounded-full">
+                      className="p-2 cursor-pointer text-blue-600 hover:bg-blue-50 rounded-full">
                       <Edit className="h-5 w-5" />
                     </button>
                     <button
@@ -207,7 +207,7 @@ const SingaporeTable = () => {
                         deleteMutation.status === "pending" &&
                         deletingId === row.id
                       }
-                      className="p-2 text-red-600 hover:bg-red-50 rounded-full">
+                      className="p-2 cursor-pointer text-red-600 hover:bg-red-50 rounded-full">
                       {deleteMutation.status === "pending" &&
                       deletingId === row.id ? (
                         <Loader2 className="h-4 w-4 animate-spin" />
@@ -235,7 +235,7 @@ const SingaporeTable = () => {
               <button
                 type="button"
                 onClick={closeEdit}
-                className="p-1 text-gray-500 hover:bg-gray-100 rounded">
+                className="p-1 text-gray-500 cursor-pointer hover:bg-gray-100 rounded">
                 <X />
               </button>
             </div>
@@ -278,12 +278,12 @@ const SingaporeTable = () => {
               <button
                 type="button"
                 onClick={closeEdit}
-                className="px-4 py-2 rounded border">
+                className="px-4 py-2 cursor-pointer rounded border">
                 Cancel
               </button>
               <button
                 type="submit"
-                className="px-4 py-2 rounded bg-amber-600 text-white">
+                className="px-4 py-2 cursor-pointer rounded bg-amber-600 text-white">
                 {mutation.status === "pending" ? (
                   <Loader2 className="animate-spin" />
                 ) : (
@@ -322,7 +322,7 @@ const SingaporeTable = () => {
               <button
                 type="button"
                 onClick={() => setCreating(false)}
-                className="p-1 text-gray-500 hover:bg-gray-100 rounded">
+                className="p-1 text-gray-500 cursor-pointer hover:bg-gray-100 rounded">
                 <X />
               </button>
             </div>
@@ -361,12 +361,12 @@ const SingaporeTable = () => {
               <button
                 type="button"
                 onClick={() => setCreating(false)}
-                className="px-4 py-2 rounded border">
+                className="px-4 py-2 cursor-pointer rounded border">
                 Cancel
               </button>
               <button
                 type="submit"
-                className="px-4 py-2 rounded bg-amber-600 text-white">
+                className="px-4 py-2 cursor-pointer rounded bg-amber-600 text-white">
                 {createMutation.status === "pending" ? (
                   <Loader2 className="animate-spin" />
                 ) : (

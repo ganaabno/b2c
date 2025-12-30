@@ -67,8 +67,7 @@ export const priceTableRouter = express.Router();
 
 priceTableRouter.get(
   "/hainan",
-  protect,
-  restrictTo("MANAGER", "ADMIN"),
+
   getHainan
 );
 
@@ -77,6 +76,13 @@ priceTableRouter.post(
   protect,
   restrictTo("MANAGER", "ADMIN"),
   createHainan
+);
+
+priceTableRouter.put(
+  "/hainan/:id",
+  protect,
+  restrictTo("MANAGER", "ADMIN"),
+  updateHainan
 );
 
 priceTableRouter.delete(
@@ -89,8 +95,7 @@ priceTableRouter.delete(
 // Singapore
 priceTableRouter.get(
   "/singapore",
-  protect,
-  restrictTo("MANAGER", "ADMIN"),
+
   getSingapore
 );
 priceTableRouter.post(
@@ -115,8 +120,7 @@ priceTableRouter.delete(
 // Ho Chi Minh / Phu Quoc
 priceTableRouter.get(
   "/ho_chi_minh_phu_quoc",
-  protect,
-  restrictTo("MANAGER", "ADMIN"),
+
   getHoChiMinhPhuQuoc
 );
 priceTableRouter.post(
@@ -141,8 +145,7 @@ priceTableRouter.delete(
 // Thailand Banggok
 priceTableRouter.get(
   "/thailand_banggok",
-  protect,
-  restrictTo("MANAGER", "ADMIN"),
+
   getThailandBanggok
 );
 priceTableRouter.post(
@@ -167,8 +170,7 @@ priceTableRouter.delete(
 // Phuket
 priceTableRouter.get(
   "/phuket",
-  protect,
-  restrictTo("MANAGER", "ADMIN"),
+
   getPhuket
 );
 priceTableRouter.post(
@@ -193,8 +195,7 @@ priceTableRouter.delete(
 // Japan
 priceTableRouter.get(
   "/japan",
-  protect,
-  restrictTo("MANAGER", "ADMIN"),
+
   getJapan
 );
 priceTableRouter.post(
@@ -219,8 +220,7 @@ priceTableRouter.delete(
 // Phu Quoc
 priceTableRouter.get(
   "/phu_quoc",
-  protect,
-  restrictTo("MANAGER", "ADMIN"),
+
   getPhuQuoc
 );
 priceTableRouter.post(
@@ -245,8 +245,7 @@ priceTableRouter.delete(
 // Nha Trang
 priceTableRouter.get(
   "/nha_trang",
-  protect,
-  restrictTo("MANAGER", "ADMIN"),
+
   getNhaTrang
 );
 priceTableRouter.post(
@@ -269,7 +268,7 @@ priceTableRouter.delete(
 );
 
 // Bali
-priceTableRouter.get("/bali", protect, restrictTo("MANAGER", "ADMIN"), getBali);
+priceTableRouter.get("/bali", getBali);
 priceTableRouter.post(
   "/bali",
   protect,
@@ -292,8 +291,7 @@ priceTableRouter.delete(
 // Turkey
 priceTableRouter.get(
   "/turkey",
-  protect,
-  restrictTo("MANAGER", "ADMIN"),
+
   getTurkey
 );
 priceTableRouter.post(
@@ -318,8 +316,7 @@ priceTableRouter.delete(
 // Dalyan
 priceTableRouter.get(
   "/dalyan",
-  protect,
-  restrictTo("MANAGER", "ADMIN"),
+
   getDalyan
 );
 priceTableRouter.post(
@@ -344,8 +341,7 @@ priceTableRouter.delete(
 // Halong Bay
 priceTableRouter.get(
   "/halong_bay",
-  protect,
-  restrictTo("MANAGER", "ADMIN"),
+
   getHalongBay
 );
 priceTableRouter.post(
@@ -373,12 +369,7 @@ priceTableRouter.post(
   restrictTo("MANAGER", "ADMIN"),
   createTable
 );
-priceTableRouter.put(
-  "/hainan/:id",
-  protect,
-  restrictTo("MANAGER", "ADMIN"),
-  updateHainan
-);
+
 priceTableRouter.put(
   "/:id",
   protect,
