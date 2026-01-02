@@ -169,7 +169,7 @@ export default function TourGrid() {
                     Дэлгэрэнгүй
                   </Link>
 
-                  <BookTourButton tour={tour} />
+                  {/* <BookTourButton tour={tour} /> */}
                 </div>
               </div>
             </motion.div>
