@@ -307,66 +307,7 @@ const returnUser = (dbUser: any) => ({
   email_verified: dbUser.email_verified || false,
 });
 
-// Ensure email verification table exists
-const ensureEmailVerificationTable = async () => {
-  try {
-    await sql`
-      CREATE TABLE IF NOT EXISTS email_verification_tokens (
-        id UUID PRIMARY KEY DEFAULT uuid_generate_v4(),
-        user_id UUID REFERENCES users(id) ON DELETE CASCADE,
-        token TEXT NOT NULL UNIQUE,
-        expires_at TIMESTAMPTZ NOT NULL,
-        used BOOLEAN DEFAULT FALSE,
-        created_at TIMESTAMPTZ DEFAULT NOW(),
-        updated_at TIMESTAMPTZ DEFAULT NOW()
-      )
-    `;
-    
-    await sql`
-      CREATE INDEX IF NOT EXISTS idx_email_verification_user_id 
-      ON email_verification_tokens(user_id)
-    `;
-    
-    await sql`
-      CREATE INDEX IF NOT EXISTS idx_email_verification_token 
-      ON email_verification_tokens(token) WHERE used = FALSE
-    `;
-    
-    console.log("✅ Email verification table ensured");
-  } catch (error) {
-    console.error("❌ Failed to create email verification table:", error);
-  }
-};
 
-// Add email_verified column to users table if not exists
-const ensureUserEmailVerifiedColumn = async () => {
-  try {
-    // Check if column exists
-    const columnCheck = await sql`
-      SELECT column_name 
-      FROM information_schema.columns 
-      WHERE table_name = 'users' AND column_name = 'email_verified'
-    `;
-    
-    if (columnCheck.length === 0) {
-      await sql`
-        ALTER TABLE users 
-        ADD COLUMN email_verified BOOLEAN DEFAULT FALSE,
-        ADD COLUMN verification_token TEXT,
-        ADD COLUMN verification_token_expiry TIMESTAMPTZ
-      `;
-      console.log("✅ Added email_verified and verification columns to users table");
-    }
-  } catch (error) {
-    console.error("❌ Failed to add email_verified column:", error);
-  }
-};
-
-// Initialize tables on startup
-(async () => {
-  await ensureEmailVerificationTable();
-  await ensureUserEmailVerifiedColumn();
-})();
 
 // SIGNUP - Modified to include email verification
 router.post("/signup", async (req, res) => {

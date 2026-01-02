@@ -267,7 +267,7 @@ export default function UserProfile() {
           <div className="flex space-x-4">
             <button
               onClick={() => setActiveTab("profile")}
-              className={`pb-3 px-1 text-sm font-medium transition-colors ${
+              className={`pb-3 cursor-pointer px-1 text-sm font-medium transition-colors ${
                 activeTab === "profile"
                   ? "border-b-2 border-blue-500 text-blue-600 dark:text-blue-400"
                   : "text-gray-500 hover:text-gray-700 dark:text-gray-400 dark:hover:text-gray-300"
@@ -276,7 +276,7 @@ export default function UserProfile() {
             </button>
             <button
               onClick={() => setActiveTab("password")}
-              className={`pb-3 px-1 text-sm font-medium transition-colors ${
+              className={`pb-3 cursor-pointer px-1 text-sm font-medium transition-colors ${
                 activeTab === "password"
                   ? "border-b-2 border-blue-500 text-blue-600 dark:text-blue-400"
                   : "text-gray-500 hover:text-gray-700 dark:text-gray-400 dark:hover:text-gray-300"

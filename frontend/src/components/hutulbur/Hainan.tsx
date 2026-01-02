@@ -5,7 +5,6 @@ import {
   BedDouble,
   Coffee,
   Calendar,
-  Info,
   ArrowRight,
   Star,
 } from "lucide-react";
@@ -76,7 +75,7 @@ const Hainan = () => {
       ],
       meals: {
         breakfast: "Зочид буудлын өглөөний цай",
-        lunch: "Өдрийн хоол: ресторан",
+        lunch: "Өдрийн хоол",
       },
       accommodation: "",
     },
@@ -94,25 +93,23 @@ const Hainan = () => {
     },
     {
       day: 3,
-      title:
-        "БҮТЭН ӨДРИЙН УБУД ХОТЫН АЯЛАЛ + KINTAMANI ГАЛТ УУЛЫН АЯЛАЛ/ӨДӨР & ОРОЙН ХООЛ/",
-      date: "2025.12.29 (Даваа)",
-      cover_photo: "https://placehold.co/600x400/00CED1/ffffff?text=Island",
-      location: "Pattaya City",
+      title: "Хөтөлбөрт өдөр",
 
       description: [
         "(Аяллын автобус)",
         "Товлосон цагт цугларч автобусандаа суун аварга загасны аж ахуйтай танилцана. 3-н давхар тансаг зэрэглэлийн усан онгоцоор Номхон далайд 3-н цаг аялна. Үүнд DJ, Karaoke, загасчлал, жимс, уух зүйлс, (хязгаартай) туршлагатай усан онгоцны баг зэрэг багтсан. Энэ аялалдаа та нэмэлтээр далайд шумбах, моторт завь, шүхэр, fly boarding зэрэг олон тоглоомууд тоглох боломжтой. (260-800 ЮАНЬ)",
       ],
-      meals: { breakfast: "Зочид буудлын өглөөний цай", dinner: "Оройн хоол" },
+      meals: {
+        breakfast: "Зочид буудлын өглөөний цай",
+        lunch: "Өдрийн хоол",
+        dinner: "Оройн хоол",
+      },
       accommodation: "",
     },
     {
       day: 4,
-      title:
-        "БҮТЭН ӨДРИЙН BEDUGUL ХЭСГИЙН АЯЛАЛ + TANAH LOT/ӨДӨР & ОРОЙН ХООЛ/",
-      date: "2025.12.30 (Мягмар)",
-      cover_photo: "https://placehold.co/600x400/00CED1/ffffff?text=Island",
+      title: "Ойн парк",
+
       location: "Яанода ойн парк",
 
       description: [
@@ -128,9 +125,6 @@ const Hainan = () => {
     {
       day: 5,
       title: "Чөлөөт өдөр. ",
-      date: "2025.12.31 (Лхагва)",
-      cover_photo: "https://placehold.co/600x400/00CED1/ffffff?text=Island",
-      location: "Pattaya City",
 
       description: [
         "Чөлөөт өдрүүдээр далайн эрэг орж цагийг өнгөрөөх, буудалдаа амрах, дэлгүүр хэсэх, нэмэлт сонирхолтой хөтөлбөр авах зэрэг бусад хүссэн зүйлсээ хийх боломжтой.",
@@ -141,9 +135,6 @@ const Hainan = () => {
     {
       day: 6,
       title: "УСАН ПАРК ҮНЭГҮЙ",
-      date: "2025.1.1 (Пүрэв)",
-      cover_photo: "https://placehold.co/600x400/00CED1/ffffff?text=Island",
-      location: "Pattaya City",
 
       description: [
         "Товлосон цагт цугларч автобусандаа сууж аялалдаа гарна. Сувдны дэлгүүр ороод үүний дараа Дубайд салбартай ATLANTIS усан паркт очиж өдөржин хүссэнээрээ тоглоно.",
@@ -158,9 +149,6 @@ const Hainan = () => {
     {
       day: 7,
       title: "Чөлөөт өдөр.",
-      date: "2025.1.2 (Баасан)",
-      cover_photo: "https://placehold.co/600x400/00CED1/ffffff?text=Island",
-      location: "Pattaya City",
 
       description: [
         "Чөлөөт өдрүүдээр далайн эрэг орж цагийг өнгөрөөх, буудалдаа амрах, дэлгүүр хэсэх, нэмэлт сонирхолтой хөтөлбөр авах зэрэг бусад хүссэн зүйлсээ хийх боломжтой.",
@@ -174,9 +162,6 @@ const Hainan = () => {
     {
       day: 8,
       title: "Чөлөөт өдөр",
-      date: "2025.1.3 (Бямба)",
-      cover_photo: "https://placehold.co/600x400/00CED1/ffffff?text=Island",
-      location: "Pattaya City",
 
       description: [
         "Чөлөөт өдрүүдээр далайн эрэг орж цагийг өнгөрөөх, буудалдаа амрах, дэлгүүр хэсэх, нэмэлт сонирхолтой хөтөлбөр авах зэрэг бусад хүссэн зүйлсээ хийх боломжтой.",
@@ -189,9 +174,7 @@ const Hainan = () => {
     {
       day: 9,
       title: "Сүүлийн өдөр",
-      date: "2025.1.4 (Ням)",
-      cover_photo: "https://placehold.co/600x400/00CED1/ffffff?text=Island",
-      location: "Pattaya City",
+
       route: [
         { name: "Саняа", distance: "3363 км", duration: "5 цаг" },
         { name: "Улаанбаатар" },
@@ -310,32 +293,6 @@ const Hainan = () => {
             </div>
           </div>
         ))}
-
-        {/* Summary Footer */}
-        <div className="bg-amber-50 dark:bg-amber-900/20 rounded-xl p-6 border border-amber-100 dark:border-amber-800/30">
-          <div className="flex items-center gap-2 mb-4">
-            <Info className="h-5 w-5 text-amber-600" />
-            <h3 className="text-lg font-bold text-amber-800 dark:text-amber-400">
-              Tour Highlights (Eniig zasna)
-            </h3>
-          </div>
-          <ul className="grid md:grid-cols-2 gap-3">
-            {[
-              "Round-trip flights from Ulaanbaatar to Bangkok",
-              "3-star beach hotel accommodation",
-              "Daily breakfast and lunch included",
-              "Professional tour guide",
-              "All entrance fees and activities included",
-            ].map((item, idx) => (
-              <li
-                key={idx}
-                className="flex items-center gap-2 text-sm text-gray-700 dark:text-gray-300">
-                <div className="w-1.5 h-1.5 rounded-full bg-amber-500" />
-                {item}
-              </li>
-            ))}
-          </ul>
-        </div>
       </div>
       {table && (
         <div className="mt-8 mb-12">
@@ -371,13 +328,13 @@ const Hainan = () => {
               <table className="w-full">
                 <thead>
                   <tr className="bg-gray-50 dark:bg-gray-700/50 border-b border-gray-200 dark:border-gray-700">
-                    <th className="text-left py-4 px-6 text-sm font-semibold text-gray-700 dark:text-gray-300 uppercase tracking-wider">
+                    <th className="text-left py-4 px-2 text-sm font-semibold text-gray-700 dark:text-gray-300 uppercase tracking-wider">
                       <div className="flex items-center ">Хөөрөх өдөр</div>
                     </th>
-                    <th className="text-left py-4 px-6 text-sm font-semibold text-gray-700 dark:text-gray-300 uppercase tracking-wider">
+                    <th className="text-left py-4 px-2 text-sm font-semibold text-gray-700 dark:text-gray-300 uppercase tracking-wider">
                       <div className="flex items-center gap-2">Суудлын тоо</div>
                     </th>
-                    <th className="text-left py-4 px-6 text-sm font-semibold text-gray-700 dark:text-gray-300 uppercase tracking-wider">
+                    <th className="text-left py-4 px-2 text-sm font-semibold text-gray-700 dark:text-gray-300 uppercase tracking-wider">
                       <div className="flex">Том хүн </div>
 
                       <div className="flex gap-1">
@@ -387,7 +344,7 @@ const Hainan = () => {
                         </div>
                       </div>
                     </th>
-                    <th className="text-left py-4 px-6 text-sm font-semibold text-gray-700 dark:text-gray-300 uppercase tracking-wider">
+                    <th className="text-left py-4 px-2 text-sm font-semibold text-gray-700 dark:text-gray-300 uppercase tracking-wider">
                       <div className="flex">Том хүн </div>
 
                       <div className="flex gap-1">
@@ -397,7 +354,7 @@ const Hainan = () => {
                         </div>
                       </div>
                     </th>
-                    <th className="text-left py-4 px-6 text-sm font-semibold text-gray-700 dark:text-gray-300 uppercase tracking-wider">
+                    <th className="text-left py-4 px-2 text-sm font-semibold text-gray-700 dark:text-gray-300 uppercase tracking-wider">
                       <div>Хүүхэд</div>
                       <div className="flex gap-1">
                         <div> (6-11)</div>
@@ -406,7 +363,7 @@ const Hainan = () => {
                         </div>
                       </div>
                     </th>
-                    <th className="text-left py-4 px-6 text-sm font-semibold text-gray-700 dark:text-gray-300 uppercase tracking-wider">
+                    <th className="text-left py-4 px-2 text-sm font-semibold text-gray-700 dark:text-gray-300 uppercase tracking-wider">
                       <div>Хүүхэд</div>
                       <div className="flex gap-1">
                         <div> (6-11)</div>
@@ -415,7 +372,7 @@ const Hainan = () => {
                         </div>
                       </div>
                     </th>
-                    <th className="text-left py-4 px-6 text-sm font-semibold text-gray-700 dark:text-gray-300 uppercase tracking-wider">
+                    <th className="text-left py-4 px-2 text-sm font-semibold text-gray-700 dark:text-gray-300 uppercase tracking-wider">
                       <div>Хүүхэд</div>
                       <div>(2-5)</div>
                     </th>
@@ -426,7 +383,7 @@ const Hainan = () => {
                     <tr
                       key={item.id || index}
                       className="hover:bg-gray-50 dark:hover:bg-gray-700/30 transition-colors duration-200">
-                      <td className="py-1 px-6">
+                      <td className="py-1 px-2">
                         <div className="flex items-center">
                           <div>
                             <div className="text-sm text-gray-500 dark:text-gray-400">
@@ -442,10 +399,10 @@ const Hainan = () => {
                           </div>
                         </div>
                       </td>
-                      <td className="py-1 px-4 text-gray-900 dark:text-gray-100">
+                      <td className="py-1 px-2 text-gray-900 dark:text-gray-100">
                         {item.availability}
                       </td>
-                      <td className="py-1 px-6">
+                      <td className="py-1 px-2">
                         <div className="font-bold text-lg text-gray-900 dark:text-gray-100">
                           ₮
                           {Number(item.five_star_adult_price).toLocaleString(
@@ -453,7 +410,7 @@ const Hainan = () => {
                           )}
                         </div>
                       </td>
-                      <td className="py-1 px-6">
+                      <td className="py-1 px-2">
                         <div className="font-bold text-lg text-gray-900 dark:text-gray-100">
                           ₮
                           {Number(item.four_star_adult_price).toLocaleString(
@@ -461,7 +418,7 @@ const Hainan = () => {
                           )}
                         </div>
                       </td>
-                      <td className="py-1 px-6">
+                      <td className="py-1 px-2">
                         <div className="font-bold text-lg text-gray-900 dark:text-gray-100">
                           ₮
                           {Number(
@@ -469,7 +426,7 @@ const Hainan = () => {
                           ).toLocaleString("mn-MN")}
                         </div>
                       </td>
-                      <td className="py-1 px-6">
+                      <td className="py-1 px-2">
                         <div className="font-bold text-lg text-gray-900 dark:text-gray-100">
                           ₮
                           {Number(
@@ -477,7 +434,7 @@ const Hainan = () => {
                           ).toLocaleString("mn-MN")}
                         </div>
                       </td>
-                      <td className="py-1 px-6">
+                      <td className="py-1 px-2">
                         <div className="font-bold text-lg text-gray-900 dark:text-gray-100">
                           ₮
                           {Number(item.child_two_to_five).toLocaleString(

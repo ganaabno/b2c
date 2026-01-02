@@ -11,8 +11,8 @@ import BaliTable from "./BaliTable";
 import TurkeyTable from "./TurkeyTable";
 import DalyanTable from "./DalyanTable";
 import HalongBayTable from "./HalongBayTable";
-import ShanghaiTable from "./ShanghaiTable";
-import JanjiejeTable from "./JanjiejeTable";
+// import ShanghaiTable from "./ShanghaiTable";
+// import JanjiejeTable from "./JanjiejeTable";
 import { Link } from "react-router-dom";
 import { ArrowLeft } from "lucide-react";
 
@@ -28,7 +28,7 @@ const ManagerPriceTable = () => {
             </Link>
           </div>
         </div>
-        <div className="m-10 flex flex-wrap gap-8 ">
+        <div className="m-10 grid grid-cols-1 gap-8 ">
           <HainanTable />
           <SingaporeTable />
           <HoChiMinhPhuQuocTable />
@@ -41,8 +41,8 @@ const ManagerPriceTable = () => {
           <TurkeyTable />
           <DalyanTable />
           <HalongBayTable />
-          <ShanghaiTable />
-          <JanjiejeTable />
+          {/* <ShanghaiTable />
+          <JanjiejeTable /> */}
         </div>
       </div>
     </>

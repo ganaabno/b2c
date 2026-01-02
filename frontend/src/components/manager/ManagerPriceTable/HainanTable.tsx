@@ -240,7 +240,7 @@ const HainanTable = () => {
                   <td className="p-2 font-bold text-amber-600">
                     ₮{Number(row.child_two_to_five || 0).toLocaleString()}
                   </td>
-                  <td className="p-2 text-right flex justify-end items-center gap-2">
+                  <td className="p-2 text-right flex justify-end items-center gap-6">
                     <button
                       onClick={() => startEdit(row)}
                       className="p-2 cursor-pointer text-blue-600 hover:bg-blue-50 rounded-full">
@@ -362,7 +362,7 @@ const HainanTable = () => {
               className="w-full mb-3 px-3 py-2 rounded border"
             />
 
-            <div className="flex justify-end gap-2">
+            <div className="flex justify-end gap-6">
               <button
                 type="button"
                 onClick={closeEdit}
@@ -488,7 +488,7 @@ const HainanTable = () => {
               className="w-full mb-3 px-3 py-2 rounded border"
             />
 
-            <div className="flex justify-end gap-2">
+            <div className="flex justify-end gap-6">
               <button
                 type="button"
                 onClick={() => setCreating(false)}

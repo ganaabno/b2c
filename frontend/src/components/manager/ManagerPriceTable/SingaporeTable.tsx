@@ -220,7 +220,7 @@ const SingaporeTable = () => {
                     ₮{Number(row.child_two_to_four || 0).toLocaleString()}
                   </td>
 
-                  <td className="p-2 text-right flex justify-end items-center gap-2">
+                  <td className="p-2 text-right flex justify-end items-center gap-6">
                     <button
                       onClick={() => startEdit(row)}
                       className="p-2 cursor-pointer text-blue-600 hover:bg-blue-50 rounded-full">
@@ -279,6 +279,16 @@ const SingaporeTable = () => {
               className="w-full mb-3 px-3 py-2 rounded border"
             />
 
+            <label className="block mb-2 text-sm">Availability (text)</label>
+            <textarea
+              value={editing.availability ?? ""}
+              onChange={(e) =>
+                setEditing({ ...editing, availability: e.target.value })
+              }
+              className="w-full mb-3 px-3 py-2 rounded border"
+              rows={4}
+            />
+
             <label className="block mb-2 text-sm">Adult Price</label>
             <input
               type="number"
@@ -288,6 +298,7 @@ const SingaporeTable = () => {
               }
               className="w-full mb-3 px-3 py-2 rounded border"
             />
+
             <label className="block mb-2 text-sm">5-11</label>
             <input
               type="number"
@@ -297,6 +308,7 @@ const SingaporeTable = () => {
               }
               className="w-full mb-3 px-3 py-2 rounded border"
             />
+
             <label className="block mb-2 text-sm">2-4</label>
             <input
               type="number"
@@ -305,16 +317,6 @@ const SingaporeTable = () => {
                 setEditing({ ...editing, child_two_to_four: e.target.value })
               }
               className="w-full mb-3 px-3 py-2 rounded border"
-            />
-
-            <label className="block mb-2 text-sm">Availability (text)</label>
-            <textarea
-              value={editing.availability ?? ""}
-              onChange={(e) =>
-                setEditing({ ...editing, availability: e.target.value })
-              }
-              className="w-full mb-3 px-3 py-2 rounded border"
-              rows={4}
             />
 
             <div className="flex justify-end gap-2">
@@ -380,6 +382,16 @@ const SingaporeTable = () => {
               className="w-full mb-3 px-3 py-2 rounded border"
             />
 
+            <label className="block mb-2 text-sm">Availability (text)</label>
+            <textarea
+              value={newRow.availability}
+              onChange={(e) =>
+                setNewRow({ ...newRow, availability: e.target.value })
+              }
+              className="w-full mb-3 px-3 py-2 rounded border"
+              rows={4}
+            />
+
             <label className="block mb-2 text-sm">Adult Price</label>
             <input
               type="number"
@@ -390,15 +402,27 @@ const SingaporeTable = () => {
               className="w-full mb-3 px-3 py-2 rounded border"
             />
 
-            <label className="block mb-2 text-sm">Availability (text)</label>
-            <textarea
-              value={newRow.availability}
+            <label className="block mb-2 text-sm">5-11 хүүхэд</label>
+            <input
+              type="number"
+              value={newRow.child_five_to_eleven}
               onChange={(e) =>
-                setNewRow({ ...newRow, availability: e.target.value })
+                setNewRow({ ...newRow, child_five_to_eleven: e.target.value })
               }
               className="w-full mb-3 px-3 py-2 rounded border"
-              rows={4}
             />
+
+            <label className="block mb-2 text-sm">2-4 хүүхэд</label>
+            <input
+              type="number"
+              value={newRow.child_two_to_four}
+              onChange={(e) =>
+                setNewRow({ ...newRow, child_two_to_four: e.target.value })
+              }
+              className="w-full mb-3 px-3 py-2 rounded border"
+            />
+
+            
 
             <div className="flex justify-end gap-2">
               <button

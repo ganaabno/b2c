@@ -5,7 +5,6 @@ import {
   BedDouble,
   Coffee,
   Calendar,
-  Info,
   ArrowRight,
 } from "lucide-react";
 import { useEffect, useState } from "react";
@@ -289,32 +288,6 @@ const Singapore = () => {
             </div>
           </div>
         ))}
-
-        {/* Summary Footer */}
-        <div className="bg-amber-50 dark:bg-amber-900/20 rounded-xl p-6 border border-amber-100 dark:border-amber-800/30">
-          <div className="flex items-center gap-2 mb-4">
-            <Info className="h-5 w-5 text-amber-600" />
-            <h3 className="text-lg font-bold text-amber-800 dark:text-amber-400">
-              Tour Highlights (Eniig zasna)
-            </h3>
-          </div>
-          <ul className="grid md:grid-cols-2 gap-3">
-            {[
-              "Round-trip flights from Ulaanbaatar to Bangkok",
-              "3-star beach hotel accommodation",
-              "Daily breakfast and lunch included",
-              "Professional tour guide",
-              "All entrance fees and activities included",
-            ].map((item, idx) => (
-              <li
-                key={idx}
-                className="flex items-center gap-2 text-sm text-gray-700 dark:text-gray-300">
-                <div className="w-1.5 h-1.5 rounded-full bg-amber-500" />
-                {item}
-              </li>
-            ))}
-          </ul>
-        </div>
       </div>
       {/* -------------- TABLE ----------- */}
       {table && (
@@ -337,7 +310,7 @@ const Singapore = () => {
                 </svg>
               </div>
               <h2 className="text-2xl font-bold text-gray-900 dark:text-gray-100">
-                Хо Ши Мин - Фукуок аялалуудын хуваарь
+                Сингапур аялалуудын хуваарь
               </h2>
             </div>
             <span className="text-sm text-gray-500 dark:text-gray-400">
@@ -351,22 +324,22 @@ const Singapore = () => {
               <table className="w-full">
                 <thead>
                   <tr className="bg-gray-50 dark:bg-gray-700/50 border-b border-gray-200 dark:border-gray-700">
-                    <th className="text-left py-4 px-6 text-sm font-semibold text-gray-700 dark:text-gray-300 uppercase tracking-wider">
+                    <th className="text-left py-4 px-2 text-sm font-semibold text-gray-700 dark:text-gray-300 uppercase tracking-wider">
                       <div className="flex items-center ">Хөөрөх өдөр</div>
                     </th>
-                    <th className="text-left py-4 px-6 text-sm font-semibold text-gray-700 dark:text-gray-300 uppercase tracking-wider">
+                    <th className="text-left py-4 px-2 text-sm font-semibold text-gray-700 dark:text-gray-300 uppercase tracking-wider">
                       <div className="flex items-center gap-2">Суудлын тоо</div>
                     </th>
-                    <th className="text-left py-4 px-6 text-sm font-semibold text-gray-700 dark:text-gray-300 uppercase tracking-wider">
+                    <th className="text-left py-4 px-2 text-sm font-semibold text-gray-700 dark:text-gray-300 uppercase tracking-wider">
                       <div>Том хүн</div>
 
                       <div>(+12)</div>
                     </th>
-                    <th className="text-left py-4 px-6 text-sm font-semibold text-gray-700 dark:text-gray-300 uppercase tracking-wider">
+                    <th className="text-left py-4 px-2 text-sm font-semibold text-gray-700 dark:text-gray-300 uppercase tracking-wider">
                       <div>Хүүхэд</div>
                       <div>(5-11)</div>
                     </th>
-                    <th className="text-left py-4 px-6 text-sm font-semibold text-gray-700 dark:text-gray-300 uppercase tracking-wider">
+                    <th className="text-left py-4 px-2 text-sm font-semibold text-gray-700 dark:text-gray-300 uppercase tracking-wider">
                       <div>Хүүхэд</div>
                       <div>(2-4)</div>
                     </th>
@@ -377,7 +350,7 @@ const Singapore = () => {
                     <tr
                       key={item.id || index}
                       className="hover:bg-gray-50 dark:hover:bg-gray-700/30 transition-colors duration-200">
-                      <td className="py-1 px-6">
+                      <td className="py-1 px-2">
                         <div className="flex items-center">
                           <div>
                             <div className="text-sm text-gray-500 dark:text-gray-400">
@@ -393,15 +366,15 @@ const Singapore = () => {
                           </div>
                         </div>
                       </td>
-                      <td className="py-1 px-4 text-gray-900 dark:text-gray-100">
+                      <td className="py-1 px-2 text-gray-900 dark:text-gray-100">
                         {item.availability}
                       </td>
-                      <td className="py-1 px-6">
+                      <td className="py-1 px-2">
                         <div className="font-bold text-lg text-gray-900 dark:text-gray-100">
                           ₮{Number(item.adult_price).toLocaleString("mn-MN")}
                         </div>
                       </td>
-                      <td className="py-1 px-6">
+                      <td className="py-1 px-2">
                         <div className="font-bold text-lg text-gray-900 dark:text-gray-100">
                           ₮
                           {Number(item.child_five_to_eleven).toLocaleString(
@@ -409,7 +382,7 @@ const Singapore = () => {
                           )}
                         </div>
                       </td>
-                      <td className="py-1 px-6">
+                      <td className="py-1 px-2">
                         <div className="font-bold text-lg text-gray-900 dark:text-gray-100">
                           ₮
                           {Number(item.child_two_to_four).toLocaleString(

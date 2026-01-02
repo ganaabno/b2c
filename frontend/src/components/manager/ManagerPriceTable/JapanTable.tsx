@@ -189,7 +189,7 @@ const JapanTable = () => {
                   <td className="p-2 text-sm text-gray-600 wrap-break-word max-w-xl">
                     {row.availability}
                   </td>
-                  <td className="p-2 text-right flex justify-end items-center gap-2">
+                  <td className="p-2 text-right flex justify-end items-center gap-6">
                     <button
                       onClick={() => startEdit(row)}
                       className="p-2 cursor-pointer text-blue-600 hover:bg-blue-50 rounded-full">

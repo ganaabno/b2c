@@ -7,6 +7,9 @@ type Row = {
   departure_date: string | null;
   adult_price: string | null;
   availability: string | null;
+  hotel: string | null;
+  child_two_to_eleven_with_bed: string | null;
+  child_two_to_eleven_no_bed: string | null;
 };
 
 const deletePhuket = async (id: string) => {
@@ -93,14 +96,31 @@ const PhuketTable = () => {
     departure_date: string;
     adult_price: string;
     availability: string;
-  }>({ departure_date: "", adult_price: "", availability: "" });
+    child_two_to_eleven_with_bed: string;
+    child_two_to_eleven_no_bed: string;
+    hotel: string;
+  }>({
+    departure_date: "",
+    adult_price: "",
+    availability: "",
+    hotel: "",
+    child_two_to_eleven_with_bed: "",
+    child_two_to_eleven_no_bed: "",
+  });
 
   const createMutation = useMutation({
     mutationFn: (body: any) => createPhuket(body),
     onSuccess: () => {
       qc.invalidateQueries({ queryKey: ["phuketPrices"] });
       setCreating(false);
-      setNewRow({ departure_date: "", adult_price: "", availability: "" });
+      setNewRow({
+        departure_date: "",
+        adult_price: "",
+        availability: "",
+        hotel: "",
+        child_two_to_eleven_with_bed: "",
+        child_two_to_eleven_no_bed: "",
+      });
     },
   });
 
@@ -130,6 +150,9 @@ const PhuketTable = () => {
         departure_date: editing.departure_date,
         adult_price: editing.adult_price,
         availability: editing.availability,
+        hotel: editing.hotel,
+        child_two_to_eleven_with_bed: editing.child_two_to_eleven_with_bed,
+        child_two_to_eleven_no_bed: editing.child_two_to_eleven_no_bed,
       },
     });
   };
@@ -145,6 +168,9 @@ const PhuketTable = () => {
               departure_date: "",
               adult_price: "",
               availability: "",
+              hotel: "",
+              child_two_to_eleven_with_bed: "",
+              child_two_to_eleven_no_bed: "",
             });
           }}
           className="flex cursor-pointer items-center gap-2 px-3 py-1 rounded bg-amber-600 text-white">
@@ -157,9 +183,13 @@ const PhuketTable = () => {
           <thead className="bg-gray-50 dark:bg-gray-900/50 text-gray-600 dark:text-gray-300 uppercase text-sm font-semibold">
             <tr>
               <th className="px-2 py-4 border-b">Departure</th>
-              <th className="px-2 py-4 border-b">Adult Price</th>
               <th className="px-2 py-4 border-b">Availability</th>
-              <th className="px-2 py-4 border-b text-right">Actions</th>
+              <th className="px-2 py-4 border-b">Зочид буудал</th>
+              <th className="px-2 py-4 border-b">Том хүн</th>
+              <th className="px-2 py-4 border-b">2-11 Хүүхэд ортой</th>
+              <th className="px-2 py-4 border-b">2-11 Хүүхэд оргүй</th>
+
+              <th className="px-2 py-4 border-b text-right">Засах , Устгах</th>
             </tr>
           </thead>
           <tbody className="divide-y divide-gray-100 dark:divide-gray-700">
@@ -183,13 +213,29 @@ const PhuketTable = () => {
                   <td className="p-2">
                     {row.departure_date ? row.departure_date.split("T")[0] : ""}
                   </td>
-                  <td className="p-2 font-bold text-amber-600">
-                    ₮{Number(row.adult_price || 0).toLocaleString()}
-                  </td>
                   <td className="p-2 text-sm text-gray-600 wrap-break-word max-w-xl">
                     {row.availability}
                   </td>
-                  <td className="p-2 text-right flex justify-end items-center gap-2">
+                  <td className="p-2 text-sm text-gray-600 wrap-break-word max-w-xl">
+                    {row.hotel}
+                  </td>
+                  <td className="p-2 font-bold text-amber-600">
+                    ₮{Number(row.adult_price || 0).toLocaleString()}
+                  </td>
+                  <td className="p-2 font-bold text-amber-600">
+                    ₮
+                    {Number(
+                      row.child_two_to_eleven_with_bed || 0
+                    ).toLocaleString()}
+                  </td>
+                  <td className="p-2 font-bold text-amber-600">
+                    ₮
+                    {Number(
+                      row.child_two_to_eleven_no_bed || 0
+                    ).toLocaleString()}
+                  </td>
+
+                  <td className="p-2 text-right flex justify-end items-center gap-6">
                     <button
                       onClick={() => startEdit(row)}
                       className="p-2 cursor-pointer  text-blue-600 hover:bg-blue-50 rounded-full">
@@ -247,7 +293,27 @@ const PhuketTable = () => {
               className="w-full mb-3 px-3 py-2 rounded border"
             />
 
-            <label className="block mb-2 text-sm">Adult Price</label>
+            <label className="block mb-2 text-sm">Үлдэгдэл суудал</label>
+            <textarea
+              value={editing.availability ?? ""}
+              onChange={(e) =>
+                setEditing({ ...editing, availability: e.target.value })
+              }
+              className="w-full mb-3 px-3 py-2 rounded border"
+              rows={4}
+            />
+
+            <label className="block mb-2 text-sm">Зочид буудал</label>
+            <textarea
+              value={editing.hotel ?? ""}
+              onChange={(e) =>
+                setEditing({ ...editing, hotel: e.target.value })
+              }
+              className="w-full mb-3 px-3 py-2 rounded border"
+              rows={2}
+            />
+
+            <label className="block mb-2 text-sm">Том хүн</label>
             <input
               type="number"
               value={editing.adult_price ?? ""}
@@ -257,14 +323,24 @@ const PhuketTable = () => {
               className="w-full mb-3 px-3 py-2 rounded border"
             />
 
-            <label className="block mb-2 text-sm">Availability (text)</label>
-            <textarea
-              value={editing.availability ?? ""}
+            <label className="block mb-2 text-sm">Хүүхэд ортой 2-11</label>
+            <input
+              type="number"
+              value={editing.child_two_to_eleven_with_bed ?? ""}
               onChange={(e) =>
-                setEditing({ ...editing, availability: e.target.value })
+                setEditing({ ...editing, child_two_to_eleven_with_bed: e.target.value })
               }
               className="w-full mb-3 px-3 py-2 rounded border"
-              rows={4}
+            />
+
+            <label className="block mb-2 text-sm">Хүүхэд оргүй 2-11</label>
+            <input
+              type="number"
+              value={editing.child_two_to_eleven_no_bed ?? ""}
+              onChange={(e) =>
+                setEditing({ ...editing, child_two_to_eleven_no_bed: e.target.value })
+              }
+              className="w-full mb-3 px-3 py-2 rounded border"
             />
 
             <div className="flex justify-end gap-2">
@@ -329,16 +405,6 @@ const PhuketTable = () => {
               className="w-full mb-3 px-3 py-2 rounded border"
             />
 
-            <label className="block mb-2 text-sm">Adult Price</label>
-            <input
-              type="number"
-              value={newRow.adult_price}
-              onChange={(e) =>
-                setNewRow({ ...newRow, adult_price: e.target.value })
-              }
-              className="w-full mb-3 px-3 py-2 rounded border"
-            />
-
             <label className="block mb-2 text-sm">Availability (text)</label>
             <textarea
               value={newRow.availability}
@@ -348,6 +414,48 @@ const PhuketTable = () => {
               className="w-full mb-3 px-3 py-2 rounded border"
               rows={4}
             />
+
+             <label className="block mb-2 text-sm">Зочид буудал</label>
+            <textarea
+              value={newRow.hotel}
+              onChange={(e) =>
+                setNewRow({ ...newRow, hotel: e.target.value })
+              }
+              className="w-full mb-3 px-3 py-2 rounded border"
+              rows={2}
+            />
+
+            <label className="block mb-2 text-sm">Том хүн</label>
+            <input
+              type="number"
+              value={newRow.adult_price ?? ""}
+              onChange={(e) =>
+                setNewRow({ ...newRow, adult_price: e.target.value })
+              }
+              className="w-full mb-3 px-3 py-2 rounded border"
+            />
+
+            <label className="block mb-2 text-sm">Хүүхэд ортой 2-11</label>
+            <input
+              type="number"
+              value={newRow.child_two_to_eleven_with_bed ?? ""}
+              onChange={(e) =>
+                setNewRow({ ...newRow, child_two_to_eleven_with_bed: e.target.value })
+              }
+              className="w-full mb-3 px-3 py-2 rounded border"
+            />
+
+            <label className="block mb-2 text-sm">Хүүхэд оргүй 2-11</label>
+            <input
+              type="number"
+              value={newRow.child_two_to_eleven_no_bed ?? ""}
+              onChange={(e) =>
+                setNewRow({ ...newRow, child_two_to_eleven_no_bed: e.target.value })
+              }
+              className="w-full mb-3 px-3 py-2 rounded border"
+            />
+
+            
 
             <div className="flex justify-end gap-2">
               <button

@@ -3,13 +3,13 @@ import { randomUUID } from "crypto";
 import { sql } from "../../utils/db";
 
 export const createPhuket = async (req: Request, res: Response) => {
-  const { departure_date, adult_price, availability } = req.body;
+  const { departure_date, adult_price, availability, child_two_to_eleven_with_bed, child_two_to_eleven_no_bed, hotel } = req.body;
 
   try {
     const id = randomUUID();
     const [created] = await sql`
-      INSERT INTO phuket_price_table (id, departure_date, adult_price, availability)
-      VALUES (${id}, ${departure_date}, ${adult_price}, ${availability})
+      INSERT INTO phuket_price_table (id, departure_date, adult_price, availability, child_two_to_eleven_with_bed, child_two_to_eleven_no_bed, hotel  )
+      VALUES (${id}, ${departure_date}, ${adult_price}, ${availability}, ${child_two_to_eleven_with_bed}, ${child_two_to_eleven_no_bed}, ${hotel})
       RETURNING *
     `;
 

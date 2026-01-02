@@ -1,15 +1,14 @@
-
 import {
   Utensils,
- 
   BedDouble,
   Coffee,
   Calendar,
-  Info,
   ArrowRight,
+  Soup,
 } from "lucide-react";
 import { useEffect, useState } from "react";
 import axios from "axios";
+
 const galleryImages = [
   "https://res.cloudinary.com/di9bplyfy/image/upload/v1767002054/Bangkok_qefn2v.png",
   "https://res.cloudinary.com/di9bplyfy/image/upload/v1767076170/Bangkok2_asrwta.webp",
@@ -26,7 +25,7 @@ const hotelImages = [
 ];
 
 const Thailand_Banggok = () => {
-const [table, setTable] = useState(null);
+  const [table, setTable] = useState(null);
   const [loading, setLoading] = useState(false);
   const [error, setError] = useState("");
   const fetchBanggokTable = async () => {
@@ -55,292 +54,229 @@ const [table, setTable] = useState(null);
     return <div>Data format error</div>;
   }
 
-
-
-
-
   const tourData = [
     {
       day: 1,
-      title: "Улаанбаатар - Ханой",
-      date: "2025.12.27 (Бямба)",
-      cover_photo: "https://placehold.co/600x400/87CEEB/ffffff?text=Bangkok",
-      location: "Улаанбаатар City",
+      title: "Улаанбаатар - Бангкок",
       route: [
-        { name: "Улаанбаатар ", distance: "3822km", duration: "4 цаг" },
-        { name: "Ханой" },
+        { name: "Улаанбаатар ", distance: "2570 км", duration: "5 цаг" },
+        { name: "Бангкок", distance: "150 км", duration: "2 цаг" },
+        { name: "Паттаяа" },
       ],
       description: [
-        "05:00 Аялагчид Хөшигийн хөндийн “Чингис Хаан” олон улсын нисэх онгоцны буудалд ирсэн байна.",
-        "08:00 – 12:00 Улаанбаатар – Ханой нислэг",
-        "14:00 Ханой хотын зочид буудалд байрлана",
-        "Аялагчид нийтдээ 2 өдөр 2 шөнө Вьетнам улсын Ханой хотод байрлан амарна.",
+        "Чингис Хаан нисэх онгоцны буудалд өглөөний 05:00 цагт цугларч үдэгчээс заавар аван бүртгэлээ хийлгэнэ.",
+        "Бүртгэлээ хийлгээд МИАТ компаний нислэгээр 08:45 цагт хөөрч БАНГКОК хот руу ниснэ.",
+        "Бангкокын онгоцны буудал Суварнабумд 13:45 цагт газардаж хилээр нэвтрээд Тайланд улсын аялал жуулчлалын 4 бүсийн нэг болох Паттаяа хот руу автобусаар 2 цаг буюу 150км яваад зочид буудалдаа хүргүүлж амарна.",
       ],
-      meals: { lunch: "Restaurant" },
-      accommodation: "Jomtien Palm Beach Hotel",
+      meals: { dinner: "Оройн хоол" },
+      accommodation: "Fifth Pattaya Jomtien ",
     },
     {
       day: 2,
-      title: "Pattaya Tour",
-      date: "2025.12.28 (Ням)",
-      cover_photo: "https://placehold.co/600x400/8B4513/ffffff?text=Pattaya",
-      location: "Pattaya City",
+      title: "Nong Nooch, Gems Gallery, Laser Buddha",
       description: [
-        "06:00-07:00 Өглөөний цай",
-        "07:30 цагт Зочид буудлын өрөөг хүлээлгэж өгөн Ной Бай олон улсын нисэх буудал руу хөдөлнө",
-        "10:05-16:25 Ханой-Бали нислэг",
-        "18:00-18:30 Зочид буудалд байрлана",
-        "Аялагчид нийтдээ 5 өдөр 5 шөнө Индонез улсын Бали аралд байрлан амарна.",
+        "Үзэсгэлэнт Нон Нооч (Nong Nooch) үлэг гүрвэлийн цэцэрлэгт хүрээлэнг зорих ба замдаа бид Тайланд улсын хамгийн том үнэт эдлэлийн төв болох Жэмс Галлерай (Gems Gallery)-р зочилж шүр сувд худалдаж авах боломжтой ба галт тэрэгний сонирхолтой аялал хийнэ.",
+        "Өдрийн хоолны дараагаар Нон Нооч (Nong Nooch) цэцэрлэгт хүрээлэнгээр зугаалж Тай үндэсний соёлын шоу болон зааны шоу зэргийг үзнэ.",
+        "Үүний дараагаар 108м Лазер будда бурхан (Laser Buddha) цэцэрлэгт хүрээлэнгээр зугаална.",
       ],
-      meals: { breakfast: "Hotel breakfast", lunch: "Restaurant" },
-      accommodation: "Jomtien Palm Beach Hotel",
+      meals: {
+        breakfast: "Зочид буудлын өглөөний цай",
+        lunch: "Өдрийн хоол",
+        dinner: "Оройн хоол",
+      },
+      accommodation: "Fifth Pattaya Jomtien",
     },
     {
       day: 3,
-      title:
-        "БҮТЭН ӨДРИЙН УБУД ХОТЫН АЯЛАЛ + KINTAMANI ГАЛТ УУЛЫН АЯЛАЛ/ӨДӨР & ОРОЙН ХООЛ/",
-      date: "2025.12.29 (Даваа)",
-      cover_photo: "https://placehold.co/600x400/00CED1/ffffff?text=Island",
-      location: "Pattaya City",
-      route: [{ name: "Pattaya City", distance: "15km", duration: "30min" }],
+      title: "Шүрэн арал, Koh Larn, Lady Boy, Моторт завь",
       description: [
-        "08:00 Өглөөний цай",
-        "Ubud Palace – Түүхэн дурсгалт хааны ордон",
-        "Uma Pakel Swing дүүжин – Нутгийн кофег амтлан шувууны үүрэнд зураг даруулах боломжтой",
-        "Tampak Siring хот – Tirta Empul ариун усны сүм",
-        "Tegalalang тосгон – Будааны дэнж",
-        "Batur галт уул болон Batur нуур",
+        "Моторт завиар Шүрэн арал (Koh Larn) руу явна. Энэ шүрэн арал нь далайн эргийн амралтад тохирсон нунтаг цагаан элс, бүлээн устай, нар шарсан дээд зэрэглэлийн элстэй газар юм. Банана завь, усан дээгүүр шүхрээр нисэх, ус руу шумбах, мотоцикл, буудлага гэх мэт олон төрлийн зугаатай тоглоомууд бий.",
+        "Өдрийн хоолыг арлын далайн хоолны ресторанд иднэ.",
+        "Орой нь бид Паттаяа хот руу хурдны моторт завиараа буцна. Оройн хоолны дараа жуулчдын сонирхлыг татдаг зөвхөн Тайландад л харж болох (Lady Boy) кабаре шоу Алкасар тоглолтыг үзэж тэдэнтэй хамт зургаа авахуулна.",
       ],
-      meals: { lunch: "Restaurant", dinner: "Included" },
-      accommodation: "Jomtien Palm Beach Hotel",
+      meals: {
+        breakfast: "Зочид буудлын өглөөний цай",
+        lunch: "Өдрийн хоол",
+        dinner: "Оройн хоол",
+      },
+      accommodation: "Fifth Pattaya Jomtien",
     },
     {
       day: 4,
-      title:
-        "БҮТЭН ӨДРИЙН BEDUGUL ХЭСГИЙН АЯЛАЛ + TANAH LOT/ӨДӨР & ОРОЙН ХООЛ/",
-      date: "2025.12.30 (Мягмар)",
-      cover_photo: "https://placehold.co/600x400/00CED1/ffffff?text=Island",
-      location: "Pattaya City",
-      route: [{ name: "Pattaya City", distance: "15km", duration: "30min" }],
+      title: "Чөлөөт өдөр",
       description: [
-        "08:00 Өглөөний цай",
-        "Mengwi тосгон – Taman Ayun язгууртны гэр бүлийн сүм",
-        "Bratan нуур – Ulun Danu усан дээрх хөвдөг сүм",
-        "Tanah Lot сүт",
+        "Та энэ өдөр өөрийн хүссэнээр амрах боломжтой.",
+        "Паттаяа хотын шоу цэнгээний гудамж (Walking Street) –ээр зугаалж болно.",
+        "Төрөл бүрийн зугаа цэнгээний газруудтай ба Паттаяа хотын шөнийн амьдралтай танилцаж цагийг зугаатай өнгөрөөх боломжтой.",
       ],
-      meals: { lunch: "Restaurant", dinner: "Included" },
-      accommodation: "Jomtien Palm Beach Hotel",
+      meals: { breakfast: "Зочид буудлын өглөөний цай" },
+      accommodation: "Fifth Pattaya Jomtien",
     },
     {
       day: 5,
-      title: "ХАГАС ӨДӨР WATER BOM PARK + ЧӨЛӨӨТ ЦАГ/ӨДӨР & ОРОЙН ХООЛ/",
-      date: "2025.12.31 (Лхагва)",
-      cover_photo: "https://placehold.co/600x400/00CED1/ffffff?text=Island",
-      location: "Pattaya City",
-      route: [{ name: "Pattaya City", distance: "15km", duration: "30min" }],
-      description: ["08:00 Өглөөний цай"],
-      meals: {},
-      accommodation: "Jomtien Palm Beach Hotel",
+      title: "Siam Park, Кобра могойн тоглолт",
+      route: [
+        { name: "Паттаяа", distance: "150 км", duration: " " },
+        { name: "Бангкок" },
+      ],
+      description: [
+        "Өглөөний цайны дараа бид Бангкок хот руу хөдлөнө.",
+        "Замдаа хорт могойн төвөөр орж Кобра могойн тоглолт үзүүлбэрийг үзнэ. Бангкок хотын захад нисэх буудлын ойролцоо байрлах Сиам (Siam Park) усан паркад экстрем тоглоом буюу усан гулгуур, галзуу хулгана зэрэг 30 гаруй тоглоомуудаас сонгон тоглож дэлхийн хамгийн том хиймэл давалгаатай усан сангийн эрэгт амрах боломжтой.",
+      ],
+      meals: {
+        breakfast: "Зочид буудлын өглөөний цай",
+        lunch: "Өдрийн хоол",
+        dinner: "Оройн хоол",
+      },
+      accommodation: "The Sukosol Hotel ",
     },
     {
       day: 6,
-      title:
-        "БҮТЭН ӨДРИЙН ТЭНГЭРИЙН ХААЛГА БОЛОН TIRTA GANGGA УСАН ОРДОНГИЙН АЯЛАЛ/ӨДӨР& ОРОЙН ХООЛ/",
-      date: "2025.1.1 (Пүрэв)",
-      cover_photo: "https://placehold.co/600x400/00CED1/ffffff?text=Island",
-      location: "Pattaya City",
-      route: [{ name: "Pattaya City", distance: "15km", duration: "30min" }],
+      title: "Бангкок хотын аялал, Grand Palace, Chao Rhaya, Bayoke Tower",
+
       description: [
-        "08:00 Өглөөний цай",
-        "The Heaven Gate – Бали арлын зүүн зүгт байрлах Lempuyang The Heaven’s Gate буюу Тэнгэрийн хаалгыг зорино",
-        "Tirta Gangga – Хааны усан ордон",
+        "Өглөөний цайны дараа Бангкок хотын аялалаа хийнэ. 1782 оноос баригдаж эхэлсэн, уран барилгын өвөрмөц хэв шинжийг хадгалсан Хааны ордон (Grand Palace) болон  Маргад Эрдэнийн Будда сүм (Emerald Buddha) –г үзнэ.",
+        "Тайланд улсын үндэсний завиар Бангкок хотын дундуур урсах (Chao Rhaya) мөрнөөр аялал хийнэ. 104 м өндөр Үүрийн Туяа (Wat Arun) хэмээх хамгийн өндөр хийдийг завьнаас харна.",
+        "Өдрийн хоолоо мөрний эрэг дээрх задгай ресторанд иднэ. Тайландын хамгийн өндөр барилга болох Баёоке цамхаг (Bayoke Tower) -ийн 76 давхарт байрлах шилэн ханатай олон үндэстний ресторанд оройн хоолоо идээд цамхагийн оройд байх эргэдэг шалтай алсыг харагч тавцан дээрээс үдшийн Бангкок хотыг харах боломжтой.",
       ],
       meals: {
-        breakfast: "Hotel breakfast",
-        lunch: "Restaurant",
-        dinner: "Restaurant",
+        breakfast: "Зочид буудлын өглөөний цай",
+        lunch: "Өдрийн хоол",
+        dinner: "Оройн хоол",
       },
-      accommodation: "Jomtien Palm Beach Hotel",
+      accommodation: "The Sukosol Hotel ",
     },
     {
       day: 7,
-      title: "",
-      date: "2025.1.2 (Баасан)",
-      cover_photo: "https://placehold.co/600x400/00CED1/ffffff?text=Island",
-      location: "Pattaya City",
-      route: [{ name: "Pattaya City", distance: "15km", duration: "30min" }],
+      title: "Шоппинг хийнэ",
+
       description: [
-        "07:00-08:00 Өглөөний цай",
-        "11:00 Аялагчид зочид буудлын өрөөгөө хүлээлгэж өгөн Ngurah Rai олон улсын нисэх буудал руу хөдөлнө.",
-        "13:10-17:20 Бали-Ханой нислэг",
-        "19:00 Зочид буудалд байрлана",
+        "Энэ өдөр шоппинг хийж өнгөрүүлнэ. Siam Paragon – хамгийн том худалдааны төв, Central World – Дэлхийн шилдэг брэнд бүтээгдэхүүнүүд, BIG C – хямд бараа болон хүнсний төв, Indra Squire Bazaar – шөнийн зах. Зочид буудал худалдааны дүүрэгт байрлалтай.",
       ],
       meals: {
-        breakfast: "Hotel breakfast",
-        lunch: "Restaurant",
-        dinner: "Restaurant",
+        breakfast: "Зочид буудлын өглөөний цай",
       },
-      accommodation: "Jomtien Palm Beach Hotel",
+      accommodation: "The Sukosol Hotel ",
     },
 
     {
       day: 8,
-      title: "Сүүлийн өдөр",
-      date: "2025.1.3 (Бямба)",
-      cover_photo: "https://placehold.co/600x400/00CED1/ffffff?text=Island",
-      location: "Pattaya City",
-      route: [{ name: "Pattaya City", distance: "15km", duration: "30min" }],
+      title: "Бангкок - Улаанбаатар",
+      route: [
+        { name: "Бангкок ", distance: "2570 км", duration: "6 цаг 40 мин" },
+        { name: "Улаанбаатар" },
+      ],
+
       description: [
-        "07:00-08:00 Өглөөний цай",
-        "08:30 Аялагчид зочид буудлын өрөөгөө хүлээлгэж өгөн Ной Бай олон улсын нисэх буудал руу хөдөлнө",
-        "13:00-19:00 Ханой-Улаанбаатар нислэг",
+        "Орой нь бид Суварнабум нисэх онгоцны буудалдаа хүргүүлж Улаанбаатар хотын зүг 15:15 цагийн нислэгээр буцна. Улаанбаатар хотод 21:55 цагт онгоц газардаж аялал өндөрлөнө.",
       ],
       meals: {
-        breakfast: "Hotel breakfast",
-        lunch: "Restaurant",
-        dinner: "Restaurant",
+        breakfast: "Зочид буудлын өглөөний цай",
       },
-      accommodation: "Jomtien Palm Beach Hotel",
+      accommodation: "",
     },
   ];
 
   return (
-    <div className=" bg-gray-50 dark:bg-gray-900 p-4 md:p-8 font-sans">
-      
-        <div className="space-y-6">
-          {tourData.map((tour) => (
-            <div
-              key={tour.day}
-              className="bg-white dark:bg-gray-800 rounded-xl shadow-sm border border-gray-200 dark:border-gray-700 overflow-hidden flex flex-col md:flex-row transition-all hover:shadow-md"
-            >
-              {/* Left: cover_photo Section */}
-              <div className="md:w-56 h-56 md:h-auto bg-gray-100 dark:bg-gray-700 shrink-0 relative group">
-                <img
-                  src={tour.cover_photo}
-                  alt={`Day ${tour.day}`}
-                  className="w-full h-full object-cover transition-transform duration-500 group-hover:scale-105"
-                />
-                <div className="absolute top-3 left-3 bg-amber-600 text-white text-xs font-bold px-3 py-1 rounded shadow-lg">
-                  Day {tour.day}
+    <div className=" bg-gray-50 dark:bg-gray-900 p-4 font-sans">
+      <div className="space-y-6">
+        {tourData.map((tour) => (
+          <div
+            key={tour.day}
+            className="bg-white dark:bg-gray-800 rounded-xl shadow-sm border border-gray-200 dark:border-gray-700 overflow-hidden flex flex-col md:flex-row transition-all hover:shadow-md">
+            <div className="p-6 flex-1 flex flex-col">
+              {/* Card Header */}
+              <div className="mb-4">
+                <div className="flex flex-col md:flex-row md:items-center md:justify-between gap-2 mb-2">
+                  <h2 className="text-xl font-bold text-amber-700 dark:text-amber-500">
+                    {tour.title}
+                  </h2>
+                  <div className="flex items-center text-sm text-gray-500 dark:text-gray-400 bg-gray-100 dark:bg-gray-700/50 px-3 py-1 rounded-full w-fit">
+                    <Calendar className="h-3.5 w-3.5 mr-2" />
+                    Өдөр {tour.day}
+                  </div>
                 </div>
               </div>
 
-              {/* Right: Content Section */}
-              <div className="p-6 flex-1 flex flex-col">
-                {/* Card Header */}
-                <div className="mb-4">
-                  <div className="flex flex-col md:flex-row md:items-center md:justify-between gap-2 mb-2">
-                    <h2 className="text-xl font-bold text-amber-700 dark:text-amber-500">
-                      {tour.title}
-                    </h2>
-                    <div className="flex items-center text-sm text-gray-500 dark:text-gray-400 bg-gray-100 dark:bg-gray-700/50 px-3 py-1 rounded-full w-fit">
-                      <Calendar className="h-3.5 w-3.5 mr-2" />
-                      {tour.date}
-                    </div>
-                  </div>
-                </div>
+              {/* Route Visualization (Dotted Line Style) */}
+              {tour.route && (
+                <div className="mb-6 pl-2 border-l-2 border-dashed border-amber-300 dark:border-amber-700/50 space-y-4">
+                  {tour.route.map((stop, index) => (
+                    <div key={index} className="relative pl-4">
+                      {/* Dot on the line */}
+                      <div className="absolute -left-[13px] top-1.5 w-2.5 h-2.5 rounded-full bg-amber-500 ring-4 ring-white dark:ring-gray-800" />
 
-                {/* Route Visualization (Dotted Line Style) */}
-                {tour.route && (
-                  <div className="mb-6 pl-2 border-l-2 border-dashed border-amber-300 dark:border-amber-700/50 space-y-4">
-                    {tour.route.map((stop, index) => (
-                      <div key={index} className="relative pl-4">
-                        {/* Dot on the line */}
-                        <div className="absolute -left-[13px] top-1.5 w-2.5 h-2.5 rounded-full bg-amber-500 ring-4 ring-white dark:ring-gray-800" />
-
-                        <div className="flex flex-col sm:flex-row sm:items-center gap-1 sm:gap-3">
-                          <span className="font-semibold text-gray-800 dark:text-gray-200 text-sm">
-                            {stop.name}
-                          </span>
-                          {stop.distance && (
-                            <div className="flex items-center text-xs text-gray-500 dark:text-gray-400 bg-amber-50 dark:bg-amber-900/20 px-2 py-0.5 rounded border border-amber-100 dark:border-amber-800/30">
-                              <span>{stop.distance}</span>
-                              <ArrowRight className="h-3 w-3 mx-1 opacity-50" />
-                              <span>{stop.duration}</span>
-                            </div>
-                          )}
-                        </div>
+                      <div className="flex flex-col sm:flex-row sm:items-center gap-1 sm:gap-3">
+                        <span className="font-semibold text-gray-800 dark:text-gray-200 text-sm">
+                          {stop.name}
+                        </span>
+                        {stop.distance && (
+                          <div className="flex items-center text-xs text-gray-500 dark:text-gray-400 bg-amber-50 dark:bg-amber-900/20 px-2 py-0.5 rounded border border-amber-100 dark:border-amber-800/30">
+                            <span>{stop.distance}</span>
+                            <ArrowRight className="h-3 w-3 mx-1 opacity-50" />
+                            <span>{stop.duration}</span>
+                          </div>
+                        )}
                       </div>
-                    ))}
+                    </div>
+                  ))}
+                </div>
+              )}
+
+              {/* Description Text */}
+              <div className="mb-4 space-y-2">
+                {tour.description?.map((desc, index) => (
+                  <p
+                    key={index}
+                    className="text-gray-600 dark:text-gray-300 text-sm leading-relaxed flex gap-3 items-start">
+                    <span className="mt-1.5 w-1.5 h-1.5 rounded-full bg-gray-300 dark:bg-gray-600 shrink-0" />
+                    {desc}
+                  </p>
+                ))}
+              </div>
+
+              {/* Footer: Meals & Accommodation */}
+              <div className=" pt-2 border-t border-gray-100 dark:border-gray-700 flex flex-wrap gap-4 md:gap-6">
+                {tour.meals && (
+                  <div className="flex items-center gap-4">
+                    {tour.meals.breakfast && (
+                      <div
+                        className="flex items-center gap-2 text-sm text-gray-600 dark:text-gray-400"
+                        title="Breakfast">
+                        <Coffee className="h-4 w-4 text-amber-600" />
+                        <span>{tour.meals.breakfast}</span>
+                      </div>
+                    )}
+                    {tour.meals.lunch && (
+                      <div
+                        className="flex items-center gap-2 text-sm text-gray-600 dark:text-gray-400"
+                        title="Lunch">
+                        <Utensils className="h-4 w-4 text-amber-600" />
+                        <span>{tour.meals.lunch}</span>
+                      </div>
+                    )}
+                    {tour.meals.dinner && (
+                      <div
+                        className="flex items-center gap-2 text-sm text-gray-600 dark:text-gray-400"
+                        title="Dinner">
+                        <Soup className="h-4 w-4 text-amber-600" />
+                        <span>{tour.meals.dinner}</span>
+                      </div>
+                    )}
                   </div>
                 )}
 
-                {/* Description Text */}
-                <div className="mb-4 space-y-2">
-                  {tour.description?.map((desc, index) => (
-                    <p
-                      key={index}
-                      className="text-gray-600 dark:text-gray-300 text-sm leading-relaxed flex gap-3 items-start"
-                    >
-                      <span className="mt-1.5 w-1.5 h-1.5 rounded-full bg-gray-300 dark:bg-gray-600 shrink-0" />
-                      {desc}
-                    </p>
-                  ))}
-                </div>
-
-                {/* Footer: Meals & Accommodation */}
-                <div className=" pt-2 border-t border-gray-100 dark:border-gray-700 flex flex-wrap gap-4 md:gap-6">
-                  {tour.meals && (
-                    <div className="flex items-center gap-4">
-                      {tour.meals.breakfast && (
-                        <div
-                          className="flex items-center gap-2 text-sm text-gray-600 dark:text-gray-400"
-                          title="Breakfast"
-                        >
-                          <Coffee className="h-4 w-4 text-amber-600" />
-                          <span>{tour.meals.breakfast}</span>
-                        </div>
-                      )}
-                      {tour.meals.lunch && (
-                        <div
-                          className="flex items-center gap-2 text-sm text-gray-600 dark:text-gray-400"
-                          title="Lunch"
-                        >
-                          <Utensils className="h-4 w-4 text-amber-600" />
-                          <span>{tour.meals.lunch}</span>
-                        </div>
-                      )}
-                    </div>
-                  )}
-
-                  {tour.accommodation && (
-                    <div className="flex items-center gap-2 text-sm font-medium text-gray-700 dark:text-gray-300 bg-gray-50 dark:bg-gray-700/50 px-3 py-1.5 rounded-lg border border-gray-100 dark:border-gray-600">
-                      <BedDouble className="h-4 w-4 text-amber-600" />
-                      <span>{tour.accommodation}</span>
-                    </div>
-                  )}
-                </div>
+                {tour.accommodation && (
+                  <div className="flex items-center gap-2 text-sm font-medium text-gray-700 dark:text-gray-300 bg-gray-50 dark:bg-gray-700/50 px-3 py-1.5 rounded-lg border border-gray-100 dark:border-gray-600">
+                    <BedDouble className="h-4 w-4 text-amber-600" />
+                    <span>{tour.accommodation}</span>
+                  </div>
+                )}
               </div>
             </div>
-          ))}
-
-          {/* Summary Footer */}
-          <div className="bg-amber-50 dark:bg-amber-900/20 rounded-xl p-6 border border-amber-100 dark:border-amber-800/30">
-            <div className="flex items-center gap-2 mb-4">
-              <Info className="h-5 w-5 text-amber-600" />
-              <h3 className="text-lg font-bold text-amber-800 dark:text-amber-400">
-                Tour Highlights (Eniig zasna)
-              </h3>
-            </div>
-            <ul className="grid md:grid-cols-2 gap-3">
-              {[
-                "Round-trip flights from Ulaanbaatar to Bangkok",
-                "3-star beach hotel accommodation",
-                "Daily breakfast and lunch included",
-                "Professional tour guide",
-                "All entrance fees and activities included",
-              ].map((item, idx) => (
-                <li
-                  key={idx}
-                  className="flex items-center gap-2 text-sm text-gray-700 dark:text-gray-300"
-                >
-                  <div className="w-1.5 h-1.5 rounded-full bg-amber-500" />
-                  {item}
-                </li>
-              ))}
-            </ul>
           </div>
-        </div>
+        ))}
+      </div>
       {table && (
         <div className="mt-8 mb-12">
           <div className="flex items-center justify-between mb-6">
@@ -361,7 +297,7 @@ const [table, setTable] = useState(null);
                 </svg>
               </div>
               <h2 className="text-2xl font-bold text-gray-900 dark:text-gray-100">
-               Тайланд - Бангкок аялалуудын хуваарь
+                Тайланд - Бангкок аялалуудын хуваарь
               </h2>
             </div>
             <span className="text-sm text-gray-500 dark:text-gray-400">
@@ -375,22 +311,22 @@ const [table, setTable] = useState(null);
               <table className="w-full">
                 <thead>
                   <tr className="bg-gray-50 dark:bg-gray-700/50 border-b border-gray-200 dark:border-gray-700">
-                    <th className="text-left py-4 px-6 text-sm font-semibold text-gray-700 dark:text-gray-300 uppercase tracking-wider">
+                    <th className="text-left py-4 px-2 text-sm font-semibold text-gray-700 dark:text-gray-300 uppercase tracking-wider">
                       <div className="flex items-center ">Хөөрөх өдөр</div>
                     </th>
-                    <th className="text-left py-4 px-6 text-sm font-semibold text-gray-700 dark:text-gray-300 uppercase tracking-wider">
+                    <th className="text-left py-4 px-2 text-sm font-semibold text-gray-700 dark:text-gray-300 uppercase tracking-wider">
                       <div className="flex items-center gap-2">Суудлын тоо</div>
                     </th>
-                    <th className="text-left py-4 px-6 text-sm font-semibold text-gray-700 dark:text-gray-300 uppercase tracking-wider">
+                    <th className="text-left py-4 px-2 text-sm font-semibold text-gray-700 dark:text-gray-300 uppercase tracking-wider">
                       <div>Том хүн</div>
 
                       <div>(+12)</div>
                     </th>
-                    <th className="text-left py-4 px-6 text-sm font-semibold text-gray-700 dark:text-gray-300 uppercase tracking-wider">
+                    <th className="text-left py-4 px-2 text-sm font-semibold text-gray-700 dark:text-gray-300 uppercase tracking-wider">
                       <div>Хүүхэд(2-11)</div>
                       <div>ор эзэлсэн</div>
                     </th>
-                    <th className="text-left py-4 px-6 text-sm font-semibold text-gray-700 dark:text-gray-300 uppercase tracking-wider">
+                    <th className="text-left py-4 px-2 text-sm font-semibold text-gray-700 dark:text-gray-300 uppercase tracking-wider">
                       <div>Хүүхэд(2-11)</div>
                       <div>ор эзлээгүй</div>
                     </th>
@@ -401,7 +337,7 @@ const [table, setTable] = useState(null);
                     <tr
                       key={item.id || index}
                       className="hover:bg-gray-50 dark:hover:bg-gray-700/30 transition-colors duration-200">
-                      <td className="py-1 px-6">
+                      <td className="py-1 px-2">
                         <div className="flex items-center">
                           <div>
                             <div className="text-sm text-gray-500 dark:text-gray-400">
@@ -417,28 +353,28 @@ const [table, setTable] = useState(null);
                           </div>
                         </div>
                       </td>
-                      <td className="py-1 px-4 text-gray-900 dark:text-gray-100">
+                      <td className="py-1 px-2 text-gray-900 dark:text-gray-100">
                         {item.availability}
                       </td>
-                      <td className="py-1 px-6">
+                      <td className="py-1 px-2">
                         <div className="font-bold text-lg text-gray-900 dark:text-gray-100">
                           ₮{Number(item.adult_price).toLocaleString("mn-MN")}
                         </div>
                       </td>
-                      <td className="py-1 px-6">
+                      <td className="py-1 px-2">
                         <div className="font-bold text-lg text-gray-900 dark:text-gray-100">
                           ₮
-                          {Number(item.child_two_to_eleven_with_bed).toLocaleString(
-                            "mn-MN"
-                          )}
+                          {Number(
+                            item.child_two_to_eleven_with_bed
+                          ).toLocaleString("mn-MN")}
                         </div>
                       </td>
-                      <td className="py-1 px-6">
+                      <td className="py-1 px-2">
                         <div className="font-bold text-lg text-gray-900 dark:text-gray-100">
                           ₮
-                          {Number(item.child_two_to_eleven_no_bed).toLocaleString(
-                            "mn-MN"
-                          )}
+                          {Number(
+                            item.child_two_to_eleven_no_bed
+                          ).toLocaleString("mn-MN")}
                         </div>
                       </td>
                       {/*ZAHIALAH BUTTON ESVEL UUR ZUIL */}
