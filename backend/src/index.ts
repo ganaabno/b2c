@@ -9,9 +9,27 @@ import uploadRouter from "./routes/upload";
 import { hipayRouter } from "./routes/hipayRouter";
 import { priceTableRouter } from "./routes/price_tables";
 import qpayRouter from "./routes/qpay.routes";
-import axios from "axios";
+import { slowDown } from "express-slow-down";
+import rateLimit from "express-rate-limit";
 const app = express();
 
+
+// const slower = slowDown({
+//   windowMs: 15 * 60 * 1000, // 5 minutes
+//   delayAfter: 10, // allow 10 requests per `windowMs` (5 minutes) without slowing them down
+//   delayMs: (hits) => hits * 200, // add 200 ms of delay to every request after the 10th
+//   maxDelayMs: 5000, // max global delay of 5 seconds
+// });
+
+// const limiter = rateLimit({
+//   windowMs: 5 * 60 * 1000, // 5 minutes
+//   limit: 200, // each IP can make up to 20 requests per `windowsMs` (5 minutes)
+//   standardHeaders: true, // add the `RateLimit-*` headers to the response
+//   legacyHeaders: false, // remove the `X-RateLimit-*` headers from the response
+// });
+//app.use("/example", limiter); // END PATH UGUUD TER PATH IIG L HAMGAALJ BOLNO
+// app.use(slower)
+// app.use(limiter);
 app.use(
   cors({
     origin: ["http://localhost:5173"],

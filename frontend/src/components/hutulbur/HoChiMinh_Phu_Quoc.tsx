@@ -8,6 +8,9 @@ import {
 } from "lucide-react";
 import { useEffect, useState } from "react";
 import axios from "axios";
+import IncludedCard from "./IncludedCard";
+import { hochiminhPhuquocHutulburt } from "@/data/hutulbur/hutulburtBagtsan";
+
 const HoChiMinh_Phu_Quoc = () => {
   const [table, setTable] = useState(null);
   const [loading, setLoading] = useState(false);
@@ -160,7 +163,6 @@ const HoChiMinh_Phu_Quoc = () => {
           <div
             key={tour.day}
             className="bg-white dark:bg-gray-800 rounded-xl shadow-sm border border-gray-200 dark:border-gray-700 overflow-hidden flex flex-col md:flex-row transition-all hover:shadow-md">
-            {/* Right: Content Section */}
             <div className="p-6 flex-1 flex flex-col">
               {/* Card Header */}
               <div className="mb-4">
@@ -168,8 +170,8 @@ const HoChiMinh_Phu_Quoc = () => {
                   <h2 className="text-xl font-bold text-amber-700 dark:text-amber-500">
                     {tour.title}
                   </h2>
-                  <div className="flex items-center text-sm text-gray-500 dark:text-gray-400 bg-gray-100 dark:bg-gray-700/50 px-3 py-1 rounded-full w-fit">
-                    <Calendar className="h-3.5 w-3.5 mr-2" />
+                  <div className="flex items-center gap-2 text-sm text-gray-500">
+                    <Calendar className="w-4 h-4" />
                     Өдөр {tour.day}
                   </div>
                 </div>
@@ -253,6 +255,7 @@ const HoChiMinh_Phu_Quoc = () => {
             </div>
           </div>
         ))}
+        <IncludedCard arr={hochiminhPhuquocHutulburt} />
       </div>
       {/* -------------- TABLE ----------- */}
       {table && (

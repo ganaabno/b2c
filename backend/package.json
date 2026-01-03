@@ -3,7 +3,7 @@
   "version": "1.0.0",
   "main": "dist/index.js",
   "license": "MIT",
-  "type":"module",
+  "type": "module",
   "scripts": {
     "dev": "dotenv -- tsx watch src/index.ts",
     "build": "tsc",
@@ -20,6 +20,8 @@
     "cors": "^2.8.5",
     "dotenv": "^17.2.3",
     "express": "^4.21.1",
+    "express-rate-limit": "^8.2.1",
+    "express-slow-down": "^3.0.1",
     "jsonwebtoken": "^9.0.2",
     "morgan": "^1.10.0",
     "multer": "^2.0.2",

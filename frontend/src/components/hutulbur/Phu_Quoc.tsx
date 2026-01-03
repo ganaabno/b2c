@@ -3,9 +3,12 @@ import {
   BedDouble,
   Coffee,
   Calendar,
-  Info,
+  
   ArrowRight,
+  Soup
 } from "lucide-react";
+import IncludedCard from "./IncludedCard";
+import { phuquocHutulburt } from "@/data/hutulbur/hutulburtBagtsan";
 
 const galleryImages = [
   "https://res.cloudinary.com/di9bplyfy/image/upload/v1767001917/PhuQuoc_rrqws9.png",
@@ -26,170 +29,75 @@ const Phu_Quoc = () => {
   const tourData = [
     {
       day: 1,
-      title: "Улаанбаатар - Ханой",
-      date: "2025.12.27 (Бямба)",
-      cover_photo: "https://placehold.co/600x400/87CEEB/ffffff?text=Bangkok",
-      location: "Улаанбаатар City",
+      title: "Улаанбаатар - Фукуок",
+
       route: [
-        { name: "Улаанбаатар ", distance: "3822km", duration: "4 цаг" },
-        { name: "Ханой" },
+        { name: "Улаанбаатар ", distance: "4000 км", duration: "6 цаг 30 мин" },
+        { name: "Фукуок" },
       ],
       description: [
-        "05:00 Аялагчид Хөшигийн хөндийн “Чингис Хаан” олон улсын нисэх онгоцны буудалд ирсэн байна.",
-        "08:00 – 12:00 Улаанбаатар – Ханой нислэг",
-        "14:00 Ханой хотын зочид буудалд байрлана",
-        "Аялагчид нийтдээ 2 өдөр 2 шөнө Вьетнам улсын Ханой хотод байрлан амарна.",
+        "06:00 Аялагчид Хөшигийн хөндийн “Чингис Хаан” олон улсын нисэх онгоцны буудалд ирсэн байна.",
+        "15:00 – 21:30 Улаанбаатар – Фукуок нислэг",
+        "22:30 Зочид буудалд байрлах",
       ],
-      meals: { lunch: "Restaurant" },
-      accommodation: "Jomtien Palm Beach Hotel",
-    },
-    {
-      day: 2,
-      title: "Pattaya Tour",
-      date: "2025.12.28 (Ням)",
-      cover_photo: "https://placehold.co/600x400/8B4513/ffffff?text=Pattaya",
-      location: "Pattaya City",
-      description: [
-        "06:00-07:00 Өглөөний цай",
-        "07:30 цагт Зочид буудлын өрөөг хүлээлгэж өгөн Ной Бай олон улсын нисэх буудал руу хөдөлнө",
-        "10:05-16:25 Ханой-Бали нислэг",
-        "18:00-18:30 Зочид буудалд байрлана",
-        "Аялагчид нийтдээ 5 өдөр 5 шөнө Индонез улсын Бали аралд байрлан амарна.",
-      ],
-      meals: { breakfast: "Hotel breakfast", lunch: "Restaurant" },
-      accommodation: "Jomtien Palm Beach Hotel",
-    },
-    {
-      day: 3,
-      title:
-        "БҮТЭН ӨДРИЙН УБУД ХОТЫН АЯЛАЛ + KINTAMANI ГАЛТ УУЛЫН АЯЛАЛ/ӨДӨР & ОРОЙН ХООЛ/",
-      date: "2025.12.29 (Даваа)",
-      cover_photo: "https://placehold.co/600x400/00CED1/ffffff?text=Island",
-      location: "Pattaya City",
-      route: [{ name: "Pattaya City", distance: "15km", duration: "30min" }],
-      description: [
-        "08:00 Өглөөний цай",
-        "Ubud Palace – Түүхэн дурсгалт хааны ордон",
-        "Uma Pakel Swing дүүжин – Нутгийн кофег амтлан шувууны үүрэнд зураг даруулах боломжтой",
-        "Tampak Siring хот – Tirta Empul ариун усны сүм",
-        "Tegalalang тосгон – Будааны дэнж",
-        "Batur галт уул болон Batur нуур",
-      ],
-      meals: { lunch: "Restaurant", dinner: "Included" },
-      accommodation: "Jomtien Palm Beach Hotel",
-    },
-    {
-      day: 4,
-      title:
-        "БҮТЭН ӨДРИЙН BEDUGUL ХЭСГИЙН АЯЛАЛ + TANAH LOT/ӨДӨР & ОРОЙН ХООЛ/",
-      date: "2025.12.30 (Мягмар)",
-      cover_photo: "https://placehold.co/600x400/00CED1/ffffff?text=Island",
-      location: "Pattaya City",
-      route: [{ name: "Pattaya City", distance: "15km", duration: "30min" }],
-      description: [
-        "08:00 Өглөөний цай",
-        "Mengwi тосгон – Taman Ayun язгууртны гэр бүлийн сүм",
-        "Bratan нуур – Ulun Danu усан дээрх хөвдөг сүм",
-        "Tanah Lot сүт",
-      ],
-      meals: { lunch: "Restaurant", dinner: "Included" },
-      accommodation: "Jomtien Palm Beach Hotel",
-    },
-    {
-      day: 5,
-      title: "ХАГАС ӨДӨР WATER BOM PARK + ЧӨЛӨӨТ ЦАГ/ӨДӨР & ОРОЙН ХООЛ/",
-      date: "2025.12.31 (Лхагва)",
-      cover_photo: "https://placehold.co/600x400/00CED1/ffffff?text=Island",
-      location: "Pattaya City",
-      route: [{ name: "Pattaya City", distance: "15km", duration: "30min" }],
-      description: ["08:00 Өглөөний цай"],
       meals: {},
-      accommodation: "Jomtien Palm Beach Hotel",
+      accommodation: "",
     },
     {
-      day: 6,
-      title:
-        "БҮТЭН ӨДРИЙН ТЭНГЭРИЙН ХААЛГА БОЛОН TIRTA GANGGA УСАН ОРДОНГИЙН АЯЛАЛ/ӨДӨР& ОРОЙН ХООЛ/",
-      date: "2025.1.1 (Пүрэв)",
-      cover_photo: "https://placehold.co/600x400/00CED1/ffffff?text=Island",
-      location: "Pattaya City",
-      route: [{ name: "Pattaya City", distance: "15km", duration: "30min" }],
+      day: "2-6",
+      title: "Фукуок",
+
       description: [
-        "08:00 Өглөөний цай",
-        "The Heaven Gate – Бали арлын зүүн зүгт байрлах Lempuyang The Heaven’s Gate буюу Тэнгэрийн хаалгыг зорино",
-        "Tirta Gangga – Хааны усан ордон",
+        "Аялагчид нийтдээ 7 өдөр 6 шөнө эсвэл 14 өдөр 13 шөнө Вьетнам улсын Фукуок арлын ресортод байрлан, манай компаний зүгээс санал болгож буй хөтөлбөрүүдээс сонгон аялах боломжтой.",
+        ` КАЗИНО: 
+        Та Фукуокд байрлах CORONA Казинод өөрийн хүссэн /автомат тоглоом, ширээний покер, рулет, баккарат гэх мэт/ тоглоомуудаас сонгон тоглож цагийг зугаатай өнгөрөөх боломжтой.`,
+        `GRAND WORLD:
+Гранд Ворлд Фукуок нь Phu Quoc United Center-ийн нэг хэсэг болох үзвэр үйлчилгээ, худалдааны томоохон цогцолбор бөгөөд Фукуок арлын алдартай аялал жуулчлалын бүс болох Гань Дау коммуны Бай Дай орчимд байрладаг.
+Хэдий энэ цогцолбор 2020 оны сүүлчээр ашиглалтад орсон ч маш хурдан хугацаанд Фукуокын “сувдан арал”-д ирсэн аялагч бүрийн заавал очих ёстой газруудын нэг болж чаджээ.
+85 га газрыг хамарсан Гранд Ворлд нь Европын сонгодог хотуудын архитектурын урам зоригийг шингээсэн гайхамшигтай хийцтэй.`,
+        `VINWONDERS AND SAFARI:
+Энэхүү парк нь зүүн өмнөд Азийн хамгийн том цогцолбор парк бөгөөд дотроо зургаан дэд хэсэгт хуваагддаг 100 гаруй нэр төрлийн интерактив үйл ажиллаагааг явуулдаг:
+Аварга том далайн амьтдын аквариум үзэх
+Усны парк дээр хөгжилдөх
+20 гаруй нэр төрлийн дэлхий дээрх хамгийн адал явдалтай паркийн тоглоомд орж тоглох боломжтой
+VINPEARL SAFARI амьтны хүрээлэнд амьтдын үзүүлбэр үзэх, хамгийн өвөрмөц амьтдыг зургаа татуулж, зарим амьтадд дээр нь очиж үзэх, хооллох боломжтой.
+Тусгайлагдсан арслан, тахийн сүрэг, Энэтхэгийн заан зэрэг олон төрөл Бингалийн бар зэрэг үзмэрээс ховор амьтны хүрээлэнд байдаг хамгийн ховор амьтдыг үзэх боломжтой.`,
       ],
-      meals: {
-        breakfast: "Hotel breakfast",
-        lunch: "Restaurant",
-        dinner: "Restaurant",
-      },
-      accommodation: "Jomtien Palm Beach Hotel",
-    },
-    {
-      day: 7,
-      title: "",
-      date: "2025.1.2 (Баасан)",
-      cover_photo: "https://placehold.co/600x400/00CED1/ffffff?text=Island",
-      location: "Pattaya City",
-      route: [{ name: "Pattaya City", distance: "15km", duration: "30min" }],
-      description: [
-        "07:00-08:00 Өглөөний цай",
-        "11:00 Аялагчид зочид буудлын өрөөгөө хүлээлгэж өгөн Ngurah Rai олон улсын нисэх буудал руу хөдөлнө.",
-        "13:10-17:20 Бали-Ханой нислэг",
-        "19:00 Зочид буудалд байрлана",
-      ],
-      meals: {
-        breakfast: "Hotel breakfast",
-        lunch: "Restaurant",
-        dinner: "Restaurant",
-      },
-      accommodation: "Jomtien Palm Beach Hotel",
+      meals: { breakfast: "Зочид буудлын өглөөний цай" },
+      accommodation: "",
     },
 
     {
-      day: 8,
+      day: 7,
       title: "Сүүлийн өдөр",
-      date: "2025.1.3 (Бямба)",
-      cover_photo: "https://placehold.co/600x400/00CED1/ffffff?text=Island",
-      location: "Pattaya City",
-      route: [{ name: "Pattaya City", distance: "15km", duration: "30min" }],
+      route: [
+        { name: "Фукуок", distance: "4000 км", duration: "8 цаг " },
+        { name: "Улаанбаатар " },
+      ],
       description: [
-        "07:00-08:00 Өглөөний цай",
-        "08:30 Аялагчид зочид буудлын өрөөгөө хүлээлгэж өгөн Ной Бай олон улсын нисэх буудал руу хөдөлнө",
-        "13:00-19:00 Ханой-Улаанбаатар нислэг",
+        "07:00-09:00 Өглөөний цай",
+        "18:45 Зочид буудлаас нисэх буудал руу хөдөлнө.",
+        `20:00 цагт аялагчид Фукуок арлын олон улсын нисэх онгоцны буудалд ирсэн байна`,
+        "22:40 – 06:30 Фукуок – Улаанбаатар нислэг",
+        "АНХААР! Дээрх нислэгийн цагийн хуваарьт өөрчлөлт орж болзошгүй.",
       ],
       meals: {
-        breakfast: "Hotel breakfast",
-        lunch: "Restaurant",
-        dinner: "Restaurant",
+        breakfast: "Зочид буудлын өглөөний цай",
+        dinner: "",
+        lunch: "",
       },
-      accommodation: "Jomtien Palm Beach Hotel",
+      accommodation: "",
     },
   ];
 
   return (
-    <div className=" bg-gray-50 dark:bg-gray-900 p-4 md:p-8 font-sans">
-      <div className=" ">
+    <div className=" bg-gray-50 dark:bg-gray-900 p-4  font-sans">
+     
         <div className="space-y-6">
           {tourData.map((tour) => (
             <div
               key={tour.day}
-              className="bg-white dark:bg-gray-800 rounded-xl shadow-sm border border-gray-200 dark:border-gray-700 overflow-hidden flex flex-col md:flex-row transition-all hover:shadow-md"
-            >
-              {/* Left: cover_photo Section */}
-              <div className="md:w-56 h-56 md:h-auto bg-gray-100 dark:bg-gray-700 shrink-0 relative group">
-                <img
-                  src={tour.cover_photo}
-                  alt={`Day ${tour.day}`}
-                  className="w-full h-full object-cover transition-transform duration-500 group-hover:scale-105"
-                />
-                <div className="absolute top-3 left-3 bg-amber-600 text-white text-xs font-bold px-3 py-1 rounded shadow-lg">
-                  Day {tour.day}
-                </div>
-              </div>
-
-              {/* Right: Content Section */}
+              className="bg-white dark:bg-gray-800 rounded-xl shadow-sm border border-gray-200 dark:border-gray-700 overflow-hidden flex flex-col md:flex-row transition-all hover:shadow-md">
               <div className="p-6 flex-1 flex flex-col">
                 {/* Card Header */}
                 <div className="mb-4">
@@ -197,9 +105,9 @@ const Phu_Quoc = () => {
                     <h2 className="text-xl font-bold text-amber-700 dark:text-amber-500">
                       {tour.title}
                     </h2>
-                    <div className="flex items-center text-sm text-gray-500 dark:text-gray-400 bg-gray-100 dark:bg-gray-700/50 px-3 py-1 rounded-full w-fit">
-                      <Calendar className="h-3.5 w-3.5 mr-2" />
-                      {tour.date}
+                    <div className="flex items-center gap-2 text-sm text-gray-500">
+                      <Calendar className="w-4 h-4" />
+                      Өдөр {tour.day}
                     </div>
                   </div>
                 </div>
@@ -234,8 +142,7 @@ const Phu_Quoc = () => {
                   {tour.description?.map((desc, index) => (
                     <p
                       key={index}
-                      className="text-gray-600 dark:text-gray-300 text-sm leading-relaxed flex gap-3 items-start"
-                    >
+                      className="text-gray-600 dark:text-gray-300 text-sm leading-relaxed flex gap-3 items-start">
                       <span className="mt-1.5 w-1.5 h-1.5 rounded-full bg-gray-300 dark:bg-gray-600 shrink-0" />
                       {desc}
                     </p>
@@ -249,8 +156,7 @@ const Phu_Quoc = () => {
                       {tour.meals.breakfast && (
                         <div
                           className="flex items-center gap-2 text-sm text-gray-600 dark:text-gray-400"
-                          title="Breakfast"
-                        >
+                          title="Breakfast">
                           <Coffee className="h-4 w-4 text-amber-600" />
                           <span>{tour.meals.breakfast}</span>
                         </div>
@@ -258,10 +164,17 @@ const Phu_Quoc = () => {
                       {tour.meals.lunch && (
                         <div
                           className="flex items-center gap-2 text-sm text-gray-600 dark:text-gray-400"
-                          title="Lunch"
-                        >
+                          title="Lunch">
                           <Utensils className="h-4 w-4 text-amber-600" />
                           <span>{tour.meals.lunch}</span>
+                        </div>
+                      )}
+                      {tour.meals.dinner && (
+                        <div
+                          className="flex items-center gap-2 text-sm text-gray-600 dark:text-gray-400"
+                          title="Dinner">
+                          <Soup className="h-4 w-4 text-amber-600" />
+                          <span>{tour.meals.dinner}</span>
                         </div>
                       )}
                     </div>
@@ -278,34 +191,9 @@ const Phu_Quoc = () => {
             </div>
           ))}
 
-          {/* Summary Footer */}
-          <div className="bg-amber-50 dark:bg-amber-900/20 rounded-xl p-6 border border-amber-100 dark:border-amber-800/30">
-            <div className="flex items-center gap-2 mb-4">
-              <Info className="h-5 w-5 text-amber-600" />
-              <h3 className="text-lg font-bold text-amber-800 dark:text-amber-400">
-                Tour Highlights (Eniig zasna)
-              </h3>
-            </div>
-            <ul className="grid md:grid-cols-2 gap-3">
-              {[
-                "Round-trip flights from Ulaanbaatar to Bangkok",
-                "3-star beach hotel accommodation",
-                "Daily breakfast and lunch included",
-                "Professional tour guide",
-                "All entrance fees and activities included",
-              ].map((item, idx) => (
-                <li
-                  key={idx}
-                  className="flex items-center gap-2 text-sm text-gray-700 dark:text-gray-300"
-                >
-                  <div className="w-1.5 h-1.5 rounded-full bg-amber-500" />
-                  {item}
-                </li>
-              ))}
-            </ul>
-          </div>
+          <IncludedCard  arr={phuquocHutulburt}/>
         </div>
-      </div>
+   
     </div>
   );
 };

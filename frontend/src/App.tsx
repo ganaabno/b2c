@@ -1,25 +1,25 @@
 /// App.tsx
-import { Routes, Route, Navigate } from "react-router-dom";
+import { ThemeProvider } from "@/components/ThemeProvider";
 import { QueryClient, QueryClientProvider } from "@tanstack/react-query";
 import { Toaster } from "react-hot-toast";
-import { ThemeProvider } from "@/components/ThemeProvider";
-import Login from "./pages/Login";
-import Signup from "./pages/Signup";
-import Home from "./pages/Home";
-import Tours from "./pages/Tours";
-import TourDetail from "./pages/TourDetail";
-import AdminDashboard from "./pages/AdminDashboard";
-import ManagerDashboard from "./pages/(manager)/ManagerDashboard";
-import UserProfile from "./pages/UserProfile";
-import ProtectedRoute from "./components/ProtectedRoute";
-import Layout from "./Layout";
-import { AuthProvider } from "./context/AuthContext";
-import MembershipPage from "./pages/MembershipPage";
-import ScrollToTop from "./components/ScrollToTop";
-import AccessDenied from "./pages/AccessDenied";
-import ForgotPassword from "./pages/ForgotPassword";
-import ResetPassword from "./pages/ResetPassword";
+import { Navigate, Route, Routes } from "react-router-dom";
 import ManagerPriceTable from "./components/manager/ManagerPriceTable/ManagerPriceTable";
+import ProtectedRoute from "./components/ProtectedRoute";
+import ScrollToTop from "./components/ScrollToTop";
+import { AuthProvider } from "./context/AuthContext";
+import Layout from "./Layout";
+import ManagerDashboard from "./pages/(manager)/ManagerDashboard";
+import AccessDenied from "./pages/AccessDenied";
+import AdminDashboard from "./pages/AdminDashboard";
+import ForgotPassword from "./pages/ForgotPassword";
+import Home from "./pages/Home";
+import Login from "./pages/Login";
+import MembershipPage from "./pages/MembershipPage";
+import ResetPassword from "./pages/ResetPassword";
+import Signup from "./pages/Signup";
+import TourDetail from "./pages/TourDetail";
+import Tours from "./pages/Tours";
+import UserProfile from "./pages/UserProfile";
 
 const queryClient = new QueryClient();
 
@@ -55,7 +55,10 @@ export default function App() {
                   <ProtectedRoute allowedRoles={["ADMIN", "MANAGER"]} />
                 }>
                 <Route path="/manager" element={<ManagerDashboard />} />
-                <Route path="/manager/price-table" element={<ManagerPriceTable />} />
+                <Route
+                  path="/manager/price-table"
+                  element={<ManagerPriceTable />}
+                />
               </Route>
             </Route>
 

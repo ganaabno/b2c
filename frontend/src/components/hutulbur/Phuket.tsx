@@ -1,6 +1,8 @@
 import { Utensils, Soup, Coffee, Calendar, Info } from "lucide-react";
 import { useEffect, useState } from "react";
 import axios from "axios";
+import { phuketHutulburt } from "@/data/hutulbur/hutulburtBagtsan";
+import IncludedCard from "./IncludedCard";
 const galleryImages = [
   "https://res.cloudinary.com/di9bplyfy/image/upload/v1766991491/D0_97_D0_90_D0_A1_D0_A1_D0_90_D0_9D-_D0_9F_D0_A3_D0_9A_D0_95_D0_A2-_D0_90_D0_AF_D0_9B_D0_90_D0_9B_fazxcj.png",
   "https://res.cloudinary.com/di9bplyfy/image/upload/v1766991570/MTAyLmpwZw_rcbxdn.jpg",
@@ -17,8 +19,7 @@ const hotelImages = [
 ];
 
 const Phuket = () => {
-
-const [table, setTable] = useState(null);
+  const [table, setTable] = useState(null);
   const [loading, setLoading] = useState(false);
   const [error, setError] = useState("");
   const fetchPhuketTable = async () => {
@@ -27,7 +28,6 @@ const [table, setTable] = useState(null);
     try {
       const res = await axios.get("/api/price_table/phuket");
       setTable(res.data.data);
-      
     } catch (error: unknown) {
       if (error instanceof Error) {
         setError(error.message);
@@ -51,7 +51,7 @@ const [table, setTable] = useState(null);
     {
       day: 1,
       title: "Улаанбаатар – Пхукет",
-      
+
       route: [
         { name: "Улаанбаатар", distance: "4,300 км", duration: "6 цаг" },
         { name: "Пхукет" },
@@ -69,7 +69,7 @@ const [table, setTable] = useState(null);
     {
       day: 2,
       title: "Чөлөөт өдөр – Далайн эрэг",
-     
+
       description: [
         "Патонг, Ката, Карон далайн эргээр чөлөөтэй амарна.",
         "Далайн усанд сэлэх, наран шарлага, SPA, массаж хийлгэх боломжтой.",
@@ -82,7 +82,7 @@ const [table, setTable] = useState(null);
     {
       day: 3,
       title: "Phi Phi арлын бүтэн өдрийн аялал",
-      
+
       description: [
         "Хурдан завиар Phi Phi арлууд руу аялна.",
         "Maya Bay, Monkey Beach, Viking Cave үзнэ.",
@@ -96,7 +96,7 @@ const [table, setTable] = useState(null);
     {
       day: 4,
       title: "Phuket хотын аялал",
-     
+
       description: [
         "Big Buddha хөшөө үзнэ.",
         "Phuket Old Town – хуучин хотын аялал.",
@@ -124,7 +124,7 @@ const [table, setTable] = useState(null);
     {
       day: 6,
       title: "Чөлөөт өдөр",
-     
+
       description: [
         "Чөлөөт өдөр – shopping, spa, далайн эрэг.",
         "Нэмэлт аялал авах боломжтой (elephant trekking, ATV гэх мэт).",
@@ -136,7 +136,7 @@ const [table, setTable] = useState(null);
     {
       day: 7,
       title: "Пхукет – Улаанбаатар",
-    
+
       route: [
         { name: "Пхукет", distance: "4,300 км", duration: "6 цаг" },
         { name: "Улаанбаатар" },
@@ -153,7 +153,7 @@ const [table, setTable] = useState(null);
   ];
 
   return (
-    <div className="bg-gray-50 dark:bg-gray-900 p-4 md:p-8">
+    <div className="bg-gray-50 dark:bg-gray-900 p-4 font-sans">
       <div className="space-y-6">
         {tourData.map((tour) => (
           <div
@@ -214,7 +214,7 @@ const [table, setTable] = useState(null);
           </div>
         ))}
 
-        <div className="bg-amber-50 dark:bg-amber-900/20 rounded-xl p-6">
+        {/* <div className="bg-amber-50 dark:bg-amber-900/20 rounded-xl p-6">
           <div className="flex items-center gap-2 mb-4">
             <Info className="w-5 h-5 text-amber-600" />
             <h3 className="font-bold text-lg">Phuket Tour Highlights</h3>
@@ -230,7 +230,8 @@ const [table, setTable] = useState(null);
               <li key={i}>• {item}</li>
             ))}
           </ul>
-        </div>
+        </div> */}
+        <IncludedCard arr={phuketHutulburt} />
       </div>
 
       {table && (
@@ -274,7 +275,9 @@ const [table, setTable] = useState(null);
                       <div className="flex items-center gap-2">Суудлын тоо</div>
                     </th>
                     <th className="text-left py-2 px-2 text-sm font-semibold text-gray-700 dark:text-gray-300 uppercase tracking-wider">
-                      <div className="flex items-center gap-2">Зочид буудал</div>
+                      <div className="flex items-center gap-2">
+                        Зочид буудал
+                      </div>
                     </th>
                     <th className="text-left py-2 px-2 text-sm font-semibold text-gray-700 dark:text-gray-300 uppercase tracking-wider">
                       <div>Том хүн</div>
@@ -282,12 +285,10 @@ const [table, setTable] = useState(null);
                       <div>(+12)</div>
                     </th>
                     <th className="text-left py-2 px-2 text-sm font-semibold text-gray-700 dark:text-gray-300 uppercase tracking-wider">
-                      Хүүхэд(2-11)
-                      ор эзэлсэн
+                      Хүүхэд(2-11) ор эзэлсэн
                     </th>
                     <th className="text-left py-2 px-2 text-sm font-semibold text-gray-700 dark:text-gray-300 uppercase tracking-wider">
-                      Хүүхэд(2-11)
-                      ор эзлээгүй
+                      Хүүхэд(2-11) ор эзлээгүй
                     </th>
                   </tr>
                 </thead>

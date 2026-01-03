@@ -10,7 +10,8 @@ import {
 } from "lucide-react";
 import { useEffect, useState } from "react";
 import axios from "axios";
-
+import IncludedCard from "./IncludedCard";
+import { hainanHutulburt } from "@/data/hutulbur/hutulburtBagtsan";
 const galleryImages = [
   "https://res.cloudinary.com/di9bplyfy/image/upload/v1766990242/sanya-beaches-700-3_wfkojz.jpg",
   "https://res.cloudinary.com/di9bplyfy/image/upload/v1766990341/Hainan-China-beach.jpg_bklugy.webp",
@@ -60,8 +61,7 @@ const Hainan = () => {
     {
       day: 1,
       title: "Улаанбаатар - Саняа",
-      date: "2025.12.27 (Бямба)",
-      cover_photo: "https://placehold.co/600x400/87CEEB/ffffff?text=Bangkok",
+
       location: "Улаанбаатар City",
       route: [
         { name: "Улаанбаатар ", distance: "3363 км", duration: "5 цаг" },
@@ -96,7 +96,7 @@ const Hainan = () => {
       title: "Хөтөлбөрт өдөр",
 
       description: [
-        "(Аяллын автобус)",
+        "Аяллын автобус",
         "Товлосон цагт цугларч автобусандаа суун аварга загасны аж ахуйтай танилцана. 3-н давхар тансаг зэрэглэлийн усан онгоцоор Номхон далайд 3-н цаг аялна. Үүнд DJ, Karaoke, загасчлал, жимс, уух зүйлс, (хязгаартай) туршлагатай усан онгоцны баг зэрэг багтсан. Энэ аялалдаа та нэмэлтээр далайд шумбах, моторт завь, шүхэр, fly boarding зэрэг олон тоглоомууд тоглох боломжтой. (260-800 ЮАНЬ)",
       ],
       meals: {
@@ -194,7 +194,7 @@ const Hainan = () => {
   ];
 
   return (
-    <div className=" bg-gray-50 dark:bg-gray-900 p-4 md:p-8 font-sans">
+    <div className=" bg-gray-50 dark:bg-gray-900 p-4 font-sans">
       <div className="space-y-6">
         {tourData.map((tour) => (
           <div
@@ -208,8 +208,8 @@ const Hainan = () => {
                   <h2 className="text-xl font-bold text-amber-700 dark:text-amber-500">
                     {tour.title}
                   </h2>
-                  <div className="flex items-center text-sm text-gray-500 dark:text-gray-400 bg-gray-100 dark:bg-gray-700/50 px-3 py-1 rounded-full w-fit">
-                    <Calendar className="h-3.5 w-3.5 mr-2" />
+                  <div className="flex items-center gap-2 text-sm text-gray-500">
+                    <Calendar className="w-4 h-4" />
                     Өдөр {tour.day}
                   </div>
                 </div>
@@ -293,7 +293,11 @@ const Hainan = () => {
             </div>
           </div>
         ))}
+
+        <IncludedCard arr={hainanHutulburt} />
       </div>
+      {/* Hutulburt orson */}
+
       {table && (
         <div className="mt-8 mb-12">
           <div className="flex items-center justify-between mb-6">

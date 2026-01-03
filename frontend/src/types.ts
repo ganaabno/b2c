@@ -1,3 +1,10 @@
+export type CacheData<T> = {
+  data: T | null;
+  timestamp: number; // When we last fetched
+  isLoading: boolean;
+  error: string | null;
+};
+
 export interface User {
   id: string;
   firstname: string;

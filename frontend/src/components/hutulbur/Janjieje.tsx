@@ -1,5 +1,4 @@
 import {
-
   Utensils,
   BedDouble,
   Coffee,
@@ -7,9 +6,9 @@ import {
   Info,
   ArrowRight,
 } from "lucide-react";
-
+import { janjiejeHutulburt } from "@/data/hutulbur/hutulburtBagtsan";
+import IncludedCard from "./IncludedCard";
 const Janjieje = () => {
-  // Keeping your original data structure
   const tourData = [
     {
       day: 1,
@@ -156,28 +155,13 @@ const Janjieje = () => {
   ];
 
   return (
-    <div className=" bg-gray-50 dark:bg-gray-900 p-4 md:p-8 font-sans">
-      <div className=" ">
-       
-
+    <div className=" bg-gray-50 dark:bg-gray-900 p-4  font-sans">
+     
         <div className="space-y-6">
           {tourData.map((tour) => (
             <div
               key={tour.day}
               className="bg-white dark:bg-gray-800 rounded-xl shadow-sm border border-gray-200 dark:border-gray-700 overflow-hidden flex flex-col md:flex-row transition-all hover:shadow-md">
-              {/* Left: cover_photo Section */}
-              <div className="md:w-56 h-56 md:h-auto bg-gray-100 dark:bg-gray-700 shrink-0 relative group">
-                <img
-                  src={tour.cover_photo}
-                  alt={`Day ${tour.day}`}
-                  className="w-full h-full object-cover transition-transform duration-500 group-hover:scale-105"
-                />
-                <div className="absolute top-3 left-3 bg-amber-600 text-white text-xs font-bold px-3 py-1 rounded shadow-lg">
-                  Day {tour.day}
-                </div>
-              </div>
-
-              {/* Right: Content Section */}
               <div className="p-6 flex-1 flex flex-col">
                 {/* Card Header */}
                 <div className="mb-4">
@@ -185,9 +169,9 @@ const Janjieje = () => {
                     <h2 className="text-xl font-bold text-amber-700 dark:text-amber-500">
                       {tour.title}
                     </h2>
-                    <div className="flex items-center text-sm text-gray-500 dark:text-gray-400 bg-gray-100 dark:bg-gray-700/50 px-3 py-1 rounded-full w-fit">
-                      <Calendar className="h-3.5 w-3.5 mr-2" />
-                      {tour.date}
+                    <div className="flex items-center gap-2 text-sm text-gray-500">
+                      <Calendar className="w-4 h-4" />
+                      Өдөр {tour.day}
                     </div>
                   </div>
                 </div>
@@ -263,33 +247,9 @@ const Janjieje = () => {
             </div>
           ))}
 
-          {/* Summary Footer */}
-          <div className="bg-amber-50 dark:bg-amber-900/20 rounded-xl p-6 border border-amber-100 dark:border-amber-800/30">
-            <div className="flex items-center gap-2 mb-4">
-              <Info className="h-5 w-5 text-amber-600" />
-              <h3 className="text-lg font-bold text-amber-800 dark:text-amber-400">
-                Tour Highlights (Eniig zasna)
-              </h3>
-            </div>
-            <ul className="grid md:grid-cols-2 gap-3">
-              {[
-                "Round-trip flights from Ulaanbaatar to Bangkok",
-                "3-star beach hotel accommodation",
-                "Daily breakfast and lunch included",
-                "Professional tour guide",
-                "All entrance fees and activities included",
-              ].map((item, idx) => (
-                <li
-                  key={idx}
-                  className="flex items-center gap-2 text-sm text-gray-700 dark:text-gray-300">
-                  <div className="w-1.5 h-1.5 rounded-full bg-amber-500" />
-                  {item}
-                </li>
-              ))}
-            </ul>
-          </div>
+          <IncludedCard arr={janjiejeHutulburt}/>
         </div>
-      </div>
+    
     </div>
   );
 };

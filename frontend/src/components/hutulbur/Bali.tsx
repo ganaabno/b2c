@@ -2,26 +2,29 @@ import {
   Utensils,
   BedDouble,
   Coffee,
-  Info,
   ArrowRight,
   Banknote,
+  Calendar,
 } from "lucide-react";
 import { useEffect, useState } from "react";
 import axios from "axios";
-
+import IncludedCard from "./IncludedCard";
+import { baliHutulburt } from "@/data/hutulbur/hutulburtBagtsan";
 const Bali = () => {
   const [table, setTable] = useState(null);
   const [loading, setLoading] = useState(false);
-  const [error, setError] = useState(null);
+  const [error, setError] = useState("");
   const fetchBaliTable = async () => {
     setLoading(true);
-    setError(null);
+    setError("");
     try {
       const res = await axios.get("/api/price_table/bali");
       setTable(res.data.data);
       console.log("RES:", res.data.data);
-    } catch (error) {
-      setError(error.message);
+    } catch (error: unknown) {
+      if (error instanceof Error) {
+        setError(error.message);
+      }
     } finally {
       setLoading(false);
     }
@@ -41,11 +44,8 @@ const Bali = () => {
     {
       day: 1,
       title: "Улаанбаатар - Ханой",
-      date: "2025.12.27 (Бямба)",
-      cover_photo: "https://placehold.co/600x400/87CEEB/ffffff?text=Bangkok",
-      location: "Улаанбаатар City",
       route: [
-        { name: "Улаанбаатар ", distance: "3822km", duration: "4 цаг" },
+        { name: "Улаанбаатар ", distance: "3822 км", duration: "4 цаг" },
         { name: "Ханой" },
       ],
       description: [
@@ -54,15 +54,16 @@ const Bali = () => {
         "14:00 Ханой хотын зочид буудалд байрлана",
         "Аялагчид нийтдээ 2 өдөр 2 шөнө Вьетнам улсын Ханой хотод байрлан амарна.",
       ],
-      meals: { lunch: "Restaurant" },
-      accommodation: "Jomtien Palm Beach Hotel",
+      meals: { dinner: "Оройн хоол" },
+      accommodation: "Зочид буудал",
     },
     {
       day: 2,
-      title: "Pattaya Tour",
-      date: "2025.12.28 (Ням)",
-      cover_photo: "https://placehold.co/600x400/8B4513/ffffff?text=Pattaya",
-      location: "Pattaya City",
+      title: "Ханой - Бали",
+      route: [
+        { name: " Ханой ", distance: "2900 км", duration: "6 цаг" },
+        { name: "Бали" },
+      ],
       description: [
         "06:00-07:00 Өглөөний цай",
         "07:30 цагт Зочид буудлын өрөөг хүлээлгэж өгөн Ной Бай олон улсын нисэх буудал руу хөдөлнө",
@@ -70,17 +71,13 @@ const Bali = () => {
         "18:00-18:30 Зочид буудалд байрлана",
         "Аялагчид нийтдээ 5 өдөр 5 шөнө Индонез улсын Бали аралд байрлан амарна.",
       ],
-      meals: { breakfast: "Hotel breakfast", lunch: "Restaurant" },
-      accommodation: "Jomtien Palm Beach Hotel",
+      meals: { breakfast: "Зочид буудлын өглөөний цай" },
+      accommodation: "Зочид буудал",
     },
     {
       day: 3,
-      title:
-        "БҮТЭН ӨДРИЙН УБУД ХОТЫН АЯЛАЛ + KINTAMANI ГАЛТ УУЛЫН АЯЛАЛ/ӨДӨР & ОРОЙН ХООЛ/",
-      date: "2025.12.29 (Даваа)",
-      cover_photo: "https://placehold.co/600x400/00CED1/ffffff?text=Island",
-      location: "Pattaya City",
-      route: [{ name: "Pattaya City", distance: "15km", duration: "30min" }],
+      title: "Бүтэн өдрийн Убуд хот + Kintamani галт уулын аялал",
+
       description: [
         "08:00 Өглөөний цай",
         "Ubud Palace – Түүхэн дурсгалт хааны ордон",
@@ -89,64 +86,63 @@ const Bali = () => {
         "Tegalalang тосгон – Будааны дэнж",
         "Batur галт уул болон Batur нуур",
       ],
-      meals: { lunch: "Restaurant", dinner: "Included" },
-      accommodation: "Jomtien Palm Beach Hotel",
+      meals: {
+        breakfast: "Зочид буудлын өглөөний цай",
+        lunch: "Өдрийн хоол",
+        dinner: "Оройн хоол",
+      },
+      accommodation: "Зочид буудал",
     },
     {
       day: 4,
-      title:
-        "БҮТЭН ӨДРИЙН BEDUGUL ХЭСГИЙН АЯЛАЛ + TANAH LOT/ӨДӨР & ОРОЙН ХООЛ/",
-      date: "2025.12.30 (Мягмар)",
-      cover_photo: "https://placehold.co/600x400/00CED1/ffffff?text=Island",
-      location: "Pattaya City",
-      route: [{ name: "Pattaya City", distance: "15km", duration: "30min" }],
+      title: "Бүтэн өдрийн Bedugul хэсгийн аялал + Tanah Lot",
+
       description: [
         "08:00 Өглөөний цай",
         "Mengwi тосгон – Taman Ayun язгууртны гэр бүлийн сүм",
         "Bratan нуур – Ulun Danu усан дээрх хөвдөг сүм",
-        "Tanah Lot сүт",
+        "Tanah Lot сүм",
       ],
-      meals: { lunch: "Restaurant", dinner: "Included" },
-      accommodation: "Jomtien Palm Beach Hotel",
+      meals: {
+        breakfast: "Зочид буудлын өглөөний цай",
+        lunch: "Өдрийн хоол",
+        dinner: "Оройн хоол",
+      },
+      accommodation: "Зочид буудал",
     },
     {
       day: 5,
-      title: "ХАГАС ӨДӨР WATER BOM PARK + ЧӨЛӨӨТ ЦАГ/ӨДӨР & ОРОЙН ХООЛ/",
-      date: "2025.12.31 (Лхагва)",
-      cover_photo: "https://placehold.co/600x400/00CED1/ffffff?text=Island",
-      location: "Pattaya City",
-      route: [{ name: "Pattaya City", distance: "15km", duration: "30min" }],
+      title: "Хагас өдөр Water Bom Park",
       description: ["08:00 Өглөөний цай"],
-      meals: {},
-      accommodation: "Jomtien Palm Beach Hotel",
+      meals: {
+        breakfast: "Зочид буудлын өглөөний цай",
+        lunch: "Өдрийн хоол",
+        dinner: "Оройн хоол",
+      },
+      accommodation: "Зочид буудал",
     },
     {
       day: 6,
-      title:
-        "БҮТЭН ӨДРИЙН ТЭНГЭРИЙН ХААЛГА БОЛОН TIRTA GANGGA УСАН ОРДОНГИЙН АЯЛАЛ/ӨДӨР& ОРОЙН ХООЛ/",
-      date: "2025.1.1 (Пүрэв)",
-      cover_photo: "https://placehold.co/600x400/00CED1/ffffff?text=Island",
-      location: "Pattaya City",
-      route: [{ name: "Pattaya City", distance: "15km", duration: "30min" }],
+      title: "Бүтэн өдрийн тэнгэрийн хаалга & Усан ордны аялал",
       description: [
         "08:00 Өглөөний цай",
         "The Heaven Gate – Бали арлын зүүн зүгт байрлах Lempuyang The Heaven’s Gate буюу Тэнгэрийн хаалгыг зорино",
         "Tirta Gangga – Хааны усан ордон",
       ],
       meals: {
-        breakfast: "Hotel breakfast",
-        lunch: "Restaurant",
-        dinner: "Restaurant",
+        breakfast: "Зочид буудлын өглөөний цай",
+        lunch: "Өдрийн хоол",
+        dinner: "Оройн хоол",
       },
-      accommodation: "Jomtien Palm Beach Hotel",
+      accommodation: "Зочид буудал",
     },
     {
       day: 7,
-      title: "",
-      date: "2025.1.2 (Баасан)",
-      cover_photo: "https://placehold.co/600x400/00CED1/ffffff?text=Island",
-      location: "Pattaya City",
-      route: [{ name: "Pattaya City", distance: "15km", duration: "30min" }],
+      title: "Бали - Ханой",
+      route: [
+        { name: "Бали ", distance: "2900 км", duration: "4 цаг" },
+        { name: "Ханой " },
+      ],
       description: [
         "07:00-08:00 Өглөөний цай",
         "11:00 Аялагчид зочид буудлын өрөөгөө хүлээлгэж өгөн Ngurah Rai олон улсын нисэх буудал руу хөдөлнө.",
@@ -154,43 +150,38 @@ const Bali = () => {
         "19:00 Зочид буудалд байрлана",
       ],
       meals: {
-        breakfast: "Hotel breakfast",
-        lunch: "Restaurant",
-        dinner: "Restaurant",
+        breakfast: "Зочид буудлын өглөөний цай",
       },
-      accommodation: "Jomtien Palm Beach Hotel",
+      accommodation: "Зочид буудал",
     },
 
     {
       day: 8,
       title: "Сүүлийн өдөр",
-      date: "2025.1.3 (Бямба)",
-      cover_photo: "https://placehold.co/600x400/00CED1/ffffff?text=Island",
-      location: "Pattaya City",
-      route: [{ name: "Pattaya City", distance: "15km", duration: "30min" }],
+      route: [
+        { name: "Улаанбаатар ", distance: "3822 км", duration: "6 цаг" },
+        { name: "Ханой" },
+      ],
       description: [
         "07:00-08:00 Өглөөний цай",
         "08:30 Аялагчид зочид буудлын өрөөгөө хүлээлгэж өгөн Ной Бай олон улсын нисэх буудал руу хөдөлнө",
         "13:00-19:00 Ханой-Улаанбаатар нислэг",
       ],
       meals: {
-        breakfast: "Hotel breakfast",
-        lunch: "Restaurant",
-        dinner: "Restaurant",
+        breakfast: "Зочид буудлын өглөөний цай",
       },
-      accommodation: "Jomtien Palm Beach Hotel",
+      accommodation: "Зочид буудал",
     },
   ];
 
   return (
-    <div className=" bg-gray-50 dark:bg-gray-900 p-4 md:p-8 font-sans">
-      <div className=" ">
+    <div className=" bg-gray-50 dark:bg-gray-900 p-4 font-sans">
+    
         <div className="space-y-6">
           {tourData.map((tour) => (
             <div
               key={tour.day}
               className="bg-white dark:bg-gray-800 rounded-xl shadow-sm border border-gray-200 dark:border-gray-700 overflow-hidden flex flex-col md:flex-row transition-all hover:shadow-md">
-              {/* Right: Content Section */}
               <div className="p-6 flex-1 flex flex-col">
                 {/* Card Header */}
                 <div className="mb-4">
@@ -198,8 +189,9 @@ const Bali = () => {
                     <h2 className="text-xl font-bold text-amber-700 dark:text-amber-500">
                       {tour.title}
                     </h2>
-                    <div className="absolute top-3 right-3 bg-amber-600 text-white text-xs font-bold px-3 py-1 rounded shadow-lg">
-                      Day {tour.day}
+                    <div className="flex items-center gap-2 text-sm text-gray-500">
+                      <Calendar className="w-4 h-4" />
+                      Өдөр {tour.day}
                     </div>
                   </div>
                 </div>
@@ -276,30 +268,8 @@ const Bali = () => {
           ))}
 
           {/* Summary Footer */}
-          <div className="bg-amber-50 dark:bg-amber-900/20 rounded-xl p-6 border border-amber-100 dark:border-amber-800/30">
-            <div className="flex items-center gap-2 mb-4">
-              <Info className="h-5 w-5 text-amber-600" />
-              <h3 className="text-lg font-bold text-amber-800 dark:text-amber-400">
-                Tour Highlights (Eniig zasna)
-              </h3>
-            </div>
-            <ul className="grid md:grid-cols-2 gap-3">
-              {[
-                "Round-trip flights from Ulaanbaatar to Bangkok",
-                "3-star beach hotel accommodation",
-                "Daily breakfast and lunch included",
-                "Professional tour guide",
-                "All entrance fees and activities included",
-              ].map((item, idx) => (
-                <li
-                  key={idx}
-                  className="flex items-center gap-2 text-sm text-gray-700 dark:text-gray-300">
-                  <div className="w-1.5 h-1.5 rounded-full bg-amber-500" />
-                  {item}
-                </li>
-              ))}
-            </ul>
-          </div>
+<IncludedCard arr={baliHutulburt}/>
+
         </div>
         <div>
           {table && (
@@ -326,7 +296,7 @@ const Bali = () => {
                   </h2>
                 </div>
                 <span className="text-sm text-gray-500 dark:text-gray-400">
-                  Нийт {table.length} аялал
+                  Нийт {table.length || "0"} аялал
                 </span>
               </div>
 
@@ -388,7 +358,6 @@ const Bali = () => {
                           className="hover:bg-gray-50 dark:hover:bg-gray-700/30 transition-colors duration-200">
                           <td className="py-1 px-6">
                             <div className="flex items-center">
-                             
                               <div>
                                 <div className="text-sm text-gray-500 dark:text-gray-400">
                                   {new Date(
@@ -402,13 +371,14 @@ const Bali = () => {
                               </div>
                             </div>
                           </td>
-                          <td className="py-1 px-4 text-gray-900 dark:text-gray-100">{item.availability}</td>
+                          <td className="py-1 px-4 text-gray-900 dark:text-gray-100">
+                            {item.availability}
+                          </td>
                           <td className="py-1 px-6">
                             <div className="font-bold text-lg text-gray-900 dark:text-gray-100">
                               ₮
                               {Number(item.adult_price).toLocaleString("mn-MN")}
                             </div>
-                            
                           </td>
                           {/*ZAHIALAH BUTTON ESVEL UUR ZUIL */}
                           {/* <td className="py-4 px-6">
@@ -519,7 +489,7 @@ const Bali = () => {
             </div>
           )}
         </div>
-      </div>
+      
     </div>
   );
 };

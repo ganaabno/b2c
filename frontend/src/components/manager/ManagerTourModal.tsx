@@ -18,7 +18,7 @@ import {
   Thailand_Banggok_Default,
   Turkey_Default,
   Phuket_Default,
-} from "./ManagerDefaultData";
+} from "../../data/manager/ManagerDefaultData";
 import * as React from "react";
 interface ManagerTourModalProps {
   isOpen: boolean;

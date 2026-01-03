@@ -9,6 +9,8 @@ import {
 } from "lucide-react";
 import { useEffect, useState } from "react";
 import axios from "axios";
+import IncludedCard from "./IncludedCard";
+import { singaporeHutulburt } from "@/data/hutulbur/hutulburtBagtsan";
 
 const galleryImages = [
   "https://res.cloudinary.com/di9bplyfy/image/upload/v1767002037/Singapore_fhvxca.png",
@@ -189,7 +191,7 @@ const Singapore = () => {
   ];
 
   return (
-    <div className=" bg-gray-50 dark:bg-gray-900 p-4 md:p-8 font-sans">
+    <div className=" bg-gray-50 dark:bg-gray-900 p-4 font-sans">
       <div className="space-y-6">
         {tourData.map((tour) => (
           <div
@@ -203,8 +205,8 @@ const Singapore = () => {
                   <h2 className="text-xl font-bold text-amber-700 dark:text-amber-500">
                     {tour.title}
                   </h2>
-                  <div className="flex items-center text-sm text-gray-500 dark:text-gray-400 bg-gray-100 dark:bg-gray-700/50 px-3 py-1 rounded-full w-fit">
-                    <Calendar className="h-3.5 w-3.5 mr-2" />
+                  <div className="flex items-center gap-2 text-sm text-gray-500">
+                    <Calendar className="w-4 h-4" />
                     Өдөр {tour.day}
                   </div>
                 </div>
@@ -288,6 +290,7 @@ const Singapore = () => {
             </div>
           </div>
         ))}
+        <IncludedCard arr={singaporeHutulburt} />
       </div>
       {/* -------------- TABLE ----------- */}
       {table && (
